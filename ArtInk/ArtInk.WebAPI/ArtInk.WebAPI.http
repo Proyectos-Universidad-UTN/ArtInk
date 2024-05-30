@@ -1,0 +1,6 @@
+@ArtInk.WebAPI_HostAddress = http://localhost:5191
+
+GET {{ArtInk.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
