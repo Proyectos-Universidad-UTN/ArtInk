@@ -1,13 +1,18 @@
 USE Artink 
 GO
 
-SET IDENTITY_INSERT TipoPago ON;
+IF NOT EXISTS(SELECT 1 FROM TipoPago WHERE Id = 1)
+BEGIN
 
-INSERT INTO dbo.TipoPago
-(Id, [Descripcion],[Referencia])
-VALUES
- (1, N'Transferencia',1)
-,(2, N'Efectivo',2)
-,(3, N'SINPE',3)
+    SET IDENTITY_INSERT TipoPago ON;
 
-SET IDENTITY_INSERT TipoPago OFF;
+    INSERT INTO dbo.TipoPago
+    (Id, [Descripcion],[Referencia])
+    VALUES
+    (1, N'Transferencia',1)
+    ,(2, N'Efectivo',2)
+    ,(3, N'SINPE',3)
+
+    SET IDENTITY_INSERT TipoPago OFF;
+
+END

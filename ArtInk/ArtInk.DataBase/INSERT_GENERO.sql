@@ -1,13 +1,18 @@
 USE Artink 
 GO
 
-SET IDENTITY_INSERT Genero ON;
+IF NOT EXISTS(SELECT 1 FROM Genero WHERE Id = 1)
+BEGIN
 
-INSERT INTO dbo.Genero
-(Id, [Nombre])
-VALUES
- (1, N'Masculino')
-,(2, N'Femenino')
-,(3, N'No definido')
+    SET IDENTITY_INSERT Genero ON;
 
-SET IDENTITY_INSERT Genero OFF;
+    INSERT INTO dbo.Genero
+    (Id, [Nombre])
+    VALUES
+    (1, N'Masculino')
+    ,(2, N'Femenino')
+    ,(3, N'No definido')
+
+    SET IDENTITY_INSERT Genero OFF;
+
+END
