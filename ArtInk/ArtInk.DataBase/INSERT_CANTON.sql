@@ -7,7 +7,7 @@ BEGIN
     SET IDENTITY_INSERT Canton ON;
 
     INSERT INTO dbo.Canton
-    ([Nombre],[IdProvincia])
+    (Id,[Nombre],[IdProvincia])
     VALUES (1, N'San José',1)
         ,(2, N'Escazú',1)
         ,(3, N'Desamparados',1)

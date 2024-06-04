@@ -7,7 +7,7 @@ BEGIN
     SET IDENTITY_INSERT Distrito ON;
 
     INSERT INTO dbo.Distrito
-    ([Nombre],[IdCanton])
+    (Id,[Nombre],[IdCanton])
     VALUES (1, N'Carmen',1)
         ,(2, N'Merced',1)
         ,(3, N'Hospital',1)
