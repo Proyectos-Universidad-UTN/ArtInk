@@ -10,7 +10,7 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
 {
     public virtual DbSet<Canton> Cantons { get; set; }
 
-    public virtual DbSet<Categorium> Categoria { get; set; }
+    public virtual DbSet<Categoria> Categoria { get; set; }
 
     public virtual DbSet<Cliente> Clientes { get; set; }
 
@@ -38,11 +38,11 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
 
     public virtual DbSet<Proveedor> Proveedors { get; set; }
 
-    public virtual DbSet<Provincium> Provincia { get; set; }
+    public virtual DbSet<Provincia> Provincia { get; set; }
 
     public virtual DbSet<Reserva> Reservas { get; set; }
 
-    public virtual DbSet<ReservaPreguntum> ReservaPregunta { get; set; }
+    public virtual DbSet<ReservaPregunta> ReservaPregunta { get; set; }
 
     public virtual DbSet<ReservaServicio> ReservaServicios { get; set; }
 
@@ -58,7 +58,7 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
 
     public virtual DbSet<TipoServicio> TipoServicios { get; set; }
 
-    public virtual DbSet<UnidadMedidum> UnidadMedida { get; set; }
+    public virtual DbSet<UnidadMedida> UnidadMedida { get; set; }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
@@ -85,7 +85,7 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
                 .HasConstraintName("FK_Canton_Provincia");
         });
 
-        modelBuilder.Entity<Categorium>(entity =>
+        modelBuilder.Entity<Categoria>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_categoria");
 
@@ -360,7 +360,7 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
                 .HasConstraintName("FK_Proveedor_Distrito");
         });
 
-        modelBuilder.Entity<Provincium>(entity =>
+        modelBuilder.Entity<Provincia>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_provincia");
 
@@ -391,7 +391,7 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
                 .HasConstraintName("FK_Reserva_SucursalHorario");
         });
 
-        modelBuilder.Entity<ReservaPreguntum>(entity =>
+        modelBuilder.Entity<ReservaPregunta>(entity =>
         {
             entity.Property(e => e.Activo).HasDefaultValue(true);
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
@@ -514,7 +514,7 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
             entity.Property(e => e.Nombre).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<UnidadMedidum>(entity =>
+        modelBuilder.Entity<UnidadMedida>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Nombre).HasMaxLength(25);

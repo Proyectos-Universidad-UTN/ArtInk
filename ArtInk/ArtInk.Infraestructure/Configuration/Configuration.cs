@@ -17,4 +17,4 @@ public static class Configuration
     }
 }
 // es una extencion xq usa la palabra this
-// Trasient cambia por cada request //scoped como para  factruas y// singleton
+// Trasient cambia por cada request //scoped como para  factruas y// singleton presente hasta la vida util de la aplicacion

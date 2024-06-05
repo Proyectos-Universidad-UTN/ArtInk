@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ArtInk.Infraestructure.Models;
 
-public partial class ReservaPreguntum
+public partial class ReservaPregunta
 {
     public int Id { get; set; }
 

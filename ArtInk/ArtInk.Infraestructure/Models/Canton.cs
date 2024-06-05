@@ -13,5 +13,5 @@ public partial class Canton
 
     public virtual ICollection<Distrito> Distritos { get; set; } = new List<Distrito>();
 
-    public virtual Provincium IdProvinciaNavigation { get; set; } = null!;
+    public virtual Provincia IdProvinciaNavigation { get; set; } = null!;
 }
