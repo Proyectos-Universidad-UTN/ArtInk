@@ -27,7 +27,7 @@ public partial class Reserva
 
     public virtual SucursalHorario IdSucursalHorarioNavigation { get; set; } = null!;
 
-    public virtual ICollection<ReservaPreguntum> ReservaPregunta { get; set; } = new List<ReservaPreguntum>();
+    public virtual ICollection<ReservaPregunta> ReservaPregunta { get; set; } = new List<ReservaPregunta>();
 
     public virtual ICollection<ReservaServicio> ReservaServicios { get; set; } = new List<ReservaServicio>();
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ArtInk.Infraestructure.Models;
 
-public partial class Categorium
+public partial class Categoria
 {
     public byte Id { get; set; }
 
