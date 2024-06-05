@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using ArtInk.Infraestructure.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtInk.Infraestructure.Data;
 
-public partial class ArtInkContext : DbContext
+public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : DbContext(options)
 {
-    public ArtInkContext()
-    {
-    }
-
-    public ArtInkContext(DbContextOptions<ArtInkContext> options)
-        : base(options)
-    {
-    }
-
     public virtual DbSet<Canton> Cantons { get; set; }
 
     public virtual DbSet<Categorium> Categoria { get; set; }
@@ -72,9 +64,7 @@ public partial class ArtInkContext : DbContext
 
     public virtual DbSet<UsuarioSucursal> UsuarioSucursals { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=Artink;Persist Security Info=True;User ID=sa;Password=123456;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;");
+    public IDbConnection Connection => Database.GetDbConnection();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
