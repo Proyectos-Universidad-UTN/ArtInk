@@ -1,72 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using ArtInk.Infraestructure.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtInk.Infraestructure.Data;
 
-public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): DbContext(options)
+public partial class ArtInkContext : DbContext
 {
-    public virtual DbSet<Canton> Canton { get; set; }
+    public ArtInkContext()
+    {
+    }
 
-    public virtual DbSet<Categoria> Categoria { get; set; }
+    public ArtInkContext(DbContextOptions<ArtInkContext> options)
+        : base(options)
+    {
+    }
 
-    public virtual DbSet<Cliente> Cliente { get; set; }
+    public virtual DbSet<Canton> Cantons { get; set; }
 
-    public virtual DbSet<Contacto> Contacto { get; set; }
+    public virtual DbSet<Categorium> Categoria { get; set; }
 
-    public virtual DbSet<DetalleFactura> DetalleFactura { get; set; }
+    public virtual DbSet<Cliente> Clientes { get; set; }
 
-    public virtual DbSet<DetalleFacturaProducto> DetalleFacturaProducto { get; set; }
+    public virtual DbSet<Contacto> Contactos { get; set; }
 
-    public virtual DbSet<Distrito> Distrito { get; set; }
+    public virtual DbSet<DetalleFactura> DetalleFacturas { get; set; }
 
-    public virtual DbSet<Factura> Factura { get; set; }
+    public virtual DbSet<DetalleFacturaProducto> DetalleFacturaProductos { get; set; }
 
-    public virtual DbSet<Feriado> Feriado { get; set; }
+    public virtual DbSet<Distrito> Distritos { get; set; }
 
-    public virtual DbSet<Genero> Genero { get; set; }
+    public virtual DbSet<Factura> Facturas { get; set; }
 
-    public virtual DbSet<Horario> Horario { get; set; }
+    public virtual DbSet<Feriado> Feriados { get; set; }
 
-    public virtual DbSet<Impuesto> Impuesto { get; set; }
+    public virtual DbSet<Genero> Generos { get; set; }
 
-    public virtual DbSet<Inventario> Inventario { get; set; }
+    public virtual DbSet<Horario> Horarios { get; set; }
 
-    public virtual DbSet<Producto> Producto { get; set; }
+    public virtual DbSet<Impuesto> Impuestos { get; set; }
 
-    public virtual DbSet<Proveedor> Proveedor { get; set; }
+    public virtual DbSet<Inventario> Inventarios { get; set; }
 
-    public virtual DbSet<Provincia> Provincia { get; set; }
+    public virtual DbSet<Producto> Productos { get; set; }
 
-    public virtual DbSet<Reserva> Reserva { get; set; }
+    public virtual DbSet<Proveedor> Proveedors { get; set; }
 
-    public virtual DbSet<ReservaPregunta> ReservaPregunta { get; set; }
+    public virtual DbSet<Provincium> Provincia { get; set; }
 
-    public virtual DbSet<ReservaServicio> ReservaServicio { get; set; }
+    public virtual DbSet<Reserva> Reservas { get; set; }
 
-    public virtual DbSet<Rol> Rol { get; set; }
+    public virtual DbSet<ReservaPreguntum> ReservaPregunta { get; set; }
 
-    public virtual DbSet<Servicio> Servicio { get; set; }
+    public virtual DbSet<ReservaServicio> ReservaServicios { get; set; }
 
-    public virtual DbSet<ServicioProducto> ServicioProducto { get; set; }
+    public virtual DbSet<Rol> Rols { get; set; }
 
-    public virtual DbSet<Sucursal> Sucursal { get; set; }
+    public virtual DbSet<Servicio> Servicios { get; set; }
 
-    public virtual DbSet<SucursalHorario> SucursalHorario { get; set; }
+    public virtual DbSet<Sucursal> Sucursals { get; set; }
 
-    public virtual DbSet<TipoPago> TipoPago { get; set; }
+    public virtual DbSet<SucursalHorario> SucursalHorarios { get; set; }
 
-    public virtual DbSet<TipoServicio> TipoServicio { get; set; }
+    public virtual DbSet<TipoPago> TipoPagos { get; set; }
 
-    public virtual DbSet<UnidadMedida> UnidadMedida { get; set; }
+    public virtual DbSet<TipoServicio> TipoServicios { get; set; }
 
-    public virtual DbSet<Usuario> Usuario { get; set; }
+    public virtual DbSet<UnidadMedidum> UnidadMedida { get; set; }
 
-    public virtual DbSet<UsuarioSucursal> UsuarioSucursal { get; set; }
+    public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    public IDbConnection Connection => Database.GetDbConnection();// esto por defecto pasa toda la info a la propiedad 
+    public virtual DbSet<UsuarioSucursal> UsuarioSucursals { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=Artink;Persist Security Info=True;User ID=sa;Password=123456;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -76,25 +84,46 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): Db
         {
             entity.HasKey(e => e.Id).HasName("PK_canton");
 
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.ToTable("Canton");
 
-            entity.HasOne(d => d.IdProvinciaNavigation).WithMany(p => p.Canton)
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Nombre).HasMaxLength(50);
+
+            entity.HasOne(d => d.IdProvinciaNavigation).WithMany(p => p.Cantons)
+                .HasForeignKey(d => d.IdProvincia)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Canton_Provincia");
         });
 
-        modelBuilder.Entity<Categoria>(entity =>
+        modelBuilder.Entity<Categorium>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_categoria");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Codigo).HasMaxLength(50);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Nombre).HasMaxLength(50);
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
         });
 
         modelBuilder.Entity<Cliente>(entity =>
         {
-            entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.ToTable("Cliente");
 
-            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Cliente)
+            entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.Apellidos).HasMaxLength(80);
+            entity.Property(e => e.CorreoElectronico).HasMaxLength(150);
+            entity.Property(e => e.DireccionExacta).HasMaxLength(250);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Nombre).HasMaxLength(80);
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Clientes)
+                .HasForeignKey(d => d.IdDistrito)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Cliente_Distrito");
         });
@@ -103,9 +132,19 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): Db
         {
             entity.HasKey(e => e.Id).HasName("PK_contacto");
 
-            entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.ToTable("Contacto");
 
-            entity.HasOne(d => d.IdProveedorNavigation).WithMany(p => p.Contacto)
+            entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.Apellidos).HasMaxLength(80);
+            entity.Property(e => e.CorreoElectronico).HasMaxLength(150);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModifiacion).HasColumnType("datetime");
+            entity.Property(e => e.Nombre).HasMaxLength(80);
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdProveedorNavigation).WithMany(p => p.Contactos)
+                .HasForeignKey(d => d.IdProveedor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Contacto_Proveedor");
         });
@@ -114,11 +153,20 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): Db
         {
             entity.HasKey(e => e.Id).HasName("PK_detalleFactura");
 
-            entity.HasOne(d => d.IdFacturaNavigation).WithMany(p => p.DetalleFactura)
+            entity.ToTable("DetalleFactura");
+
+            entity.Property(e => e.MontoImpuesto).HasColumnType("money");
+            entity.Property(e => e.MontoSubtotal).HasColumnType("money");
+            entity.Property(e => e.MontoTotal).HasColumnType("money");
+            entity.Property(e => e.TarifaServicio).HasColumnType("money");
+
+            entity.HasOne(d => d.IdFacturaNavigation).WithMany(p => p.DetalleFacturas)
+                .HasForeignKey(d => d.IdFactura)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetalleFactura_Factura");
 
-            entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.DetalleFactura)
+            entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.DetalleFacturas)
+                .HasForeignKey(d => d.IdServicio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetalleFactura_Servicio");
         });
@@ -127,11 +175,17 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): Db
         {
             entity.HasKey(e => e.Id).HasName("PK_[DetalleFacturaProducto");
 
-            entity.HasOne(d => d.IdDetalleFacturaNavigation).WithMany(p => p.DetalleFacturaProducto)
+            entity.ToTable("DetalleFacturaProducto");
+
+            entity.Property(e => e.Cantidad).HasColumnType("decimal(6, 2)");
+
+            entity.HasOne(d => d.IdDetalleFacturaNavigation).WithMany(p => p.DetalleFacturaProductos)
+                .HasForeignKey(d => d.IdDetalleFactura)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetalleFacturaProducto_DetalleFactura");
 
-            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.DetalleFacturaProducto)
+            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.DetalleFacturaProductos)
+                .HasForeignKey(d => d.IdProducto)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetalleFacturaProducto_Producto");
         });
@@ -140,7 +194,12 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): Db
         {
             entity.HasKey(e => e.Id).HasName("PK_distrito");
 
-            entity.HasOne(d => d.IdCantonNavigation).WithMany(p => p.Distrito)
+            entity.ToTable("Distrito");
+
+            entity.Property(e => e.Nombre).HasMaxLength(50);
+
+            entity.HasOne(d => d.IdCantonNavigation).WithMany(p => p.Distritos)
+                .HasForeignKey(d => d.IdCanton)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Distrito_Canton");
         });
@@ -149,61 +208,109 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): Db
         {
             entity.HasKey(e => e.Id).HasName("PK_factura");
 
-            entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Factura)
+            entity.ToTable("Factura");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.MontoImpuesto).HasColumnType("money");
+            entity.Property(e => e.MontoTotal).HasColumnType("money");
+            entity.Property(e => e.NombreCliente).HasMaxLength(160);
+            entity.Property(e => e.PorcentajeImpuesto).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.SubTotal).HasColumnType("money");
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Facturas)
+                .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Factura_Cliente");
 
-            entity.HasOne(d => d.IdImpuestoNavigation).WithMany(p => p.Factura)
+            entity.HasOne(d => d.IdImpuestoNavigation).WithMany(p => p.Facturas)
+                .HasForeignKey(d => d.IdImpuesto)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Factura_Impuesto");
 
-            entity.HasOne(d => d.IdTipoPagoNavigation).WithMany(p => p.Factura)
+            entity.HasOne(d => d.IdTipoPagoNavigation).WithMany(p => p.Facturas)
+                .HasForeignKey(d => d.IdTipoPago)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Factura_TipoPago");
 
-            entity.HasOne(d => d.IdUsuarioSucursalNavigation).WithMany(p => p.Factura)
+            entity.HasOne(d => d.IdUsuarioSucursalNavigation).WithMany(p => p.Facturas)
+                .HasForeignKey(d => d.IdUsuarioSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Factura_UsuarioSucursal");
         });
 
         modelBuilder.Entity<Feriado>(entity =>
         {
+            entity.ToTable("Feriado");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Nombre).HasMaxLength(80);
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
 
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Feriado)
+            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Feriados)
+                .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Feriado_Sucursal");
         });
 
         modelBuilder.Entity<Genero>(entity =>
         {
+            entity.ToTable("Genero");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Nombre).HasMaxLength(25);
         });
 
         modelBuilder.Entity<Horario>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_horario");
 
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Horario)
+            entity.ToTable("Horario");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Horarios)
+                .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Horario_Sucursal");
         });
 
         modelBuilder.Entity<Impuesto>(entity =>
         {
+            entity.ToTable("Impuesto");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Nombre).HasMaxLength(40);
+            entity.Property(e => e.Porcentaje).HasColumnType("decimal(5, 2)");
         });
 
         modelBuilder.Entity<Inventario>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_inventario");
 
-            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.Inventario)
+            entity.ToTable("Inventario");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.Inventarios)
+                .HasForeignKey(d => d.IdProducto)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Inventario_Producto");
 
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Inventario)
+            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Inventarios)
+                .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Inventario_Sucursal");
         });
@@ -212,13 +319,29 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): Db
         {
             entity.HasKey(e => e.Id).HasName("PK_producto");
 
-            entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.ToTable("Producto");
 
-            entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Producto)
+            entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.Cantidad).HasColumnType("decimal(6, 2)");
+            entity.Property(e => e.Costo).HasColumnType("money");
+            entity.Property(e => e.Descripcion).HasMaxLength(150);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Marca).HasMaxLength(50);
+            entity.Property(e => e.Nombre).HasMaxLength(70);
+            entity.Property(e => e.Sku)
+                .HasMaxLength(50)
+                .HasColumnName("SKU");
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Productos)
+                .HasForeignKey(d => d.IdCategoria)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Producto_Categoria");
 
-            entity.HasOne(d => d.IdUnidadMedidaNavigation).WithMany(p => p.Producto)
+            entity.HasOne(d => d.IdUnidadMedidaNavigation).WithMany(p => p.Productos)
+                .HasForeignKey(d => d.IdUnidadMedida)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Producto_UnidadMedida");
         });
@@ -227,51 +350,83 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): Db
         {
             entity.HasKey(e => e.Id).HasName("PK_proveedor");
 
+            entity.ToTable("Proveedor");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.CedulaJuridica).HasMaxLength(20);
+            entity.Property(e => e.CorreoElectronico).HasMaxLength(150);
+            entity.Property(e => e.DireccionExacta).HasMaxLength(250);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Nombre).HasMaxLength(80);
+            entity.Property(e => e.RasonSocial).HasMaxLength(150);
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
 
-            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Proveedor)
+            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Proveedors)
+                .HasForeignKey(d => d.IdDistrito)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Proveedor_Distrito");
         });
 
-        modelBuilder.Entity<Provincia>(entity =>
+        modelBuilder.Entity<Provincium>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_provincia");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Nombre).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Reserva>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_reserva");
 
+            entity.ToTable("Reserva");
+
             entity.Property(e => e.Activo).HasDefaultValue(true);
             entity.Property(e => e.Estado)
+                .HasMaxLength(1)
+                .IsUnicode(false)
                 .HasDefaultValue("P")
                 .IsFixedLength();
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
 
-            entity.HasOne(d => d.IdSucursalHorarioNavigation).WithMany(p => p.Reserva)
+            entity.HasOne(d => d.IdSucursalHorarioNavigation).WithMany(p => p.Reservas)
+                .HasForeignKey(d => d.IdSucursalHorario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Reserva_SucursalHorario");
         });
 
-        modelBuilder.Entity<ReservaPregunta>(entity =>
+        modelBuilder.Entity<ReservaPreguntum>(entity =>
         {
             entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Pregunta).HasMaxLength(250);
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
 
             entity.HasOne(d => d.IdReservaNavigation).WithMany(p => p.ReservaPregunta)
+                .HasForeignKey(d => d.IdReserva)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ReservaPregunta_Reserva");
         });
 
         modelBuilder.Entity<ReservaServicio>(entity =>
         {
-            entity.HasOne(d => d.IdReservaNavigation).WithMany(p => p.ReservaServicio)
+            entity.ToTable("ReservaServicio");
+
+            entity.HasOne(d => d.IdReservaNavigation).WithMany(p => p.ReservaServicios)
+                .HasForeignKey(d => d.IdReserva)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ReservaServicio_Reserva");
 
-            entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.ReservaServicio)
+            entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.ReservaServicios)
+                .HasForeignKey(d => d.IdServicio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ReservaServicio_Servicio");
         });
@@ -280,98 +435,152 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options): Db
         {
             entity.HasKey(e => e.Id).HasName("PK_rol");
 
+            entity.ToTable("Rol");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.Descripcion).HasMaxLength(50);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Tipo).HasMaxLength(50);
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
         });
 
         modelBuilder.Entity<Servicio>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_servicio");
 
+            entity.ToTable("Servicio");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.Descripcion).HasMaxLength(150);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Nombre).HasMaxLength(50);
+            entity.Property(e => e.Observacion).HasMaxLength(250);
+            entity.Property(e => e.Tarifa).HasColumnType("money");
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
 
-            entity.HasOne(d => d.IdTipoServicioNavigation).WithMany(p => p.Servicio)
+            entity.HasOne(d => d.IdTipoServicioNavigation).WithMany(p => p.Servicios)
+                .HasForeignKey(d => d.IdTipoServicio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Servicio_TipoServicio");
-        });
-
-        modelBuilder.Entity<ServicioProducto>(entity =>
-        {
-            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.ServicioProducto)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ServicioProducto_Producto");
-
-            entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.ServicioProducto)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ServicioProducto_Servicio");
         });
 
         modelBuilder.Entity<Sucursal>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_sucursal");
 
+            entity.ToTable("Sucursal");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.CorreoElectronico).HasMaxLength(50);
+            entity.Property(e => e.Descripcion).HasMaxLength(150);
+            entity.Property(e => e.DireccionExacta).HasMaxLength(250);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Nombre).HasMaxLength(80);
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
 
-            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Sucursal)
+            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Sucursals)
+                .HasForeignKey(d => d.IdDistrito)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Sucursal_Distrito");
         });
 
         modelBuilder.Entity<SucursalHorario>(entity =>
         {
-            entity.HasOne(d => d.IdHorarioNavigation).WithMany(p => p.SucursalHorario)
+            entity.ToTable("SucursalHorario");
+
+            entity.HasOne(d => d.IdHorarioNavigation).WithMany(p => p.SucursalHorarios)
+                .HasForeignKey(d => d.IdHorario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SucursalHorario_Horario");
 
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.SucursalHorario)
+            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.SucursalHorarios)
+                .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SucursalHorario_Sucursal");
         });
 
         modelBuilder.Entity<TipoPago>(entity =>
         {
+            entity.ToTable("TipoPago");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Descripcion).HasMaxLength(50);
         });
 
         modelBuilder.Entity<TipoServicio>(entity =>
         {
+            entity.ToTable("TipoServicio");
+
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Nombre).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<UnidadMedida>(entity =>
+        modelBuilder.Entity<UnidadMedidum>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.Simbolo).IsFixedLength();
+            entity.Property(e => e.Nombre).HasMaxLength(25);
+            entity.Property(e => e.Simbolo)
+                .HasMaxLength(5)
+                .IsFixedLength();
         });
 
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_usuario");
 
-            entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.ToTable("Usuario");
 
-            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Usuario)
+            entity.Property(e => e.Activo).HasDefaultValue(true);
+            entity.Property(e => e.Apellidos).HasMaxLength(80);
+            entity.Property(e => e.Cedula).HasMaxLength(50);
+            entity.Property(e => e.Contrasenna)
+                .HasMaxLength(80)
+                .IsUnicode(false);
+            entity.Property(e => e.CorreoElectronico).HasMaxLength(150);
+            entity.Property(e => e.DireccionExacta).HasMaxLength(250);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.Nombre).HasMaxLength(80);
+            entity.Property(e => e.UrlFoto).HasMaxLength(200);
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Usuarios)
+                .HasForeignKey(d => d.IdDistrito)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Usuario_Distrito");
 
-            entity.HasOne(d => d.IdGeneroNavigation).WithMany(p => p.Usuario)
+            entity.HasOne(d => d.IdGeneroNavigation).WithMany(p => p.Usuarios)
+                .HasForeignKey(d => d.IdGenero)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Usuario_Genero");
 
-            entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Usuario)
+            entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Usuarios)
+                .HasForeignKey(d => d.IdRol)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Usuario_Rol");
         });
 
         modelBuilder.Entity<UsuarioSucursal>(entity =>
         {
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.UsuarioSucursal)
+            entity.ToTable("UsuarioSucursal");
+
+            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.UsuarioSucursals)
+                .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UsuarioSucursal_Sucursal");
 
-            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.UsuarioSucursal)
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.UsuarioSucursals)
+                .HasForeignKey(d => d.IdUsuario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UsuarioSucursal_Usuario");
         });

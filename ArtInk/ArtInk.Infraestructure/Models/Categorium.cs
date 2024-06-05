@@ -3,17 +3,13 @@ using System.Collections.Generic;
 
 namespace ArtInk.Infraestructure.Models;
 
-public partial class Feriado
+public partial class Categorium
 {
     public byte Id { get; set; }
 
-    public byte IdSucursal { get; set; }
+    public string Codigo { get; set; } = null!;
 
     public string Nombre { get; set; } = null!;
-
-    public DateOnly? Fecha { get; set; }
-
-    public bool Activo { get; set; }
 
     public DateTime FechaCreacion { get; set; }
 
@@ -23,5 +19,5 @@ public partial class Feriado
 
     public string? UsuarioModificacion { get; set; }
 
-    public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
+    public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
 }

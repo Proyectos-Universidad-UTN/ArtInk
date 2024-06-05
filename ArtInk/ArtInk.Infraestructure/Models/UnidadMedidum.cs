@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace ArtInk.Infraestructure.Models;
 
-public partial class TipoServicio
+public partial class UnidadMedidum
 {
     public byte Id { get; set; }
 
     public string Nombre { get; set; } = null!;
 
-    public TimeOnly Duracion { get; set; }
+    public string Simbolo { get; set; } = null!;
 
-    public virtual ICollection<Servicio> Servicios { get; set; } = new List<Servicio>();
+    public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
 }
