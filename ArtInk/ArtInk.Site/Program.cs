@@ -3,11 +3,14 @@ using Serilog.Events;
 using Serilog;
 using System.Text;
 using ArtInk.web.Middleware;
+using ArtInk.Site.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.ConfigureArtInkAPIClient();
 
 
 

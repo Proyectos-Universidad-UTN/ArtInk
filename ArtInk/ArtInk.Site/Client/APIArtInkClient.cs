@@ -5,19 +5,27 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using ArtInk.Site.Configuration;
 using ArtInk.Utils;
 using Newtonsoft.Json;
 
 namespace ArtInk.Site.Client
 {
-    public class APIArtInkClient
+    public class APIArtInkClient : IAPIArtInkClient
     {
-        public static bool Error { set; get; }
-        public static string MensajeError { set; get; } = null!;
+        public bool Error { set; get; }
+        public string MensajeError { set; get; } = null!;
 
+        private string BaseUrlAPI { set; get; } = null!;
 
-        public static async Task<T> ConsumirAPIAsync<T> (string mediaType, string tipoLlamado ,string url,
-                                                                       Dictionary<string,string> cabecerasAcceso,
+        public APIArtInkClient(IConfiguration configuration)
+        {
+            var artInkAPI = configuration.GetSection("ArtInkAPI") ?? throw new ArgumentNullException("La sección ArtInkAPI no está configurada.");
+            BaseUrlAPI = artInkAPI.GetValue<string>("BaseUrl") ?? throw new ArgumentNullException("El valor de BaseUrl no está configurado.");
+        }
+
+        public async Task<T> ConsumirAPIAsync<T> (string tipoLlamado, string url, string mediaType = Constantes.MEDIATYPEJSON,
+                                                                       Dictionary<string,string> cabecerasAcceso = default!,
                                                                        params object[] valoresConsumo)
         {
             try
@@ -33,12 +41,17 @@ namespace ArtInk.Site.Client
 
                 using (var client = new HttpClient(clientHandler))
                 {
-                    foreach (var header in cabecerasAcceso)
+                    if (cabecerasAcceso != null)
                     {
-                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                        foreach (var header in cabecerasAcceso)
+                        {
+                            client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                        }
                     }
 
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
+
+                    url = string.Format(BaseUrlAPI, url); // concatenar
 
                     switch (tipoLlamado)
                     {
