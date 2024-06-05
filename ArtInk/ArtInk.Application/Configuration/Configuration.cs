@@ -17,6 +17,7 @@ namespace ArtInk.Application.Configuration
         public static void ConfigureApplication(this IServiceCollection services)
         {
             services.AddTransient<IServiceUsuario, ServiceUsuario>();
+            services.AddTransient<IServiceSucursal, ServiceSucursal>();
             //se agrega
         }
 
@@ -24,7 +25,8 @@ namespace ArtInk.Application.Configuration
         {
             services.AddAutoMapper(config =>
             {
-                config.AddProfile<ApplicationProfile>();
+                config.AddProfile<ApplicationProfileModelToDTO>();
+                config.AddProfile<ApplicationProfileDTOToModel>();
             });
         }
     }
