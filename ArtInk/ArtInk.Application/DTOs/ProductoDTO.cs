@@ -26,14 +26,13 @@ namespace ArtInk.Application.DTOs
 
         public bool Activo { get; set; }
 
+        public virtual ICollection<DetalleFacturaProductoDTO> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProductoDTO>();
 
-        //public virtual ICollection<DetalleFacturaProducto> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProducto>();
+        public virtual CategoriaDTO Categoria { get; set; } = null!;
 
-        public virtual Categorium IdCategoriaNavigation { get; set; } = null!;
+        public virtual UnidadMedidaDTO UnidadMedida { get; set; } = null!;
 
-        public virtual UnidadMedidum IdUnidadMedidaNavigation { get; set; } = null!;
-
-        //public virtual ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();
+        public virtual ICollection<InventarioDTO> Inventarios { get; set; } = new List<InventarioDTO>();
 
     }
 }

@@ -18,7 +18,7 @@ public partial class Usuario
     public string CorreoElectronico { get; set; } = null!;
 
     public short IdDistrito { get; set; }
-
+    
     public string? DireccionExacta { get; set; }
 
     public DateOnly FechaNacimiento { get; set; }

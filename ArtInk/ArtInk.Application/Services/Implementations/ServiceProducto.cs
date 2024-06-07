@@ -1,5 +1,6 @@
 ﻿using ArtInk.Application.DTOs;
 using ArtInk.Application.Services.Interfaces;
+using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using AutoMapper;
 using System;
@@ -12,11 +13,15 @@ namespace ArtInk.Application.Services.Implementations
 {
     public class ServiceProducto (IRepositoryProducto repository, IMapper mapper) : IServiceProducto
     {
-        public async Task<ProductoDTO> FindByIdAsync(int id)
+        //buscarlo por ID
+        public async Task<ProductoDTO> FindByIdAsync(short id)
         {
             var producto = await repository.FindByIdAsync(id);
+            if (producto == null) throw new Exception("Producto no encontrado.");
+
             return mapper.Map<ProductoDTO>(producto);
         }
+        //buscar toda la lista
         public async Task<ICollection<ProductoDTO>> ListAsync()
         {
             //Obtener datos del repositorio

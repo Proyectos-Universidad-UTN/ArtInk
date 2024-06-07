@@ -17,6 +17,8 @@ namespace ArtInk.Application.Configuration
         public static void ConfigureApplication(this IServiceCollection services)
         {
             services.AddTransient<IServiceUsuario, ServiceUsuario>();
+            services.AddTransient<IServiceProducto, ServiceProducto>();
+            services.AddTransient<IServiceRol, ServiceRol>();
             //se agrega
         }
 

@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Logs\" />
     <Folder Include="ViewModels\Request\" />
+    <Folder Include="wwwroot\Imagenes\" />
   </ItemGroup>
 
   <ItemGroup>

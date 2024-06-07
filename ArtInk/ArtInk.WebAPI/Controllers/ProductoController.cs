@@ -15,5 +15,12 @@ namespace ArtInk.WebAPI.Controllers
             var productos= await serviceProducto.ListAsync();
             return StatusCode(StatusCodes.Status200OK, productos);
         }
+
+        [HttpGet("{idProducto}")]
+        public async Task<IActionResult> GetProductoByIdAsync(short idProducto)
+        {
+            var producto = await serviceProducto.FindByIdAsync(idProducto);
+            return StatusCode(StatusCodes.Status200OK, producto);
+        }
     }
 }

@@ -7,9 +7,11 @@ namespace ArtInk.Application.Services.Implementations
 {
     public class ServiceUsuario(IRepositoryUsuario repository, IMapper mapper) : IServiceUsuario
     {
-        public async Task<UsuarioDTO> FindByIdAsync(int id)
+        public async Task<UsuarioDTO> FindByIdAsync(short id)
         {
             var usuario = await repository.FindByIdAsync(id);
+            if (usuario == null) throw new Exception("Usuario no encontrado.");
+
             return mapper.Map<UsuarioDTO>(usuario);
         }
         public async Task<ICollection<UsuarioDTO>> ListAsync()

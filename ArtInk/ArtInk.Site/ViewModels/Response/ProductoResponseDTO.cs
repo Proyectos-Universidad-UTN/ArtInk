@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Site.ViewModels.Response
 {
-    public class ProductoResponseDTO
+    public record ProductoResponseDTO
     {
 
         public short Id { get; set; }
@@ -26,9 +26,9 @@
 
         //public virtual ICollection<DetalleFacturaProducto> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProducto>();
 
-        public virtual Categorium IdCategoriaNavigation { get; set; } = null!;
+        public virtual CategoriaResponseDTO Categoria { get; set; } = null!;
 
-        public virtual UnidadMedidum IdUnidadMedidaNavigation { get; set; } = null!;
+        public virtual UnidadMedidaResponseDTO UnidadMedida { get; set; } = null!;
 
         //public virtual ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();
     }

@@ -9,8 +9,16 @@ namespace ArtInk.Site.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            var collection = await cliente.ConsumirAPIAsync<IEnumerable<ProductoResponseDTO>>(Constantes.GET, Constantes.GETALLUSUARIOS);
+            var collection = await cliente.ConsumirAPIAsync<IEnumerable<ProductoResponseDTO>>(Constantes.GET, Constantes.GETALLPRODUCTOS);
             return View(collection);
         }
+
+        public async Task<IActionResult> Details(short id)
+        {
+            var url = string.Format(Constantes.GETPRODUCTOBYID, id);
+            var collection = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.GET, url);
+            return View(collection);
+        }
+
     }
 }

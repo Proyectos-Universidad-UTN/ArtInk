@@ -14,7 +14,15 @@ namespace ArtInk.Application.Profiles
     {
         public ApplicationProfile()
         {
-            CreateMap<UsuarioDTO, Usuario>().ReverseMap();
+            CreateMap<Usuario, UsuarioDTO>()
+                .ForMember(dest => dest.Rol, inp => inp.MapFrom(ori => ori.IdRolNavigation));
+            CreateMap<Producto, ProductoDTO>()
+                .ForMember(dest => dest.UnidadMedida, inp => inp.MapFrom(ori => ori.IdUnidadMedidaNavigation))
+                .ForMember(dest => dest.Categoria, inp => inp.MapFrom(ori => ori.IdCategoriaNavigation));
+            CreateMap<Categoria, CategoriaDTO>();
+            CreateMap<UnidadMedida, UnidadMedidaDTO>();
+            CreateMap<Rol, RolDTO>();
+
         }
     }
 }

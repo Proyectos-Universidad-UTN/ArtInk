@@ -10,7 +10,7 @@ namespace ArtInk.Infraestructure.Repository.Interfaces
     public interface IRepositoryUsuario
     {
         Task<ICollection<Usuario>> ListAsync();
-        Task<Usuario> FindByIdAsync(int id);
+        Task<Usuario?> FindByIdAsync(short id);
 
     }
 }
