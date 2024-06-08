@@ -10,6 +10,7 @@ namespace ArtInk.Site.ViewModels.Response
 
         public string Nombre { get; set; } = null!;
 
+        [DisplayName("Descripción")]
         public string Descripcion { get; set; } = null!;
 
         public string Marca { get; set; } = null!;
