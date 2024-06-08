@@ -4,6 +4,7 @@ using ArtInk.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtInk.Infraestructure.Migrations
 {
     [DbContext(typeof(ArtInkContext))]
-    partial class ArtInkContextModelSnapshot : ModelSnapshot
+    [Migration("20240608031439_ReservaPregunta_AddRespuesta")]
+    partial class ReservaPregunta_AddRespuesta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +50,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.ToTable("Canton", (string)null);
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.Categoria", b =>
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.Categorium", b =>
                 {
                     b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
@@ -389,6 +392,9 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime");
 
+                    b.Property<byte>("IdSucursal")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -404,6 +410,8 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasColumnType("nvarchar(70)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdSucursal");
 
                     b.ToTable("Feriado", (string)null);
                 });
@@ -675,7 +683,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.ToTable("Proveedor", (string)null);
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.Provincia", b =>
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.Provincium", b =>
                 {
                     b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
@@ -748,7 +756,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.ToTable("Reserva", (string)null);
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.ReservaPregunta", b =>
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.ReservaPreguntum", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -979,30 +987,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.ToTable("Sucursal", (string)null);
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.SucursalFeriado", b =>
-                {
-                    b.Property<short>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
-
-                    b.Property<byte>("IdFeriado")
-                        .HasColumnType("tinyint");
-
-                    b.Property<byte>("IdSucursal")
-                        .HasColumnType("tinyint");
-
-                    b.HasKey("Id")
-                        .HasName("PK_SucursalFeriado");
-
-                    b.HasIndex("IdFeriado");
-
-                    b.HasIndex("IdSucursal");
-
-                    b.ToTable("SucursalFeriado", (string)null);
-                });
-
             modelBuilder.Entity("ArtInk.Infraestructure.Models.SucursalHorario", b =>
                 {
                     b.Property<short>("Id")
@@ -1068,7 +1052,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.ToTable("TipoServicio", (string)null);
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.UnidadMedida", b =>
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.UnidadMedidum", b =>
                 {
                     b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
@@ -1206,7 +1190,7 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Canton", b =>
                 {
-                    b.HasOne("ArtInk.Infraestructure.Models.Provincia", "IdProvinciaNavigation")
+                    b.HasOne("ArtInk.Infraestructure.Models.Provincium", "IdProvinciaNavigation")
                         .WithMany("Cantons")
                         .HasForeignKey("IdProvincia")
                         .IsRequired()
@@ -1321,6 +1305,17 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("IdUsuarioSucursalNavigation");
                 });
 
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.Feriado", b =>
+                {
+                    b.HasOne("ArtInk.Infraestructure.Models.Sucursal", "IdSucursalNavigation")
+                        .WithMany("Feriados")
+                        .HasForeignKey("IdSucursal")
+                        .IsRequired()
+                        .HasConstraintName("FK_Feriado_Sucursal");
+
+                    b.Navigation("IdSucursalNavigation");
+                });
+
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Horario", b =>
                 {
                     b.HasOne("ArtInk.Infraestructure.Models.Sucursal", "IdSucursalNavigation")
@@ -1353,13 +1348,13 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Producto", b =>
                 {
-                    b.HasOne("ArtInk.Infraestructure.Models.Categoria", "IdCategoriaNavigation")
+                    b.HasOne("ArtInk.Infraestructure.Models.Categorium", "IdCategoriaNavigation")
                         .WithMany("Productos")
                         .HasForeignKey("IdCategoria")
                         .IsRequired()
                         .HasConstraintName("FK_Producto_Categoria");
 
-                    b.HasOne("ArtInk.Infraestructure.Models.UnidadMedida", "IdUnidadMedidaNavigation")
+                    b.HasOne("ArtInk.Infraestructure.Models.UnidadMedidum", "IdUnidadMedidaNavigation")
                         .WithMany("Productos")
                         .HasForeignKey("IdUnidadMedida")
                         .IsRequired()
@@ -1392,7 +1387,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("IdSucursalHorarioNavigation");
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.ReservaPregunta", b =>
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.ReservaPreguntum", b =>
                 {
                     b.HasOne("ArtInk.Infraestructure.Models.Reserva", "IdReservaNavigation")
                         .WithMany("ReservaPregunta")
@@ -1442,25 +1437,6 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasConstraintName("FK_Sucursal_Distrito");
 
                     b.Navigation("IdDistritoNavigation");
-                });
-
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.SucursalFeriado", b =>
-                {
-                    b.HasOne("ArtInk.Infraestructure.Models.Feriado", "IdFeriadoNavigation")
-                        .WithMany("SucursalFeriados")
-                        .HasForeignKey("IdFeriado")
-                        .IsRequired()
-                        .HasConstraintName("FK_SucursalFeriado_Feriado");
-
-                    b.HasOne("ArtInk.Infraestructure.Models.Sucursal", "IdSucursalNavigation")
-                        .WithMany("SucursalFeriados")
-                        .HasForeignKey("IdSucursal")
-                        .IsRequired()
-                        .HasConstraintName("FK_SucursalFeriado_Sucursal");
-
-                    b.Navigation("IdFeriadoNavigation");
-
-                    b.Navigation("IdSucursalNavigation");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.SucursalHorario", b =>
@@ -1533,7 +1509,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("Distritos");
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.Categoria", b =>
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.Categorium", b =>
                 {
                     b.Navigation("Productos");
                 });
@@ -1564,11 +1540,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("DetalleFacturas");
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.Feriado", b =>
-                {
-                    b.Navigation("SucursalFeriados");
-                });
-
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Genero", b =>
                 {
                     b.Navigation("Usuarios");
@@ -1596,7 +1567,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("Contactos");
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.Provincia", b =>
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.Provincium", b =>
                 {
                     b.Navigation("Cantons");
                 });
@@ -1622,11 +1593,11 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Sucursal", b =>
                 {
+                    b.Navigation("Feriados");
+
                     b.Navigation("Horarios");
 
                     b.Navigation("Inventarios");
-
-                    b.Navigation("SucursalFeriados");
 
                     b.Navigation("SucursalHorarios");
 
@@ -1648,7 +1619,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("Servicios");
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.UnidadMedida", b =>
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.UnidadMedidum", b =>
                 {
                     b.Navigation("Productos");
                 });
