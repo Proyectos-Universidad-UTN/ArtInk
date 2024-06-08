@@ -1,4 +1,7 @@
-﻿namespace ArtInk.Site.ViewModels.Response
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace ArtInk.Site.ViewModels.Response
 {
     public record ProductoResponseDTO
     {
@@ -11,6 +14,7 @@
 
         public string Marca { get; set; } = null!;
 
+        [DisplayName("Categoría")]
         public byte IdCategoria { get; set; }
 
         public decimal Costo { get; set; }
@@ -19,6 +23,7 @@
 
         public decimal Cantidad { get; set; }
 
+        [DisplayName("Unidad Medida")]
         public byte IdUnidadMedida { get; set; }
 
         public bool Activo { get; set; }
