@@ -26,8 +26,6 @@ public partial class Sucursal
 
     public string? UsuarioModificacion { get; set; }
 
-    public virtual ICollection<Feriado> Feriados { get; set; } = new List<Feriado>();
-
     public virtual ICollection<Horario> Horarios { get; set; } = new List<Horario>();
 
     public virtual Distrito IdDistritoNavigation { get; set; } = null!;
@@ -37,4 +35,7 @@ public partial class Sucursal
     public virtual ICollection<SucursalHorario> SucursalHorarios { get; set; } = new List<SucursalHorario>();
 
     public virtual ICollection<UsuarioSucursal> UsuarioSucursals { get; set; } = new List<UsuarioSucursal>();
+
+    public virtual ICollection<SucursalFeriado> SucursalFeriados { get; set; } = new List<SucursalFeriado>();
+
 }

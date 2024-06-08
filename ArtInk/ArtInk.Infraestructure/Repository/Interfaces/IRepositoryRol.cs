@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace ArtInk.Infraestructure.Repository.Interfaces
 {
-    public interface IRepositoryUsuario
+    public interface IRepositoryRol
     {
-        Task<ICollection<Usuario>> ListAsync();
-        Task<Usuario?> FindByIdAsync(short id);
-
+        Task<ICollection<Rol>> ListAsync();
+        Task<Rol?> FindByIdAsync(byte id);
     }
 }

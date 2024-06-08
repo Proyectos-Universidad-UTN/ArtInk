@@ -64,6 +64,8 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
 
     public virtual DbSet<UsuarioSucursal> UsuarioSucursals { get; set; }
 
+    public virtual DbSet<SucursalFeriado> SucursalFeriados { get; set; }
+
     public IDbConnection Connection => Database.GetDbConnection();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -242,11 +244,6 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
             entity.Property(e => e.Nombre).HasMaxLength(80);
             entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
             entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
-
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Feriados)
-                .HasForeignKey(d => d.IdSucursal)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Feriado_Sucursal");
         });
 
         modelBuilder.Entity<Genero>(entity =>
@@ -573,6 +570,23 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
                 .HasForeignKey(d => d.IdUsuario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UsuarioSucursal_Usuario");
+        });
+
+        modelBuilder.Entity<SucursalFeriado>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_SucursalFeriado");
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.ToTable("SucursalFeriado");
+
+            entity.HasOne(d => d.IdFeriadoNavigation).WithMany(p => p.SucursalFeriados)
+                .HasForeignKey(d => d.IdFeriado)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SucursalFeriado_Feriado");
+
+            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.SucursalFeriados)
+                .HasForeignKey(d => d.IdSucursal)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SucursalFeriado_Sucursal");
         });
 
         OnModelCreatingPartial(modelBuilder);

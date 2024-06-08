@@ -13,7 +13,9 @@ public static class Configuration
 {
     public static void ConfigureInfraestructure(this IServiceCollection services)
     {
-       services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
+        services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
+        services.AddTransient<IRepositoryProducto, RepositoryProducto>();
+        services.AddTransient<IRepositoryRol, RepositoryRol>();
     }
 }
 // es una extencion xq usa la palabra this
