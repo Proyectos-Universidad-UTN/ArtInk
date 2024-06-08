@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArtInk.Infraestructure.Models;
 
-public partial class ReservaPreguntum
+public partial class ReservaPregunta
 {
     public int Id { get; set; }
 
