@@ -19,13 +19,12 @@ namespace ArtInk.Application.Services.Implementations
 
             return mapper.Map<RolDTO>(rol);
         }
+
         public async Task<ICollection<RolDTO>> ListAsync()
         {
-            //Obtener datos del repositorio
             var list = await repository.ListAsync();
-            // Map List<Autor> a ICollection<BodegaDTO>
             var collection = mapper.Map<ICollection<RolDTO>>(list);
-            // Return lista
+
             return collection;
         }
     }

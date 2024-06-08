@@ -25,7 +25,5 @@ namespace ArtInk.Infraestructure.Repository.Implementations
                 .ToListAsync();
             return collection;
         }
-
-
     }
 }

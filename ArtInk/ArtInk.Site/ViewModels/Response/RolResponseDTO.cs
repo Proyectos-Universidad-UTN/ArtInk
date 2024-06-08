@@ -10,6 +10,5 @@
 
         public bool Activo { get; set; }
 
-        //public virtual ICollection<UsuarioDTO> Usuarios { get; set; } = new List<UsuarioDTO>();
     }
 }

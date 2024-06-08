@@ -7,8 +7,6 @@ public partial class Feriado
 {
     public byte Id { get; set; }
 
-    public byte IdSucursal { get; set; }
-
     public string Nombre { get; set; } = null!;
 
     public DateOnly? Fecha { get; set; }
@@ -23,5 +21,6 @@ public partial class Feriado
 
     public string? UsuarioModificacion { get; set; }
 
-    public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
+    public virtual ICollection<SucursalFeriado> SucursalFeriados { get; set; } = new List<SucursalFeriado>();
+
 }

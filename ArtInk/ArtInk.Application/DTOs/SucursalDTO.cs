@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ArtInk.Application.DTOs.Base;
+using ArtInk.Infraestructure.Models;
 
 namespace ArtInk.Application.DTOs;
 
@@ -24,8 +25,6 @@ public record SucursalDTO: BaseEntity
 
     public bool Activo { get; set; }
 
-    public virtual ICollection<FeriadoDTO> Feriados { get; set; } = new List<FeriadoDTO>();
-
     public virtual ICollection<HorarioDTO> Horarios { get; set; } = new List<HorarioDTO>();
 
     public virtual DistritoDTO? Distrito { get; set; } = null!;
@@ -35,4 +34,6 @@ public record SucursalDTO: BaseEntity
     public virtual ICollection<SucursalHorarioDTO> SucursalHorarios { get; set; } = new List<SucursalHorarioDTO>();
 
     public virtual ICollection<UsuarioSucursalDTO> UsuarioSucursals { get; set; } = new List<UsuarioSucursalDTO>();
+
+    public virtual ICollection<SucursalFeriadoDTO> SucursalFeriados { get; set; } = new List<SucursalFeriadoDTO>();
 }

@@ -17,8 +17,8 @@ namespace ArtInk.Site.Controllers
         {
             var url = string.Format(Constantes.GETPRODUCTOBYID, id);
             var collection = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.GET, url);
+
             return View(collection);
         }
-
     }
 }

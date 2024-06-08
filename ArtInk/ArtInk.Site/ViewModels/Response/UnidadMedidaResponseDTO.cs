@@ -8,7 +8,5 @@
 
         public string Simbolo { get; set; } = null!;
 
-        //public virtual ICollection<ProductoDTO> Productos { get; set; } = new List<ProductoDTO>();
-
     }
 }
