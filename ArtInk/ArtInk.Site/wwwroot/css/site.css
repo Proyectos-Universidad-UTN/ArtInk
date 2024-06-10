@@ -53,6 +53,25 @@ footer {
     z-index: 999;
 }
 
+/******************************************************ARTINKTABLES****************************************************/
+.artink-tables {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+    .artink-tables th {
+        background-color: #495057;
+    }
+
+    .artink-tables td, .artink-tables th {
+        border-color: #6c757d;
+    }
+
+    .artink-tables tbody tr:hover {
+        background-color: #5a6268;
+    }
+
+
 /***************************************************CARDS***********************************************************/
 
 .card {
