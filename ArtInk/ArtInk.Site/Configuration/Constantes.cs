@@ -20,5 +20,13 @@
         public const string GETALLROLS = "rol"; //minuscula es el endpoint del API
         public const string GETROLBYID = "rol/{0}";
 
+        //Url Reserva
+        public const string GETALLRESERVAS = "reserva"; //minuscula es el endpoint del API
+        public const string GETRESERVABYID = "reserva/{0}";
+
+        //Url Sucursales
+        public const string GETALLSUCURSALES = "sucursal"; //minuscula es el endpoint del API
+        public const string GETSUCURSALBYID = "sucursal/{0}";
+
     }
 }

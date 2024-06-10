@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.ReservaResponseDTO>
+
+@{
+    ViewData["Title"] = "Reserva";
+}
+
+<h1>Reserva</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary ,b-3">Crear Nuevo</a>
+</p>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-12 col-xxl-3">
+                <div class="card mb-4 shadow-sm card-fixed-heigth">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Id)</h5>
+                        <p class="card-text">
+                            <strong>Descripción:</strong> @Html.DisplayFor(modelItem => item.IdSucursalHorario)<br />
+                            <strong>Fecha:</strong> @Html.DisplayFor(modelItem => item.Fecha)<br />
+                            <strong>Hora:</strong> @Html.DisplayFor(modelItem => item.Hora)<br />
+                            <strong>Sucursal:</strong> @Html.DisplayFor(modelItem => item.SucursalHorario.Sucursal.Nombre)<br />
+                            <strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado)<br />
+                            <strong>Activo:</strong> @Html.DisplayFor(modelItem => item.Activo)
+                        </p>
+                        <div class="mt-auto">
+                            <div class="btn-group" role="group">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .card-fixed-heigth {
+        height: 420px !important;
+    }
+</style>

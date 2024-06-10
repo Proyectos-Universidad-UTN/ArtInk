@@ -29,7 +29,7 @@ public partial class Servicio
 
     public virtual ICollection<DetalleFactura> DetalleFacturas { get; set; } = new List<DetalleFactura>();
 
-    public virtual TipoServicio IdTipoServicioNavigation { get; set; } = null!;
+    public virtual TipoServicio IdTipoServicioNavigation{ get; set; } = null!;
 
     public virtual ICollection<ReservaServicio> ReservaServicios { get; set; } = new List<ReservaServicio>();
 }
