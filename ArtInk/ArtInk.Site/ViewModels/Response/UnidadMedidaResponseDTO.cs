@@ -8,6 +8,7 @@ namespace ArtInk.Site.ViewModels.Response
 
         public string Nombre { get; set; } = null!;
 
+
         [DisplayName("Símbolo")]
         public string Simbolo { get; set; } = null!;
 

@@ -20,5 +20,9 @@
         public const string GETALLROLS = "rol"; //minuscula es el endpoint del API
         public const string GETROLBYID = "rol/{0}";
 
+        //Url Facturas
+        public const string GETALLFACTURAS = "factura"; //minuscula es el endpoint del API
+        public const string GETFACTURAOBYID = "FACTURA/{0}";
+
     }
 }
