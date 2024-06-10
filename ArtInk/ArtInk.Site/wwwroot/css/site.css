@@ -134,3 +134,23 @@ a.btn {
     background-color: #5a6268;
 }
 /***************************************************ENDTABLE***********************************************************/
+
+/***************************************************DETALLEPRODUCTO********************************/
+.detalleProducto .small-content {
+    font-size: 1rem;
+}
+
+    .detalleProdcuto.small-content h1 {
+        font-size: 1.5rem;
+    }
+
+.detalleProducto.small-content th, .small-content td {
+    padding: 0.5rem;
+}
+
+.detalleProducto.small-content .btn {
+    font-size: 0.8rem;
+    padding: 0.25rem 1rem;
+}
+
+/***************************************************ENDDETALLEPRODUCTO********************************/
