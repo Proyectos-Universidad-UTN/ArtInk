@@ -1,4 +1,6 @@
-﻿namespace ArtInk.Site.ViewModels.Response
+﻿using System.ComponentModel;
+
+namespace ArtInk.Site.ViewModels.Response
 {
     public record TipoServicioResponseDTO
     {
@@ -6,8 +8,9 @@
 
         public string Nombre { get; set; } = null!;
 
+        [DisplayName("Duración")]
         public TimeOnly Duracion { get; set; }
 
-        //public virtual ICollection<ServicioDTO> Servicios { get; set; } = new List<ServicioDTO>();
+        public virtual ICollection<ServicioResponseDTO> Servicios { get; set; } = new List<ServicioResponseDTO>();
     }
 }

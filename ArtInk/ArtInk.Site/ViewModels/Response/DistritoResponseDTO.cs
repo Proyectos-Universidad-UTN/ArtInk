@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel;
 
 namespace ArtInk.Site.ViewModels.Response
 {
@@ -8,15 +8,18 @@ namespace ArtInk.Site.ViewModels.Response
 
         public string Nombre { get; set; } = null!;
 
+        [DisplayName("Cantón")]
         public byte IdCanton { get; set; }
 
-        //public virtual ICollection<ClienteDTO> Clientes { get; set; } = new List<ClienteDTO>();
+        public virtual ICollection<ClienteResponseDTO> Clientes { get; set; } = new List<ClienteResponseDTO>();
 
-        //public virtual CantonDTO Canton { get; set; } = null!;
+        public virtual CantonResponseDTO Canton { get; set; } = null!;
 
-        //public virtual ICollection<ProveedorDTO> Proveedores { get; set; } = new List<ProveedorDTO>();
+        public virtual ICollection<ProveedorResponseDTO> Proveedores { get; set; } = new List<ProveedorResponseDTO>();
 
-        //public virtual ICollection<SucursalDTO> Sucursales { get; set; } = new List<SucursalDTO>();
+        public virtual ICollection<SucursalResponseDTO> Sucursales { get; set; } = new List<SucursalResponseDTO>();
+
+        public virtual ICollection<UsuarioResponseDTO> Usuarios { get; set; } = new List<UsuarioResponseDTO>();
 
         //public virtual ICollection<UsuarioDTO> Usuarios { get; set; } = new List<UsuarioDTO>();
     }

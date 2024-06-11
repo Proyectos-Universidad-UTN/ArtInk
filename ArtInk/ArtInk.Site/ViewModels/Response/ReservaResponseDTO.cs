@@ -2,7 +2,7 @@
 
 namespace ArtInk.Site.ViewModels.Response
 {
-    public record ReservaResponseDTO 
+    public record ReservaResponseDTO
     {
         public int Id { get; set; }
 
@@ -19,9 +19,8 @@ namespace ArtInk.Site.ViewModels.Response
 
         public virtual SucursalHorarioResponseDTO SucursalHorario { get; set; } = null!;
 
-        //public virtual ICollection<ReservaPreguntaDTO> ReservaPregunta { get; set; } = new List<ReservaPreguntaDTO>();
+        public virtual ICollection<ReservaPreguntaResponseDTO> ReservaPregunta { get; set; } = new List<ReservaPreguntaResponseDTO>();
 
-        //public virtual ICollection<ReservaServicioDTO> ReservaServicios { get; set; } = new List<ReservaServicioDTO>();
-
+        public virtual ICollection<ReservaServicioResponseDTO> ReservaServicios { get; set; } = new List<ReservaServicioResponseDTO>();
     }
 }

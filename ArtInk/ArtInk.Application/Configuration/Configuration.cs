@@ -1,6 +1,7 @@
 ﻿using ArtInk.Application.Profiles;
 using ArtInk.Application.Services.Implementations;
 using ArtInk.Application.Services.Interfaces;
+using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Implementations;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +25,6 @@ namespace ArtInk.Application.Configuration
             services.AddTransient<IServiceServicio, ServiceServicio>();
             //se agrega
         }
-
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(config =>
