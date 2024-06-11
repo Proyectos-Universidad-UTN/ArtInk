@@ -6,18 +6,14 @@ namespace ArtInk.Site.ViewModels.Response
     {
         public short Id { get; set; }
 
-
         [DisplayName("Sucursal")]
         public byte IdSucursal { get; set; }
-
 
         [DisplayName("Día")]
         public DateOnly Dia { get; set; }
 
-
         [DisplayName("Hora Inicio")]
         public TimeOnly HoraInicio { get; set; }
-
 
         [DisplayName("Hora Final")]
         public TimeOnly HoraFin { get; set; }

@@ -6,10 +6,8 @@ namespace ArtInk.Site.ViewModels.Response
     {
         public short Id { get; set; }
 
-
         [DisplayName("Detalle")]
         public short IdDetalleFactura { get; set; }
-
 
         [DisplayName("Producto")]
         public short IdProducto { get; set; }

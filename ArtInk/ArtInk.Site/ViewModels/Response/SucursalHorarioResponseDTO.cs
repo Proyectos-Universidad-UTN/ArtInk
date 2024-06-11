@@ -6,10 +6,8 @@ namespace ArtInk.Site.ViewModels.Response
     {
         public short Id { get; set; }
 
-
         [DisplayName("Sucursal")]
         public byte IdSucursal { get; set; }
-
 
         [DisplayName("Horario")]
         public short IdHorario { get; set; }

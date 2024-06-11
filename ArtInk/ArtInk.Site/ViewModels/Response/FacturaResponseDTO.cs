@@ -8,29 +8,24 @@ namespace ArtInk.Site.ViewModels.Response
 
         public short IdCliente { get; set; }
 
-
         [DisplayName("Nombre")]
         public string NombreCliente { get; set; } = null!;
 
         public DateOnly Fecha { get; set; }
-
 
         [DisplayName("Forma Pago")]
         public byte IdTipoPago { get; set; }
 
         public short Consecutivo { get; set; }
 
-
         [DisplayName("Usuario")]
         public short IdUsuarioSucursal { get; set; }
-
 
         [DisplayName("Impuesto")]
         public byte IdImpuesto { get; set; }
 
         [DisplayName("% IVA")]
         public decimal PorcentajeImpuesto { get; set; }
-
 
         [DisplayName("Subtotal")]
         public decimal SubTotal { get; set; }

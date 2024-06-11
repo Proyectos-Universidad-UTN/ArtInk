@@ -7,22 +7,17 @@ namespace ArtInk.Site.ViewModels.Response
         public byte Id { get; set; }
         public string Nombre { get; set; } = null!;
 
-
         [DisplayName("Descripción")]
         public string Descripcion { get; set; } = null!;
-
 
         [DisplayName("Teléfono")]
         public int Telefono { get; set; }
 
-
         [DisplayName("Corro Electrónico")]
         public string CorreoElectronico { get; set; } = null!;
 
-
         [DisplayName("Distrito")]
         public short IdDistrito { get; set; }
-
 
         [DisplayName("Dirección")]
         public string? DireccionExacta { get; set; }
