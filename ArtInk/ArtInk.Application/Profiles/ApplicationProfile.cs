@@ -35,8 +35,8 @@ namespace ArtInk.Application.Profiles
                 .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
             CreateMap<Distrito, DistritoDTO>();
             CreateMap<ReservaServicio, ReservaServicioDTO>()
-                .ForMember(dest => dest.ReservaNav, inp => inp.MapFrom(ori => ori.IdReservaNavigation))
-                .ForMember(dest => dest.ServicioNav, inp => inp.MapFrom(ori => ori.IdReservaNavigation));
+                .ForMember(dest => dest.Reserva, inp => inp.MapFrom(ori => ori.IdReservaNavigation))
+                .ForMember(dest => dest.Servicio, inp => inp.MapFrom(ori => ori.IdReservaNavigation));
             CreateMap<Servicio, ServicioDTO>()
                 .ForMember(dest => dest.TipoServicio, inp => inp.MapFrom(ori => ori.IdTipoServicioNavigation));
             CreateMap<TipoServicio, TipoServicioDTO>();

@@ -22,6 +22,7 @@ namespace ArtInk.Infraestructure.Repository.Implementations
         {
             var collection = await context.Set<Reserva>()
                 .Include(a => a.IdSucursalHorarioNavigation)
+                .ThenInclude(a => a.IdSucursalNavigation)
                 .ToListAsync();
             return collection;
         }
