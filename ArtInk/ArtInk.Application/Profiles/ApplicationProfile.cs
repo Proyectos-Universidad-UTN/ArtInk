@@ -23,10 +23,10 @@ namespace ArtInk.Application.Profiles
             CreateMap<UnidadMedida, UnidadMedidaDTO>();
             CreateMap<Rol, RolDTO>();
             CreateMap<Factura, FacturaDTO>()
-                .ForMember(dest => dest.Cliente, inp => inp.MapFrom(ori => ori.IdCliente))
-                .ForMember(dest => dest.TipoPago, inp => inp.MapFrom(ori => ori.IdTipoPago))
-                .ForMember(dest => dest.UsuarioSucursal, inp => inp.MapFrom(ori => ori.IdUsuarioSucursal))
-                .ForMember(dest => dest.Impuesto, inp => inp.MapFrom(ori => ori.IdImpuesto));
+                .ForMember(dest => dest.Cliente, inp => inp.MapFrom(ori => ori.IdClienteNavigation))
+                .ForMember(dest => dest.TipoPago, inp => inp.MapFrom(ori => ori.IdTipoPagoNavigation))
+                .ForMember(dest => dest.UsuarioSucursal, inp => inp.MapFrom(ori => ori.IdUsuarioSucursalNavigation))
+                .ForMember(dest => dest.Impuesto, inp => inp.MapFrom(ori => ori.IdImpuestoNavigation));
 
         }
     }

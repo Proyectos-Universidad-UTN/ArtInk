@@ -20,10 +20,10 @@ namespace ArtInk.Infraestructure.Repository.Implementations
         public async Task<ICollection<Factura>> ListAsync()
         {
             var collection = await context.Set<Factura>()
-                .Include(a => a.IdCliente)
-                .Include(a => a.IdTipoPago)
-                .Include(a => a.IdImpuesto)
-                .Include(a => a.IdUsuarioSucursal)
+                .Include(a => a.IdClienteNavigation)
+                .Include(a => a.IdTipoPagoNavigation)
+                .Include(a => a.IdImpuestoNavigation)
+                .Include(a => a.IdUsuarioSucursalNavigation)
                 .ToListAsync();
             return collection;
         }
