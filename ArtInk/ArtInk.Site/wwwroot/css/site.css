@@ -53,6 +53,25 @@ footer {
     z-index: 999;
 }
 
+/******************************************************ARTINKTABLES****************************************************/
+.artink-tables {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+    .artink-tables th {
+        background-color: #495057;
+    }
+
+    .artink-tables td, .artink-tables th {
+        border-color: #6c757d;
+    }
+
+    .artink-tables tbody tr:hover {
+        background-color: #5a6268;
+    }
+
+
 /***************************************************CARDS***********************************************************/
 
 .card {
@@ -66,6 +85,13 @@ footer {
         transform: scale(1.05);
     }
 
+.card-fixed-heigth.sm {
+    height: 320px !important;
+}
+
+.card-fixed-heigth.lg {
+    height: 420px !important;
+}
 /***************************************************ENDCARDS***********************************************************/
 
 
@@ -133,4 +159,31 @@ a.btn {
 .table-hover tbody tr:hover {
     background-color: #5a6268;
 }
+
+.dt-paging-button.page-item a{
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: white !important;
+}
+
+.dt-paging-button.page-item.disabled a {
+    background-color: darkgrey !important;
+    border-color: darkgrey !important;
+    color: whitesmoke !important;
+}
+
+.dt-paging-button.page-item.active a{
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
 /***************************************************ENDTABLE***********************************************************/
+/***************************************************DETALLEPRODUCTO********************************/
+.detalle-artink.small-content {
+    font-size: 1rem;
+}
+
+    .detalle-artink.small-content th, detalle-artink.small-content td {
+        padding: 0.5rem;
+    }
+
+/***************************************************ENDDETALLEPRODUCTO********************************/

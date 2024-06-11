@@ -17,6 +17,7 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayName("Categoría")]
         public byte IdCategoria { get; set; }
 
+        [DisplayFormat(DataFormatString ="{0:C2}")]
         public decimal Costo { get; set; }
 
         public string Sku { get; set; } = null!;

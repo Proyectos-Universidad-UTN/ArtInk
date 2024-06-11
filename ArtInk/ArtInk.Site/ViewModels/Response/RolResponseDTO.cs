@@ -6,7 +6,6 @@ namespace ArtInk.Site.ViewModels.Response
     {
         public byte Id { get; set; }
 
-
         [DisplayName("Descripción")]
         public string Descripcion { get; set; } = null!;
 

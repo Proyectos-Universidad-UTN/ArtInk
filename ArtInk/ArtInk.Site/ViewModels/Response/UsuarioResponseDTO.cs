@@ -6,7 +6,6 @@ namespace ArtInk.Site.ViewModels.Response
     {
         public short Id { get; set; }
 
-
         [DisplayName("Cédula")]
         public string Cedula { get; set; } = null!;
 
@@ -14,30 +13,23 @@ namespace ArtInk.Site.ViewModels.Response
 
         public string Apellidos { get; set; } = null!;
 
-
         [DisplayName("Télefono")]
         public int Telefono { get; set; }
-
 
         [DisplayName("Correo Electrónico")]
         public string CorreoElectronico { get; set; } = null!;
 
-
         [DisplayName("Distrito")]
         public short IdDistrito { get; set; }
-
 
         [DisplayName("Dirección Exacta")]
         public string? DireccionExacta { get; set; }
 
-
         [DisplayName("Fecha Nacimiento")]
         public DateOnly FechaNacimiento { get; set; }
 
-
         [DisplayName("Contraseña")]
         public string Contrasenna { get; set; } = null!;
-
 
         [DisplayName("Género")]
         public byte IdGenero { get; set; }
@@ -45,7 +37,6 @@ namespace ArtInk.Site.ViewModels.Response
         public bool Activo { get; set; }
 
         public string? UrlFoto { get; set; }
-
 
         [DisplayName("Rol")]
         public byte IdRol { get; set; }

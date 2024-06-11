@@ -14,19 +14,15 @@
     <div class="row">
         @foreach (var item in Model)
         {
-            <div class="col-md-4 col-sm-12 col-xxl-3">
-                <div class="card mb-4 shadow-sm card-fixed-heigth">
+            <div class="col-md-6 col-sm-12 col-xxl-3">
+                <div class="card mb-4 shadow-sm card-fixed-heigth sm">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nombre)</h5>
                         <p class="card-text">
                             <strong>Descripción:</strong> @Html.DisplayFor(modelItem => item.Descripcion)<br />
-                            <strong>Marca:</strong> @Html.DisplayFor(modelItem => item.Marca)<br />
-                            <strong>@Html.DisplayNameFor(a => a.IdCategoria):</strong> @Html.DisplayFor(modelItem => item.Categoria.Nombre)<br />
-                            <strong>Costo:</strong> @Html.DisplayFor(modelItem => item.Costo)<br />
                             <strong>SKU:</strong> @Html.DisplayFor(modelItem => item.Sku)<br />
                             <strong>Cantidad:</strong> @Html.DisplayFor(modelItem => item.Cantidad)<br />
-                            <strong>Unidad de Medida:</strong> @Html.DisplayFor(modelItem => item.UnidadMedida.Nombre)<br />
-                            <strong>Activo:</strong> @Html.DisplayFor(modelItem => item.Activo)
+                            <strong>Costo:</strong> @Html.DisplayFor(modelItem => item.Costo)<br />
                         </p>
                         <div class="mt-auto">
                             <div class="btn-group d-flex justify-content-between" role="group">
@@ -41,9 +37,3 @@
         }
     </div>
 </div>
-
-<style>
-    .card-fixed-heigth {
-        height: 420px !important;
-    }
-</style>
