@@ -29,6 +29,12 @@ namespace ArtInk.Application.Profiles
                 .ForMember(dest => dest.Impuesto, inp => inp.MapFrom(ori => ori.IdImpuestoNavigation));
             CreateMap<Sucursal, SucursalDTO>()
                 .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
+            CreateMap<Distrito, DistritoDTO>();
+            CreateMap<Horario, HorarioDTO>();
+            CreateMap<Inventario, InventarioDTO>();
+            CreateMap<SucursalHorario, SucursalHorarioDTO>();
+            CreateMap<UsuarioSucursal, UsuarioSucursalDTO>();
+            CreateMap<SucursalFeriado, SucursalFeriadoDTO>();
         }
     }
 }
