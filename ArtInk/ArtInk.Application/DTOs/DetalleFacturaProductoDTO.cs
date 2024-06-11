@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,8 +10,10 @@ public record DetalleFacturaProductoDTO
 {
     public short Id { get; set; }
 
+    [DisplayName("Detalle")]
     public short IdDetalleFactura { get; set; }
 
+    [DisplayName("Producto")]
     public short IdProducto { get; set; }
 
     public decimal Cantidad { get; set; }

@@ -13,6 +13,7 @@ public partial class Producto
 
     public string Marca { get; set; } = null!;
 
+ 
     public byte IdCategoria { get; set; }
 
     public decimal Costo { get; set; }
