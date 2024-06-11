@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers
 {
-    public class SucursalController1(IAPIArtInkClient cliente) : Controller
+    public class SucursalController(IAPIArtInkClient cliente) : Controller
     {
         public async Task<IActionResult> Index()
         {

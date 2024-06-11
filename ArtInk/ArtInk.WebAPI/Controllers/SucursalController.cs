@@ -10,8 +10,8 @@ namespace ArtInk.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllSucursalesAsync()
         {
-            var productos = await serviceSucursal.ListAsync();
-            return StatusCode(StatusCodes.Status200OK, productos);
+            var sucursal = await serviceSucursal.ListAsync();
+            return StatusCode(StatusCodes.Status200OK, sucursal);
         }
 
         [HttpGet("{idSucursal}")]
