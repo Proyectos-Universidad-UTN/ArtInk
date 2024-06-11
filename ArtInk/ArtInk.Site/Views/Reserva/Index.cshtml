@@ -19,8 +19,8 @@
                         <h5 class="card-title">@Html.DisplayFor(modelItem => item.Fecha)</h5>
                         <p class="card-text">
                             <strong>Sucursal:</strong> @Html.DisplayFor(modelItem => item.SucursalHorario.Sucursal.Nombre)<br />                           
-                            <strong>Fecha:</strong> @Html.DisplayFor(modelItem => item.Fecha)<br />
-                            <strong>Hora:</strong> @Html.DisplayFor(modelItem => item.Hora)<br />                           
+                            <strong>Hora de Inicio:</strong> @Html.DisplayFor(modelItem => item.SucursalHorario.Horario.HoraInicio)<br />
+                            <strong>Hora de Fin:</strong> @Html.DisplayFor(modelItem => item.SucursalHorario.Horario.HoraFin)<br />
                             <strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado)<br />
                         </p>
                         <div class="mt-auto">

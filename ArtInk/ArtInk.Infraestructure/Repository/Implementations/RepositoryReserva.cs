@@ -25,6 +25,8 @@ namespace ArtInk.Infraestructure.Repository.Implementations
                 .ThenInclude(a => a.IdSucursalNavigation)
                 .Include(a => a.ReservaServicios)
                 .ThenInclude(a => a.IdServicioNavigation)
+                .Include(a => a.IdSucursalHorarioNavigation)
+                .ThenInclude(a => a.IdHorarioNavigation)
                 .ToListAsync();
             return collection;
         }

@@ -27,7 +27,7 @@ namespace ArtInk.Site.ViewModels.Response
 
         public virtual ICollection<HorarioResponseDTO> Horarios { get; set; } = new List<HorarioResponseDTO>();
 
-        public virtual DistritoResponseDTO? Distrito { get; set; } = null!;
+        public virtual DistritoResponseDTO Distrito { get; set; } = null!;
 
         public virtual ICollection<InventarioResponseDTO> Inventarios { get; set; } = new List<InventarioResponseDTO>();
 

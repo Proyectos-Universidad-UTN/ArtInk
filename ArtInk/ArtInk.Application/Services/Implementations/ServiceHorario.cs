@@ -10,30 +10,29 @@ using System.Threading.Tasks;
 
 namespace ArtInk.Application.Services.Implementations
 {
-    public class ServiceSucursal(IRepositorySucursal repository, IMapper mapper) : IServiceSucursal
+    public class ServiceHorario(IRepositoryHorario repository, IMapper mapper) : IServiceHorario
     {
         /// <summary>
         /// buscarlo por ID
         /// </summary>
-        public async Task<SucursalDTO> FindByIdAsync(byte id)
+        public async Task<HorarioDTO> FindByIdAsync(short id)
         {
-            var sucursal = await repository.FindByIdAsync(id);
-            if (sucursal == null) throw new Exception("Sucursal no encontrada.");
+            var horario = await repository.FindByIdAsync(id);
+            if (horario == null) throw new Exception("Horario no encontrada.");
 
-            return mapper.Map<SucursalDTO>(sucursal);
+            return mapper.Map<HorarioDTO>(horario);
         }
 
         /// <summary>
         /// buscar toda la lista
         /// </summary>
-        /// <returns>ICollection<ProductoDTO></returns>
-        public async Task<ICollection<SucursalDTO>> ListAsync()
+        /// <returns>ICollection<HorarioDTO></returns>
+        public async Task<ICollection<HorarioDTO>> ListAsync()
         {
             var list = await repository.ListAsync();
-            var collection = mapper.Map<ICollection<SucursalDTO>>(list);
+            var collection = mapper.Map<ICollection<HorarioDTO>>(list);
 
             return collection;
         }
-
     }
 }

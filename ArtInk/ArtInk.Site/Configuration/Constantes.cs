@@ -33,5 +33,12 @@
         public const string GETALLSERVICIOS = "servicio"; //minuscula es el endpoint del API
         public const string GETSERVICIOBYID = "servicio/{0}";
 
+        //Url Horarios
+        public const string GETALLHORARIOS = "horario"; //minuscula es el endpoint del API
+        public const string GETHORARIOBYID = "horario/{0}";
+
+        //Url Facturas
+        public const string GETALLFACTURAS = "factura"; //minuscula es el endpoint del API
+        public const string GETFACTURABYID = "factura/{0}";
     }
 }
