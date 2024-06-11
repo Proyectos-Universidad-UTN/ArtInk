@@ -2,7 +2,7 @@
 
 namespace ArtInk.Site.ViewModels.Response
 {
-    public record RolResponseDTO 
+    public record TipoPagoResponseDTO
     {
         public byte Id { get; set; }
 
@@ -10,9 +10,8 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayName("Descripción")]
         public string Descripcion { get; set; } = null!;
 
-        public string Tipo { get; set; } = null!;
+        public int Referencia { get; set; }
 
-        public bool Activo { get; set; }
-
+        public virtual ICollection<FacturaResponseDTO> Facturas { get; set; } = new List<FacturaResponseDTO>();
     }
 }

@@ -16,6 +16,8 @@ public static class Configuration
         services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
         services.AddTransient<IRepositoryProducto, RepositoryProducto>();
         services.AddTransient<IRepositoryRol, RepositoryRol>();
+        services.AddTransient<IRepositoryFactura, RepositoryFactura>();
+        services.AddTransient<IRepositoryDetalleFactura, RepositoryDetalleFactura>();
     }
 }
 // es una extencion xq usa la palabra this
