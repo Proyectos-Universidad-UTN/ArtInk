@@ -19,7 +19,6 @@
         public bool Activo { get; set; }
 
         //public virtual ICollection<HorarioDTO> Horarios { get; set; } = new List<HorarioDTO>();
-
         public virtual DistritoResponseDTO? Distrito { get; set; } = null!;
 
         //public virtual ICollection<InventarioDTO> Inventarios { get; set; } = new List<InventarioDTO>();

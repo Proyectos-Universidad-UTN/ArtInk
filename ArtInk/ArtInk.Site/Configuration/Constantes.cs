@@ -28,5 +28,10 @@
         public const string GETALLSUCURSALES = "sucursal"; //minuscula es el endpoint del API
         public const string GETSUCURSALBYID = "sucursal/{0}";
 
+
+        //Url Servicos
+        public const string GETALLSERVICIOS = "servicio"; //minuscula es el endpoint del API
+        public const string GETSERVICIOBYID = "servicio/{0}";
+
     }
 }

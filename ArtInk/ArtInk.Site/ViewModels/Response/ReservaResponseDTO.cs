@@ -1,9 +1,12 @@
-﻿namespace ArtInk.Site.ViewModels.Response
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ArtInk.Site.ViewModels.Response
 {
     public record ReservaResponseDTO 
     {
         public int Id { get; set; }
 
+        [DisplayFormat(DataFormatString = "{00}")]
         public DateOnly Fecha { get; set; }
 
         public TimeOnly Hora { get; set; }
