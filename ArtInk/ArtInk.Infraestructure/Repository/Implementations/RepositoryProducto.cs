@@ -14,7 +14,11 @@ namespace ArtInk.Infraestructure.Repository.Implementations
     {
         public async Task<Producto?> FindByIdAsync(short id)
         {
-            return await context.Set<Producto>().FindAsync(id);
+            var keyProperty = context.Model.FindEntityType(typeof(Producto))!.FindPrimaryKey()!.Properties[0];
+            return await context.Set<Producto>()
+                .Include(a => a.IdUnidadMedidaNavigation)
+                .Include(a => a.IdCategoriaNavigation)
+                .FirstOrDefaultAsync(a => EF.Property<short>(a, keyProperty.Name)==id);
         }
 
         public async Task<ICollection<Producto>> ListAsync()

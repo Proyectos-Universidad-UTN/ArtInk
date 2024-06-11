@@ -10,18 +10,14 @@ namespace ArtInk.Site.ViewModels.Response
 
         public string Apellidos { get; set; } = null!;
 
-
         [DisplayName("Correo Electrónico")]
         public string CorreoElectronico { get; set; } = null!;
-
 
         [DisplayName("Teléfono")]
         public int Telefono { get; set; }
 
-
         [DisplayName("Distrito")]
         public short IdDistrito { get; set; }
-
 
         [DisplayName("Dirección")]
         public string? DireccionExacta { get; set; }

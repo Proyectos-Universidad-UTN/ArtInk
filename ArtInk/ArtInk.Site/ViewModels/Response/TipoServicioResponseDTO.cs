@@ -8,7 +8,6 @@ namespace ArtInk.Site.ViewModels.Response
 
         public string Nombre { get; set; } = null!;
 
-
         [DisplayName("Duración")]
         public TimeOnly Duracion { get; set; }
 

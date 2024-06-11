@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/artink.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ArtInk.Site.styles.css" asp-append-version="true" />
+    @* CSS DATATABLES *@
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css" asp-append-version="true" />
+
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header>
@@ -25,17 +29,11 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Factura" asp-action="Index">Factura</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Sucursal" asp-action="Index">Sucursales</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuarios</a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="usuariosDropdown">
                                 <li>
                                     <a class="dropdown-item" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="S" asp-action="Index">Usuarios</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" asp-area="" asp-controller="Rol" asp-action="Index">Roles</a>

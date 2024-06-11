@@ -14,29 +14,24 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayName("Servicio")]
         public byte IdServicio { get; set; }
 
-
         [DisplayName("Línea")]
         public byte NumeroLinea { get; set; }
 
         public short Cantidad { get; set; }
 
-
         [DisplayName("Tarifa")]
         public decimal TarifaServicio { get; set; }
-
 
         [DisplayName("Subtotal")]
         public decimal MontoSubtotal { get; set; }
 
-
         [DisplayName("Impuesto")]
         public decimal MontoImpuesto { get; set; }
-
 
         [DisplayName("Total")]
         public decimal MontoTotal { get; set; }
 
-        public virtual ICollection<DetalleFacturaProductoDTO> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProductoDTO>();
+        public virtual ICollection<DetalleFacturaProductoResponseDTO> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProductoResponseDTO>();
 
         public virtual FacturaResponseDTO Factura { get; set; } = null!;
 
