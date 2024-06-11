@@ -13,7 +13,7 @@ namespace ArtInk.Site.Controllers
             return View(collection);
         }
 
-        public async Task<IActionResult> Details(short id)
+        public async Task<IActionResult> Details(byte id)
         {
             var url = string.Format(Constantes.GETSUCURSALBYID, id);
             var collection = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.GET, url);
