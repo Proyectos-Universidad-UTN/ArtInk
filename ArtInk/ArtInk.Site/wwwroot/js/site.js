@@ -1,14 +1,9 @@
-﻿
-//************************DETALLEPRODUCTO**************************/
-var script = document.createElement('script');
+﻿var script = document.createElement('script');
 script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js';
 document.head.appendChild(script);
 
-//************************ENDDETALLEPRODUCTO**************************/
-
-//************************USUARIO************************* */
-
 // Importar Bootstrap y DataTables
+
 var scriptBootstrap = document.createElement('script');
 scriptBootstrap.src = 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js';
 document.head.appendChild(scriptBootstrap);
@@ -54,24 +49,21 @@ scriptButtonsColVis.src = 'https://cdn.datatables.net/buttons/3.0.2/js/buttons.c
 document.head.appendChild(scriptButtonsColVis);
 
 // **********************************Función para inicializar DataTables**********************
-function initializeDataTables(selector) {
-    document.addEventListener('DOMContentLoaded', function () {
-        const tables = document.querySelectorAll(selector);
-        tables.forEach(table => {
-            new DataTable(table, {
-                layout: {
-                    topStart: {
-                        buttons: ['copy', 'excel', 'pdf', 'colvis']
-                    }
-                },
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-                },
-                scrollY: '400px',
-                scrollCollapse: true
-            });
+document.addEventListener('DOMContentLoaded', function () {
+    const tables = document.querySelectorAll(".artink-tables");
+    tables.forEach(table => {
+        new DataTable(table, {
+            pageLength: 3,
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'excel', 'pdf', 'colvis']
+                }
+            },
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+            },
+            scrollY: '400px',
+            scrollCollapse: true
         });
     });
-
-//************************ENDUSUARIO************************* */
-
+});

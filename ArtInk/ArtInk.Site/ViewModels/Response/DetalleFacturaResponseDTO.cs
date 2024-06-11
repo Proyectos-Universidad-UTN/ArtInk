@@ -36,7 +36,7 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayName("Total")]
         public decimal MontoTotal { get; set; }
 
-        public virtual ICollection<DetalleFacturaProductoDTO> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProductoDTO>();
+        public virtual ICollection<DetalleFacturaProductoResponseDTO> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProductoResponseDTO>();
 
         public virtual FacturaResponseDTO Factura { get; set; } = null!;
 

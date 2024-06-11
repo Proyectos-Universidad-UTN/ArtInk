@@ -85,6 +85,13 @@ footer {
         transform: scale(1.05);
     }
 
+.card-fixed-heigth.sm {
+    height: 320px !important;
+}
+
+.card-fixed-heigth.lg {
+    height: 420px !important;
+}
 /***************************************************ENDCARDS***********************************************************/
 
 
@@ -152,24 +159,31 @@ a.btn {
 .table-hover tbody tr:hover {
     background-color: #5a6268;
 }
-/***************************************************ENDTABLE***********************************************************/
 
+.dt-paging-button.page-item a{
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: white !important;
+}
+
+.dt-paging-button.page-item.disabled a {
+    background-color: darkgrey !important;
+    border-color: darkgrey !important;
+    color: whitesmoke !important;
+}
+
+.dt-paging-button.page-item.active a{
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+/***************************************************ENDTABLE***********************************************************/
 /***************************************************DETALLEPRODUCTO********************************/
-.detalleProducto .small-content {
+.detalle-artink.small-content {
     font-size: 1rem;
 }
 
-    .detalleProdcuto.small-content h1 {
-        font-size: 1.5rem;
+    .detalle-artink.small-content th, detalle-artink.small-content td {
+        padding: 0.5rem;
     }
-
-.detalleProducto.small-content th, .small-content td {
-    padding: 0.5rem;
-}
-
-.detalleProducto.small-content .btn {
-    font-size: 0.8rem;
-    padding: 0.25rem 1rem;
-}
 
 /***************************************************ENDDETALLEPRODUCTO********************************/
