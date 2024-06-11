@@ -49,47 +49,48 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCliente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreCliente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTipoPago)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Consecutivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuarioSucursal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdImpuesto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PorcentajeImpuesto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MontoImpuesto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MontoTotal)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdCliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreCliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdTipoPago)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Consecutivo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdUsuarioSucursal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdImpuesto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PorcentajeImpuesto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MontoImpuesto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MontoTotal)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
