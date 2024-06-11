@@ -22,6 +22,7 @@ namespace ArtInk.Application.Configuration
             services.AddTransient<IServiceRol, ServiceRol>();
             services.AddTransient<IServiceDetalleFactura, ServiceDetalleFactura>();
             services.AddTransient<IServiceFactura, ServiceFactura>();
+            services.AddTransient<IServiceSucursal, ServiceSucursal>();
 
             //se agrega
         }

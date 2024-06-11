@@ -22,7 +22,11 @@
 
         //Url Facturas
         public const string GETALLFACTURAS = "factura"; //minuscula es el endpoint del API
-        public const string GETFACTURAOBYID = "FACTURA/{0}";
+        public const string GETFACTURAOBYID = "factura/{0}";
+
+        //Url Sucursal
+        public const string GETALLSUCURSALES = "sucursal"; //minuscula es el endpoint del API
+        public const string GETSUCURSALBYID = "sucursal/{0}";
 
     }
 }
