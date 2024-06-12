@@ -23,6 +23,7 @@ namespace ArtInk.Application.Configuration
             services.AddTransient<IServiceReserva, ServiceReserva>();
             services.AddTransient<IServiceSucursal, ServiceSucursal>();
             services.AddTransient<IServiceServicio, ServiceServicio>();
+                services.AddTransient<IServiceReservaPregunta, ServiceReservaPregunta>();
             //se agrega
         }
         public static void ConfigureAutoMapper(this IServiceCollection services)

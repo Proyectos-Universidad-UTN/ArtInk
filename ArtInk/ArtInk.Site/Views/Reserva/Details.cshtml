@@ -4,16 +4,16 @@
     ViewData["Title"] = "Detalle Reserva";
 }
 
-<div class="container fade-in mt-5 mb-5 small-content">
+<div class="container fade-in mt-5 mb-5 detalle-artink small-content">
     <table class="table table-striped table-dark table-hover">
         <thead>
             <tr>
-                <th colspan="2" class="bg-primary text-white text-center">Detalle Producto</th>
+                <th colspan="2" class="bg-primary text-white text-center">Detalle del servicio</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.Id)</th> 
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
                 <td>@Html.DisplayFor(model => model.Id)</td>
             </tr>
             <tr>
@@ -35,6 +35,29 @@
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Fecha)</th>
                 <td>@Html.DisplayFor(model => model.Fecha)</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped table-dark table-hover">
+        <thead>
+            <tr>
+                <th colspan="2" class="bg-primary text-white text-center">Informacion de Sucursal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped table-dark table-hover">
+        <thead>
+            <tr>
+                <th colspan="2" class="bg-primary text-white text-center">Historial de preguntas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+    
             </tr>
         </tbody>
     </table>

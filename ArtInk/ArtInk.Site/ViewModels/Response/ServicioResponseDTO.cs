@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ArtInk.Site.ViewModels.Response
 {
@@ -14,6 +15,7 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayName("Tipo Servicio")]
         public byte IdTipoServicio { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal Tarifa { get; set; }
 
         [DisplayName("Observación")]
