@@ -49,6 +49,9 @@ namespace ArtInk.Application.Profiles
             CreateMap<Servicio, ServicioDTO>()
                 .ForMember(dest => dest.TipoServicio, inp => inp.MapFrom(ori => ori.IdTipoServicioNavigation));
             CreateMap<TipoServicio, TipoServicioDTO>();
+            CreateMap<Canton, CantonDTO>()
+                .ForMember(dest => dest.Provincia, inp => inp.MapFrom(ori => ori.IdProvinciaNavigation));
+
 
 
 

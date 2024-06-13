@@ -14,7 +14,14 @@ namespace ArtInk.Infraestructure.Repository.Implementations
     {
         public async Task<Reserva?> FindByIdAsync(int id)
         {
-            return await context.Set<Reserva>().FindAsync(id);
+            var keyProperty = context.Model.FindEntityType(typeof(Reserva))!.FindPrimaryKey()!.Properties[0];
+            return await context.Set<Reserva>()
+                .Include(a => a.ReservaServicios)
+                .ThenInclude(a => a.IdServicioNavigation)
+                .Include(a => a.IdSucursalHorarioNavigation)
+                .ThenInclude(a => a.IdHorarioNavigation)
+                .Include(a => a.ReservaPregunta)
+            .FirstOrDefaultAsync(a => EF.Property<int>(a, keyProperty.Name) == id);
         }
 
 
@@ -23,10 +30,7 @@ namespace ArtInk.Infraestructure.Repository.Implementations
             var collection = await context.Set<Reserva>()
                 .Include(a => a.IdSucursalHorarioNavigation)
                 .ThenInclude(a => a.IdSucursalNavigation)
-                .Include(a => a.ReservaServicios)
-                .ThenInclude(a => a.IdServicioNavigation)
-                .Include(a => a.IdSucursalHorarioNavigation)
-                .ThenInclude(a => a.IdHorarioNavigation)
+
                 .ToListAsync();
             return collection;
         }
