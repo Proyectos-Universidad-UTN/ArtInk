@@ -34,9 +34,9 @@ namespace ArtInk.Application.DTOs
 
         public byte IdRol { get; set; }
 
-        public virtual Distrito IdDistritoNavigation { get; set; } = null!;
+        public virtual Distrito Distrito { get; set; } = null!;
 
-        public virtual Genero IdGeneroNavigation { get; set; } = null!;
+        public virtual Genero Genero { get; set; } = null!;
 
         public virtual Rol Rol { get; set; } = null!;
 
