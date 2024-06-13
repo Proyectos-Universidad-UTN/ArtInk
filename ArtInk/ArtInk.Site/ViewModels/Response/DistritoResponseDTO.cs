@@ -21,5 +21,8 @@ namespace ArtInk.Site.ViewModels.Response
 
         public virtual ICollection<UsuarioResponseDTO> Usuarios { get; set; } = new List<UsuarioResponseDTO>();
 
+        //public virtual ICollection<UsuarioDTO> Usuarios { get; set; } = new List<UsuarioDTO>();
     }
 }
+
+

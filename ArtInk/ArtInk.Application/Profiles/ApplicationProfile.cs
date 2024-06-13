@@ -30,12 +30,33 @@ namespace ArtInk.Application.Profiles
                 .ForMember(dest => dest.Impuesto, inp => inp.MapFrom(ori => ori.IdImpuestoNavigation));
             CreateMap<Sucursal, SucursalDTO>()
                 .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
-            CreateMap<Distrito, DistritoDTO>();
-            CreateMap<Horario, HorarioDTO>();
             CreateMap<Inventario, InventarioDTO>();
-            CreateMap<SucursalHorario, SucursalHorarioDTO>();
             CreateMap<UsuarioSucursal, UsuarioSucursalDTO>();
             CreateMap<SucursalFeriado, SucursalFeriadoDTO>();
+            CreateMap<ReservaPregunta, ReservaPreguntaDTO>()
+                .ForMember(dest => dest.Reserva, inp => inp.MapFrom(ori => ori.IdReservaNavigation));
+            CreateMap<Reserva, ReservaDTO>()
+                .ForMember(dest => dest.SucursalHorario, inp => inp.MapFrom(ori => ori.IdSucursalHorarioNavigation));
+            CreateMap<SucursalHorario, SucursalHorarioDTO>()
+                .ForMember(dest => dest.Horario, inp => inp.MapFrom(ori => ori.IdHorarioNavigation))
+                .ForMember(dest => dest.Sucursal, inp => inp.MapFrom(ori => ori.IdSucursalNavigation));
+            CreateMap<Horario, HorarioDTO>()
+                .ForMember(dest => dest.Sucursal, inp => inp.MapFrom(ori => ori.IdSucursalNavigation));
+            CreateMap<Distrito, DistritoDTO>();
+            CreateMap<ReservaServicio, ReservaServicioDTO>()
+                .ForMember(dest => dest.Reserva, inp => inp.MapFrom(ori => ori.IdReservaNavigation))
+                .ForMember(dest => dest.Servicio, inp => inp.MapFrom(ori => ori.IdServicioNavigation));
+            CreateMap<Servicio, ServicioDTO>()
+                .ForMember(dest => dest.TipoServicio, inp => inp.MapFrom(ori => ori.IdTipoServicioNavigation));
+            CreateMap<TipoServicio, TipoServicioDTO>();
+            CreateMap<Canton, CantonDTO>()
+                .ForMember(dest => dest.Provincia, inp => inp.MapFrom(ori => ori.IdProvinciaNavigation));
+
+
+
+
+
+
         }
     }
 }

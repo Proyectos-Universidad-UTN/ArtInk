@@ -12,6 +12,9 @@ namespace ArtInk.Application.Services.Implementations
 {
     public class ServiceSucursal(IRepositorySucursal repository, IMapper mapper) : IServiceSucursal
     {
+        /// <summary>
+        /// buscarlo por ID
+        /// </summary>
         public async Task<SucursalDTO> FindByIdAsync(byte id)
         {
             var sucursal = await repository.FindByIdAsync(id);
@@ -19,6 +22,11 @@ namespace ArtInk.Application.Services.Implementations
 
             return mapper.Map<SucursalDTO>(sucursal);
         }
+
+        /// <summary>
+        /// buscar toda la lista
+        /// </summary>
+        /// <returns>ICollection<ProductoDTO></returns>
         public async Task<ICollection<SucursalDTO>> ListAsync()
         {
             var list = await repository.ListAsync();
@@ -26,5 +34,6 @@ namespace ArtInk.Application.Services.Implementations
 
             return collection;
         }
+
     }
 }

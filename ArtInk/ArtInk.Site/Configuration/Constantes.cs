@@ -20,13 +20,30 @@
         public const string GETALLROLS = "rol"; //minuscula es el endpoint del API
         public const string GETROLBYID = "rol/{0}";
 
+        //Url Reserva
+        public const string GETALLRESERVAS = "reserva"; //minuscula es el endpoint del API
+        public const string GETRESERVABYID = "reserva/{0}";
+
+        //Url Sucursales
+        public const string GETALLSUCURSALES = "sucursal"; //minuscula es el endpoint del API
+        public const string GETSUCURSALBYID = "sucursal/{0}";
+
+
+        //Url Servicos
+        public const string GETALLSERVICIOS = "servicio"; //minuscula es el endpoint del API
+        public const string GETSERVICIOBYID = "servicio/{0}";
+
+        //Url Horarios
+        public const string GETALLHORARIOS = "horario"; //minuscula es el endpoint del API
+        public const string GETHORARIOBYID = "horario/{0}";
+
         //Url Facturas
         public const string GETALLFACTURAS = "factura"; //minuscula es el endpoint del API
         public const string GETFACTURABYID = "factura/{0}";
 
-        //Url Sucursal
-        public const string GETALLSUCURSALES = "sucursal"; //minuscula es el endpoint del API
-        public const string GETSUCURSALBYID = "sucursal/{0}";
+        //Url ReservaPregunta
+        public const string GETALLRESERVASPREGUNTAS = "reserva"; //minuscula es el endpoint del API
+        public const string GETRESERVAPREGUNTABYID = "reserva/{0}";
 
     }
 }

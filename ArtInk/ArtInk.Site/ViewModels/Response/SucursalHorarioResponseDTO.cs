@@ -16,6 +16,6 @@ namespace ArtInk.Site.ViewModels.Response
 
         public virtual SucursalResponseDTO Sucursal { get; set; } = null!;
 
-        public virtual ICollection<ReservaResponseDTO> Reservas { get; set; } = new List<ReservaResponseDTO>();
+        //public virtual ICollection<ReservaDTO> Reservas { get; set; } = new List<ReservaDTO>();
     }
 }

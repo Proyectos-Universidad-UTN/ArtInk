@@ -16,5 +16,5 @@ public record ReservaPreguntaDTO: BaseEntity
 
     public bool Activo { get; set; }
 
-    public virtual ReservaDTO IdReservaNavigation { get; set; } = null!;
+    public virtual ReservaDTO Reserva { get; set; } = null!;
 }

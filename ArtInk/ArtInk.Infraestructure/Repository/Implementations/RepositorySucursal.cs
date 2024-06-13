@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ArtInk.Infraestructure.Repository.Implementations
 {
-    public class RepositorySucursal(ArtInkContext context): IRepositorySucursal
+    public class RepositorySucursal(ArtInkContext context) : IRepositorySucursal
     {
         public async Task<Sucursal?> FindByIdAsync(byte id)
         {
@@ -24,7 +24,5 @@ namespace ArtInk.Infraestructure.Repository.Implementations
                 .ToListAsync();
             return collection;
         }
-
-
     }
 }

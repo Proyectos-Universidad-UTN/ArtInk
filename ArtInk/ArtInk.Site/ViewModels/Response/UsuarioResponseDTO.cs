@@ -33,7 +33,6 @@ namespace ArtInk.Site.ViewModels.Response
 
         [DisplayName("Género")]
         public byte IdGenero { get; set; }
-
         public bool Activo { get; set; }
 
         public string? UrlFoto { get; set; }
