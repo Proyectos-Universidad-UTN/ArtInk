@@ -20,6 +20,8 @@ namespace ArtInk.Infraestructure.Repository.Implementations
                 .ThenInclude(a => a.IdServicioNavigation)
                 .Include(a => a.IdSucursalHorarioNavigation)
                 .ThenInclude(a => a.IdHorarioNavigation)
+                .Include(a => a.IdSucursalHorarioNavigation)
+                .ThenInclude(a => a.IdSucursalNavigation)
                 .Include(a => a.ReservaPregunta)
             .FirstOrDefaultAsync(a => EF.Property<int>(a, keyProperty.Name) == id);
         }
@@ -30,7 +32,8 @@ namespace ArtInk.Infraestructure.Repository.Implementations
             var collection = await context.Set<Reserva>()
                 .Include(a => a.IdSucursalHorarioNavigation)
                 .ThenInclude(a => a.IdSucursalNavigation)
-
+                .Include(a => a.IdSucursalHorarioNavigation)
+                .ThenInclude(a => a.IdHorarioNavigation)
                 .ToListAsync();
             return collection;
         }
