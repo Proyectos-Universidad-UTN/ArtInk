@@ -20,7 +20,7 @@ namespace ArtInk.Infraestructure.Repository.Implementations
         public async Task<ICollection<Sucursal>> ListAsync()
         {
             var collection = await context.Set<Sucursal>()
-                .Include(a => a.IdDistritoNavigation)
+                .Include(a => a.IdDistritoNavigation) 
                 .ToListAsync();
             return collection;
         }

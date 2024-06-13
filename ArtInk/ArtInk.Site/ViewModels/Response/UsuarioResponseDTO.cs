@@ -40,9 +40,9 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayName("Rol")]
         public byte IdRol { get; set; }
 
-        public virtual DistritoResponseDTO IdDistritoNavigation { get; set; } = null!;
+        public virtual DistritoResponseDTO Distrito { get; set; } = null!;
 
-        public virtual GeneroResponseDTO IdGeneroNavigation { get; set; } = null!;
+        public virtual GeneroResponseDTO Genero { get; set; } = null!;
 
         public virtual RolResponseDTO Rol { get; set; } = null!;
         public virtual ICollection<UsuarioSucursalResponseDTO> UsuarioSucursal { get; set; } = new List<UsuarioSucursalResponseDTO>();

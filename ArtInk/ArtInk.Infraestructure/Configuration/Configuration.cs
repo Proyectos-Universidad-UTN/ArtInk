@@ -16,8 +16,10 @@ public static class Configuration
         services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
         services.AddTransient<IRepositoryProducto, RepositoryProducto>();
         services.AddTransient<IRepositoryRol, RepositoryRol>();
-        services.AddTransient<IRepositoryReserva, RepositoryReserva>();
+        services.AddTransient<IRepositoryFactura, RepositoryFactura>();
+        services.AddTransient<IRepositoryDetalleFactura, RepositoryDetalleFactura>();
         services.AddTransient<IRepositorySucursal, RepositorySucursal>();
+        services.AddTransient<IRepositoryReserva, RepositoryReserva>();
         services.AddTransient<IRepositoryServicio, RepositoryServicio>();
         services.AddTransient<IRepositoryHorario, RepositoryHorario>();
         services.AddTransient<IRepositoryReservaPregunta, IRepositoryReservaPregunta>();
