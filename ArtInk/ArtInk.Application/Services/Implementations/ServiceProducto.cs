@@ -13,9 +13,7 @@ namespace ArtInk.Application.Services.Implementations
 {
     public class ServiceProducto (IRepositoryProducto repository, IMapper mapper) : IServiceProducto
     {
-        /// <summary>
-        /// buscarlo por ID
-        /// </summary>
+       
         public async Task<ProductoDTO> FindByIdAsync(short id)
         {
             var producto = await repository.FindByIdAsync(id);
@@ -23,11 +21,6 @@ namespace ArtInk.Application.Services.Implementations
 
             return mapper.Map<ProductoDTO>(producto);
         }
-
-        /// <summary>
-        /// buscar toda la lista
-        /// </summary>
-        /// <returns>ICollection<ProductoDTO></returns>
         public async Task<ICollection<ProductoDTO>> ListAsync()
         {
             var list = await repository.ListAsync();

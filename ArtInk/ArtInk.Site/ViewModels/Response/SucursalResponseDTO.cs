@@ -5,6 +5,7 @@ namespace ArtInk.Site.ViewModels.Response
     public record SucursalResponseDTO
     {
         public byte Id { get; set; }
+
         public string Nombre { get; set; } = null!;
 
         [DisplayName("Descripción")]
@@ -26,7 +27,7 @@ namespace ArtInk.Site.ViewModels.Response
 
         public virtual ICollection<HorarioResponseDTO> Horarios { get; set; } = new List<HorarioResponseDTO>();
 
-        public virtual DistritoResponseDTO? Distrito { get; set; } = null!;
+        public virtual DistritoResponseDTO Distrito { get; set; } = null!;
 
         public virtual ICollection<InventarioResponseDTO> Inventarios { get; set; } = new List<InventarioResponseDTO>();
 
