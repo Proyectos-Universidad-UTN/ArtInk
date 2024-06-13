@@ -15,7 +15,8 @@ namespace ArtInk.Application.Profiles
         public ApplicationProfile()
         {
             CreateMap<Usuario, UsuarioDTO>()
-                .ForMember(dest => dest.Rol, inp => inp.MapFrom(ori => ori.IdRolNavigation));
+                .ForMember(dest => dest.Rol, inp => inp.MapFrom(ori => ori.IdRolNavigation))
+                .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
             CreateMap<Producto, ProductoDTO>()
                 .ForMember(dest => dest.UnidadMedida, inp => inp.MapFrom(ori => ori.IdUnidadMedidaNavigation))
                 .ForMember(dest => dest.Categoria, inp => inp.MapFrom(ori => ori.IdCategoriaNavigation));
@@ -27,7 +28,14 @@ namespace ArtInk.Application.Profiles
                 .ForMember(dest => dest.TipoPago, inp => inp.MapFrom(ori => ori.IdTipoPagoNavigation))
                 .ForMember(dest => dest.UsuarioSucursal, inp => inp.MapFrom(ori => ori.IdUsuarioSucursalNavigation))
                 .ForMember(dest => dest.Impuesto, inp => inp.MapFrom(ori => ori.IdImpuestoNavigation));
-
+            CreateMap<Sucursal, SucursalDTO>()
+                .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
+            CreateMap<Distrito, DistritoDTO>();
+            CreateMap<Horario, HorarioDTO>();
+            CreateMap<Inventario, InventarioDTO>();
+            CreateMap<SucursalHorario, SucursalHorarioDTO>();
+            CreateMap<UsuarioSucursal, UsuarioSucursalDTO>();
+            CreateMap<SucursalFeriado, SucursalFeriadoDTO>();
         }
     }
 }
