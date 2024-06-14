@@ -1,12 +1,4 @@
-﻿var script = document.createElement('script');
-script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js';
-document.head.appendChild(script);
-
-// Importar Bootstrap y DataTables
-
-var scriptBootstrap = document.createElement('script');
-scriptBootstrap.src = 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js';
-document.head.appendChild(scriptBootstrap);
+﻿// Importar Bootstrap y DataTables
 
 var scriptDataTables = document.createElement('script');
 scriptDataTables.src = 'https://cdn.datatables.net/2.0.8/js/dataTables.js';
