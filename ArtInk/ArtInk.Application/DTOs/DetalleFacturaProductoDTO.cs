@@ -20,5 +20,5 @@ public record DetalleFacturaProductoDTO
 
     public virtual DetalleFacturaDTO DetalleFactura { get; set; } = null!;
 
-    public virtual ProductoDTO IdProductoNavigation { get; set; } = null!;
+    public virtual ProductoDTO Producto { get; set; } = null!;
 }
