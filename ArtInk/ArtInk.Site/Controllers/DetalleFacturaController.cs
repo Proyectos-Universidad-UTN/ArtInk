@@ -7,18 +7,19 @@ namespace ArtInk.Site.Controllers
 {
     public class DetalleFacturaController(IAPIArtInkClient detalleFactura) : Controller
     {
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> DetalleFactura(long idFactura)
         {
-            var collection = await detalleFactura.ConsumirAPIAsync<IEnumerable<DetalleFacturaResponseDTO>>(Constantes.GET, Constantes.GETALLDETALLEFACTURAS);
+            var url = string.Format(Constantes.GETALLDETALLEFACTURAS, idFactura);
+            var collection = await detalleFactura.ConsumirAPIAsync<IEnumerable<DetalleFacturaResponseDTO>>(Constantes.GET, url);
             return View(collection);
         }
 
-        public async Task<IActionResult> Details(int id)
-        {
-            var url = string.Format(Constantes.GETDETALLEFACTURABYID, id);
-            var collection = await detalleFactura.ConsumirAPIAsync<DetalleFacturaResponseDTO>(Constantes.GET, url);
+        //public async Task<IActionResult> Details(short id)
+        //{
+        //    var url = string.Format(Constantes.GETDETALLEFACTURABYID, id);
+        //    var collection = await detalleFactura.ConsumirAPIAsync<DetalleFacturaResponseDTO>(Constantes.GET, url);
 
-            return View(collection);
-        }
+        //    return View(collection);
+        //}
     }
 }

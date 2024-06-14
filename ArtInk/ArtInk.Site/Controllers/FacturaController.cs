@@ -13,7 +13,7 @@ namespace ArtInk.Site.Controllers
             return View(collection);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(long id)
         {
             var url = string.Format(Constantes.GETFACTURABYID, id);
             var collection = await factura.ConsumirAPIAsync<FacturaResponseDTO>(Constantes.GET, url);

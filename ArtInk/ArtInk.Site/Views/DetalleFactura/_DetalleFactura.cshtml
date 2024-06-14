@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.DetalleFacturaResponseDTO>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdFactura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdServicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroLinea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TarifaServicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoSubtotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoImpuesto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoTotal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdFactura)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdServicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroLinea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TarifaServicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoSubtotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoImpuesto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoTotal)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -12,7 +12,7 @@ namespace ArtInk.Application.Services.Implementations
 {
     public class ServiceFactura(IRepositoryFactura repository, IMapper mapper) : IServiceFactura
     {
-        public async Task<FacturaDTO> FindByIdAsync(int id)
+        public async Task<FacturaDTO> FindByIdAsync(long id)
         {
             var factura = await repository.FindByIdAsync(id);
             if (factura == null) throw new Exception("Factura no encontrada.");

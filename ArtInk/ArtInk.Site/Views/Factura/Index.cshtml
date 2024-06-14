@@ -32,6 +32,9 @@
                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
                             </div>
                         </div>
+                        <div>
+                            @await Html.PartialAsync("_DetalleFactura.cshtml", new { idFactura = item.Id });
+                        </div>
                     </div>
                 </div>
             </div>

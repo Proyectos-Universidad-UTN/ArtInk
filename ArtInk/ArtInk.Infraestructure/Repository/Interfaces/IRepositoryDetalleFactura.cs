@@ -9,8 +9,8 @@ namespace ArtInk.Infraestructure.Repository.Interfaces
 {
     public interface IRepositoryDetalleFactura
     {
-        Task<ICollection<DetalleFactura>> ListAsync();
-        Task<DetalleFactura?> FindByIdAsync(int id);
+        Task<ICollection<DetalleFactura>> ListAsync(long idFactura);
+        Task<DetalleFactura?> FindByIdAsync(long id);
 
     }
 }

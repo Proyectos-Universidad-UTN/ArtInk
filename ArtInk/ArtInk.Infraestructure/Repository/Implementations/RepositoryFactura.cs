@@ -12,7 +12,7 @@ namespace ArtInk.Infraestructure.Repository.Implementations
 {
     public class RepositoryFactura(ArtInkContext context) : IRepositoryFactura
     {
-        public async Task<Factura?> FindByIdAsync(int id)
+        public async Task<Factura?> FindByIdAsync(long id)
         {
             return await context.Set<Factura>().FindAsync(id);
         }
