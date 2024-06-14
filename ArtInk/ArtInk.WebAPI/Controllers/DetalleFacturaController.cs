@@ -14,11 +14,11 @@ namespace ArtInk.WebAPI.Controllers
             return StatusCode(StatusCodes.Status200OK, detalleFacturas);
         }
 
-        [HttpGet("{idDetalleFacturas}")]
-        public async Task<IActionResult> GetDetalleFacturasByIdAsync(int idDetalleFactura)
+        [HttpGet("{idDetalleFactura}")]
+        public async Task<IActionResult> GetDetalleFacturaByIdAsync(int idDetalleFactura)
         {
-            var detalleFacturas = await serviceDetalleFactura.FindByIdAsync(idDetalleFactura);
-            return StatusCode(StatusCodes.Status200OK, detalleFacturas);
+            var detalleFactura = await serviceDetalleFactura.FindByIdAsync(idDetalleFactura);
+            return StatusCode(StatusCodes.Status200OK, detalleFactura);
         }
     }
 }

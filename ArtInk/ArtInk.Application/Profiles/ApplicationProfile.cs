@@ -77,6 +77,8 @@ namespace ArtInk.Application.Profiles
             CreateMap<UsuarioSucursal, UsuarioSucursalDTO>()
                  .ForMember(dest => dest.Sucursal, inp => inp.MapFrom(ori => ori.IdSucursalNavigation))
                  .ForMember(dest => dest.Usuario, inp => inp.MapFrom(ori => ori.IdUsuarioNavigation));
+            CreateMap<Cliente, ClienteDTO>()
+                  .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
 
 
 

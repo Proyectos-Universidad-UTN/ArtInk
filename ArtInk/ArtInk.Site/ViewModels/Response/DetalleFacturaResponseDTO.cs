@@ -1,6 +1,7 @@
 ﻿
 
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ArtInk.Site.ViewModels.Response
 {
@@ -20,15 +21,18 @@ namespace ArtInk.Site.ViewModels.Response
         public short Cantidad { get; set; }
 
         [DisplayName("Tarifa")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal TarifaServicio { get; set; }
 
         [DisplayName("Subtotal")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal MontoSubtotal { get; set; }
 
         [DisplayName("Impuesto")]
         public decimal MontoImpuesto { get; set; }
 
         [DisplayName("Total")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal MontoTotal { get; set; }
 
         public virtual ICollection<DetalleFacturaProductoResponseDTO> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProductoResponseDTO>();
