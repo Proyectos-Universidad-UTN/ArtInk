@@ -4,7 +4,7 @@ namespace ArtInk.Site.ViewModels.Response
 {
     public record FacturaResponseDTO
     {
-        public short Id { get; set; }
+        public long Id { get; set; }
 
         public short IdCliente { get; set; }
 

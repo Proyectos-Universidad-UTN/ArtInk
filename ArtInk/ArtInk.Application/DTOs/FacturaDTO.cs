@@ -8,7 +8,7 @@ namespace ArtInk.Application.DTOs;
 
 public record FacturaDTO: BaseEntity
 {
-    public short Id { get; set; }
+    public long Id { get; set; }
 
     public short IdCliente { get; set; }
 

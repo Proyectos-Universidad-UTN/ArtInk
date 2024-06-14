@@ -5,7 +5,7 @@ namespace ArtInk.Infraestructure.Models;
 
 public partial class Factura
 {
-    public short Id { get; set; }
+    public long Id { get; set; }
 
     public short IdCliente { get; set; }
 
