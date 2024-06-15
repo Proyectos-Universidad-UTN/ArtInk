@@ -4,7 +4,6 @@ GO
 IF NOT EXISTS(SELECT 1 FROM DetalleFactura WHERE Id = 1)
 BEGIN
 
-
 	SET IDENTITY_INSERT dbo.DetalleFactura ON
 	INSERT INTO dbo.DetalleFactura
 	([Id],[IdFactura],[IdServicio],[NumeroLinea],[Cantidad],[TarifaServicio],[MontoSubtotal],[MontoImpuesto],[MontoTotal])
