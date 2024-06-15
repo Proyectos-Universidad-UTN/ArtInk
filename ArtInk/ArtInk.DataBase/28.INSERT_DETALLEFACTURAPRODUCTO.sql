@@ -10,6 +10,10 @@ BEGIN
 	([Id],[IdDetalleFactura],[IdProducto],[Cantidad])
 	VALUES
 	 (1,1,1,1.00)
+	,(2,1,1,5.00)
+	,(3,2,2,3.00)
+	,(4,3,3,4.00)
+	,(5,4,4,2.00)
 	SET IDENTITY_INSERT dbo.DetalleFacturaProducto OFF;
 	
 END
