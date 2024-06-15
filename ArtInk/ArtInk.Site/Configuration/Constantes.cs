@@ -42,8 +42,8 @@
         public const string GETFACTURABYID = "factura/{0}";
 
         //Url DetalleFactura
-        public const string GETALLDETALLEFACTURAS = "detallefactura/{0}"; //minuscula es el endpoint del API
-        public const string GETDETALLEFACTURABYID = "detallefactura/{0}";
+        public const string GETALLDETALLEFACTURAS = "factura/{0}/detallefactura"; //minuscula es el endpoint del API
+        public const string GETDETALLEFACTURABYID = "factura/{0}/detallefactura/{1}";
 
         //Url ReservaPregunta
         public const string GETALLRESERVASPREGUNTAS = "reserva"; //minuscula es el endpoint del API

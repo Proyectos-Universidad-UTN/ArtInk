@@ -12,9 +12,9 @@ namespace ArtInk.Application.Services.Implementations
 {
     public class ServiceDetalleFactura(IRepositoryDetalleFactura repository, IMapper mapper) : IServiceDetalleFactura
     {
-        public async Task<DetalleFacturaDTO> FindByIdAsync(long id)
+        public async Task<DetalleFacturaDTO> FindByIdAsync(long idFactura, long id)
         {
-            var detalleFactura = await repository.FindByIdAsync(id);
+            var detalleFactura = await repository.FindByIdAsync(idFactura, id);
             if (detalleFactura == null) throw new Exception("Detalle Factura no encontrada.");
 
             return mapper.Map<DetalleFacturaDTO>(detalleFactura);

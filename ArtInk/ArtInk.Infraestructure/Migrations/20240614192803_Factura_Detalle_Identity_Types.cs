@@ -10,6 +10,26 @@ namespace ArtInk.Infraestructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_DetalleFacturaProducto_DetalleFactura",
+                table: "DetalleFacturaProducto");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_[DetalleFacturaProducto",
+                table: "DetalleFacturaProducto");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_DetalleFactura_Factura",
+                table: "DetalleFactura");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_detalleFactura",
+                table: "DetalleFactura");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_factura",
+                table: "Factura");
+
             migrationBuilder.AlterColumn<long>(
                 name: "Id",
                 table: "Factura",
@@ -55,11 +75,62 @@ namespace ArtInk.Infraestructure.Migrations
                 oldType: "smallint")
                 .Annotation("SqlServer:Identity", "1, 1")
                 .OldAnnotation("SqlServer:Identity", "1, 1");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_factura",
+                table: "Factura",
+                column: "Id");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_detalleFactura",
+                table: "DetalleFactura",
+                column: "Id");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_detalleFacturaProducto",
+                table: "DetalleFacturaProducto",
+                column: "Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_DetalleFacturaProducto_DetalleFactura",
+                table: "DetalleFacturaProducto",
+                principalTable: "DetalleFactura",
+                column: "IdDetalleFactura",
+                onDelete: ReferentialAction.Restrict,
+                onUpdate: ReferentialAction.NoAction);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_DetalleFactura_Factura",
+                table: "DetalleFactura",
+                principalTable: "Factura",
+                column: "IdFactura",
+                onDelete: ReferentialAction.Restrict,
+                onUpdate: ReferentialAction.NoAction);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_DetalleFacturaProducto_DetalleFactura",
+                table: "DetalleFacturaProducto");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_[DetalleFacturaProducto",
+                table: "DetalleFacturaProducto");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_DetalleFactura_Factura",
+                table: "DetalleFactura");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_detalleFactura",
+                table: "DetalleFactura");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_factura",
+                table: "Factura");
+
             migrationBuilder.AlterColumn<short>(
                 name: "Id",
                 table: "Factura",
@@ -105,6 +176,38 @@ namespace ArtInk.Infraestructure.Migrations
                 oldType: "bigint")
                 .Annotation("SqlServer:Identity", "1, 1")
                 .OldAnnotation("SqlServer:Identity", "1, 1");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_factura",
+                table: "Factura",
+                column: "Id");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_detalleFactura",
+                table: "DetalleFactura",
+                column: "Id");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_detalleFacturaProducto",
+                table: "DetalleFacturaProducto",
+                column: "Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_DetalleFacturaProducto_DetalleFactura",
+                table: "DetalleFacturaProducto",
+                principalTable: "DetalleFactura",
+                column: "IdDetalleFactura",
+                onDelete: ReferentialAction.Restrict,
+                onUpdate: ReferentialAction.NoAction);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_DetalleFactura_Factura",
+                table: "DetalleFactura",
+                principalTable: "Factura",
+                column: "IdFactura",
+                onDelete: ReferentialAction.Restrict,
+                onUpdate: ReferentialAction.NoAction);  
+
         }
     }
 }

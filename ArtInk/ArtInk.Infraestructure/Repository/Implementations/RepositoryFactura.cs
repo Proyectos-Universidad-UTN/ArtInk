@@ -14,16 +14,21 @@ namespace ArtInk.Infraestructure.Repository.Implementations
     {
         public async Task<Factura?> FindByIdAsync(long id)
         {
-            return await context.Set<Factura>().FindAsync(id);
+            var keyProperty = context.Model.FindEntityType(typeof(Factura))!.FindPrimaryKey()!.Properties[0];
+            return await context.Set<Factura>()
+                .Include(a => a.IdClienteNavigation)
+                .Include(a => a.IdTipoPagoNavigation)
+                .Include(a => a.IdImpuestoNavigation)
+                .Include(a => a.IdUsuarioSucursalNavigation)
+                .ThenInclude(a => a.IdSucursalNavigation)
+                .Include(a => a.DetalleFacturas)
+                .ThenInclude(a => a.IdServicioNavigation)
+                .FirstOrDefaultAsync(a => EF.Property<long>(a, keyProperty.Name) == id);
         }
 
         public async Task<ICollection<Factura>> ListAsync()
         {
             var collection = await context.Set<Factura>()
-                .Include(a => a.IdClienteNavigation)
-                .Include(a => a.IdTipoPagoNavigation)
-                .Include(a => a.IdImpuestoNavigation)
-                .Include(a => a.IdUsuarioSucursalNavigation)
                 .ToListAsync();
             return collection;
         }

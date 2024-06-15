@@ -29,9 +29,10 @@ namespace ArtInk.Site.ViewModels.Response
         public decimal MontoSubtotal { get; set; }
 
         [DisplayName("Impuesto")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal MontoImpuesto { get; set; }
 
-        [DisplayName("Total")]
+        [DisplayName("Total Línea")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal MontoTotal { get; set; }
 
