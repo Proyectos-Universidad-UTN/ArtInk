@@ -3,33 +3,33 @@
 @{
     ViewData["Title"] = "Detalle Factura";
 }
-<div class="container pt-3">
+<div class="container pt-3" id="sucursalesTable">
     <div class="row gutters">
         <div class="col-12 col-sm-12 col-xl-12">
-           <div class="card bg-white pe-none">
-               <div class="card-body p-0">
-                   <div class="container-factura p-4">
-                       <div class="header-factura text-black">
-                           <div class="row gutters">
-                              <div class="col-sm-12 col-xl-12">
-                                  <div class="mb-5 m-auto d-flex justify-content-end">
-                                      <a href="#" class="btn btn-primary m-1">
-                                          <i class="icon-download"></i>Descargar
-                                      </a>
-                                  </div>
-                              </div>
-                           </div>
-                           <div class="row gutters">
-                               <div class="col-sm-6 col-xl-6">
-                                   <h1>ArtInk</h1> @* TODO: Cambiar por ícono *@
-                               </div>
-                               <div class="col-sm-6 col-xl-6">
-                                  <address class="text-end m-0">Dirección Local: @Model.UsuarioSucursal.Sucursal.DireccionExacta</address>
-                               </div>
-                           </div>
+            <div class="card bg-white pe-none">
+                <div class="card-body p-0">
+                    <div class="container-factura p-4">
+                        <div class="header-factura text-black">
                             <div class="row gutters">
-                                <div class="col-sm-6 col-xl-6"> 
-                                    <div class="detalle-factura mt-3 p-3 lh-3 bg-light"> 
+                                <div class="col-sm-12 col-xl-12">
+                                    <div class="mb-5 m-auto d-flex justify-content-end">
+                                        <a href="" class="btn btn-primary m-1">
+                                            <i class="icon-download"></i>Descargar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gutters">
+                                <div class="col-sm-6 col-xl-6">
+                                    <h1>ArtInk</h1> @* TODO: Cambiar por ícono *@
+                                </div>
+                                <div class="col-sm-6 col-xl-6">
+                                    <address class="text-end m-0">Dirección Local: @Model.UsuarioSucursal.Sucursal.DireccionExacta</address>
+                                </div>
+                            </div>
+                            <div class="row gutters">
+                                <div class="col-sm-6 col-xl-6">
+                                    <div class="detalle-factura mt-3 p-3 lh-3 bg-light">
                                         <address>@Model.NombreCliente</address>
                                     </div>
                                 </div>
@@ -40,22 +40,22 @@
                                     </div>
                                 </div>
                             </div>
-                       </div>
-                       <div class="body-factura">
-                           <div class="row gutters">
+                        </div>
+                        <div class="body-factura">
+                            <div class="row gutters">
                                 <div class="col-12 col-sm-12 col-xl-12">
                                     <div class="table-response">
                                         @await Html.PartialAsync("~/Views/Factura/_DetalleFactura.cshtml", Model)
                                     </div>
-                               </div>
-                           </div>
-                       </div>
-                       <div class="footer-factura text-black">
-                           Gracias por tu compra
-                       </div>
-                   </div>
-               </div>
-           </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-factura text-black">
+                            Gracias por tu compra
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -135,6 +135,12 @@
 <div>
     @await Html.PartialAsync("~/Views/Factura/_DetalleFactura.cshtml", item.DetalleFacturas);
 </div> *@
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="container pt-3 mb-3">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-primary float">
+                <a asp-action="Index" style="color: black; text-decoration: none;">Regresar</a>
+            </button>
+        </div>
+    </div>
 </div>

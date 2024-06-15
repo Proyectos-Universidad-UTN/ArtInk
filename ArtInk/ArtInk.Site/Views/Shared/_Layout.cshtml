@@ -11,6 +11,7 @@
     @* CSS DATATABLES *@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/preloader.css" asp-append-version="true" />
 
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -24,33 +25,33 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Factura" asp-action="Index">Factura</a>
+                            <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Factura" asp-action="Index">Factura</a>
                         </li>
-                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Sucursal" asp-action="Index">Sucursales</a>
+                        <li class="nav-item">
+                            <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Sucursal" asp-action="Index">Sucursales</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuarios</a>
+                            <a class="nav-link dropdown-toggle btnfos btnfos-5" href="#" id="usuariosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuarios</a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="usuariosDropdown">
                                 <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
+                                    <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Rol" asp-action="Index">Roles</a>
+                                    <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Rol" asp-action="Index">Roles</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Reserva" asp-action="Index">Reservas</a>
+                            <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Servicio" asp-action="Index">Servicios</a>
+                            <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Reserva" asp-action="Index">Reservas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Servicio" asp-action="Index">Servicios</a>
                         </li>
                     </ul>
                 </div>
@@ -70,6 +71,7 @@
                 &copy; 2024 - ArtInk.Site - <a href="#">Privacy</a>
             </div>
         </div>
+
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
