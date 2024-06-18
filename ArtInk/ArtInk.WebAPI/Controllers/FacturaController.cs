@@ -15,7 +15,7 @@ namespace ArtInk.WebAPI.Controllers
         }
 
         [HttpGet("{idFactura}")]
-        public async Task<IActionResult> GetFacturaByIdAsync(int idFactura)
+        public async Task<IActionResult> GetFacturaByIdAsync(long idFactura)
         {
             var factura = await serviceFactura.FindByIdAsync(idFactura);
             return StatusCode(StatusCodes.Status200OK, factura);

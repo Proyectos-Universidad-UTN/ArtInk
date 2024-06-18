@@ -7,18 +7,19 @@ namespace ArtInk.WebAPI.Controllers
     [ApiController]
     public class DetalleFacturaController(IServiceDetalleFactura serviceDetalleFactura) : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetAllDetalleFacturasAsync()
+        //Formato del endpoint: el controller sería el de DetalleFactura
+        [HttpGet("~/api/Factura/{idFactura}/[controller]")]
+        public async Task<IActionResult> GetAllDetalleFacturaByFacturaAsync(long idFactura)
         {
-            var detalleFacturas = await serviceDetalleFactura.ListAsync();
+            var detalleFacturas = await serviceDetalleFactura.ListAsync(idFactura);
             return StatusCode(StatusCodes.Status200OK, detalleFacturas);
         }
 
-        [HttpGet("{idDetalleFacturas}")]
-        public async Task<IActionResult> GetDetalleFacturasByIdAsync(int idDetalleFactura)
+        [HttpGet("~/api/Factura/{idFactura}/[controller]/{idDetalleFactura}")]
+        public async Task<IActionResult> GetDetalleFacturaByIdAsync(long idFactura, long idDetalleFactura)
         {
-            var detalleFacturas = await serviceDetalleFactura.FindByIdAsync(idDetalleFactura);
-            return StatusCode(StatusCodes.Status200OK, detalleFacturas);
+            var detalleFactura = await serviceDetalleFactura.FindByIdAsync(idFactura, idDetalleFactura);
+            return StatusCode(StatusCodes.Status200OK, detalleFactura);
         }
     }
 }

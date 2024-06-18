@@ -4,93 +4,35 @@
     ViewData["Title"] = "Factura";
 }
 
-<h1>Index</h1>
+<h1>Factura</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-3">Inicio</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreCliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdTipoPago)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Consecutivo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuarioSucursal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdImpuesto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PorcentajeImpuesto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubTotal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MontoImpuesto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MontoTotal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <div class="row">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdCliente)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreCliente)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdTipoPago)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Consecutivo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdUsuarioSucursal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdImpuesto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PorcentajeImpuesto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SubTotal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MontoImpuesto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MontoTotal)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+            <div class="col-md-6 col-sm-12 col-xxl-3">
+                <div class="card mb-4 shadow-sm card-fixed-heigth sm">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Factura # @Html.DisplayFor(modelItem => item.Consecutivo)</h5>
+                        <p class="card-text">
+                            <strong>Cliente:</strong> @Html.DisplayFor(modelItem => item.NombreCliente)<br />
+                            <strong>Fecha de Emisión:</strong> @Html.DisplayFor(modelItem => item.Fecha)<br />
+                            <strong>Subtotal:</strong> @Html.DisplayFor(modelItem => item.SubTotal)<br />
+                            <strong>Impuesto:</strong> @Html.DisplayFor(modelItem => item.MontoImpuesto)<br />
+                            <strong>Total:</strong> @Html.DisplayFor(modelItem => item.MontoTotal)<br />
+                        </p>
+                        <div class="mt-auto">
+                            <div class="btn-group d-flex justify-content-between" role="group">
+                                @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

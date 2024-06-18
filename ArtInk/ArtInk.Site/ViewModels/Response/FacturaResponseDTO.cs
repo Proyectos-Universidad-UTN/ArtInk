@@ -1,16 +1,18 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ArtInk.Site.ViewModels.Response
 {
     public record FacturaResponseDTO
     {
-        public short Id { get; set; }
+        public long Id { get; set; }
 
         public short IdCliente { get; set; }
 
         [DisplayName("Nombre")]
         public string NombreCliente { get; set; } = null!;
 
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         public DateOnly Fecha { get; set; }
 
         [DisplayName("Forma Pago")]
@@ -28,12 +30,15 @@ namespace ArtInk.Site.ViewModels.Response
         public decimal PorcentajeImpuesto { get; set; }
 
         [DisplayName("Subtotal")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal SubTotal { get; set; }
 
         [DisplayName("Impuesto")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal MontoImpuesto { get; set; }
 
         [DisplayName("Total")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal MontoTotal { get; set; }
 
         public virtual ICollection<DetalleFacturaResponseDTO> DetalleFacturas { get; set; } = new List<DetalleFacturaResponseDTO>();
