@@ -26,13 +26,17 @@ namespace ArtInk.Application.Configuration
             services.AddTransient<IServiceReserva, ServiceReserva>();
             services.AddTransient<IServiceServicio, ServiceServicio>();
             services.AddTransient<IServiceReservaPregunta, ServiceReservaPregunta>();
+            services.AddTransient<IServiceUnidadMedida, ServiceUnidadMedida>();
+            services.AddTransient<IServiceCategoria, ServiceCategoria>();
             //se agrega
         }
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(config =>
             {
-                config.AddProfile<ApplicationProfile>();
+                config.AddProfile<ModelToDTOApplicationProfile>();
+                config.AddProfile<DTOToModelApplicationProfile>();
+
             });
         }
     }
