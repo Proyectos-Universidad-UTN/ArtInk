@@ -12,6 +12,7 @@ namespace ArtInk.Site.ViewModels.Response
         public string Pregunta { get; set; } = null!;
 
         public bool Activo { get; set; }
+        public string Respuesta { get; set; }
 
         public virtual ReservaResponseDTO Reserva { get; set; } = null!;
     }
