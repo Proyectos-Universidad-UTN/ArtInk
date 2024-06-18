@@ -8,10 +8,10 @@ namespace ArtInk.Application.DTOs;
 
 public record DetalleFacturaProductoDTO
 {
-    public short Id { get; set; }
+    public long Id { get; set; }
 
     [DisplayName("Detalle")]
-    public short IdDetalleFactura { get; set; }
+    public long IdDetalleFactura { get; set; }
 
     [DisplayName("Producto")]
     public short IdProducto { get; set; }
@@ -20,5 +20,5 @@ public record DetalleFacturaProductoDTO
 
     public virtual DetalleFacturaDTO DetalleFactura { get; set; } = null!;
 
-    public virtual ProductoDTO IdProductoNavigation { get; set; } = null!;
+    public virtual ProductoDTO Producto { get; set; } = null!;
 }

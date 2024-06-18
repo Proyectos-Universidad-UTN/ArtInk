@@ -1,0 +1,22 @@
+{
+    "composer.bin": "",
+    "dotnet.preferCSharpExtension": false,
+    "editor.formatOnType": true,
+    "sqltools.connections": [
+        {
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": true
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 1433,
+            "driver": "MSSQL",
+            "name": "ArtInk",
+            "database": "Artink",
+            "username": "sa",
+            "password": "!Al3j0sMSSQLServer"
+        }
+    ]
+}

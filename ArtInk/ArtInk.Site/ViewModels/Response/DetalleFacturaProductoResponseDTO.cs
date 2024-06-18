@@ -4,10 +4,10 @@ namespace ArtInk.Site.ViewModels.Response
 {
     public record DetalleFacturaProductoResponseDTO
     {
-        public short Id { get; set; }
+        public long Id { get; set; }
 
         [DisplayName("Detalle")]
-        public short IdDetalleFactura { get; set; }
+        public long IdDetalleFactura { get; set; }
 
         [DisplayName("Producto")]
         public short IdProducto { get; set; }

@@ -1,15 +1,16 @@
 ﻿
 
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ArtInk.Site.ViewModels.Response
 {
     public record DetalleFacturaResponseDTO
     {
-        public short Id { get; set; }
+        public long Id { get; set; }
 
         [DisplayName("Factura")]
-        public short IdFactura { get; set; }
+        public long IdFactura { get; set; }
 
         [DisplayName("Servicio")]
         public byte IdServicio { get; set; }
@@ -20,15 +21,19 @@ namespace ArtInk.Site.ViewModels.Response
         public short Cantidad { get; set; }
 
         [DisplayName("Tarifa")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal TarifaServicio { get; set; }
 
         [DisplayName("Subtotal")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal MontoSubtotal { get; set; }
 
         [DisplayName("Impuesto")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal MontoImpuesto { get; set; }
 
-        [DisplayName("Total")]
+        [DisplayName("Total Línea")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal MontoTotal { get; set; }
 
         public virtual ICollection<DetalleFacturaProductoResponseDTO> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProductoResponseDTO>();

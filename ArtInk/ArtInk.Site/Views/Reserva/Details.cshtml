@@ -16,11 +16,13 @@
             {
                 <div class="accordion-item" id="servicio-@reservaServicio.index">
                     <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@reservaServicio.index" aria-expanded="false" aria-controls="collapse-@reservaServicio.index">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse-@reservaServicio.index" aria-controls="collapse-@reservaServicio.index">
                             @string.Format("Servicio: {0}", reservaServicio.value.Servicio.Nombre)
                         </button>
                     </h2>
-                    <div id="collapse-@reservaServicio.index" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion-servicios">
+                    <div id="collapse-@reservaServicio.index" class="accordion-collapse collapse"
+                        data-bs-parent="#accordion-servicios">
                         <div class="accordion-body text black">
                             <div class="container text-center text-black">
                                 <div class="row">
@@ -99,3 +101,13 @@
         <a href="@Url.Action("Index")" class="btn btn-secondary">Regresar</a>
     </div>
 </div>
+
+<script>
+    $(document).ready(() => {
+        const $ddBtn = $('.my-jquery-collapse')
+        const $dd = $($ddBtn.data('my-target'))
+        $ddBtn.on('click', () => {
+            $dd.toggleClass('d-none')
+        })
+    })
+</script>
