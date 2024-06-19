@@ -19,8 +19,10 @@ namespace ArtInk.Infraestructure.Repository.Implementations
 
         public async Task<ICollection<UnidadMedida>> ListAsync()
         {
-            var collection = await context.Set<UnidadMedida>().ToListAsync();
-            return collection;
+            //AsQueryable hace el acceso más sencillo
+            var collection = from unidades in context.Set<UnidadMedida>().AsQueryable()
+                             select unidades;
+            return await collection.ToListAsync();
         }
     }
 }
