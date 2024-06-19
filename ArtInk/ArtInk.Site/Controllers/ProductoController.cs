@@ -2,6 +2,7 @@
 using ArtInk.Site.Configuration;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
+using ArtInk.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Policy;
 
@@ -43,8 +44,15 @@ namespace ArtInk.Site.Controllers
             producto.UnidadMedidas = unidadMedida;
             producto.Categorias = categoria;
 
-            var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.POST, Constantes.POSTPRODUCTO);
-            return View(producto);
+            try
+            {
+                var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.POST, Constantes.POSTPRODUCTO, valoresConsumo: Serialization.Serialize(producto));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return View(producto);
+            }
         }
     }
 }

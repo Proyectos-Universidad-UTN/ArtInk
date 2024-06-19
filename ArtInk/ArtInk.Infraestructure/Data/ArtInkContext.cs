@@ -619,7 +619,7 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
         {
             if (entry.State == EntityState.Added)
             {
-                if (entry.Entity.GetType().GetProperty("FechaCreacion") != null && entry.Property("FechaCreacion").CurrentValue == null) entry.Property("FechaCreacion").CurrentValue = DateTimeOffset.Now;
+                if (entry.Entity.GetType().GetProperty("FechaCreacion") != null && entry.Property("FechaCreacion").CurrentValue != null) entry.Property("FechaCreacion").CurrentValue = DateTime.Now;
                 if (entry.Entity.GetType().GetProperty("Activo") != null && (bool)entry.Property("Activo").CurrentValue! == false) entry.Property("Activo").CurrentValue = true;
 
                 if (entry.Entity.GetType().GetProperty("UsuarioCreacion") != null && entry.Property("UsuarioModificacion").CurrentValue != null)
@@ -628,6 +628,7 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
                     entry.Property("UsuarioModificacion").CurrentValue = null;
                 }
 
+                entry.Property("UsuarioCreacion").CurrentValue = "ArtInkAPI";
                 entry.Property("FechaModificacion").IsModified = false;
                 entry.Property("UsuarioModificacion").IsModified = false;
             }
@@ -635,8 +636,9 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
             {
                 if (entry.State == EntityState.Modified)
                 {
-                    if (entry.Entity.GetType().GetProperty("FechaModificacion") != null) entry.Property("FechaModificacion").CurrentValue = DateTimeOffset.Now;
+                    if (entry.Entity.GetType().GetProperty("FechaModificacion") != null) entry.Property("FechaModificacion").CurrentValue = DateTime.Now;
 
+                    entry.Property("UsuarioModificacion").CurrentValue = "ArtInkAPIModify";
                     entry.Property("FechaCreacion").IsModified = false;
                     entry.Property("UsuarioCreacion").IsModified = false;
 
