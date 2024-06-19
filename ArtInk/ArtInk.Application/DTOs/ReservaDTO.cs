@@ -20,7 +20,11 @@ public record ReservaDTO: BaseEntity
 
     public bool Activo { get; set; }
 
+    public short IdUsuarioSucursal { get; set; }
+
     public virtual SucursalHorarioDTO SucursalHorario { get; set; } = null!;
+
+    public virtual UsuarioSucursalDTO UsuarioSucursal { get; set; } = null!;
 
     public virtual ICollection<ReservaPreguntaDTO> ReservaPregunta { get; set; } = new List<ReservaPreguntaDTO>();
 

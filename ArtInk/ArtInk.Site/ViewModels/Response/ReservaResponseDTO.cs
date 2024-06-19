@@ -17,7 +17,11 @@ namespace ArtInk.Site.ViewModels.Response
 
         public bool Activo { get; set; }
 
+        public short IdUsuarioSucursal { get; set; }
+
         public virtual SucursalHorarioResponseDTO SucursalHorario { get; set; } = null!;
+
+        public virtual UsuarioSucursalResponseDTO UsuarioSucursal { get; set; } = null!;
 
         public virtual ICollection<ReservaPreguntaResponseDTO> ReservaPregunta { get; set; } = new List<ReservaPreguntaResponseDTO>();
 

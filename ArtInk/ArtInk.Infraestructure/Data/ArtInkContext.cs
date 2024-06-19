@@ -386,6 +386,11 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
                 .HasForeignKey(d => d.IdSucursalHorario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Reserva_SucursalHorario");
+
+            entity.HasOne(d => d.IdUsuarioSucursalNavigation).WithMany(p => p.Reservas)
+                .HasForeignKey(d => d.IdUsuarioSucursal)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Reserva_UsuarioSucursal");
         });
 
         modelBuilder.Entity<ReservaPregunta>(entity =>
