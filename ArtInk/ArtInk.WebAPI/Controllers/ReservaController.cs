@@ -8,12 +8,21 @@ namespace ArtInk.WebAPI.Controllers
     [ApiController]
     public class ReservaController(IServiceReserva serviceReserva) : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetAllReservasAsync()
+        [HttpGet("~/api/Rol/{rol}/[controller]")]
+        public async Task<IActionResult> GetAllReservasAsync(string rol)
         {
-            var reservas = await serviceReserva.ListAsync();
+            ArgumentNullException.ThrowIfNullOrEmpty(rol);
+            var reservas = await serviceReserva.ListAsync(rol);
             return StatusCode(StatusCodes.Status200OK, reservas);
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetAllReservasByRolAsync([FromQuery]string rol)
+        //{
+        //    ArgumentNullException.ThrowIfNullOrEmpty(rol);
+        //    var reservas = await serviceReserva.ListAsync(rol);
+        //    return StatusCode(StatusCodes.Status200OK, reservas);
+        //}
 
         [HttpGet("{idReserva}")]
         public async Task<IActionResult> GetReservaByIdAsync(int idReserva)

@@ -9,7 +9,8 @@ namespace ArtInk.Site.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            var collection = await cliente.ConsumirAPIAsync<IEnumerable<ReservaResponseDTO>>(Constantes.GET, Constantes.GETALLRESERVAS);
+            var url = string.Format(Constantes.GETALLRESERVASBYROL, "1");
+            var collection = await cliente.ConsumirAPIAsync<IEnumerable<ReservaResponseDTO>>(Constantes.GET, url);
             return View(collection);
         }
 

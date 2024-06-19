@@ -15,6 +15,8 @@ public record UsuarioSucursalDTO
 
     public virtual ICollection<FacturaDTO> Facturas { get; set; } = new List<FacturaDTO>();
 
+    public virtual ICollection<ReservaDTO> Reservas { get; set; } = new List<ReservaDTO>();
+
     public virtual SucursalDTO Sucursal { get; set; } = null!;
 
     public virtual UsuarioDTO Usuario { get; set; } = null!;

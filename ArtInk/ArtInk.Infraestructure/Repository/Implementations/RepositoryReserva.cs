@@ -27,13 +27,16 @@ namespace ArtInk.Infraestructure.Repository.Implementations
         }
 
 
-        public async Task<ICollection<Reserva>> ListAsync()
+        public async Task<ICollection<Reserva>> ListAsync(byte rol)
         {
             var collection = await context.Set<Reserva>()
                 .Include(a => a.IdSucursalHorarioNavigation)
                 .ThenInclude(a => a.IdSucursalNavigation)
                 .Include(a => a.IdSucursalHorarioNavigation)
                 .ThenInclude(a => a.IdHorarioNavigation)
+                .Include(a => a.IdUsuarioSucursalNavigation)
+                .ThenInclude(a => a.IdUsuarioNavigation)
+                .Where(a => a.IdUsuarioSucursalNavigation.IdUsuarioNavigation.IdRol == rol)
                 .ToListAsync();
             return collection;
         }
