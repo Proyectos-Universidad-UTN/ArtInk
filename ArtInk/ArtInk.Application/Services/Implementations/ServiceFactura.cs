@@ -23,6 +23,7 @@ namespace ArtInk.Application.Services.Implementations
         public async Task<ICollection<FacturaDTO>> ListAsync()
         {
             var list = await repository.ListAsync();
+            list = list.OrderByDescending(x => x.Fecha).ToList();    
             var collection = mapper.Map<ICollection<FacturaDTO>>(list);
 
             return collection;

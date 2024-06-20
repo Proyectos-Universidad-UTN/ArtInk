@@ -11,7 +11,13 @@
                     <div class="container-factura p-4">
                         <div class="header-factura text-black">
                             <div class="row gutters">
-                                <div class="col-sm-12 col-xl-12">
+                                <div class="col-sm-6 col-xl-6">
+                                    <h1>ArtInk</h1>
+                                    <div class="w-100">
+                                        <img src="~/img/logoArtInk.webp" alt="Logo Factura" class="img-thumbnail rounded img-fluid" style="height: 200px!important" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xl-6">
                                     <div class="mb-5 m-auto d-flex justify-content-end">
                                         <a href="" class="btn btn-primary m-1">
                                             <i class="icon-download"></i>Descargar
@@ -21,15 +27,23 @@
                             </div>
                             <div class="row gutters">
                                 <div class="col-sm-6 col-xl-6">
-                                    <h1>ArtInk</h1> @* TODO: Cambiar por ícono *@
                                 </div>
                                 <div class="col-sm-6 col-xl-6">
                                     <address class="text-end m-0">Dirección Local: @Model.UsuarioSucursal.Sucursal.DireccionExacta</address>
+                                    <div class="text-end m-0">
+                                        Correo electrónico
+                                        <a href='@String.Format("mailto:{0}",Model.UsuarioSucursal.Sucursal.CorreoElectronico)'>
+                                            @Model.UsuarioSucursal.Sucursal.CorreoElectronico
+                                        </a>
+                                    </div>
+                                    <div class="text-end m-0">Teléfono: @Model.UsuarioSucursal.Sucursal.Telefono</div>
                                 </div>
+
                             </div>
                             <div class="row gutters">
                                 <div class="col-sm-6 col-xl-6">
                                     <div class="detalle-factura mt-3 p-3 lh-3 bg-light">
+                                        <div>Cédula: @Model.Cliente.Id</div>
                                         <address>@Model.NombreCliente</address>
                                     </div>
                                 </div>
@@ -60,81 +74,6 @@
     </div>
 </div>
 
-@* <div>
-    <h4>FacturaResponseDTO</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCliente)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCliente)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NombreCliente)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NombreCliente)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdTipoPago)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdTipoPago)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Consecutivo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Consecutivo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdUsuarioSucursal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdUsuarioSucursal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdImpuesto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdImpuesto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PorcentajeImpuesto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PorcentajeImpuesto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SubTotal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SubTotal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MontoImpuesto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MontoImpuesto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MontoTotal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MontoTotal)
-        </dd>
-    </dl>
-</div>
-<div>
-    @await Html.PartialAsync("~/Views/Factura/_DetalleFactura.cshtml", item.DetalleFacturas);
-</div> *@
 <div class="container pt-3 mb-3">
     <div class="row">
         <div class="col-12">

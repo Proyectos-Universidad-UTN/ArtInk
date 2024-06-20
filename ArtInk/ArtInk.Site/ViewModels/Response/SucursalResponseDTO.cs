@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ArtInk.Site.ViewModels.Response
 {
@@ -12,6 +13,7 @@ namespace ArtInk.Site.ViewModels.Response
         public string Descripcion { get; set; } = null!;
 
         [DisplayName("Teléfono")]
+        [DisplayFormat(DataFormatString ="{0:####-####}")]
         public int Telefono { get; set; }
 
         [DisplayName("Corro Electrónico")]
