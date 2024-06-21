@@ -1,4 +1,5 @@
 ﻿using ArtInk.Application.DTOs;
+using ArtInk.Application.RequestDTOs;
 
 namespace ArtInk.Application.Services.Interfaces
 {
@@ -6,5 +7,6 @@ namespace ArtInk.Application.Services.Interfaces
     {
         Task<ICollection<SucursalDTO>> ListAsync();
         Task<SucursalDTO> FindByIdAsync(byte id);
+        Task<SucursalDTO> CreateSucursalAsync(RequestProductoDTO producto);
     }
 }

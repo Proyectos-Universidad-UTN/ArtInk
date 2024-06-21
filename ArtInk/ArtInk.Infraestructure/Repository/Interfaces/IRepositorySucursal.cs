@@ -9,6 +9,7 @@ namespace ArtInk.Infraestructure.Repository.Interfaces
 {
     public interface IRepositorySucursal
     {
+        Task<Sucursal> CreateSucursalAsync(Sucursal sucursal);
         Task<ICollection<Sucursal>> ListAsync();
         Task<Sucursal?> FindByIdAsync(byte id);
     }

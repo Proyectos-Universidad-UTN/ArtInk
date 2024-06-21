@@ -12,6 +12,15 @@ namespace ArtInk.Infraestructure.Repository.Implementations
 {
     public class RepositorySucursal(ArtInkContext context) : IRepositorySucursal
     {
+        public async Task<Sucursal> CreateSucursalAsync(Sucursal sucursal)
+        {
+            var result = context.Sucursals.Add(sucursal);
+            //aplica en la BD
+            await context.SaveChangesAsync();
+            //Refleja la entidad
+            return result.Entity;
+        }
+
         public async Task<Sucursal?> FindByIdAsync(byte id)
         {
             return await context.Set<Sucursal>().FindAsync(id);
