@@ -14,10 +14,17 @@ namespace ArtInk.Application.Services.Implementations
 {
     public class ServiceSucursal(IRepositorySucursal repository, IMapper mapper) : IServiceSucursal
     {
+        public async Task<SucursalDTO> CreateSucursalAsync(RequestSucursalDTO sucursal)
+        {
+            var result = await repository.CreateSucursalAsync(mapper.Map<Sucursal>(sucursal));
+            if (result == null) throw new Exception("Sucursal no se creado.");
+            return mapper.Map<SucursalDTO>(result);
+        }
+
         /// <summary>
         /// buscarlo por ID
         /// </summary>
-       
+
 
         public async Task<SucursalDTO> FindByIdAsync(byte id)
         {

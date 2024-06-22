@@ -7,6 +7,6 @@ namespace ArtInk.Application.Services.Interfaces
     {
         Task<ICollection<SucursalDTO>> ListAsync();
         Task<SucursalDTO> FindByIdAsync(byte id);
-        Task<SucursalDTO> CreateSucursalAsync(RequestProductoDTO producto);
+        Task<SucursalDTO> CreateSucursalAsync(RequestSucursalDTO sucursal);
     }
 }
