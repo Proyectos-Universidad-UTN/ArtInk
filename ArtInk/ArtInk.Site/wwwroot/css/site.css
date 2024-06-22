@@ -81,7 +81,7 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Asegura que esté detrás del contenido */
+    z-index: -1; /* Asegura que estï¿½ detrï¿½s del contenido */
     animation: growShrink 25s infinite;
 }
 
@@ -116,6 +116,10 @@ footer {
 
     .card:hover {
         transform: scale(1.05);
+    }
+
+    .no-transform:hover {
+        transform: none !important;
     }
 
 .card-fixed-heigth.sm {
@@ -250,7 +254,7 @@ a.btn {
     height: 100%;
     top: 0;
     left: 0;
-    z-index: -1; /* Para que las burbujas queden detrás del contenido del footer */
+    z-index: -1; /* Para que las burbujas queden detrï¿½s del contenido del footer */
 }
 
 .bubble {
