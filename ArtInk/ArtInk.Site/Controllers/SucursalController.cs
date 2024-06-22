@@ -25,30 +25,27 @@ namespace ArtInk.Site.Controllers
         public async Task<IActionResult> Create()
         {
             var distrito = await cliente.ConsumirAPIAsync<IEnumerable<DistritoResponseDTO>>(Constantes.GET, Constantes.GETALLDISTRITOS);
-            var producto = new DistritoRequestDTO()
+            var sucursal = new SucursalRequestDTO()
             {
-                UnidadMedidas = unidadMedida,
-                Categorias = categoria
+               Distritos =distrito
             };
-            return View(producto);
+            return View(sucursal);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductoRequestDTO producto)
+        public async Task<IActionResult> Create(SucursalRequestDTO sucursal)
         {
-            var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-            var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-            producto.UnidadMedidas = unidadMedida;
-            producto.Categorias = categoria;
+            var distrito = await cliente.ConsumirAPIAsync<IEnumerable<DistritoResponseDTO>>(Constantes.GET, Constantes.GETALLDISTRITOS);
+            sucursal.Distritos = distrito;
 
             try
             {
-                var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.POST, Constantes.POSTPRODUCTO, valoresConsumo: Serialization.Serialize(producto));
+                var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
-                return View(producto);
+                return View(sucursal);
             }
         }
     }
