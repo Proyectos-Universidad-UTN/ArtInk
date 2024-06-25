@@ -1,5 +1,7 @@
 ﻿using ArtInk.Application.DTOs;
+using ArtInk.Application.RequestDTOs;
 using ArtInk.Application.Services.Interfaces;
+using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using AutoMapper;
 using System;
@@ -12,6 +14,12 @@ namespace ArtInk.Application.Services.Implementations
 {
     public class ServiceServicio(IRepositoryServicio repository, IMapper mapper) : IServiceServicio
     {
+        public async Task<ServicioDTO> CreateServicioAsync(RequestServicioDTO servicio)
+        {
+            var result = await repository.CreateServicioAsync(mapper.Map<Servicio>(servicio));
+            if (result == null) throw new Exception("Producto no creado.");
+            return mapper.Map<ServicioDTO>(result);
+        }
 
         /// <summary>
         /// buscarlo por ID

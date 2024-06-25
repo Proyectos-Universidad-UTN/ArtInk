@@ -32,6 +32,7 @@
         //Url Servicos
         public const string GETALLSERVICIOS = "servicio"; //minuscula es el endpoint del API
         public const string GETSERVICIOBYID = "servicio/{0}";
+        public const string POSTSERVICIO = "servicio";
 
         //Url Horarios
         public const string GETALLHORARIOS = "horario"; //minuscula es el endpoint del API
@@ -48,6 +49,9 @@
         //Url ReservaPregunta
         public const string GETALLRESERVASPREGUNTAS = "reserva"; //minuscula es el endpoint del API
         public const string GETRESERVAPREGUNTABYID = "reserva/{0}";
+
+        //Url TipoServicio
+        public const string GETALLTIPOSERVICIOS = "tiposervicio"; //minuscula es el endpoint del API
 
     }
 }

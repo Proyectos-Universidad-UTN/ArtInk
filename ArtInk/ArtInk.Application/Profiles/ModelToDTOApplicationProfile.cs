@@ -10,9 +10,9 @@ using AutoMapper;
 
 namespace ArtInk.Application.Profiles
 {
-    public class ApplicationProfile :Profile
+    public class ModelToDTOApplicationProfile :Profile
     {
-        public ApplicationProfile()
+        public ModelToDTOApplicationProfile()
         {
             CreateMap<Usuario, UsuarioDTO>()
                 .ForMember(dest => dest.Rol, inp => inp.MapFrom(ori => ori.IdRolNavigation))

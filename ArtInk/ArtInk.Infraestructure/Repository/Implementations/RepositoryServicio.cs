@@ -12,6 +12,15 @@ namespace ArtInk.Infraestructure.Repository.Implementations
 {
     public class RepositoryServicio(ArtInkContext context) : IRepositoryServicio
     {
+        public async Task<Servicio> CreateServicioAsync(Servicio servicio)
+        {
+            var result = context.Servicios.Add(servicio);
+            //aplica en la BD
+            await context.SaveChangesAsync();
+            //Refleja la entidad
+            return result.Entity;
+        }
+
         public async Task<Servicio?> FindByIdAsync(byte id)
         {
             return await context.Set<Servicio>().FindAsync(id);
