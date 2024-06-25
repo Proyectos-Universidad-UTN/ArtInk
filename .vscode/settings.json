@@ -1,7 +1,7 @@
 {
     "composer.bin": "",
     "dotnet.preferCSharpExtension": false,
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "emmet.includeLanguages": {
         "aspnetcorerazor": "html"
     },
