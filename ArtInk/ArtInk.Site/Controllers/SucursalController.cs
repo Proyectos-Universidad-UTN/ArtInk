@@ -40,7 +40,8 @@ namespace ArtInk.Site.Controllers
 
             try
             {
-                var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
+                var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>
+                    (Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
