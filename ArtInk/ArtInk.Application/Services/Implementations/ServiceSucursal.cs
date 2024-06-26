@@ -17,7 +17,7 @@ namespace ArtInk.Application.Services.Implementations
         public async Task<SucursalDTO> CreateSucursalAsync(RequestSucursalDTO sucursal)
         {
             var result = await repository.CreateSucursalAsync(mapper.Map<Sucursal>(sucursal));
-            if (result == null) throw new Exception("Sucursal no se creado.");
+            if (result == null) throw new Exception("Sucursal no se ha creado.");
             return mapper.Map<SucursalDTO>(result);
         }
 

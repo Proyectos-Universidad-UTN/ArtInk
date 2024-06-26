@@ -24,8 +24,7 @@ namespace ArtInk.Site.Controllers
         }
         public async Task<IActionResult> Create()
         {
-            var distrito = await cliente.ConsumirAPIAsync<IEnumerable<DistritoResponseDTO>>
-                (Constantes.GET, Constantes.GETALLDISTRITOS);
+            var distrito = await cliente.ConsumirAPIAsync<IEnumerable<DistritoResponseDTO>>(Constantes.GET, Constantes.GETALLDISTRITOS);
             var sucursal = new SucursalRequestDTO()
             {
                Distritos =distrito

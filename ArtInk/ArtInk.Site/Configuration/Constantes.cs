@@ -55,7 +55,11 @@
         public const string GETALLUNIDAMEDIDAS = "unidadmedida"; 
 
         //Url Categoria
-        public const string GETALLCATEGORIAS = "categoria"; 
+        public const string GETALLCATEGORIAS = "categoria";
+
+        //Url Provincia
+        public const string GETALLPROVINCIA = "provincia";
+        public const string GETPROVINCIABYID = "provincia/{0}";
 
         //Url Distrito
         public const string GETALLDISTRITOS = "distrito"; 

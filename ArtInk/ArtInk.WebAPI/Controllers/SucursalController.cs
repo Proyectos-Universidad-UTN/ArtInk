@@ -32,7 +32,7 @@ namespace ArtInk.WebAPI.Controllers
             //retorna una excepçión is es nulo
             ArgumentNullException.ThrowIfNull(sucursal);
             var result = await serviceSucursal.CreateSucursalAsync(sucursal);
-            return StatusCode(StatusCodes.Status201Created, sucursal);
+            return StatusCode(StatusCodes.Status201Created, result);
         }
     }
 }

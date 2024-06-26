@@ -1,4 +1,5 @@
 ﻿using ArtInk.Application.Profiles;
+using ArtInk.Application.Services;
 using ArtInk.Application.Services.Implementations;
 using ArtInk.Application.Services.Interfaces;
 using ArtInk.Infraestructure.Models;
@@ -29,6 +30,7 @@ namespace ArtInk.Application.Configuration
             services.AddTransient<IServiceUnidadMedida, ServiceUnidadMedida>();
             services.AddTransient<IServiceCategoria, ServiceCategoria>();
             services.AddTransient<IServiceHorario, ServiceHorario>();
+            services.AddTransient<IServiceProvincia, ServiceProvincia>();
 
             //se agrega
         }
