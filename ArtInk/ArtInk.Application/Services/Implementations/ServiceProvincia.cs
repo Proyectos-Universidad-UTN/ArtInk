@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArtInk.Application.Services
+namespace ArtInk.Application.Services.Implementations
 {
     public class ServiceProvincia(IRepositoryProvincia repository, IMapper mapper) : IServiceProvincia
     {

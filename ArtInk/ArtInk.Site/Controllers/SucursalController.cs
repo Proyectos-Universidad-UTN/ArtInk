@@ -22,33 +22,34 @@ namespace ArtInk.Site.Controllers
 
             return View(collection);
         }
+
         public async Task<IActionResult> Create()
         {
-            var distrito = await cliente.ConsumirAPIAsync<IEnumerable<DistritoResponseDTO>>(Constantes.GET, Constantes.GETALLDISTRITOS);
+            var provincias = await cliente.ConsumirAPIAsync<IEnumerable<ProvinciaResponseDTO>>(Constantes.GET, Constantes.GETALLPROVINCIA);
             var sucursal = new SucursalRequestDTO()
             {
-               Distritos =distrito
+               Provincias = provincias
             };
             return View(sucursal);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(SucursalRequestDTO sucursal)
-        {
-            var distrito = await cliente.ConsumirAPIAsync<IEnumerable<DistritoResponseDTO>>(Constantes.GET, Constantes.GETALLDISTRITOS);
-            sucursal.Distritos = distrito;
+        //[HttpPost]
+        //public async Task<IActionResult> Create(SucursalRequestDTO sucursal)
+        //{
+        //    var distrito = await cliente.ConsumirAPIAsync<IEnumerable<DistritoResponseDTO>>(Constantes.GET, Constantes.GETALLDISTRITOS);
+        //    sucursal.Distritos = distrito;
 
-            try
-            {
-                var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>
-                    (Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception)
-            {
-                return View(sucursal);
-            }
-        }
+        //    try
+        //    {
+        //        var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>
+        //            (Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return View(sucursal);
+        //    }
+        //}
     }
 }
 

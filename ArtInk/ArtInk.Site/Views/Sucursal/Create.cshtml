@@ -1,4 +1,5 @@
-﻿@model ArtInk.Site.ViewModels.Request.SucursalRequestDTO
+﻿@using ArtInk.Site.ViewModels.Response
+@model ArtInk.Site.ViewModels.Request.SucursalRequestDTO
 
 @{
     ViewData["Title"] = "Crear";
@@ -50,8 +51,27 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="IdDistrito" class="form-label"></label>
-                            <input asp-for="IdDistrito" class="form-control" />
+                            <label asp-for="IdProvincia" class="form-label"></label>
+                            <select asp-for="IdProvincia" class="form-select" asp-items="@(new SelectList(Model.Provincias,"Id","Nombre"))"></select>
+                            <span asp-validation-for="IdProvincia" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <div id="cantonSelect">
+                                @await Html.PartialAsync("~/Views/Shared/_CantonSelect.cshtml", new List<CantonResponseDTO>())
+                            </div>
+                            <span asp-validation-for="IdCanton" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <div id="distritoSelect">
+
+                            </div>
                             <span asp-validation-for="IdDistrito" class="text-danger"></span>
                         </div>
                     </div>
@@ -86,3 +106,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+<script src="~/js/direcciones/canton-select.js"></script>

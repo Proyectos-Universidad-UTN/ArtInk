@@ -26,6 +26,10 @@ namespace ArtInk.Site.ViewModels.Request
 
         public bool Activo { get; set; }
 
-        public IEnumerable<DistritoResponseDTO> Distritos { get; set; } = null!;
+        public IEnumerable<ProvinciaResponseDTO> Provincias { get; set; } = null!;
+
+        public byte IdProvincia { get; set; }
+
+        public byte IdCanton { get; set; }
     }
 }

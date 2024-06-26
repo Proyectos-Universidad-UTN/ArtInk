@@ -8,7 +8,7 @@ namespace ArtInk.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProvinciaController (IServiceProvincia serviceProvincia) : ControllerBase
+    public class ProvinciaController(IServiceProvincia serviceProvincia) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAllProvinciasAsync()
@@ -24,3 +24,4 @@ namespace ArtInk.WebAPI.Controllers
             return StatusCode(StatusCodes.Status200OK, provincia);
         }
     }
+}
