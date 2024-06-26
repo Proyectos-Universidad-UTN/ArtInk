@@ -16,17 +16,12 @@ namespace ArtInk.Infraestructure.Repository.Implementations
         {
             var keyProperty = context.Model.FindEntityType(typeof(Provincia))!.FindPrimaryKey()!.Properties[0];
             return await context.Set<Provincia>()
-                .Include(a => a.Cantons)
-                .ThenInclude(a => a.Distritos)
                 .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
         }
 
         public async Task<ICollection<Provincia>> ListAsync()
         {
-            var collection = await context.Set<Provincia>()
-                .Include(a => a.Cantons)
-                .ThenInclude(a => a.Distritos)
-                .ToListAsync();
+            var collection = await context.Set<Provincia>().ToListAsync();
             return collection;
         }
     }

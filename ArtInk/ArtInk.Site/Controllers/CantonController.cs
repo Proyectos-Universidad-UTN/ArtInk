@@ -16,7 +16,8 @@ namespace ArtInk.Site.Controllers
         public async Task<IActionResult> ObtenerCantones(byte idProvincia)
         {
             var url = string.Format(Constantes.GETALLCANTONESBYPROVINCIA, idProvincia);
-            var collection = await cantonCliente.ConsumirAPIAsync<IEnumerable<CantonResponseDTO>>(Constantes.GET, url);
+            var collection = await cantonCliente.ConsumirAPIAsync<List<CantonResponseDTO>>(Constantes.GET, url);
+            collection.Insert(0, new CantonResponseDTO() { Id = 0, Nombre = "Seleccione un cantón" });
             return PartialView("~/Views/Shared/_CantonSelect.cshtml", collection);
         }
 

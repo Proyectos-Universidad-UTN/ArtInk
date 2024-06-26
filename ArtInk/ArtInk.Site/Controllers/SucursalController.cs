@@ -25,7 +25,8 @@ namespace ArtInk.Site.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var provincias = await cliente.ConsumirAPIAsync<IEnumerable<ProvinciaResponseDTO>>(Constantes.GET, Constantes.GETALLPROVINCIA);
+            var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDTO>>(Constantes.GET, Constantes.GETALLPROVINCIA);
+            provincias.Insert(0, new ProvinciaResponseDTO() { Id = 0, Nombre = "Seleccione una provincia" });
             var sucursal = new SucursalRequestDTO()
             {
                Provincias = provincias

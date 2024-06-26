@@ -20,11 +20,10 @@ namespace ArtInk.Infraestructure.Repository.Implementations
                         .ThenInclude(m => m.IdProvinciaNavigation)
                         .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
         }
-        public async Task<ICollection<Distrito>> ListAsync(byte idProvincia)
+        public async Task<ICollection<Distrito>> ListAsync(byte IdCanton)
         {
             var collection = await context.Set<Distrito>()
-                .Include(m => m.IdCantonNavigation)
-                .ThenInclude(m => m.IdProvinciaNavigation)
+                .Where(m => m.IdCanton == IdCanton)
                 .ToListAsync();
             return collection;
         }
