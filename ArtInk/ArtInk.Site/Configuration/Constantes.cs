@@ -61,6 +61,9 @@
         public const string GETALLDISTRITOS = "distrito"; 
         public const string GETDISTRITOBYID = "distrito/{0}";
 
+        //Url Canton
+        public const string GETALLCANTONESBYPROVINCIA = "provincia/{0}/canton"; 
+        public const string GETCANTONBYID = "canton/{0}";
 
     }
 }

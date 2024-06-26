@@ -29,6 +29,7 @@ namespace ArtInk.Application.Configuration
             services.AddTransient<IServiceUnidadMedida, ServiceUnidadMedida>();
             services.AddTransient<IServiceCategoria, ServiceCategoria>();
             services.AddTransient<IServiceHorario, ServiceHorario>();
+            services.AddTransient<IServiceCanton, ServiceCanton>();
 
             //se agrega
         }
