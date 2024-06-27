@@ -731,6 +731,9 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<short>("IdSucursalHorario")
                         .HasColumnType("smallint");
 
+                    b.Property<short>("IdUsuarioSucursal")
+                        .HasColumnType("smallint");
+
                     b.Property<string>("UsuarioCreacion")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -744,6 +747,8 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasName("PK_reserva");
 
                     b.HasIndex("IdSucursalHorario");
+
+                    b.HasIndex("IdUsuarioSucursal");
 
                     b.ToTable("Reserva", (string)null);
                 });
@@ -1389,7 +1394,15 @@ namespace ArtInk.Infraestructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Reserva_SucursalHorario");
 
+                    b.HasOne("ArtInk.Infraestructure.Models.UsuarioSucursal", "IdUsuarioSucursalNavigation")
+                        .WithMany("Reservas")
+                        .HasForeignKey("IdUsuarioSucursal")
+                        .IsRequired()
+                        .HasConstraintName("FK_Reserva_UsuarioSucursal");
+
                     b.Navigation("IdSucursalHorarioNavigation");
+
+                    b.Navigation("IdUsuarioSucursalNavigation");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.ReservaPregunta", b =>
@@ -1661,6 +1674,8 @@ namespace ArtInk.Infraestructure.Migrations
             modelBuilder.Entity("ArtInk.Infraestructure.Models.UsuarioSucursal", b =>
                 {
                     b.Navigation("Facturas");
+
+                    b.Navigation("Reservas");
                 });
 #pragma warning restore 612, 618
         }

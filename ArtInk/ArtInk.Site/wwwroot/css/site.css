@@ -39,6 +39,7 @@ body {
 
 .full-page {
     min-height: 92vh;
+
 }
 
 main {
@@ -59,17 +60,29 @@ footer {
 }
 /******************************************************FONDO****************************************************/
 
+
+@keyframes growShrink {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
 .background-image-main {
     background-image: url('../img/imagenfondo.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Asegura que esté detrás del contenido */
+    z-index: -1; /* Asegura que estï¿½ detrï¿½s del contenido */
+    animation: growShrink 25s infinite;
 }
 
 
@@ -103,6 +116,10 @@ footer {
 
     .card:hover {
         transform: scale(1.05);
+    }
+
+    .no-transform:hover {
+        transform: none !important;
     }
 
 .card-fixed-heigth.sm {
@@ -251,7 +268,7 @@ a.btn {
     height: 100%;
     top: 0;
     left: 0;
-    z-index: -1; /* Para que las burbujas queden detrás del contenido del footer */
+    z-index: -1; /* Para que las burbujas queden detrï¿½s del contenido del footer */
 }
 
 .bubble {
@@ -359,4 +376,23 @@ a.btn {
     }
 }
 /***************************************************ENDBurbujas********************************/
+
+
+.navbar-logo {
+    width: 40px; 
+    height: 40px; 
+    animation: rotate 10s linear infinite; 
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
 

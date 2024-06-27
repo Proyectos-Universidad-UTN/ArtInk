@@ -22,7 +22,7 @@
         public const string GETROLBYID = "rol/{0}";
 
         //Url Reserva
-        public const string GETALLRESERVAS = "reserva"; //minuscula es el endpoint del API
+        public const string GETALLRESERVASBYROL = "rol/{0}/reserva"; //minuscula es el endpoint del API
         public const string GETRESERVABYID = "reserva/{0}";
 
         //Url Sucursales

@@ -23,6 +23,9 @@ namespace ArtInk.Infraestructure.Repository.Implementations
                 .ThenInclude(a => a.IdSucursalNavigation)
                 .Include(a => a.DetalleFacturas)
                 .ThenInclude(a => a.IdServicioNavigation)
+                .Include(a => a.DetalleFacturas)
+                .ThenInclude(a => a.DetalleFacturaProductos)
+                .ThenInclude(a => a.IdProductoNavigation)
                 .FirstOrDefaultAsync(a => EF.Property<long>(a, keyProperty.Name) == id);
         }
 
