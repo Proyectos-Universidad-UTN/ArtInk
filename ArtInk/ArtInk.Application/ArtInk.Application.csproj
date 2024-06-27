@@ -14,4 +14,8 @@
     <ProjectReference Include="..\ArtInk.Infraestructure\ArtInk.Infraestructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validations\" />
+  </ItemGroup>
+
 </Project>

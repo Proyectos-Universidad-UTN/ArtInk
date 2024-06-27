@@ -34,23 +34,24 @@ namespace ArtInk.Site.Controllers
             return View(sucursal);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create(SucursalRequestDTO sucursal)
-        //{
-        //    var distrito = await cliente.ConsumirAPIAsync<IEnumerable<DistritoResponseDTO>>(Constantes.GET, Constantes.GETALLDISTRITOS);
-        //    sucursal.Distritos = distrito;
+        [HttpPost]
+        public async Task<IActionResult> Create(SucursalRequestDTO sucursal)
+        {
+            var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDTO>>(Constantes.GET, Constantes.GETALLPROVINCIA);
+            provincias.Insert(0, new ProvinciaResponseDTO() { Id = 0, Nombre = "Seleccione una provincia" });
+            sucursal.Provincias = provincias;
 
-        //    try
-        //    {
-        //        var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>
-        //            (Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return View(sucursal);
-        //    }
-        //}
+            try
+            {
+                var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>
+                    (Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return View(sucursal);
+            }
+        }
     }
 }
 

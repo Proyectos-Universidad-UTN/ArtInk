@@ -70,7 +70,7 @@
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             <div id="distritoSelect">
-
+                                @await Html.PartialAsync("~/Views/Shared/_DistritoSelect.cshtml", new List<DistritoResponseDTO>())
                             </div>
                             <span asp-validation-for="IdDistrito" class="text-danger"></span>
                         </div>
@@ -107,3 +107,4 @@
     }
 }
 <script src="~/js/direcciones/canton-select.js"></script>
+<script src="~/js/direcciones/distrito-select.js"></script>

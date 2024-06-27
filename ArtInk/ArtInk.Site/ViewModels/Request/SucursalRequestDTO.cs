@@ -1,5 +1,6 @@
 ﻿using ArtInk.Site.ViewModels.Response;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArtInk.Site.ViewModels.Request
 {
@@ -26,10 +27,13 @@ namespace ArtInk.Site.ViewModels.Request
 
         public bool Activo { get; set; }
 
+        [NotMapped]
         public IEnumerable<ProvinciaResponseDTO> Provincias { get; set; } = null!;
 
+        [NotMapped]
         public byte IdProvincia { get; set; }
 
+        [NotMapped]
         public byte IdCanton { get; set; }
     }
 }

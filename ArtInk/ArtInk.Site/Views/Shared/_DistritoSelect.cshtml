@@ -1,0 +1,4 @@
+﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.DistritoResponseDTO>
+
+<label name="IdDistrito" class="form-label"></label>
+<select name="IdDistrito" class="form-select" asp-items="@(new SelectList(Model,"Id","Nombre"))"></select>
