@@ -129,6 +129,20 @@ footer {
 .card-fixed-heigth.lg {
     height: 420px !important;
 }
+
+.card.disable-hover {
+    background-color: #495057;
+    color: #f8f9fa;
+    border: 1px solid #6c757d;
+    transition: transform 0.2s;
+}
+
+    .card.disable-hover:hover {
+        transform: none;
+    }
+
+
+
 /***************************************************ENDCARDS***********************************************************/
 
 
