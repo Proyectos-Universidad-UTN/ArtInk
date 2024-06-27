@@ -1,4 +1,5 @@
-﻿using ArtInk.Application.DTOs;
+﻿using ArtInk.Application.Comunes;
+using ArtInk.Application.DTOs;
 using ArtInk.Application.Services.Interfaces;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using AutoMapper;
@@ -18,7 +19,7 @@ namespace ArtInk.Application.Services.Implementations
         public async Task<HorarioDTO> FindByIdAsync(short id)
         {
             var horario = await repository.FindByIdAsync(id);
-            if (horario == null) throw new Exception("Horario no encontrada.");
+            if (horario == null) throw new NotFoundException("Horario no encontrada.");
 
             return mapper.Map<HorarioDTO>(horario);
         }

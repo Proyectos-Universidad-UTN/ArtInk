@@ -1,4 +1,5 @@
-﻿using ArtInk.Application.Services.Interfaces;
+﻿using ArtInk.Application.DTOs;
+using ArtInk.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.WebAPI.Controllers
@@ -15,6 +16,9 @@ namespace ArtInk.WebAPI.Controllers
         }
 
         [HttpGet("{idHorario}")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(HorarioDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
         public async Task<IActionResult> GetHorarioByIdAsync(short idHorario)
         {
             var horario = await serviceHorario.FindByIdAsync(idHorario);
