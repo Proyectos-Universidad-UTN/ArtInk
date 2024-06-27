@@ -598,4 +598,57 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        OnBeforeSaving();
+
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+    {
+        OnBeforeSaving();
+        return await base.SaveChangesAsync(acceptAllChangesOnSuccess);
+    }
+
+    private void OnBeforeSaving()
+    {
+        DefaultProperties();
+    }
+
+    //pone valores por defecto
+    private void DefaultProperties()
+    {
+        foreach (var entry in ChangeTracker.Entries())
+        {
+            if (entry.State == EntityState.Added)
+            {
+                if (entry.Entity.GetType().GetProperty("FechaCreacion") != null && entry.Property("FechaCreacion").CurrentValue != null) entry.Property("FechaCreacion").CurrentValue = DateTime.Now;
+                if (entry.Entity.GetType().GetProperty("Activo") != null && (bool)entry.Property("Activo").CurrentValue! == false) entry.Property("Activo").CurrentValue = true;
+
+                if (entry.Entity.GetType().GetProperty("UsuarioCreacion") != null && entry.Property("UsuarioModificacion").CurrentValue != null)
+                {
+                    entry.Property("UsuarioCreacion").CurrentValue = entry.Property("UsuarioModificacion").CurrentValue;
+                    entry.Property("UsuarioModificacion").CurrentValue = null;
+                }
+
+                entry.Property("UsuarioCreacion").CurrentValue = "ArtInkAPI";
+                entry.Property("FechaModificacion").IsModified = false;
+                entry.Property("UsuarioModificacion").IsModified = false;
+            }
+            else
+            {
+                if (entry.State == EntityState.Modified)
+                {
+                    if (entry.Entity.GetType().GetProperty("FechaModificacion") != null) entry.Property("FechaModificacion").CurrentValue = DateTime.Now;
+
+                    entry.Property("UsuarioModificacion").CurrentValue = "ArtInkAPIModify";
+                    entry.Property("FechaCreacion").IsModified = false;
+                    entry.Property("UsuarioCreacion").IsModified = false;
+
+                }
+            }
+        }
+    }
 }

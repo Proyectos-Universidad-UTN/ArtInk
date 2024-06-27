@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace ArtInk.Infraestructure.Repository.Interfaces
 {
-    public interface IRepositoryProducto
+    public interface IRepositoryCategoria
     {
-        Task<ICollection<Producto>> ListAsync();
-        Task<Producto?> FindByIdAsync(short id);
-
-        Task<Producto> CreateProductoAsync(Producto producto);
-
+        Task<ICollection<Categoria>> ListAsync();
+        Task<Categoria?> FindByIdAsync(byte id);
     }
 }
