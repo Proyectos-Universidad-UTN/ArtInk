@@ -1,4 +1,12 @@
-﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.CantonResponseDTO>
+﻿@model ArtInk.Site.ViewModels.Common.Direcciones
 
-<label name="IdCanton" class="form-label"></label>
-<select id="IdCanton" name="IdCanton" class="form-select" onchange="cargarDistritos()" asp-items="@(new SelectList(Model,"Id","Nombre"))"></select>
+<select id="IdCanton" asp-for="IdCanton" class="form-select" onchange="cargarDistritos()" asp-items="@(new SelectList(Model.Cantones,"Id","Nombre"))"
+data-val-range="Por favor seleccione un cantón" data-val-range-max="1000" data-val-range-min="1"></select>
+<span id="ErrorCanton" asp-validation-for="IdCanton" class="text-danger"></span>
+
+<script>
+    $(document).ready(function(){
+        $("#IdCanton").removeClass("input-validation-error")
+        $("#ErrorCanton").removeClass("field-validation-error").addClass("field-validation-valid").html('')
+    })
+</script>

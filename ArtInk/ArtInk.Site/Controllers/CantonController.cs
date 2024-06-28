@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ArtInk.Site.Client;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.ViewModels.Common;
+using ArtInk.Site.ViewModels.Interfaces;
 using ArtInk.Site.ViewModels.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,12 +15,14 @@ namespace ArtInk.Site.Controllers
 {
     public class CantonController(IAPIArtInkClient cantonCliente) : Controller
     {
-        public async Task<IActionResult> ObtenerCantones(byte idProvincia)
+        [HttpPost]
+        public async Task<IActionResult> ObtenerCantones(Direcciones direcciones)
         {
-            var url = string.Format(Constantes.GETALLCANTONESBYPROVINCIA, idProvincia);
+            var url = string.Format(Constantes.GETALLCANTONESBYPROVINCIA, direcciones.IdProvincia);
             var collection = await cantonCliente.ConsumirAPIAsync<List<CantonResponseDTO>>(Constantes.GET, url);
             collection.Insert(0, new CantonResponseDTO() { Id = 0, Nombre = "Seleccione un cantón" });
-            return PartialView("~/Views/Shared/_CantonSelect.cshtml", collection);
+            direcciones.Cantones = collection;
+            return PartialView("~/Views/Shared/_CantonSelect.cshtml", direcciones);
         }
 
         public async Task<CantonResponseDTO> ObtenerCanton(byte id)

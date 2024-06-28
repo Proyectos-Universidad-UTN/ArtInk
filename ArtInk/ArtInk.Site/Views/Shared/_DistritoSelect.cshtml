@@ -1,4 +1,12 @@
-﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.DistritoResponseDTO>
+﻿@model ArtInk.Site.ViewModels.Common.Direcciones
 
-<label name="IdDistrito" class="form-label"></label>
-<select name="IdDistrito" class="form-select" asp-items="@(new SelectList(Model,"Id","Nombre"))"></select>
+<select id="IdDistrito" asp-for="IdDistrito" class="form-select" asp-items="@(new SelectList(Model.Distritos,"Id","Nombre"))"
+data-val-range="Por favor seleccione un distrito" data-val-range-max="1000" data-val-range-min="1"></select>
+<span id="ErrorDistrito" asp-validation-for="IdDistrito" class="text-danger"></span>
+
+<script>
+    $(document).ready(function(){
+        $("#IdDistrito").removeClass("input-validation-error")
+        $("#ErrorDistrito").removeClass("field-validation-error").addClass("field-validation-valid").html('')
+    })
+</script>

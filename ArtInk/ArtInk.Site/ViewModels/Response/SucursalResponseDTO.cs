@@ -16,7 +16,7 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayFormat(DataFormatString ="{0:####-####}")]
         public int Telefono { get; set; }
 
-        [DisplayName("Corro Electrónico")]
+        [DisplayName("Correo Electrónico")]
         public string CorreoElectronico { get; set; } = null!;
 
         [DisplayName("Distrito")]

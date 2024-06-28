@@ -1,11 +1,10 @@
-﻿using ArtInk.Site.ViewModels.Response;
+﻿using ArtInk.Site.ViewModels.Common;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArtInk.Site.ViewModels.Request
 {
-    public record SucursalRequestDTO
+    public record SucursalRequestDTO: Direcciones
     {
         public byte Id { get; set; }
 
@@ -16,38 +15,30 @@ namespace ArtInk.Site.ViewModels.Request
         [Required(ErrorMessage = "La descripción es requerida")]
         public string Descripcion { get; set; } = null!;
 
+        public int Telefono { 
+            get{
+                return !string.IsNullOrEmpty(TelefonoFormateado) ? int.Parse(TelefonoFormateado.Replace("-", "")) : 0;
+            } 
+            set{
+                Telefono = value;
+            } 
+        }
+
         [DisplayName("Teléfono")]
         [Required(ErrorMessage = "El teléfono es requerido")]
-        [RegularExpression(@"^\d{8}$", ErrorMessage = "El teléfono debe tener exactamente 8 dígitos.")]
-        public int Telefono { get; set; }
+        [RegularExpression(@"^\d{4}\-\d{4}$", ErrorMessage = "Por favor complete el teléfono")]
+        [MaxLength(9)]
+        public string TelefonoFormateado { get; set; } = string.Empty;
 
         [DisplayName("Correo Electrónico")]
         [Required(ErrorMessage = "El correo electrónico es requerido")]
-        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com|yahoo\.com|biz)$",
-        ErrorMessage = "Por favor ingrese un correo válido de Gmail, Hotmail, Yahoo o Biz.")]
+        [EmailAddress(ErrorMessage = "Por favor ingrese una dirección de correo válido")]
         public string CorreoElectronico { get; set; } = null!;
-
-        [DisplayName("Distrito")]
-        [Required(ErrorMessage = "El distrito es requerido")]
-        public short IdDistrito { get; set; }
 
         [DisplayName("Dirección Exacta")]
         [Required(ErrorMessage = "La dirección es requerida")]
         public string? DireccionExacta { get; set; }
 
         public bool Activo { get; set; }
-
-        [NotMapped]
-        public IEnumerable<ProvinciaResponseDTO> Provincias { get; set; } = null!;
-
-        [NotMapped]
-        [DisplayName("Provincia")]
-        [Required(ErrorMessage = "La provincia es requerida")]
-        public byte IdProvincia { get; set; }
-
-        [DisplayName("Cantón")]
-        [NotMapped]
-        [Required(ErrorMessage = "El cantón es requerido")]
-        public byte IdCanton { get; set; }
     }
 }

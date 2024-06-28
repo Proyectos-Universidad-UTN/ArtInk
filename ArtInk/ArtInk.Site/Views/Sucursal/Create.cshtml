@@ -11,11 +11,11 @@
             <h4>Formulario de Sucursal</h4>
         </div>
         <div class="card-body">
-            <form asp-action="Create">
+            <form asp-action="Create" class="form-object">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group mb-3">
                             <label asp-for="Nombre" class="form-label"></label>
                             <input asp-for="Nombre" class="form-control" />
@@ -25,23 +25,23 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
+                    <div class="col-md-12">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="Descripcion" style="height: 80px" class="form-control"></textarea>
                             <label asp-for="Descripcion" class="form-label"></label>
-                            <input asp-for="Descripcion" class="form-control" />
                             <span asp-validation-for="Descripcion" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="Telefono" class="form-label"></label>
-                            <input asp-for="Telefono" class="form-control" />
-                            <span asp-validation-for="Telefono" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="TelefonoFormateado" class="form-label"></label>
+                            <input asp-for="TelefonoFormateado" class="form-control" data-mask="0000-0000" />
+                            <span asp-validation-for="TelefonoFormateado" class="text-danger"></span>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label asp-for="CorreoElectronico" class="form-label"></label>
@@ -49,6 +49,9 @@
                             <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label asp-for="IdProvincia" class="form-label"></label>
@@ -56,41 +59,35 @@
                             <span asp-validation-for="IdProvincia" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
+                            <label asp-for="IdCanton" class="form-label"></label>
                             <div id="cantonSelect">
-                                @await Html.PartialAsync("~/Views/Shared/_CantonSelect.cshtml", new List<CantonResponseDTO>())
+                                @await Html.PartialAsync("~/Views/Shared/_CantonSelect.cshtml", Model)
                             </div>
-                            <span asp-validation-for="IdCanton" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3">
+                            <label asp-for="IdDistrito" class="form-label"></label>
                             <div id="distritoSelect">
-                                @await Html.PartialAsync("~/Views/Shared/_DistritoSelect.cshtml", new List<DistritoResponseDTO>())
+                                @await Html.PartialAsync("~/Views/Shared/_DistritoSelect.cshtml", Model)
                             </div>
-                            <span asp-validation-for="IdDistrito" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group mb-3">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="DireccionExacta" style="height: 100px" class="form-control"></textarea>
                             <label asp-for="DireccionExacta" class="form-label"></label>
-                            <input asp-for="DireccionExacta" class="form-control" />
                             <span asp-validation-for="DireccionExacta" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                    <button type="submit" class="btn btn-primary me-md-2">Crear</button>
-                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-                </div>
+                @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
             </form>
         </div>
     </div>
