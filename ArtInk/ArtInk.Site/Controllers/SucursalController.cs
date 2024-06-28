@@ -43,8 +43,10 @@ namespace ArtInk.Site.Controllers
 
             try
             {
-                var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>
-                    (Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
+                var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
+
+                TempData["SuccessMessage"] = "Sucursal creada correctamente.";
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -52,6 +54,7 @@ namespace ArtInk.Site.Controllers
                 return View(sucursal);
             }
         }
+
     }
 }
 
