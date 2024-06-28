@@ -13,6 +13,7 @@ namespace ArtInk.Site.ViewModels.Request
 
         [DisplayName("Descripción")]
         [Required(ErrorMessage = "La descripción es requerida")]
+        [MaxLength(150)]
         public string Descripcion { get; set; } = null!;
 
         public int Telefono { 
@@ -36,7 +37,7 @@ namespace ArtInk.Site.ViewModels.Request
         public string CorreoElectronico { get; set; } = null!;
 
         [DisplayName("Dirección Exacta")]
-        [Required(ErrorMessage = "La dirección es requerida")]
+        [MaxLength(250)]
         public string? DireccionExacta { get; set; }
 
         public bool Activo { get; set; }
