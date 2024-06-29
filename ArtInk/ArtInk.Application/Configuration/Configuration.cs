@@ -26,6 +26,8 @@ namespace ArtInk.Application.Configuration
             services.AddTransient<IServiceReserva, ServiceReserva>();
             services.AddTransient<IServiceServicio, ServiceServicio>();
             services.AddTransient<IServiceReservaPregunta, ServiceReservaPregunta>();
+            services.AddTransient<IServiceUnidadMedida, ServiceUnidadMedida>();
+            services.AddTransient<IServiceCategoria, ServiceCategoria>();
             services.AddTransient<IServiceHorario, ServiceHorario>();
             services.AddTransient<IServiceTipoServicio, ServiceTipoServicio>();
             //se agrega
@@ -36,6 +38,7 @@ namespace ArtInk.Application.Configuration
             {
                 config.AddProfile<ModelToDTOApplicationProfile>();
                 config.AddProfile<DTOToModelApplicationProfile>();
+
             });
         }
     }

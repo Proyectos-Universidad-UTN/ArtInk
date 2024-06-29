@@ -15,7 +15,8 @@
         //Url Productos
         public const string GETALLPRODUCTOS = "producto"; //minuscula es el endpoint del API
         public const string GETPRODUCTOBYID = "producto/{0}";
-
+        public const string POSTPRODUCTO = "producto";
+       
         //Url Rol
         public const string GETALLROLS = "rol"; //minuscula es el endpoint del API
         public const string GETROLBYID = "rol/{0}";
@@ -48,7 +49,14 @@
 
         //Url ReservaPregunta
         public const string GETALLRESERVASPREGUNTAS = "reserva"; //minuscula es el endpoint del API
-        public const string GETRESERVAPREGUNTABYID = "reserva/{0}";
+        public const string GETRESERVAPREGUNTABYID = "reserva/{0}"; 
+        
+        //Url UnidadMedida
+        public const string GETALLUNIDAMEDIDAS = "unidadmedida"; //minuscula es el endpoint del API
+
+        //Url Categoria
+        public const string GETALLCATEGORIAS = "categoria"; //minuscula es el endpoint del API
+
 
         //Url TipoServicio
         public const string GETALLTIPOSERVICIOS = "tiposervicio"; //minuscula es el endpoint del API

@@ -39,4 +39,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+app.ConfigureExceptionHandler(logger);
+
 app.Run();

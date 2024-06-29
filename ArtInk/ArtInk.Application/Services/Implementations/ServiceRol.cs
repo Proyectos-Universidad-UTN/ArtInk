@@ -1,4 +1,5 @@
-﻿using ArtInk.Application.DTOs;
+﻿using ArtInk.Application.Comunes;
+using ArtInk.Application.DTOs;
 using ArtInk.Application.Services.Interfaces;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using AutoMapper;
@@ -15,7 +16,7 @@ namespace ArtInk.Application.Services.Implementations
         public async Task<RolDTO> FindByIdAsync(byte id)
         {
             var rol = await repository.FindByIdAsync(id);
-            if (rol == null) throw new Exception("Rol no encontrado.");
+            if (rol == null) throw new NotFoundException("Rol no encontrado.");
 
             return mapper.Map<RolDTO>(rol);
         }
