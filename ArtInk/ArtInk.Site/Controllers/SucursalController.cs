@@ -15,6 +15,8 @@ namespace ArtInk.Site.Controllers
             try
             {
                 var collection = await cliente.ConsumirAPIAsync<IEnumerable<SucursalResponseDTO>>(Constantes.GET, Constantes.GETALLSUCURSALES);
+                if (collection == null) return RedirectToAction("Index", "Home");
+
                 return View(collection);
             }
             catch (Exception)
@@ -29,6 +31,7 @@ namespace ArtInk.Site.Controllers
             {
                 var url = string.Format(Constantes.GETSUCURSALBYID, id);
                 var sucursal = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.GET, url);
+                if (sucursal == null) return RedirectToAction("Index", "Home");
 
                 return View(sucursal);
             }
@@ -44,6 +47,9 @@ namespace ArtInk.Site.Controllers
             {
                 var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDTO>>(Constantes.GET, Constantes.GETALLPROVINCIA);
                 provincias.Insert(0, new ProvinciaResponseDTO() { Id = 0, Nombre = "Seleccione una provincia" });
+
+                if (provincias == null) return RedirectToAction("Index", "Home");
+                
                 var sucursal = new SucursalRequestDTO()
                 {
                     Provincias = provincias
@@ -62,12 +68,15 @@ namespace ArtInk.Site.Controllers
             try
             {
                 var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDTO>>(Constantes.GET, Constantes.GETALLPROVINCIA);
+                if (provincias == null) return RedirectToAction(nameof(Index));
+
                 provincias.Insert(0, new ProvinciaResponseDTO() { Id = 0, Nombre = "Seleccione una provincia" });
                 sucursal.Provincias = provincias;
 
-                if (!ModelState.IsValid) return View(sucursal);
+                if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
 
                 var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
+                if (resultado == null) return View(sucursal);
 
                 TempData["SuccessMessage"] = "Sucursal creada correctamente.";
 
@@ -85,6 +94,7 @@ namespace ArtInk.Site.Controllers
             {
                 var url = string.Format(Constantes.GETSUCURSALBYID, id);
                 var sucursalExisting = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.GET, url);
+                if (sucursalExisting == null) return RedirectToAction(nameof(Index));
 
                 var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDTO>>(Constantes.GET, Constantes.GETALLPROVINCIA);
                 provincias.Insert(0, new ProvinciaResponseDTO() { Id = 0, Nombre = "Seleccione una provincia" });
@@ -94,7 +104,7 @@ namespace ArtInk.Site.Controllers
                 sucursal.IdDistrito = sucursalExisting.IdDistrito;
                 sucursal.IdCanton = sucursalExisting.Distrito.IdCanton;
                 sucursal.IdProvincia = sucursalExisting.Distrito.Canton.IdProvincia;
-                
+
                 return View(sucursal);
             }
             catch (Exception)
@@ -110,6 +120,8 @@ namespace ArtInk.Site.Controllers
             {
                 var url = string.Format(Constantes.PUTSUCURSAL, sucursal.Id);
                 var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDTO>>(Constantes.GET, Constantes.GETALLPROVINCIA);
+                if (provincias == null) return RedirectToAction(nameof(Index));
+
                 provincias.Insert(0, new ProvinciaResponseDTO() { Id = 0, Nombre = "Seleccione una provincia" });
                 sucursal.Provincias = provincias;
                 sucursal.Activo = true;
@@ -117,9 +129,10 @@ namespace ArtInk.Site.Controllers
                 if (!ModelState.IsValid) return View(sucursal);
 
                 var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(sucursal));
+                if (resultado == null) return View(sucursal);
 
                 TempData["SuccessMessage"] = "Sucursal actualizada correctamente.";
-                
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
