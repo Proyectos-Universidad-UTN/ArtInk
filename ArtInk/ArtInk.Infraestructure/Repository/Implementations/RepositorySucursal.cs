@@ -21,15 +21,30 @@ namespace ArtInk.Infraestructure.Repository.Implementations
             return result.Entity;
         }
 
+        public async Task<Sucursal> UpdateSucursalAsync(Sucursal sucursal)
+        {
+            context.Sucursals.Update(sucursal);
+
+            await context.SaveChangesAsync();
+
+            var response = await FindByIdAsync(sucursal.Id);
+            return response!;
+        }
+
         public async Task<Sucursal?> FindByIdAsync(byte id)
         {
             return await context.Set<Sucursal>().FindAsync(id);
         }
 
+        public async Task<bool> ExisteSucursal(byte id)
+        {
+            return await context.Set<Sucursal>().FindAsync(id) != null;
+        }
+
         public async Task<ICollection<Sucursal>> ListAsync()
         {
             var collection = await context.Set<Sucursal>()
-                .Include(a => a.IdDistritoNavigation) 
+                .Include(a => a.IdDistritoNavigation)
                 .ToListAsync();
             return collection;
         }
