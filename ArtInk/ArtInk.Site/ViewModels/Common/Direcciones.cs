@@ -9,7 +9,7 @@ namespace ArtInk.Site.ViewModels.Common;
 public record Direcciones : IDirecciones
 {
     [NotMapped]
-    public IEnumerable<ProvinciaResponseDTO> Provincias { get; set; } = null!;
+    public List<ProvinciaResponseDTO> Provincias { get; set; } = new List<ProvinciaResponseDTO>();
 
     [NotMapped]
     public List<CantonResponseDTO> Cantones { get; set; } = new List<CantonResponseDTO>();

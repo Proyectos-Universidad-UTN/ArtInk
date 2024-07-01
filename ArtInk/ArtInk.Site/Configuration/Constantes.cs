@@ -29,6 +29,7 @@
         public const string GETALLSUCURSALES = "sucursal"; 
         public const string GETSUCURSALBYID = "sucursal/{0}";
         public const string POSTSUCURSAL = "sucursal";
+        public const string PUTSUCURSAL = "sucursal/{0}";
 
 
         //Url Servicos
@@ -69,9 +70,6 @@
         //Url Canton
         public const string GETALLCANTONESBYPROVINCIA = "provincia/{0}/canton"; 
         public const string GETCANTONBYID = "canton/{0}";
-
-        //Url Categoria
-        public const string GETALLCATEGORIAS = "categoria"; //minuscula es el endpoint del API
 
         //Url TipoServicio
         public const string GETALLTIPOSERVICIOS = "tiposervicio"; //minuscula es el endpoint del API

@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.Models;
 using ArtInk.Utils;
 using Newtonsoft.Json;
 
@@ -24,8 +25,8 @@ namespace ArtInk.Site.Client
             BaseUrlAPI = artInkAPI.GetValue<string>("BaseUrl") ?? throw new ArgumentNullException("El valor de BaseUrl no está configurado.");
         }
 
-        public async Task<T> ConsumirAPIAsync<T> (string tipoLlamado, string url, string mediaType = Constantes.MEDIATYPEJSON,
-                                                                       Dictionary<string,string> cabecerasAcceso = default!,
+        public async Task<T> ConsumirAPIAsync<T>(string tipoLlamado, string url, string mediaType = Constantes.MEDIATYPEJSON,
+                                                                       Dictionary<string, string> cabecerasAcceso = default!,
                                                                        params object[] valoresConsumo)
         {
             try
@@ -60,7 +61,7 @@ namespace ArtInk.Site.Client
                             break;
                         case "POST":
                         case "PUT":
-                            contenidoAPI = valoresConsumo[0].ToString();
+                            contenidoAPI = valoresConsumo[0].ToString()!;
                             inputMessage.Content = new StringContent(contenidoAPI, Encoding.UTF8, mediaType);
                             if (tipoLlamado.Equals("POST"))
                             {
@@ -79,34 +80,22 @@ namespace ArtInk.Site.Client
 
                 var contenido = await responseMessage.Content.ReadAsStringAsync();
 
-                if (!responseMessage.StatusCode.Equals(HttpStatusCode.OK))
+                if (responseMessage.StatusCode.Equals(HttpStatusCode.OK) || responseMessage.StatusCode.Equals(HttpStatusCode.Created))
                 {
-                    Error = true;
-                    MensajeError = "No se ha procesado la solicitud";
-
-                    return default!;
+                    return Serialization.Deserialize<T>(contenido);
                 }
 
-                if (contenido.ToUpper().Contains("ERROR"))
-                {
-                    Error = true;
-                    MensajeError = ObtenerMensajeError(contenido);
-                }
+                var responseError = Serialization.Deserialize<ErrorDetailsArtInk>(contenido);
 
-                return Serialization.Deserialize<T>(contenido);
+                Error = true;
+                MensajeError = responseError.Mensaje!;
+
+                return default!;
             }
             catch (Exception excepcion)
             {
                 throw new Exception(excepcion.Message);
             }
         }
-
-        private static string ObtenerMensajeError(string contenido)
-        {
-            var mensajes = JsonConvert.DeserializeObject<Dictionary<string, string>>(contenido);
-            return mensajes["message"];
-            
-        }
-
     }
 }

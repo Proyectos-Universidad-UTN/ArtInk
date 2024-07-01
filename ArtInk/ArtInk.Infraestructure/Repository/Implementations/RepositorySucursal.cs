@@ -33,18 +33,32 @@ namespace ArtInk.Infraestructure.Repository.Implementations
 
         public async Task<Sucursal?> FindByIdAsync(byte id)
         {
-            return await context.Set<Sucursal>().FindAsync(id);
+            var keyProperty = context.Model.FindEntityType(typeof(Provincia))!.FindPrimaryKey()!.Properties[0];
+
+            return await context.Set<Sucursal>()
+                .AsNoTracking()
+                .Include(m => m.IdDistritoNavigation)
+                .ThenInclude(m => m.IdCantonNavigation)
+                .ThenInclude(m => m.IdProvinciaNavigation)
+                .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
         }
 
         public async Task<bool> ExisteSucursal(byte id)
         {
-            return await context.Set<Sucursal>().FindAsync(id) != null;
+            var keyProperty = context.Model.FindEntityType(typeof(Provincia))!.FindPrimaryKey()!.Properties[0];
+
+            return await context.Set<Sucursal>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id) != null;
         }
 
         public async Task<ICollection<Sucursal>> ListAsync()
         {
             var collection = await context.Set<Sucursal>()
+                .AsNoTracking()
                 .Include(a => a.IdDistritoNavigation)
+                .ThenInclude(m => m.IdCantonNavigation)
+                .ThenInclude(m => m.IdProvinciaNavigation)
                 .ToListAsync();
             return collection;
         }

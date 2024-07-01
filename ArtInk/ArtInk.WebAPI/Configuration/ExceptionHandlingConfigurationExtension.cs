@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using ArtInk.Application.Comunes;
 using Microsoft.AspNetCore.Diagnostics;
@@ -33,6 +34,11 @@ public static class ExceptionHandlingConfigurationExtension
             case NotFoundException e:
                 httpStatusCode = e.HttpStatusCode;
                 logLevel = e.LogLevel;
+                break;
+            case ValidationException:
+            case ValidationEntityException:
+                httpStatusCode = HttpStatusCode.UnprocessableEntity;
+                logLevel = LogLevel.Information;
                 break;
             default:
                 httpStatusCode = HttpStatusCode.InternalServerError;

@@ -31,7 +31,6 @@
             <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
             <th>@Html.DisplayNameFor(model => model.Telefono)</th>
             <th>@Html.DisplayNameFor(model => model.CorreoElectronico)</th>
-            <th>@Html.DisplayNameFor(model => model.IdDistrito)</th>
             <th>@Html.DisplayNameFor(model => model.DireccionExacta)</th>
             <th>@Html.DisplayNameFor(model => model.Activo)</th>
             <th>Acciones</th>
@@ -46,8 +45,7 @@
                 <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
                 <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
                 <td>@Html.DisplayFor(modelItem => item.CorreoElectronico)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdDistrito)</td>
-                <td>@Html.DisplayFor(modelItem => item.DireccionExacta)</td>
+                <td>@String.Format("{0}, {1}, {2}, {3}", item.Distrito.Canton.Provincia.Nombre, item.Distrito.Canton.Nombre, item.Distrito.Nombre, item.DireccionExacta)</td>
                 <td>@Html.DisplayFor(modelItem => item.Activo)</td>
                 <td>
                     <div class="btn-group" role="group">

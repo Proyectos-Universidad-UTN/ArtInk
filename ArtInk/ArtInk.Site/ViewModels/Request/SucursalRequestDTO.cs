@@ -21,7 +21,7 @@ namespace ArtInk.Site.ViewModels.Request
                 return !string.IsNullOrEmpty(TelefonoFormateado) ? int.Parse(TelefonoFormateado.Replace("-", "")) : 0;
             } 
             set{
-                Telefono = value;
+                TelefonoFormateado = value.ToString();
             } 
         }
 
