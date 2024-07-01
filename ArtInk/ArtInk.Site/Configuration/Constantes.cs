@@ -34,6 +34,7 @@
         //Url Servicos
         public const string GETALLSERVICIOS = "servicio"; 
         public const string GETSERVICIOBYID = "servicio/{0}";
+        public const string POSTSERVICIO = "servicio";
 
         //Url Horarios
         public const string GETALLHORARIOS = "horario"; 
@@ -49,7 +50,7 @@
 
         //Url ReservaPregunta
         public const string GETALLRESERVASPREGUNTAS = "reserva"; 
-        public const string GETRESERVAPREGUNTABYID = "reserva/{0}"; 
+        public const string GETRESERVAPREGUNTABYID = "reserva/{0}";  
         
         //Url UnidadMedida
         public const string GETALLUNIDAMEDIDAS = "unidadmedida"; 
@@ -68,6 +69,12 @@
         //Url Canton
         public const string GETALLCANTONESBYPROVINCIA = "provincia/{0}/canton"; 
         public const string GETCANTONBYID = "canton/{0}";
+
+        //Url Categoria
+        public const string GETALLCATEGORIAS = "categoria"; //minuscula es el endpoint del API
+
+        //Url TipoServicio
+        public const string GETALLTIPOSERVICIOS = "tiposervicio"; //minuscula es el endpoint del API
 
     }
 }

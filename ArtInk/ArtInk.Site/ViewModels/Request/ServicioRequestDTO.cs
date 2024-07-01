@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using ArtInk.Site.ViewModels.Response;
 
 namespace ArtInk.Site.ViewModels.Request
 {
@@ -20,5 +20,7 @@ namespace ArtInk.Site.ViewModels.Request
         public string? Observacion { get; set; }
 
         public bool Activo { get; set; }
+
+        public IEnumerable<TipoServicioResponseDTO> TipoServicios { get; set; } = null;
     }
 }
