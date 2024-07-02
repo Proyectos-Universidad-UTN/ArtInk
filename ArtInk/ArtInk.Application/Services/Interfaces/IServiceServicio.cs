@@ -1,4 +1,5 @@
 ﻿using ArtInk.Application.DTOs;
+using ArtInk.Application.RequestDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace ArtInk.Application.Services.Interfaces
     {
         Task<ICollection<ServicioDTO>> ListAsync();
         Task<ServicioDTO> FindByIdAsync(byte id);
+        Task<ServicioDTO> CreateServicioAsync(RequestServicioDTO servicio);
     }
 }

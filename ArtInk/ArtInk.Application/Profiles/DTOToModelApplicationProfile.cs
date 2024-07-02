@@ -14,6 +14,8 @@ namespace ArtInk.Application.Profiles
         public DTOToModelApplicationProfile()
         {
             CreateMap<RequestProductoDTO, Producto>();
+            CreateMap<RequestSucursalDTO, Sucursal>();
+            CreateMap<RequestServicioDTO, Servicio>();
         }
     }
 }
