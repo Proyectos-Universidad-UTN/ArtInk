@@ -14,13 +14,13 @@ builder.Services.ConfigureArtInkAPIClient();
 
 
 
-//Configuración Serilog
+//Configuraciï¿½n Serilog
 // Logger. P.E. Verbose = muestra SQl Statement
 var logger = new LoggerConfiguration()
-     // Limitar la información de depuración
+     // Limitar la informaciï¿½n de depuraciï¿½n
      .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
     .Enrich.FromLogContext()
-    // Log LogEventLevel.Verbose muestra mucha información, pero no es necesaria solo para el proceso de depuración
+    // Log LogEventLevel.Verbose muestra mucha informaciï¿½n, pero no es necesaria solo para el proceso de depuraciï¿½n
     .WriteTo.Console(LogEventLevel.Information)
     .WriteTo.Logger(l => l.Filter.ByIncludingOnly(e => e.Level == LogEventLevel.Information).WriteTo.File(@"Logs\Info-.log", shared: true, encoding:
     Encoding.ASCII, rollingInterval: RollingInterval.Day))
@@ -38,7 +38,7 @@ var logger = new LoggerConfiguration()
      .CreateLogger();
 builder.Host.UseSerilog(logger);
 
-
+builder.Services.ConfigureSiteAutoMapper();
 
 var app = builder.Build();
 

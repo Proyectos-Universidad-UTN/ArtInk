@@ -1,0 +1,102 @@
+﻿@using ArtInk.Site.ViewModels.Response
+@model ArtInk.Site.ViewModels.Request.SucursalRequestDTO
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Formulario de Sucursal</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" class="form-object">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-3">
+                            <label asp-for="Nombre" class="form-label"></label>
+                            <input asp-for="Nombre" class="form-control" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="Descripcion" style="height: 80px" class="form-control"></textarea>
+                            <label asp-for="Descripcion" class="form-label"></label>
+                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="TelefonoFormateado" class="form-label"></label>
+                            <input asp-for="TelefonoFormateado" class="form-control" data-mask="0000-0000" />
+                            <span asp-validation-for="TelefonoFormateado" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="CorreoElectronico" class="form-label"></label>
+                            <input asp-for="CorreoElectronico" class="form-control" />
+                            <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="IdProvincia" class="form-label"></label>
+                            <select asp-for="IdProvincia" class="form-select" asp-items="@(new SelectList(Model.Provincias,"Id","Nombre"))"></select>
+                            <span asp-validation-for="IdProvincia" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="IdCanton" class="form-label"></label>
+                            <div id="cantonSelect">
+                                @await Html.PartialAsync("~/Views/Shared/_CantonSelect.cshtml", Model)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="IdDistrito" class="form-label"></label>
+                            <div id="distritoSelect">
+                                @await Html.PartialAsync("~/Views/Shared/_DistritoSelect.cshtml", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="DireccionExacta" style="height: 100px" class="form-control"></textarea>
+                            <label asp-for="DireccionExacta" class="form-label"></label>
+                            <span asp-validation-for="DireccionExacta" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script src="~/js/direcciones/canton-select.js"></script>
+<script src="~/js/direcciones/distrito-select.js"></script>

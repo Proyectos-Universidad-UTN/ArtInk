@@ -12,6 +12,7 @@ namespace ArtInk.Infraestructure.Repository.Interfaces
     {
         Task<ICollection<Servicio>> ListAsync();
         Task<Servicio?> FindByIdAsync(byte id);
+        Task<Servicio> CreateServicioAsync(Servicio servicio);
     }
 
 }
