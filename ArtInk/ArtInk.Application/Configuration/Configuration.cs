@@ -33,8 +33,6 @@ namespace ArtInk.Application.Configuration
             services.AddTransient<IServiceProvincia, ServiceProvincia>();
             services.AddTransient<IServiceCanton, ServiceCanton>();
             services.AddTransient<IServiceDistrito, ServiceDistrito>();
-
-            //se agrega
         }
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
@@ -42,7 +40,6 @@ namespace ArtInk.Application.Configuration
             {
                 config.AddProfile<ModelToDTOApplicationProfile>();
                 config.AddProfile<DTOToModelApplicationProfile>();
-
             });
         }
     }

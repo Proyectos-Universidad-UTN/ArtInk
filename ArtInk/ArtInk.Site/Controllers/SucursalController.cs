@@ -124,7 +124,6 @@ namespace ArtInk.Site.Controllers
 
                 provincias.Insert(0, new ProvinciaResponseDTO() { Id = 0, Nombre = "Seleccione una provincia" });
                 sucursal.Provincias = provincias;
-                sucursal.Activo = true;
 
                 if (!ModelState.IsValid) return View(sucursal);
 

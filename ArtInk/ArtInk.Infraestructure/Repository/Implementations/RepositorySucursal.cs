@@ -33,7 +33,7 @@ namespace ArtInk.Infraestructure.Repository.Implementations
 
         public async Task<Sucursal?> FindByIdAsync(byte id)
         {
-            var keyProperty = context.Model.FindEntityType(typeof(Provincia))!.FindPrimaryKey()!.Properties[0];
+            var keyProperty = context.Model.FindEntityType(typeof(Sucursal))!.FindPrimaryKey()!.Properties[0];
 
             return await context.Set<Sucursal>()
                 .AsNoTracking()
@@ -45,7 +45,7 @@ namespace ArtInk.Infraestructure.Repository.Implementations
 
         public async Task<bool> ExisteSucursal(byte id)
         {
-            var keyProperty = context.Model.FindEntityType(typeof(Provincia))!.FindPrimaryKey()!.Properties[0];
+            var keyProperty = context.Model.FindEntityType(typeof(Sucursal))!.FindPrimaryKey()!.Properties[0];
 
             return await context.Set<Sucursal>()
                 .AsNoTracking()

@@ -27,6 +27,6 @@ public class SucursalValidator : AbstractValidator<Sucursal>
 
         RuleFor(x => x.DireccionExacta)
             .NotEmpty().WithMessage("Por favor ingrese un distrito válido")
-            .When(x => !string.IsNullOrEmpty(x.DireccionExacta));
+            .When(x => x.DireccionExacta != null);
     }
 }
