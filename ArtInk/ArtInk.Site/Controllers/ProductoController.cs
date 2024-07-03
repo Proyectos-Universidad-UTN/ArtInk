@@ -40,14 +40,23 @@ namespace ArtInk.Site.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductoRequestDTO producto)
         {
-            var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-            var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-            producto.UnidadMedidas = unidadMedida;
-            producto.Categorias = categoria;
-
             try
             {
+                var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
+                if (unidadMedida == null) return RedirectToAction(nameof(Index));
+                producto.UnidadMedidas = unidadMedida;
+
+                var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
+                if (categoria == null) return RedirectToAction(nameof(Index));
+                producto.Categorias = categoria;
+
+                if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
+
                 var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.POST, Constantes.POSTPRODUCTO, valoresConsumo: Serialization.Serialize(producto));
+                if (resultado == null) return View(producto);
+
+                TempData["SuccessMessage"] = "Producto creado correctamente.";
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -65,8 +74,8 @@ namespace ArtInk.Site.Controllers
 
                 var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
                 var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-                var producto = mapper.Map<ProductoRequestDTO>(productoExisting);
 
+                var producto = mapper.Map<ProductoRequestDTO>(productoExisting);
                 producto.UnidadMedidas = unidadMedida;
                 producto.Categorias = categoria;
 
@@ -94,7 +103,7 @@ namespace ArtInk.Site.Controllers
                 if (categoria == null) return RedirectToAction(nameof(Index));
                 producto.Categorias = categoria;
 
-                var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.POST, Constantes.POSTPRODUCTO, valoresConsumo: Serialization.Serialize(producto));
+                var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(producto));
                 if (resultado == null) return View(producto);
 
                 TempData["SuccessMessage"] = "Producto actualizado correctamente.";
