@@ -16,7 +16,8 @@
         public const string GETALLPRODUCTOS = "producto"; 
         public const string GETPRODUCTOBYID = "producto/{0}";
         public const string POSTPRODUCTO = "producto";
-       
+        public const string PUTPRODUCTO = "producto/{0}";
+
         //Url Rol
         public const string GETALLROLS = "rol"; 
         public const string GETROLBYID = "rol/{0}";

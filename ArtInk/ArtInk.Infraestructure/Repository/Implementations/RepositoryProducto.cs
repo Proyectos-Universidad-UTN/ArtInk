@@ -21,6 +21,16 @@ namespace ArtInk.Infraestructure.Repository.Implementations
             return result.Entity;
         }
 
+        public async Task<Producto> UpdateProductoAsync(Producto producto)
+        {
+            context.Productos.Update(producto);
+
+            await context.SaveChangesAsync();
+
+            var response = await FindByIdAsync(producto.Id);
+            return response!;
+        }
+
         public async Task<Producto?> FindByIdAsync(short id)
         {
             var keyProperty = context.Model.FindEntityType(typeof(Producto))!.FindPrimaryKey()!.Properties[0];
@@ -37,6 +47,15 @@ namespace ArtInk.Infraestructure.Repository.Implementations
                 .Include(a => a.IdCategoriaNavigation)
                 .ToListAsync();
             return collection;
+        }
+
+        public async Task<bool> ExisteProducto(short id)
+        {
+            var keyProperty = context.Model.FindEntityType(typeof(Producto))!.FindPrimaryKey()!.Properties[0];
+
+            return await context.Set<Producto>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => EF.Property<short>(a, keyProperty.Name) == id) != null;
         }
     }
 }
