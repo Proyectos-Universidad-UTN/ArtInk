@@ -11,18 +11,36 @@ namespace ArtInk.Site.Controllers
 {
     public class ProductoController(IAPIArtInkClient cliente, IMapper mapper) : Controller
     {
+     
         public async Task<IActionResult> Index()
         {
-            var collection = await cliente.ConsumirAPIAsync<IEnumerable<ProductoResponseDTO>>(Constantes.GET, Constantes.GETALLPRODUCTOS);
-            return View(collection);
+            try
+            {
+                var collection = await cliente.ConsumirAPIAsync<IEnumerable<ProductoResponseDTO>>(Constantes.GET, Constantes.GETALLPRODUCTOS);
+                if (collection == null) return RedirectToAction("Index", "Home");
+                return View(collection);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public async Task<IActionResult> Details(short id)
         {
-            var url = string.Format(Constantes.GETPRODUCTOBYID, id);
-            var collection = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.GET, url);
+            try
+            {
+                var url = string.Format(Constantes.GETPRODUCTOBYID, id);
+                var producto = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.GET, url);
+                if (producto == null) return RedirectToAction("Index", "Home");
 
-            return View(collection);
+                return View(producto);
+
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         public async Task<IActionResult> Create()
