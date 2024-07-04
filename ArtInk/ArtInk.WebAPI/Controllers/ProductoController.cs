@@ -14,7 +14,7 @@ namespace ArtInk.WebAPI.Controllers
     public class ProductoController(IServiceProducto serviceProducto) : ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductoDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProductoDTO>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Exception))]
         public async Task <IActionResult> GetAllProductosAsync()
         {
