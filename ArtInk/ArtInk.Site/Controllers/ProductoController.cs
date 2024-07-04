@@ -27,14 +27,23 @@ namespace ArtInk.Site.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-            var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-            var producto = new ProductoRequestDTO()
+            try
             {
-                UnidadMedidas = unidadMedida,
-                Categorias = categoria
-            };
-            return View(producto);
+                var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
+                var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
+
+                var producto = new ProductoRequestDTO()
+                {
+                    UnidadMedidas = unidadMedida,
+                    Categorias = categoria
+                };
+                return View(producto);
+
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpPost]

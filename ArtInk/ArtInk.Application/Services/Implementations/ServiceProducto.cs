@@ -23,7 +23,7 @@ namespace ArtInk.Application.Services.Implementations
         {
             var producto = await ValidarProducto(productoDTO);
 
-            var result = await repository.CreateProductoAsync(mapper.Map<Producto>(producto));
+            var result = await repository.CreateProductoAsync(producto);
             if (result == null) throw new Exception("Producto no creado.");
 
             return mapper.Map<ProductoDTO>(result);
