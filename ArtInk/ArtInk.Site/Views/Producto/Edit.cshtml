@@ -58,9 +58,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Costo" class="form-label"></label>
-                            <input asp-for="Costo" class="form-control" />
-                            <span asp-validation-for="Costo" class="text-danger"></span>
+                            <label asp-for="CostoFormateado" class="form-label"></label>
+                            <input asp-for="CostoFormateado" placeholder="#,##0.0000" class="form-control" data-mask="#,##0.00" data-mask-reverse="true" />
+                            <span asp-validation-for="CostoFormateado" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -75,9 +75,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Cantidad" class="form-label"></label>
-                            <input asp-for="Cantidad" class="form-control" />
-                            <span asp-validation-for="Cantidad" class="text-danger"></span>
+                            <label asp-for="CantidadFormateada" class="form-label"></label>
+                            <input asp-for="CantidadFormateada" placeholder="#,##0.00" class="form-control" data-mask="#,##0.00" data-mask-reverse="true"  />
+                            <span asp-validation-for="CantidadFormateada" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">

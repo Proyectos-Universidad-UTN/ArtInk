@@ -1,6 +1,8 @@
 ﻿using ArtInk.Site.ViewModels.Response;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace ArtInk.Site.ViewModels.Request
 {
@@ -22,16 +24,38 @@ namespace ArtInk.Site.ViewModels.Request
         [Required(ErrorMessage = "La categoría es obligatoria")]
         public byte IdCategoria { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "El costo debe ser mayor a 0")]
+        public decimal Costo 
+        {
+            get => !string.IsNullOrEmpty(CostoFormateado) ? Decimal.Parse(CostoFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
+            set
+            {
+                CostoFormateado = value.ToString("#,##0.00");
+            } 
+        }
+
+        [NotMapped]
+        [DisplayName("Costo ¢")]
         [Required(ErrorMessage = "El costo es obligatorio")]
-        public decimal Costo { get; set; }
+        [RegularExpression(@"^(?!0+\.00)(?=.{1,9}(\.|$))\d{1,3}(,\d{3})*(\.\d+)?$", ErrorMessage = "Ingrese un valor válido y mayor a 0")]
+        public string CostoFormateado { get; set; } = null!;
 
         [Required(ErrorMessage = "El SKU es obligatorio")]
         public string Sku { get; set; } = null!;
 
+        public decimal Cantidad 
+        {
+            get => !string.IsNullOrEmpty(CantidadFormateada) ? Decimal.Parse(CantidadFormateada.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
+            set
+            {
+                CantidadFormateada = value.ToString("#,##0.00");
+            } 
+        }
+
+        [NotMapped]
+        [DisplayName("Cantidad")]
         [Required(ErrorMessage = "La cantidad es obligatoria")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0")]
-        public decimal Cantidad { get; set; }
+        [RegularExpression(@"^(?!0+\.00)(?=.{1,9}(\.|$))\d{1,3}(,\d{3})*(\.\d+)?$", ErrorMessage = "Ingrese un valor válido y mayor a 0")]
+        public string CantidadFormateada { get; set; } = null!;
 
         [DisplayName("Unidad de Medida")]
         [Required(ErrorMessage = "La unidad de medida es obligatoria")]
@@ -39,8 +63,10 @@ namespace ArtInk.Site.ViewModels.Request
 
         public bool Activo { get; set; }
 
-        public IEnumerable<CategoriaResponseDTO> Categorias { get; set; } = null!;
+        [NotMapped]
+        public IEnumerable<CategoriaResponseDTO>? Categorias { get; set; } = null!;
 
-        public IEnumerable<UnidadMedidaResponseDTO> UnidadMedidas { get; set; } = null!;
+        [NotMapped]
+        public IEnumerable<UnidadMedidaResponseDTO>? UnidadMedidas { get; set; } = null!;
     }
 }
