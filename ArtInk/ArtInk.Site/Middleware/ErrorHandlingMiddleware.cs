@@ -70,10 +70,9 @@ namespace ArtInk.web.Middleware
 
         private static async Task HandleErrorAsync(HttpContext context)
         {
-            string? msg = context.Items["ErrorMessagesJson"] as string;
-            string redirectUrl = $"/Home/ErrorHandler?messagesJson={msg}";
+            string redirectUrl = $"/Home/Error";
             context.Response.Redirect(redirectUrl);
-            // Dummy Await
+            
             await Task.FromResult(1);
         }
     }
