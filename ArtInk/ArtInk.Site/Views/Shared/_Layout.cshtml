@@ -85,6 +85,34 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <div class="container full-page">
         <main role="main">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="toast-container position-fixed top-5 end-0 p-3 text-white">
+                    <div id="liveToast" class="toast" role="alert" aria-live="assertive"
+                        aria-atomic="true">
+                        <div class="toast-body bg-success d-flex">
+                            <div class="flex-grow-1">
+                                @TempData["SuccessMessage"]
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="toast-container position-fixed top-5 end-0 p-3 text-white">
+                    <div id="liveToast" class="toast" role="alert" aria-live="assertive"
+                        aria-atomic="true">
+                        <div class="toast-body bg-danger d-flex">
+                            <div class="flex-grow-1">
+                                @TempData["ErrorMessage"]
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            }
             @RenderBody()
         </main>
     </div>
@@ -108,11 +136,13 @@
             <span class="bubble"></span>
         </div>
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js" integrity="sha256-yE5LLp5HSQ/z+hJeCqkz9hdjNkk1jaiGG0tDCraumnA=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"
+        integrity="sha256-yE5LLp5HSQ/z+hJeCqkz9hdjNkk1jaiGG0tDCraumnA=" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/b-print-3.0.2/fc-5.0.1/r-3.0.2/sc-2.4.3/sl-2.0.3/sr-1.4.1/datatables.min.js"></script>
+    <script
+        src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/b-print-3.0.2/fc-5.0.1/r-3.0.2/sc-2.4.3/sl-2.0.3/sr-1.4.1/datatables.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
