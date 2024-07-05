@@ -13,5 +13,6 @@ namespace ArtInk.Application.Services.Interfaces
         Task<ICollection<ServicioDTO>> ListAsync();
         Task<ServicioDTO> FindByIdAsync(byte id);
         Task<ServicioDTO> CreateServicioAsync(RequestServicioDTO servicio);
+        Task<ServicioDTO> UpdateServicioAsync(byte id, RequestServicioDTO servicioDTO);
     }
 }

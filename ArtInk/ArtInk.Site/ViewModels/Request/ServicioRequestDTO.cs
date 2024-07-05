@@ -25,6 +25,7 @@ namespace ArtInk.Site.ViewModels.Request
         public decimal Tarifa { get; set; }
 
         [DisplayName("Observación")]
+        [MaxLength(150)]
         public string? Observacion { get; set; }
 
         public bool Activo { get; set; }
