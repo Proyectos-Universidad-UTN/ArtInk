@@ -17,4 +17,14 @@ document.addEventListener('DOMContentLoaded', function () {
             scrollCollapse: true
         });
     });
+
+    const toast = $('.toast');
+
+    toast.toast('show');
+
+    setTimeout(function () {
+        $toast.fadeOut(1000, function () {
+            $(this).remove();
+        });
+    }, 3000);
 });

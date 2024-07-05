@@ -13,6 +13,11 @@ namespace ArtInk.Site.Controllers
         public async Task<IActionResult> Index()
         {
             var collection = await cliente.ConsumirAPIAsync<IEnumerable<ProductoResponseDTO>>(Constantes.GET, Constantes.GETALLPRODUCTOS);
+            if (collection == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index", "Home");
+            }
             return View(collection);
         }
 
