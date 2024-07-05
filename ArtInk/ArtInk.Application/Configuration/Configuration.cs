@@ -29,8 +29,10 @@ namespace ArtInk.Application.Configuration
             services.AddTransient<IServiceUnidadMedida, ServiceUnidadMedida>();
             services.AddTransient<IServiceCategoria, ServiceCategoria>();
             services.AddTransient<IServiceHorario, ServiceHorario>();
-            services.AddTransient<IServiceTipoServicio, ServiceTipoServicio>();
-            //se agrega
+            services.AddTransient<IServiceTipoServicio, ServiceTipoServicio>();            
+            services.AddTransient<IServiceProvincia, ServiceProvincia>();
+            services.AddTransient<IServiceCanton, ServiceCanton>();
+            services.AddTransient<IServiceDistrito, ServiceDistrito>();
         }
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
@@ -38,7 +40,6 @@ namespace ArtInk.Application.Configuration
             {
                 config.AddProfile<ModelToDTOApplicationProfile>();
                 config.AddProfile<DTOToModelApplicationProfile>();
-
             });
         }
     }

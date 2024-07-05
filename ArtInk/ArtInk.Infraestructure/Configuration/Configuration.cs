@@ -26,6 +26,10 @@ public static class Configuration
         services.AddTransient<IRepositoryTipoServicio, RepositoryTipoServicio>();
         services.AddTransient<IRepositoryUnidadMedida, RepositoryUnidadMedida>();
         services.AddTransient<IRepositoryCategoria, RepositoryCategoria>();
+        services.AddTransient<IRepositoryCanton, RepositoryCanton>();
+        services.AddTransient<IRepositoryProvincia, RepositoryProvincia>();
+        services.AddTransient<IRepositoryDistrito, RepositoryDistrito>();
+        services.AddTransient<IRepositoryTipoServicio, RepositoryTipoServicio>();
     }
 }
 // es una extencion xq usa la palabra this

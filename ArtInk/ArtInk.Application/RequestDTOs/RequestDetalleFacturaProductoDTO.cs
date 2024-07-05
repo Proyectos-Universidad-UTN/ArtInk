@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ArtInk.Application.RequestDTOs
 {
-    public class RequestDetalleFacturaProductoDTO
+    public record RequestDetalleFacturaProductoDTO
     {
         public long Id { get; set; }
 

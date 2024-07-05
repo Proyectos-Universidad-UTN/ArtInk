@@ -1,4 +1,5 @@
-﻿using ArtInk.Site.ViewModels.Response;
+﻿using System.ComponentModel;
+using ArtInk.Site.ViewModels.Response;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,7 +18,7 @@ namespace ArtInk.Site.ViewModels.Request
         [MaxLength(150)]
         public string Descripcion { get; set; } = null!;
 
-        [DisplayName("Tipo de servicio")]
+        [DisplayName("Tipo Servicio")]
         public byte IdTipoServicio { get; set; }
 
         [Required(ErrorMessage = "La tarifa es requerida")]
@@ -28,6 +29,6 @@ namespace ArtInk.Site.ViewModels.Request
 
         public bool Activo { get; set; }
 
-        public IEnumerable<TipoServicioResponseDTO> TipoServicios { get; set; } = null;
+        public IEnumerable<TipoServicioResponseDTO> TipoServicios { get; set; } = null!;
     }
 }

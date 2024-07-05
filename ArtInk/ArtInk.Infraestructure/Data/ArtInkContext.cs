@@ -646,7 +646,6 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
                     entry.Property("UsuarioModificacion").CurrentValue = "ArtInkAPIModify";
                     entry.Property("FechaCreacion").IsModified = false;
                     entry.Property("UsuarioCreacion").IsModified = false;
-
                 }
             }
         }
