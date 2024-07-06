@@ -37,14 +37,14 @@ namespace ArtInk.Infraestructure.Repository.Implementations
             return await context.Set<Producto>()
                 .Include(a => a.IdUnidadMedidaNavigation)
                 .Include(a => a.IdCategoriaNavigation)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(a => EF.Property<short>(a, keyProperty.Name)==id);
         }
 
         public async Task<ICollection<Producto>> ListAsync()
         {
             var collection = await context.Set<Producto>()
-                .Include(a => a.IdUnidadMedidaNavigation)
-                .Include(a => a.IdCategoriaNavigation)
+                .AsNoTracking()
                 .ToListAsync();
             return collection;
         }

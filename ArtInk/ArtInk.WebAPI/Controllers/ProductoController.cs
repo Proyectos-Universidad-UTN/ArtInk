@@ -15,7 +15,7 @@ namespace ArtInk.WebAPI.Controllers
     {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProductoDTO>))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Exception))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
         public async Task <IActionResult> GetAllProductosAsync()
         {
             var productos= await serviceProducto.ListAsync();
@@ -25,7 +25,7 @@ namespace ArtInk.WebAPI.Controllers
         [HttpGet("{idProducto}")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductoDTO))]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Exception))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
         public async Task<IActionResult> GetProductoByIdAsync(short idProducto)
         {
             var producto = await serviceProducto.FindByIdAsync(idProducto);
@@ -35,7 +35,7 @@ namespace ArtInk.WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductoDTO))]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Exception))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
         public async Task<IActionResult> CreateProductoAsync([FromBody]RequestProductoDTO producto)
         {
             //retorna una excepçión is es nulo
