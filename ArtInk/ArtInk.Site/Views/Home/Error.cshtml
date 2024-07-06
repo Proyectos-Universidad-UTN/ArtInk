@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Error";
+    Layout = "_ErrorLayout";
+}
+<style>
+    body {
+        background-color: #333333;
+        width: 100vw;
+        height: 100vh;
+        color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .eye {
+        background: #fff;
+        border-radius: 50%;
+        display: inline-block;
+        height: 100px;
+        position: relative;
+        width: 100px;
+    }
+
+    .eye::after {
+        background: #000;
+        border-radius: 50%;
+        bottom: 56.1px;
+        content: "";
+        height: 33px;
+        position: absolute;
+        right: 33px;
+        width: 33px;
+    }
+</style>
+<div class="body-error">
+    <span class='error-num' style="font-size: 8em">5</span>
+    <div class='eye'></div>
+    <div class='eye'></div>
+    <p class='sub-text' style="margin-bottom: 4em;">Se ha presentado un error al ejecutar el proceso. Estamos <i>buscando</i> que sucedio.</p>
+    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Volver a inicio</a>
+</div>
+
+<script>
+    $('body').mousemove(function (event) {
+        var e = $('.eye');
+        var x = (e.offset().left) + (e.width() / 2);
+        var y = (e.offset().top) + (e.height() / 2);
+        var rad = Math.atan2(event.pageX - x, event.pageY - y);
+        var rot = (rad * (180 / Math.PI) * -1) + 180;
+        e.css({
+            '-webkit-transform': 'rotate(' + rot + 'deg)',
+            'transform': 'rotate(' + rot + 'deg)'
+        });
+    });
+</script>

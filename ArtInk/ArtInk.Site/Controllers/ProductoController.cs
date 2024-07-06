@@ -11,136 +11,145 @@ namespace ArtInk.Site.Controllers
 {
     public class ProductoController(IAPIArtInkClient cliente, IMapper mapper) : Controller
     {
-     
+
         public async Task<IActionResult> Index()
         {
-            try
+            var collection = await cliente.ConsumirAPIAsync<IEnumerable<ProductoResponseDTO>>(Constantes.GET, Constantes.GETALLPRODUCTOS);
+            if (collection == null)
             {
-                var collection = await cliente.ConsumirAPIAsync<IEnumerable<ProductoResponseDTO>>(Constantes.GET, Constantes.GETALLPRODUCTOS);
-                if (collection == null) return RedirectToAction("Index", "Home");
-                return View(collection);
-            }
-            catch (Exception)
-            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction("Index", "Home");
             }
+            return View(collection);
         }
 
         public async Task<IActionResult> Details(short id)
         {
-            try
-            {
-                var url = string.Format(Constantes.GETPRODUCTOBYID, id);
-                var producto = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.GET, url);
-                if (producto == null) return RedirectToAction("Index", "Home");
+            var url = string.Format(Constantes.GETPRODUCTOBYID, id);
+            var collection = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.GET, url);
 
-                return View(producto);
-
-            }
-            catch (Exception)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            return View(collection);
         }
 
         public async Task<IActionResult> Create()
         {
-            try
+            var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
+            if (unidadMedida == null)
             {
-                var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-                var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-
-                var producto = new ProductoRequestDTO()
-                {
-                    UnidadMedidas = unidadMedida,
-                    Categorias = categoria
-                };
-                return View(producto);
-
-            }
-            catch (Exception)
-            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction(nameof(Index));
             }
+
+            var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
+            if (categoria == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction(nameof(Index));
+            }
+
+            var producto = new ProductoRequestDTO()
+            {
+                UnidadMedidas = unidadMedida,
+                Categorias = categoria
+            };
+            return View(producto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(ProductoRequestDTO producto)
         {
-            try
+            var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
+            if (unidadMedida == null)
             {
-                var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-                if (unidadMedida == null) return RedirectToAction(nameof(Index));
-                producto.UnidadMedidas = unidadMedida;
-
-                var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-                if (categoria == null) return RedirectToAction(nameof(Index));
-                producto.Categorias = categoria;
-
-                if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
-
-                var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.POST, Constantes.POSTPRODUCTO, valoresConsumo: Serialization.Serialize(producto));
-                if (resultado == null) return View(producto);
-
-                TempData["SuccessMessage"] = "Producto creado correctamente.";
-
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+
+            var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
+            if (categoria == null)
             {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction(nameof(Index));
+            }
+
+            producto.UnidadMedidas = unidadMedida;
+            producto.Categorias = categoria;
+
+            var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.POST, Constantes.POSTPRODUCTO, valoresConsumo: Serialization.Serialize(producto));
+            if (resultado == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return View(producto);
             }
+
+            TempData["SuccessMessage"] = "Producto creado correctamente.";
+
+            return RedirectToAction(nameof(Index));
         }
+
         public async Task<IActionResult> Edit(short id)
         {
-            try
+            var url = string.Format(Constantes.GETPRODUCTOBYID, id);
+            var productoExisting = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.GET, url);
+            if (productoExisting == null)
             {
-                var url = string.Format(Constantes.GETPRODUCTOBYID, id);
-                var productoExisting = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.GET, url);
-                if (productoExisting == null) return RedirectToAction(nameof(Index));
-
-                var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-                var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-
-                var producto = mapper.Map<ProductoRequestDTO>(productoExisting);
-                producto.UnidadMedidas = unidadMedida;
-                producto.Categorias = categoria;
-
-                return View(producto);
-
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction(nameof(Index)); 
             }
-            catch (Exception)
+
+            var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
+            if (unidadMedida == null)
             {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction(nameof(Index));
             }
+
+            var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
+            if (categoria == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction(nameof(Index));
+            }
+
+            var producto = mapper.Map<ProductoRequestDTO>(productoExisting);
+            producto.UnidadMedidas = unidadMedida;
+            producto.Categorias = categoria;
+
+            return View(producto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(ProductoRequestDTO producto)
         {
-            try
+            var url = string.Format(Constantes.PUTPRODUCTO, producto.Id);
+
+            var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
+            if (unidadMedida == null)
             {
-                var url = string.Format(Constantes.PUTPRODUCTO, producto.Id);
-
-                var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDTO>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-                if (unidadMedida == null) return RedirectToAction(nameof(Index));
-                producto.UnidadMedidas = unidadMedida;
-
-                var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-                if (categoria == null) return RedirectToAction(nameof(Index));
-                producto.Categorias = categoria;
-
-                var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(producto));
-                if (resultado == null) return View(producto);
-
-                TempData["SuccessMessage"] = "Producto actualizado correctamente.";
-
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            producto.UnidadMedidas = unidadMedida;
+
+            var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDTO>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
+            if (categoria == null) 
             {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction(nameof(Index));
             }
+            producto.Categorias = categoria;
+
+            var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDTO>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(producto));
+
+            if (resultado == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return View(producto);
+            }
+
+            TempData["SuccessMessage"] = "Producto actualizado correctamente.";
+
+            return RedirectToAction(nameof(Index));
         }
 
     }

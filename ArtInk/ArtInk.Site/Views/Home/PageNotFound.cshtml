@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Error";
+    Layout = "_ErrorLayout";
+}
+
+<link rel="stylesheet" href="~/css/not-found.css" asp-append-version="true" />
+<h1>Oooops!</h1>
+<p class="zoom-area"><b>ArtInk</b> no ha encontrado la página indicada</p>
+<section class="error-container">
+    <span class="four"><span class="screen-reader-text">4</span></span>
+    <span class="zero"><span class="screen-reader-text">0</span></span>
+    <span class="four"><span class="screen-reader-text">4</span></span>
+</section>
+<div class="link-container">
+    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Ir a inicio</a>
+</div>
