@@ -16,6 +16,6 @@ namespace ArtInk.Application.RequestDTOs
 
         public bool Activo { get; set; }
 
-        public string Respuesta { get; set; } = null!;
-        }
+        public string? Respuesta { get; set; }
+    }   
 }

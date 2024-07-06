@@ -9,7 +9,12 @@ namespace ArtInk.Site.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            var collection = await cliente.ConsumirAPIAsync<IEnumerable<HorarioResponseDTO>>(Constantes.GET, Constantes.GETALLHORARIOS);
+            var collection = await cliente.ConsumirAPIAsync<IEnumerable<SucursalResponseDTO>>(Constantes.GET, Constantes.GETALLSUCURSALES);
+            if (collection == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index", "Home");
+            }
             return View(collection);
         }
 
@@ -20,5 +25,7 @@ namespace ArtInk.Site.Controllers
 
             return View(collection);
         }
+
+
     }
 }

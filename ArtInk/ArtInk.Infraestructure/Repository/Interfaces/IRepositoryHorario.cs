@@ -10,6 +10,7 @@ namespace ArtInk.Infraestructure.Repository.Interfaces
     public interface IRepositoryHorario
     {
         Task<ICollection<Horario>> ListAsync();
+        Task<ICollection<Horario>> GetHorariosBySucursalAsync(byte idSucursal);
         Task<Horario?> FindByIdAsync(short id);
     }
 }

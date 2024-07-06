@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.SucursalResponseDTO>
+
+@{
+    ViewData["Title"] = "Horarios";
+}
+
+<h1>Horarios</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            @await Html.PartialAsync("~/Views/Shared/_SucursalSelect.cshtml", Model)
+        </div>
+    </div>
+</div>

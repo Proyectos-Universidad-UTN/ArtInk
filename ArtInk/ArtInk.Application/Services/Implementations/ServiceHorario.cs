@@ -24,6 +24,14 @@ namespace ArtInk.Application.Services.Implementations
             return mapper.Map<HorarioDTO>(horario);
         }
 
+        public async Task<ICollection<HorarioDTO>> GetHorariosBySucursalAsync(byte idSucursal)
+        {
+            var list = await repository.GetHorariosBySucursalAsync(idSucursal);
+            var collection = mapper.Map<ICollection<HorarioDTO>>(list);
+
+            return collection;
+        }
+
         /// <summary>
         /// buscar toda la lista
         /// </summary>

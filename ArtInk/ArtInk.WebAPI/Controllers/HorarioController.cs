@@ -9,6 +9,9 @@ namespace ArtInk.WebAPI.Controllers
     public class HorarioController(IServiceHorario serviceHorario) : ControllerBase
     {
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<HorarioDTO>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
         public async Task<IActionResult> GetAllHorariosAsync()
         {
             var horarios = await serviceHorario.ListAsync();
@@ -16,7 +19,7 @@ namespace ArtInk.WebAPI.Controllers
         }
 
         [HttpGet("{idHorario}")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(HorarioDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HorarioDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
         public async Task<IActionResult> GetHorarioByIdAsync(short idHorario)
@@ -24,5 +27,16 @@ namespace ArtInk.WebAPI.Controllers
             var horario = await serviceHorario.FindByIdAsync(idHorario);
             return StatusCode(StatusCodes.Status200OK, horario);
         }
+
+        [HttpGet("~/api/sucursal/{idSucursal}/horario")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<HorarioDTO>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
+        public async Task<IActionResult> GetAllHorariosBySucursalAsync(byte idSucursal)
+        {
+            var horarios = await serviceHorario.GetHorariosBySucursalAsync(idSucursal);
+            return StatusCode(StatusCodes.Status200OK, horarios);
+        }
+
     }
 }

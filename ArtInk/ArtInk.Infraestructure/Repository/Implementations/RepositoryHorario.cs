@@ -17,6 +17,14 @@ namespace ArtInk.Infraestructure.Repository.Implementations
             return await context.Set<Horario>().FindAsync(id);
         }
 
+        public async Task<ICollection<Horario>> GetHorariosBySucursalAsync(byte idSucursal)
+        {
+            var collection = await context.Set<Horario>()
+             .Where(a => a.IdSucursal == idSucursal)
+             .ToListAsync();
+            return collection;
+        }
+
         public  async Task<ICollection<Horario>> ListAsync()
         {
             var collection = await context.Set<Horario>()

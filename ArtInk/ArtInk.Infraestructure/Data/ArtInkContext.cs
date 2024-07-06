@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using ArtInk.Infraestructure.Enums;
 using ArtInk.Infraestructure.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -259,6 +260,8 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
             entity.HasKey(e => e.Id).HasName("PK_horario");
 
             entity.ToTable("Horario");
+
+            entity.Property(a => a.Dia).HasConversion(m => m.ToString(), b => (DiaSemana)Enum.Parse(typeof(DiaSemana), b));
 
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
             entity.Property(e => e.FechaModificacion).HasColumnType("datetime");

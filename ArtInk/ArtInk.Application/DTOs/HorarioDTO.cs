@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ArtInk.Application.DTOs.Base;
+using ArtInk.Infraestructure.Enums;
 
 namespace ArtInk.Application.DTOs;
 
@@ -12,7 +13,7 @@ public record HorarioDTO : BaseEntity
 
     public byte IdSucursal { get; set; }
 
-    public DateOnly Dia { get; set; }
+    public DiaSemana Dia { get; set; }
 
     public TimeOnly HoraInicio { get; set; }
 
