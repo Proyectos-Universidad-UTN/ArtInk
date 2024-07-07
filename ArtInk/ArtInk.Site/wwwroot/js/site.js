@@ -25,4 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
             $(this).remove();
         });
     }, 3000);
+
+    const elems = document.querySelectorAll('.datepicker-fechas');
+    elems.forEach(elem => {
+        new Datepicker(elem, {
+            format: 'dd/mm/yyyy',
+            language: 'es'
+        });
+    })
 });
