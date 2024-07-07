@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
 using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
@@ -19,10 +15,10 @@ public record InventarioDTO: BaseEntity
 
     public byte Disponible { get; set; }
 
-    [DisplayName("Mínima")]
+    [DisplayName("Mï¿½nima")]
     public byte Minima { get; set; }
 
-    [DisplayName("Máxima")]
+    [DisplayName("Mï¿½xima")]
     public byte Maxima { get; set; }
 
     public virtual ProductoDTO Producto { get; set; } = null!;

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using ArtInk.Infraestructure.Enums;
 using ArtInk.Infraestructure.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtInk.Infraestructure.Data;
 
-public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : DbContext(options)
+public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : DbContext(options)
 {
     public virtual DbSet<Canton> Cantons { get; set; }
 
@@ -236,6 +237,8 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
         modelBuilder.Entity<Feriado>(entity =>
         {
             entity.ToTable("Feriado");
+
+            entity.Property(e => e.Mes).HasConversion(x => x.ToString(), y => (MesEnum)Enum.Parse(typeof(MesEnum), y));
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Activo).HasDefaultValue(true);

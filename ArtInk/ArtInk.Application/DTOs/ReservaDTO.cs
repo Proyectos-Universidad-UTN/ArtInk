@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
@@ -29,5 +25,4 @@ public record ReservaDTO: BaseEntity
     public virtual ICollection<ReservaPreguntaDTO> ReservaPregunta { get; set; } = new List<ReservaPreguntaDTO>();
 
     public virtual ICollection<ReservaServicioDTO> ReservaServicios { get; set; } = new List<ReservaServicioDTO>();
-
 }

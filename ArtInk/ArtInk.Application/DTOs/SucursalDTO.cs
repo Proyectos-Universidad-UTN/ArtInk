@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArtInk.Application.DTOs.Base;
-using ArtInk.Infraestructure.Models;
 
 namespace ArtInk.Application.DTOs;
 

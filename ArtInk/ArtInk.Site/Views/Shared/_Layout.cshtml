@@ -35,9 +35,19 @@
                             <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Home"
                                 asp-action="Index">Inicio</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Sucursal"
-                                asp-action="Index">Sucursales</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle btnfos btnfos-5" href="#" id="sucursalesDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">Sucursal</a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sucursalesDropdown">
+                                <li>
+                                    <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Feriado"
+                                        asp-action="Index">Feriados</a>
+                                    <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Sucursal"
+                                        asp-action="Index">Sucursales</a>
+                                        <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="SucursalFeriado"
+                                        asp-action="Index">Feriados Sucursal</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle btnfos btnfos-5" href="#" id="gestionesDropdown"
@@ -64,7 +74,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle btnfos btnfos-5" href="#" id="usuariosDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuarios</a>
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">Seguridad</a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="usuariosDropdown">
                                 <li>
                                     <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Usuario"
@@ -84,36 +94,10 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <div class="container full-page">
-        <main role="main">
-            @if (TempData["SuccessMessage"] != null)
-            {
-                <div class="toast-container position-fixed top-5 end-0 p-3 text-white">
-                    <div id="liveToast" class="toast" role="alert" aria-live="assertive"
-                        aria-atomic="true">
-                        <div class="toast-body bg-success d-flex">
-                            <div class="flex-grow-1">
-                                @TempData["SuccessMessage"]
-                            </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                    </div>
-                </div>
-            }
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <div class="toast-container position-fixed top-5 end-0 p-3 text-white">
-                    <div id="liveToast" class="toast" role="alert" aria-live="assertive"
-                        aria-atomic="true">
-                        <div class="toast-body bg-danger d-flex">
-                            <div class="flex-grow-1">
-                                @TempData["ErrorMessage"]
-                            </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                    </div>
-                </div>
-            }
+        <main role="main pt-1">
+            @await Html.PartialAsync("~/Views/Shared/_ManejoMensajes.cshtml")
             @RenderBody()
+            @await Html.PartialAsync("~/Views/Shared/_ConfirmacionRemover.cshtml")
         </main>
     </div>
 

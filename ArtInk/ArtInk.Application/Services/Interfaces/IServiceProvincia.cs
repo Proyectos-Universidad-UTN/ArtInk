@@ -1,15 +1,9 @@
 ﻿using ArtInk.Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace ArtInk.Application.Services.Interfaces;
 
-namespace ArtInk.Application.Services.Interfaces
+public interface IServiceProvincia
 {
-    public interface IServiceProvincia
-    {
-        Task<ICollection<ProvinciaDTO>> ListAsync();
-        Task<ProvinciaDTO> FindByIdAsync(byte id);
-    }
+    Task<ICollection<ProvinciaDTO>> ListAsync();
+
+    Task<ProvinciaDTO> FindByIdAsync(byte id);
 }

@@ -12,6 +12,10 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayName("Sucursal")]
         public byte IdSucursal { get; set; }
 
+        public DateOnly Fecha { get; set; }
+
+        public short Ano { get; set; }
+
         public virtual FeriadoResponseDTO Feriado { get; set; } = null!;
 
         public virtual SucursalResponseDTO Sucursal { get; set; } = null!;

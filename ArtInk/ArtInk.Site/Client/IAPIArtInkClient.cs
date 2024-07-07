@@ -8,6 +8,8 @@ namespace ArtInk.Site.Client
  
         public string MensajeError { set; get; }
 
+        public string BaseUrlAPI { init; get; }
+
         Task<T> ConsumirAPIAsync<T>(string tipoLlamado, string url, string mediaType = Constantes.MEDIATYPEJSON,
                                                                        Dictionary<string, string> cabecerasAcceso = default!,
                                                                        params object[] valoresConsumo);

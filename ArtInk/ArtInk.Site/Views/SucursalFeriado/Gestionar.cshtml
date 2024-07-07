@@ -1,0 +1,40 @@
+@model ArtInk.Site.ViewModels.Request.Misc.SucursalSucursalFeriado
+
+@{
+ViewData["Title"] = "Crear feriado sucursal";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Formulario de Feriado para sucursal @Model.Sucursal.Nombre</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Gestionar">
+                <div class="row">
+                    <input hidden asp-for="Sucursal.Id">
+                    <ul class="list-group p-3">
+                        @{
+                        foreach(var it in Model.FeriadosSucursal.Select((x, i) => new { Value = x, Index = i })){
+                        <li class="list-group-item">
+                            <div class="row">
+                                <input hidden name="FeriadosSucursal[@it.Index].IdFeriado"
+                                    value="@it.Value.IdFeriado" />
+                                <div class="col-sm-12 col-md-6">
+                                    <label class="form-label">@it.Value.Feriado.Nombre</label>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <input class="form-control" name="FeriadosSucursal[@it.Index].Fecha"
+                                        value="@it.Value.Fecha">
+                                </div>
+                            </div>
+                        </li>
+                        }
+                        }
+                    </ul>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+            </form>
+        </div>
+    </div>
+</div>

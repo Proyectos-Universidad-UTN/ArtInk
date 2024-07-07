@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ArtInk.Application.RequestDTOs;
 
-namespace ArtInk.Application.RequestDTOs
+public record RequestClienteDTO
 {
-    public record RequestClienteDTO
-    {
-        public short Id { get; set; }
+    public short Id { get; set; }
 
-        public string Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-        public string Apellidos { get; set; } = null!;
+    public string Apellidos { get; set; } = null!;
 
-        public string CorreoElectronico { get; set; } = null!;
+    public string CorreoElectronico { get; set; } = null!;
 
-        public int Telefono { get; set; }
+    public int Telefono { get; set; }
 
-        public short IdDistrito { get; set; }
+    public short IdDistrito { get; set; }
 
-        public string? DireccionExacta { get; set; }
+    public string? DireccionExacta { get; set; }
 
-        public bool Activo { get; set; }
-    }
+    public bool Activo { get; set; }
 }

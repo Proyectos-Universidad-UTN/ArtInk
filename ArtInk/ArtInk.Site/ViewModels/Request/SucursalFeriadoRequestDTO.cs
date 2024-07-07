@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using ArtInk.Site.ViewModels.Response;
 
 namespace ArtInk.Site.ViewModels.Request
 {
@@ -11,5 +13,12 @@ namespace ArtInk.Site.ViewModels.Request
 
         [DisplayName("Sucursal")]
         public byte IdSucursal { get; set; }
+
+        public DateOnly Fecha { get; set; }
+
+        public short Ano { get; set; }
+
+        [NotMapped]
+        public FeriadoResponseDTO Feriado { get; set; } = null!;
     }
 }
