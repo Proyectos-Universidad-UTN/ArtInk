@@ -33,7 +33,7 @@ namespace ArtInk.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ServicioDTO))]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-        public async Task<IActionResult> CreateProductoAsync([FromBody] RequestServicioDTO servicio)
+        public async Task<IActionResult> CreateServicioAsync([FromBody] RequestServicioDTO servicio)
         {
             //retorna una excepçión is es nulo
             ArgumentNullException.ThrowIfNull(servicio);
@@ -46,7 +46,7 @@ namespace ArtInk.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-        public async Task<IActionResult> UpdateSucursalAsync(byte idServicio, [FromBody] RequestServicioDTO servicio)
+        public async Task<IActionResult> UpdateServicioAsync(byte idServicio, [FromBody] RequestServicioDTO servicio)
         {
             //retorna una excepçión is es nulo
             ArgumentNullException.ThrowIfNull(servicio);

@@ -14,6 +14,12 @@ namespace ArtInk.Site.Controllers
         public async Task<IActionResult> Index()
         {
             var collection = await cliente.ConsumirAPIAsync<IEnumerable<ServicioResponseDTO>>(Constantes.GET, Constantes.GETALLSERVICIOS);
+            if (collection == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(collection);
         }
 
@@ -21,6 +27,11 @@ namespace ArtInk.Site.Controllers
         {
             var url = string.Format(Constantes.GETSERVICIOBYID, id);
             var collection = await cliente.ConsumirAPIAsync<ServicioResponseDTO>(Constantes.GET, url);
+            if (collection == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index");
+            }
 
             return View(collection);
         }
@@ -28,6 +39,12 @@ namespace ArtInk.Site.Controllers
         public async Task<IActionResult> Create()
         {
             var tipoServicio = await cliente.ConsumirAPIAsync<IEnumerable<TipoServicioResponseDTO>>(Constantes.GET, Constantes.GETALLTIPOSERVICIOS);
+            if (tipoServicio == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index");
+            }
+
             var servicio = new ServicioRequestDTO()
             {
                 TipoServicios = tipoServicio
@@ -39,66 +56,92 @@ namespace ArtInk.Site.Controllers
         public async Task<IActionResult> Create(ServicioRequestDTO servicio)
         {
             var tipoServicio = await cliente.ConsumirAPIAsync<IEnumerable<TipoServicioResponseDTO>>(Constantes.GET, Constantes.GETALLTIPOSERVICIOS);
+            if (tipoServicio == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index");
+            }
+
             servicio.TipoServicios = tipoServicio;
 
-            try
+            if (!ModelState.IsValid)
             {
-                var resultado = await cliente.ConsumirAPIAsync<ServicioResponseDTO>(Constantes.POST, Constantes.POSTSERVICIO, valoresConsumo: Serialization.Serialize(servicio));
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception)
-            {
+                TempData["ErrorMessage"] = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
                 return View(servicio);
             }
+
+            var resultado = await cliente.ConsumirAPIAsync<ServicioResponseDTO>(Constantes.POST, Constantes.POSTSERVICIO, valoresConsumo: Serialization.Serialize(servicio));
+
+            if (resultado == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return View(servicio);
+            }
+            
+            TempData["SuccessMessage"] = "Servicio creado correctamente.";
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(byte id)
         {
-            try
+            var url = string.Format(Constantes.GETSERVICIOBYID, id);
+            var servicioExisting = await cliente.ConsumirAPIAsync<ServicioResponseDTO>(Constantes.GET, url);
+            if (servicioExisting == null)
             {
-                var url = string.Format(Constantes.GETSERVICIOBYID, id);
-                var servicioExisting = await cliente.ConsumirAPIAsync<ServicioResponseDTO>(Constantes.GET, url);
-                if (servicioExisting == null) return RedirectToAction(nameof(Index));
-
-                var servicios = await cliente.ConsumirAPIAsync<List<TipoServicioResponseDTO>>(Constantes.GET, Constantes.GETALLSERVICIOS);
-                servicios.Insert(0, new TipoServicioResponseDTO() { Id = 0, Nombre = "Seleccione un servicio" });
-
-                var servicio = mapper.Map<ServicioRequestDTO>(servicioExisting);
-                servicio.TipoServicios = servicios;
-
-                return View(servicio);
-            }
-            catch (Exception)
-            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction(nameof(Index));
             }
+
+            var servicios = await cliente.ConsumirAPIAsync<List<TipoServicioResponseDTO>>(Constantes.GET, Constantes.GETALLSERVICIOS);
+            if (servicios == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction(nameof(Index));
+            }
+
+            servicios.Insert(0, new TipoServicioResponseDTO() { Id = 0, Nombre = "Seleccione un servicio" });
+
+            var servicio = mapper.Map<ServicioRequestDTO>(servicioExisting);
+            servicio.TipoServicios = servicios;
+
+            return View(servicio);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(ServicioRequestDTO servicio)
         {
-            try
+            var url = string.Format(Constantes.PUTSERVICIO, servicio.Id);
+            var servicios = await cliente.ConsumirAPIAsync<List<TipoServicioResponseDTO>>(Constantes.GET, Constantes.GETALLSERVICIOS);
+            if (servicios == null)
             {
-                var url = string.Format(Constantes.PUTSERVICIO, servicio.Id);
-                var servicios = await cliente.ConsumirAPIAsync<List<TipoServicioResponseDTO>>(Constantes.GET, Constantes.GETALLSERVICIOS);
-                if (servicios == null) return RedirectToAction(nameof(Index));
-
-                servicios.Insert(0, new TipoServicioResponseDTO() { Id = 0, Nombre = "Seleccione un servicio" });
-                servicio.TipoServicios = servicios;
-
-                if (!ModelState.IsValid) return View(servicio);
-
-                var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(servicio));
-                if (resultado == null) return View(servicio);
-
-                TempData["SuccessMessage"] = "Servicio actualizado correctamente.";
-
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+
+            servicios.Insert(0, new TipoServicioResponseDTO() { Id = 0, Nombre = "Seleccione un servicio" });
+            servicio.TipoServicios = servicios;
+
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                TempData["ErrorMessage"] = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+                return View(servicio);
             }
+
+            var resultado = await cliente.ConsumirAPIAsync<ServicioResponseDTO>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(servicio));
+            if (resultado == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return View(servicio);
+            }
+
+            TempData["SuccessMessage"] = "Servicio actualizado correctamente.";
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
