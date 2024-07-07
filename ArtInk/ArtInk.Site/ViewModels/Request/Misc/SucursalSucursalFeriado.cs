@@ -18,7 +18,7 @@ public record SucursalSucursalFeriado
 
     public void CargarFeriados(IEnumerable<SucursalFeriadoRequestDTO> feriadosExistentes, IEnumerable<FeriadoResponseDTO> feriados, short anno)
     {
-        if (feriadosExistentes != null)
+        if (feriadosExistentes.Count() > 0)
         {
             FeriadosSucursal = feriadosExistentes.ToList();
             return;
