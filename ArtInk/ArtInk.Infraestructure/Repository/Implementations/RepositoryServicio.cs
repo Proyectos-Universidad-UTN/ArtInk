@@ -23,9 +23,9 @@ namespace ArtInk.Infraestructure.Repository.Implementations
 
         public async Task<bool> ExisteServicio(byte id)
         {
-            var keyProperty = context.Model.FindEntityType(typeof(Sucursal))!.FindPrimaryKey()!.Properties[0];
+            var keyProperty = context.Model.FindEntityType(typeof(Servicio))!.FindPrimaryKey()!.Properties[0];
 
-            return await context.Set<Sucursal>()
+            return await context.Set<Servicio>()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id) != null;
         }
