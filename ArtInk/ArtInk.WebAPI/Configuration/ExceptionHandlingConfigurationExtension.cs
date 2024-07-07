@@ -36,6 +36,7 @@ public static class ExceptionHandlingConfigurationExtension
                 logLevel = e.LogLevel;
                 break;
             case ValidationException:
+            case FluentValidation.ValidationException:
             case ValidationEntityException:
                 httpStatusCode = HttpStatusCode.UnprocessableEntity;
                 logLevel = LogLevel.Information;

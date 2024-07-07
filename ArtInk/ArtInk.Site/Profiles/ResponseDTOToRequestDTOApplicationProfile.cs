@@ -9,6 +9,7 @@ public class ResponseDTOToRequestDTOApplicationProfile: Profile
     public ResponseDTOToRequestDTOApplicationProfile()
     {
         CreateMap<SucursalResponseDTO, SucursalRequestDTO>();
+        CreateMap<ProductoResponseDTO, ProductoRequestDTO>();
         CreateMap<ServicioResponseDTO, ServicioRequestDTO>();
     }
 }
