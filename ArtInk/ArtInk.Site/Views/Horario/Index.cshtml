@@ -3,16 +3,17 @@
 @{
     ViewData["Title"] = "Horarios";
 }
-
+<br />
 <h1>Horarios</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-3">Inicio</a>
 </p>
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="col-sm-3 col-md-3 col-lg-3">
             @await Html.PartialAsync("~/Views/Shared/_SucursalSelect.cshtml", Model)
         </div>
     </div>

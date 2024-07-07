@@ -397,5 +397,15 @@ a.btn {
     }
 }
 
+.whatsapp-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Asegura que esté sobre otros elementos */
+}
+
+    .whatsapp-icon img {
+        width: 50px; /* Ajusta el tamaño según necesites */
+         
 
 
