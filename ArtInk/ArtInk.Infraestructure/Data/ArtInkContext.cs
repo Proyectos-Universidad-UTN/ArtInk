@@ -67,6 +67,8 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
 
     public virtual DbSet<SucursalFeriado> SucursalFeriados { get; set; }
 
+    public virtual DbSet<SucursalHorarioBloqueo> SucursalHorarioBloqueos { get; set; }
+
     public IDbConnection Connection => Database.GetDbConnection();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -595,6 +597,20 @@ public partial class ArtInkContext (DbContextOptions<ArtInkContext> options) : D
                 .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SucursalFeriado_Sucursal");
+        });
+
+        modelBuilder.Entity<SucursalHorarioBloqueo>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_SucursalHorarioBloqueo");
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.ToTable("SucursalHorarioBloqueo");
+
+            entity.Property(e => e.Activo).HasDefaultValue(true);
+
+            entity.HasOne(d => d.IdSucursalHorarioNavigation).WithMany(p => p.SucursalHorarioBloqueos)
+                .HasForeignKey(d => d.IdSucursalHorario)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SucursalHorarioBloqueo_SucursalHorario");
         });
 
         OnModelCreatingPartial(modelBuilder);

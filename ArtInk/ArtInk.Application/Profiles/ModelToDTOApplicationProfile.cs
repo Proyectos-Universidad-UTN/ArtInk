@@ -80,19 +80,8 @@ namespace ArtInk.Application.Profiles
                  .ForMember(dest => dest.Usuario, inp => inp.MapFrom(ori => ori.IdUsuarioNavigation));
             CreateMap<Cliente, ClienteDTO>()
                   .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
-
-
-
-
-
-
-
-
-
-
-
-
-
+            CreateMap<SucursalHorarioBloqueo, SucursalHorarioBloqueoDTO>()
+                .ForMember(dest => dest.SucursalHorario, inp => inp.MapFrom(ori => ori.IdSucursalHorarioNavigation));
 
         }
     }

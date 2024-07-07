@@ -396,16 +396,15 @@ a.btn {
         transform: rotate(360deg);
     }
 }
-
+/***************************************************whatsapp***********************************************************/
 .whatsapp-icon {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 1000; /* Asegura que esté sobre otros elementos */
+    z-index: 1000; 
 }
 
     .whatsapp-icon img {
-        width: 50px; /* Ajusta el tamaño según necesites */
-         
+        width: 50px; 
 
 

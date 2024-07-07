@@ -18,4 +18,7 @@ public record SucursalHorarioDTO
     public virtual SucursalDTO Sucursal { get; set; } = null!;
 
     public virtual ICollection<ReservaDTO> Reservas { get; set; } = new List<ReservaDTO>();
+
+    public virtual ICollection<SucursalHorarioBloqueoDTO> SucursalHorarioBloqueos { get; set; } = new List<SucursalHorarioBloqueoDTO>();
+
 }

@@ -25,7 +25,5 @@ namespace ArtInk.Site.Controllers
 
             return View(collection);
         }
-
-
     }
 }
