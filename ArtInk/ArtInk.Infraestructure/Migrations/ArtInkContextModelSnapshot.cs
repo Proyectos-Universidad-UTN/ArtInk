@@ -996,7 +996,7 @@ namespace ArtInk.Infraestructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
-                    b.Property<short>("Ano")
+                    b.Property<short>("Anno")
                         .HasColumnType("smallint");
 
                     b.Property<DateOnly>("Fecha")

@@ -15,7 +15,7 @@ public class ServiceSucursalFeriado(IRepositorySucursalFeriado repository, IMapp
 {
     public async Task<bool> CreateSucursalFeriadosAsync(byte idSucursal, IEnumerable<RequestSucursalFeriadoDTO> sucursalFeriados)
     {
-        var feriados = await ValidateFeriados(sucursalFeriados);
+        var feriados = await ValidateFeriados(idSucursal, sucursalFeriados);
 
         var result = await repository.CreateSucursalFeriadosAsync(idSucursal, feriados);
         if (!result) throw new ListNotAddedExecption("Error al guardar feriados");
@@ -40,11 +40,12 @@ public class ServiceSucursalFeriado(IRepositorySucursalFeriado repository, IMapp
         return mapper.Map<SucursalFeriadoDTO>(sucursalFeriado);
     }
 
-    private async Task<IEnumerable<SucursalFeriado>> ValidateFeriados(IEnumerable<RequestSucursalFeriadoDTO> sucursalFeriados)
+    private async Task<IEnumerable<SucursalFeriado>> ValidateFeriados(byte idSucursal, IEnumerable<RequestSucursalFeriadoDTO> sucursalFeriados)
     {
-        var feriados = mapper.Map<IEnumerable<SucursalFeriado>>(sucursalFeriados);
+        var feriados = mapper.Map<List<SucursalFeriado>>(sucursalFeriados);
         foreach (var item in feriados)
         {
+            item.IdSucursal = idSucursal;
             await sucursalFeriadoValidator.ValidateAndThrowAsync(item);
         }
         return feriados;

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtInk.Infraestructure.Migrations
 {
     [DbContext(typeof(ArtInkContext))]
-    [Migration("20240707091416_Feriado_Fechas_Sucursal")]
+    [Migration("20240707131317_Feriado_Fechas_Sucursal")]
     partial class Feriado_Fechas_Sucursal
     {
         /// <inheritdoc />
@@ -999,7 +999,7 @@ namespace ArtInk.Infraestructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
-                    b.Property<short>("Ano")
+                    b.Property<short>("Anno")
                         .HasColumnType("smallint");
 
                     b.Property<DateOnly>("Fecha")

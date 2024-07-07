@@ -13,7 +13,7 @@ public class SucursalFeriadoValidator : AbstractValidator<SucursalFeriado>
         RuleFor(m => m.IdSucursal)
             .NotEmpty().WithMessage("Debe especificar la sucursal");
 
-        RuleFor(m => m.Ano)
-            .GreaterThan((short)DateTime.Now.Year).WithMessage(m => $"Año({m.Ano}) no puede ser menor al actual");
+        RuleFor(m => m.Anno)
+            .GreaterThanOrEqualTo((short)DateTime.Now.Year).WithMessage(m => $"Año({m.Anno}) no puede ser menor al actual");
     }
 }

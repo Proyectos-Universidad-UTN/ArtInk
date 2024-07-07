@@ -7,6 +7,7 @@ ViewData["Title"] = "Feriados sucursal";
 <h1>Feriados Sucursal</h1>
 
 <p>
+    <a hidden asp-action="Gestionar" asp-route-idSucursal="0" asp-route-anno="0" id="GestionarBase" class="btn btn-primary mb-3"></a>
     <a asp-action="Gestionar" asp-route-idSucursal="0" asp-route-anno="0" id="Gestionar" class="btn btn-primary mb-3">Gestionar
         Feriados Sucursal</a>
 </p>
@@ -42,11 +43,11 @@ ViewData["Title"] = "Feriados sucursal";
     })
 
     $(".reload-table").on('change', () => {
-        const url = "@Model.UrlAPI".replace("{0}", `Sucursal/${$("#IdSucursal").val()}/Feriado?Anno=${$("#Anno option:selected").val()}`);
+        const url = "@Model.UrlAPI".replace("{0}", `Sucursal/${$("#IdSucursal").val()}/Feriado?Anno=${$("#Anno").val()}`);
         table.ajax.url(url);
         table.ajax.reload();
 
-        var hrefGestionar = $("#Gestionar").attr("href").toString().replace("=0", `=${$("#IdSucursal").val()}`).toString().replace("=0", `=${$("#Anno option:selected").val()}`);
+        var hrefGestionar = $("#GestionarBase").attr("href").toString().replace("=0", `=${$("#IdSucursal").val()}`).toString().replace("=0", `=${$("#Anno").val()}`);
         $("#Gestionar").attr("href", hrefGestionar)
     })
 

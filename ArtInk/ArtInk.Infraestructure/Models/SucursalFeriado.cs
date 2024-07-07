@@ -20,7 +20,7 @@ namespace ArtInk.Infraestructure.Models
 
         public DateOnly Fecha { get; set; }
 
-        public short Ano { get; set; }
+        public short Anno { get; set; }
 
         public virtual Feriado IdFeriadoNavigation { get; set; } = null!;
 

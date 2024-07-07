@@ -11,35 +11,46 @@ public class RepositorySucursalFeriado(ArtInkContext context) : IRepositorySucur
     {
         var result = true;
         var feriadosExistentes = await GetFeriadosBySucursalAsync(idSucursal);
-        using var transaccion = context.Database.BeginTransaction();
 
-        try
+        var executionStrategy = context.Database.CreateExecutionStrategy();
+
+        await executionStrategy.Execute(async () =>
         {
-            context.SucursalFeriados.RemoveRange(feriadosExistentes);
-            var rowsAffected = await context.SaveChangesAsync();
+            using var transaccion = context.Database.BeginTransaction();
+            try
+            {
+                context.SucursalFeriados.RemoveRange(feriadosExistentes);
+                var rowsAffected = await context.SaveChangesAsync();
 
-            if (rowsAffected == 0)
+                if (rowsAffected == 0 && feriadosExistentes.Count != 0)
+                {
+                    await transaccion.RollbackAsync();
+                    result = false;
+                }
+                else
+                {
+                    context.SucursalFeriados.AddRange(sucursalFeriados);
+                    rowsAffected = await context.SaveChangesAsync();
+
+                    if (rowsAffected == 0)
+                    {
+                        await transaccion.RollbackAsync();
+                        result = false;
+                    }
+                    else
+                    {
+                        await transaccion.CommitAsync();
+                    }                    
+                }
+
+            }
+            catch (Exception exc)
             {
                 await transaccion.RollbackAsync();
-                return false;
+                throw new Exception("Error al guardar feriados");
             }
 
-            context.SucursalFeriados.AddRange(sucursalFeriados);
-            rowsAffected = await context.SaveChangesAsync();
-
-            if (rowsAffected == 0)
-            {
-                await transaccion.RollbackAsync();
-                return false;
-            }
-
-            await transaccion.CommitAsync();
-        }
-        catch (Exception)
-        {
-            await transaccion.RollbackAsync();
-            throw new Exception("Error al guardar feriados");
-        }
+        });
 
         return result;
     }
@@ -59,7 +70,7 @@ public class RepositorySucursalFeriado(ArtInkContext context) : IRepositorySucur
         var collection = await context.Set<SucursalFeriado>()
                 .AsNoTracking()
                 .Include(m => m.IdFeriadoNavigation)
-                .Where(m => m.IdSucursal == idSucursal && m.Ano == anno)
+                .Where(m => m.IdSucursal == idSucursal && m.Anno == anno)
                 .ToListAsync();
         return collection;
     }

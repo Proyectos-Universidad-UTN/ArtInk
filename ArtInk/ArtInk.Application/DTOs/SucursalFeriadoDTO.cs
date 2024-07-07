@@ -10,7 +10,7 @@ public record SucursalFeriadoDTO
 
     public DateOnly Fecha { get; set; }
 
-    public short Ano { get; set; }
+    public short Anno { get; set; }
 
     public virtual FeriadoDTO Feriado { get; set; } = null!;
 

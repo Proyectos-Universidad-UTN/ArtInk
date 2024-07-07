@@ -16,7 +16,7 @@ namespace ArtInk.Site.ViewModels.Request
 
         public DateOnly Fecha { get; set; }
 
-        public short Ano { get; set; }
+        public short Anno { get; set; }
 
         [NotMapped]
         public FeriadoResponseDTO Feriado { get; set; } = null!;

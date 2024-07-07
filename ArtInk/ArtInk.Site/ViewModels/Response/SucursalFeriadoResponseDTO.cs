@@ -14,7 +14,7 @@ namespace ArtInk.Site.ViewModels.Response
 
         public DateOnly Fecha { get; set; }
 
-        public short Ano { get; set; }
+        public short Anno { get; set; }
 
         public virtual FeriadoResponseDTO Feriado { get; set; } = null!;
 

@@ -16,7 +16,7 @@ namespace ArtInk.Infraestructure.Migrations
                 table: "Feriado");
 
             migrationBuilder.AddColumn<short>(
-                name: "Ano",
+                name: "Anno",
                 table: "SucursalFeriado",
                 type: "smallint",
                 nullable: false,
@@ -48,7 +48,7 @@ namespace ArtInk.Infraestructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Ano",
+                name: "Anno",
                 table: "SucursalFeriado");
 
             migrationBuilder.DropColumn(

@@ -77,13 +77,13 @@
 
         // Url feriados
         public const string GETALLFERIADOS = "feriado";
-        public const string GETFERIADOSBYSUCURSAL = "sucursal/{0}/feriado";
         public const string GETFERIADOBYID = "feriado/{0}";
         public const string POSTFERIADO = "feriado";
         public const string PUTFERIADO = "feriado/{0}";
         public const string DELETEFERIADO = "feriado/{0}";
 
         // Url sucursal feriados
-        
+        public const string GETSUCURSALFERIADO = "Sucursal/{0}/Feriado?Anno={1}";
+        public const string POSTSUCURSALFERIADO = "Sucursal/{0}/Feriado";
     }
 }

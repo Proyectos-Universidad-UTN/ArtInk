@@ -10,5 +10,5 @@ public record RequestSucursalFeriadoDTO
 
     public DateOnly Fecha { get; set; }
 
-    public short Ano { get; set; }
+    public short Anno { get; set; }
 }
