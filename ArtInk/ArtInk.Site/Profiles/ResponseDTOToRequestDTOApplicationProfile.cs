@@ -10,5 +10,6 @@ public class ResponseDTOToRequestDTOApplicationProfile: Profile
     {
         CreateMap<SucursalResponseDTO, SucursalRequestDTO>();
         CreateMap<ProductoResponseDTO, ProductoRequestDTO>();
+        CreateMap<ServicioResponseDTO, ServicioRequestDTO>();
     }
 }

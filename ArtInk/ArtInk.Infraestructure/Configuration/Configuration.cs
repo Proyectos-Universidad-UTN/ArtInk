@@ -23,6 +23,7 @@ public static class Configuration
         services.AddTransient<IRepositoryServicio, RepositoryServicio>();
         services.AddTransient<IRepositoryHorario, RepositoryHorario>();
         services.AddTransient<IRepositoryReservaPregunta, RepositoryReservaPregunta>();
+        services.AddTransient<IRepositoryTipoServicio, RepositoryTipoServicio>();
         services.AddTransient<IRepositoryUnidadMedida, RepositoryUnidadMedida>();
         services.AddTransient<IRepositoryCategoria, RepositoryCategoria>();
         services.AddTransient<IRepositoryCanton, RepositoryCanton>();
