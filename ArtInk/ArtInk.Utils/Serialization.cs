@@ -14,7 +14,6 @@ namespace ArtInk.Utils
         {
             return JsonConvert.SerializeObject(request)!;
         }
-
         public static T Deserialize<T>(string response) 
         {
            return JsonConvert.DeserializeObject<T>(response)!;

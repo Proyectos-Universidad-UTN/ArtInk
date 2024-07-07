@@ -37,6 +37,7 @@
         public const string GETALLSERVICIOS = "servicio"; 
         public const string GETSERVICIOBYID = "servicio/{0}";
         public const string POSTSERVICIO = "servicio";
+        public const string PUTSERVICIO = "servicio/{0}";
 
         //Url Horarios
         public const string GETALLHORARIOS = "horario"; 

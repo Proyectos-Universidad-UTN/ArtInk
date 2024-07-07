@@ -12,5 +12,6 @@ public class ResponseDTOToRequestDTOApplicationProfile: Profile
         CreateMap<ProductoResponseDTO, ProductoRequestDTO>();
         CreateMap<FeriadoResponseDTO, FeriadoRequestDTO>();
         CreateMap<SucursalFeriadoResponseDTO, SucursalFeriadoRequestDTO>();
+        CreateMap<ServicioResponseDTO, ServicioRequestDTO>();
     }
 }

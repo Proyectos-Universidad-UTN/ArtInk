@@ -10,4 +10,6 @@ public interface IServiceServicio
     Task<ServicioDTO> FindByIdAsync(byte id);
 
     Task<ServicioDTO> CreateServicioAsync(RequestServicioDTO servicio);
+
+    Task<ServicioDTO> UpdateServicioAsync(byte id, RequestServicioDTO servicioDTO);
 }
