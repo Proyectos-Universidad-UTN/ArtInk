@@ -1,15 +1,10 @@
 ﻿using ArtInk.Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ArtInk.Application.Services.Interfaces
+namespace ArtInk.Application.Services.Interfaces;
+
+public interface IServiceRol
 {
-    public interface IServiceRol
-    {
-        Task<ICollection<RolDTO>> ListAsync();
-        Task<RolDTO> FindByIdAsync(byte id);
-    }
+    Task<ICollection<RolDTO>> ListAsync();
+
+    Task<RolDTO> FindByIdAsync(byte id);
 }

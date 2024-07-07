@@ -380,14 +380,18 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
-                    b.Property<DateOnly?>("Fecha")
-                        .HasColumnType("date");
+                    b.Property<byte>("Dia")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("Mes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -991,6 +995,12 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
+
+                    b.Property<short>("Anno")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<byte>("IdFeriado")
                         .HasColumnType("tinyint");

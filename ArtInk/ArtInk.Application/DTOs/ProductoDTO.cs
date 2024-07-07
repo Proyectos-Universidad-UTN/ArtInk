@@ -1,6 +1,4 @@
-﻿
-using ArtInk.Application.DTOs.Base;
-using ArtInk.Infraestructure.Models;
+﻿using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs
 {
@@ -33,6 +31,5 @@ namespace ArtInk.Application.DTOs
         public virtual UnidadMedidaDTO UnidadMedida { get; set; } = null!;
 
         public virtual ICollection<InventarioDTO> Inventarios { get; set; } = new List<InventarioDTO>();
-
     }
 }

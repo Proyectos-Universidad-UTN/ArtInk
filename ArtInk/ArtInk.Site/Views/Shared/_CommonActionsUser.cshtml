@@ -14,7 +14,8 @@
 
         if(Model.Eliminar)
         {
-            @Html.ActionLink("Eliminar", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger btn-sm flex-fill m-0" })        
+            <button class="btn btn-danger btn-sm flex-fill m-0 data-eliminar" data-id="@Model.Id", data-bs-toggle="modal", data-bs-target="#modalConfirmacion">Eliminar</button>
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "hidden delete-register", hidden="hidden" })        
         }
     }
 </div>

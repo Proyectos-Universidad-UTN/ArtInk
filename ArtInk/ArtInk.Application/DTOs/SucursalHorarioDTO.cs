@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ArtInk.Application.DTOs;
 
 public record SucursalHorarioDTO
@@ -12,6 +7,10 @@ public record SucursalHorarioDTO
     public byte IdSucursal { get; set; }
 
     public short IdHorario { get; set; }
+
+    public DateOnly Fecha { get; set; }
+
+    public short Ano { get; set; }
 
     public virtual HorarioDTO Horario { get; set; } = null!;
 

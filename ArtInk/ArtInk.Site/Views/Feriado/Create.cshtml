@@ -1,0 +1,54 @@
+@using ArtInk.Site.ViewModels.Common;
+@model ArtInk.Site.ViewModels.Request.FeriadoRequestDTO
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Formulario de Feriado</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" class="form-object">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group mb-3">
+                            <label asp-for="Nombre" class="form-label"></label>
+                            <input asp-for="Nombre" class="form-control" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Mes" class="form-label"></label>
+                            <select asp-for="Mes" class="form-select" asp-items="Html.GetEnumSelectList<MesEnum>()"></select>
+                            <span asp-validation-for="Mes" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Dia" class="form-label"></label>
+                            <input asp-for="Dia" class="form-control" />
+                            <span asp-validation-for="Dia" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+@{
+await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

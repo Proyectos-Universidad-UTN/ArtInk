@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
             },
             responsive: true,
-            scrollY: '400px',
-            scrollCollapse: true
         });
     });
 
@@ -23,8 +21,16 @@ document.addEventListener('DOMContentLoaded', function () {
     toast.toast('show');
 
     setTimeout(function () {
-        $toast.fadeOut(1000, function () {
+        toast.fadeOut(1000, function () {
             $(this).remove();
         });
     }, 3000);
+
+    const elems = document.querySelectorAll('.datepicker-fechas');
+    elems.forEach(elem => {
+        new Datepicker(elem, {
+            format: 'dd/mm/yyyy',
+            language: 'es'
+        });
+    })
 });

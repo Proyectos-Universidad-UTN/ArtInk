@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
@@ -15,7 +11,8 @@ public record ReservaPreguntaDTO: BaseEntity
     public string Pregunta { get; set; } = null!;
 
     public bool Activo { get; set; }
-    public string Respuesta { get; set; }
+
+    public string? Respuesta { get; set; }
 
     public virtual ReservaDTO Reserva { get; set; } = null!;
 }

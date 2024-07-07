@@ -1,6 +1,5 @@
 ﻿using ArtInk.Application.DTOs;
 using ArtInk.Application.RequestDTOs;
-using ArtInk.Application.Services.Implementations;
 using ArtInk.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

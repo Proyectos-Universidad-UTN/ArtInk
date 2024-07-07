@@ -1,22 +1,18 @@
 ﻿using ArtInk.Application.RequestDTOs;
 using ArtInk.Infraestructure.Models;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ArtInk.Application.Profiles
+namespace ArtInk.Application.Profiles;
+
+public class DTOToModelApplicationProfile : Profile
 {
-    public class DTOToModelApplicationProfile : Profile
+    public DTOToModelApplicationProfile()
     {
-        public DTOToModelApplicationProfile()
-        {
-            CreateMap<RequestProductoDTO, Producto>();
-            CreateMap<RequestSucursalDTO, Sucursal>();
-            CreateMap<RequestServicioDTO, Servicio>();
-            CreateMap<RequestTipoServicioDTO, TipoServicio>();
-        }
+        CreateMap<RequestProductoDTO, Producto>();
+        CreateMap<RequestSucursalDTO, Sucursal>();
+        CreateMap<RequestServicioDTO, Servicio>();
+        CreateMap<RequestTipoServicioDTO, TipoServicio>();
+        CreateMap<RequestFeriadoDTO, Feriado>();
+        CreateMap<RequestSucursalFeriadoDTO, SucursalFeriado>();
     }
 }
