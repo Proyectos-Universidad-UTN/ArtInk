@@ -1,0 +1,73 @@
+@model ArtInk.Site.ViewModels.Request.ServicioRequestDTO
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Formulario de Servicio Nº @Model.Id</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div hidden> 
+                    <input asp-for="Id" />
+                    <input asp-for="Activo" />
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Nombre" class="form-label"></label>
+                            <input asp-for="Nombre" class="form-control" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Descripcion" class="form-label"></label>
+                            <input asp-for="Descripcion" class="form-control" />
+                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="IdTipoServicio" class="form-label"></label>
+                            <select asp-for="IdTipoServicio" class="form-select" asp-items="@(new SelectList(Model.TipoServicios,"Id","Nombre"))"></select>
+                            <span asp-validation-for="IdTipoServicio" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="TarifaFormateada" class="form-label"></label>
+                            <input asp-for="TarifaFormateada" class="form-control" data-mask="#,##0.00" data-mask-reverse="true" placeholder="#,##0.00" />
+                            <span asp-validation-for="TarifaFormateada" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Observacion" class="form-label"></label>
+                            <input asp-for="Observacion" class="form-control" />
+                            <span asp-validation-for="Observacion" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ArtInk.Application.RequestDTOs;
 
-namespace ArtInk.Application.RequestDTOs
+public record RequestTipoPagoDTO
 {
-    public record RequestTipoPagoDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        public string Descripcion { get; set; } = null!;
+    public string Descripcion { get; set; } = null!;
 
-        public int Referencia { get; set; }
-    }
+    public int Referencia { get; set; }
 }

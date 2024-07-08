@@ -1,0 +1,80 @@
+@model ArtInk.Site.ViewModels.Common.SucursalFeriados
+
+@{
+ViewData["Title"] = "Feriados sucursal";
+}
+
+<h1>Feriados Sucursal</h1>
+
+<p>
+    <a hidden asp-action="Gestionar" asp-route-idSucursal="0" asp-route-anno="0" id="GestionarBase" class="btn btn-primary mb-3"></a>
+    <a asp-action="Gestionar" asp-route-idSucursal="0" asp-route-anno="0" id="Gestionar" class="btn btn-primary mb-3">Gestionar
+        Feriados Sucursal</a>
+</p>
+
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-sm-12 col-md-4 col-lg-3">
+            <label class="form-label">Sucursal</label>
+            <select id="IdSucursal" class="form-select reload-table"
+                asp-items='@(new SelectList(Model.Sucursales,"Id","Nombre"))'></select>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-3">
+            <label class="form-label">Año</label>
+            <select id="Anno" class="form-select reload-table" asp-items="@(new SelectList(Model.Annos))"></select>
+        </div>
+    </div>
+    <div class="row">
+        <table id="feriados" class="table table-striped table-dark table-hover">
+            <thead>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Feriado</th>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script>
+    let table;
+    $(document).ready(function () {
+        cargarFeriados()
+    })
+
+    $(".reload-table").on('change', () => {
+        const url = "@Model.UrlAPI".replace("{0}", `Sucursal/${$("#IdSucursal").val()}/Feriado?Anno=${$("#Anno").val()}`);
+        table.ajax.url(url);
+        table.ajax.reload();
+
+        var hrefGestionar = $("#GestionarBase").attr("href").toString().replace("=0", `=${$("#IdSucursal").val()}`).toString().replace("=0", `=${$("#Anno").val()}`);
+        $("#Gestionar").attr("href", hrefGestionar)
+    })
+
+    const cargarFeriados = () => {
+        const url = "@Model.UrlAPI".replace("{0}", `Sucursal/0/Feriado`);
+        table = new DataTable($("#feriados"),
+            {
+                pageLength: 10,
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'excel', 'pdf', 'colvis']
+                    }
+                },
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+                },
+                responsive: true,
+                ajax: {
+                    url: url,
+                    type: "GET",
+                    dataSrc: ''
+                },
+                columns: [
+                    { data: "id" },
+                    { data: "fecha" },
+                    { data: "feriado.nombre" }
+                ]
+            })
+    }
+</script>

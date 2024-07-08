@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ArtInk.Infraestructure.Enums;
 
 namespace ArtInk.Infraestructure.Models;
 
@@ -9,9 +10,11 @@ public partial class Feriado
 
     public string Nombre { get; set; } = null!;
 
-    public DateOnly? Fecha { get; set; }
-
     public bool Activo { get; set; }
+
+    public MesEnum Mes { get; set; }
+
+    public byte Dia { get; set; }
 
     public DateTime FechaCreacion { get; set; }
 

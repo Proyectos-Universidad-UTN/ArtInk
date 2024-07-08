@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ArtInk.Application.DTOs.Enums
+namespace ArtInk.Application.DTOs.Enums;
+
+public enum RolEnum
 {
-    public enum RolEnum
-    {
-        [Description("Administrador")]
-        ADMINISTRADOR = 1,
+    [Description("Administrador")]
+    ADMINISTRADOR = 1,
 
-        [Description("Usuario")]
-        USUARIO = 2,
+    [Description("Usuario")]
+    USUARIO = 2,
 
-        [Description("Moderador")]
-        MODERADOR = 3,
+    [Description("Moderador")]
+    MODERADOR = 3,
 
-        [Description("Invitado")]
-        INVITADO = 4
-    }
+    [Description("Invitado")]
+    INVITADO = 4
 }

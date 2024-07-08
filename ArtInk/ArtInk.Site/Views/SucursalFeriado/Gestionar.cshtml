@@ -1,0 +1,69 @@
+@model ArtInk.Site.ViewModels.Request.Misc.SucursalSucursalFeriado
+
+@{
+ViewData["Title"] = "Crear feriado sucursal";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Formulario de Feriado para sucursal @Model.Sucursal.Nombre</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Gestionar" class="form-object">
+                <div class="row">
+                    <input hidden asp-for="Sucursal.Id" />
+                    <input hidden asp-for="Accion" id="Accion" />
+                    <input hidden asp-for="IdFeriado" id="IdFeriado" />
+                    <input hidden asp-for="Anno" />
+                    <div id="feriados">
+                        @await Html.PartialAsync("~/Views/SucursalFeriado/_Feriados.cshtml", Model)
+                    </div>
+                </div>
+                <div class="px-3">
+                    @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const agregarFeriadoSucursal = (button) => {
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalFeriado/AgregarEliminarFeriadoSucursal";
+        $("#Accion").val('A')
+        $("#IdFeriado").val($("#IdFeriadoSelect").val())
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#feriados").html(result);
+            }
+        })
+    }
+
+    const eliminarFeriadoSucursal = (buttton) => {
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalFeriado/AgregarEliminarFeriadoSucursal";
+        $("#Accion").val("R")
+        $("#IdFeriado").val($(buttton).data("feriado"))
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#feriados").html(result);
+            }
+        })
+    }
+</script>

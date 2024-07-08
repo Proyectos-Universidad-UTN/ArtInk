@@ -11,36 +11,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArtInk.Application.Configuration
+namespace ArtInk.Application.Configuration;
+
+public static class Configuration
 {
-    public static class Configuration
+    public static void ConfigureApplication(this IServiceCollection services)
     {
-        public static void ConfigureApplication(this IServiceCollection services)
+        services.AddTransient<IServiceUsuario, ServiceUsuario>();
+        services.AddTransient<IServiceProducto, ServiceProducto>();
+        services.AddTransient<IServiceRol, ServiceRol>();
+        services.AddTransient<IServiceDetalleFactura, ServiceDetalleFactura>();
+        services.AddTransient<IServiceFactura, ServiceFactura>();
+        services.AddTransient<IServiceSucursal, ServiceSucursal>();
+        services.AddTransient<IServiceReserva, ServiceReserva>();
+        services.AddTransient<IServiceServicio, ServiceServicio>();
+        services.AddTransient<IServiceReservaPregunta, ServiceReservaPregunta>();
+        services.AddTransient<IServiceUnidadMedida, ServiceUnidadMedida>();
+        services.AddTransient<IServiceCategoria, ServiceCategoria>();
+        services.AddTransient<IServiceHorario, ServiceHorario>();
+        services.AddTransient<IServiceTipoServicio, ServiceTipoServicio>();
+        services.AddTransient<IServiceProvincia, ServiceProvincia>();
+        services.AddTransient<IServiceCanton, ServiceCanton>();
+        services.AddTransient<IServiceDistrito, ServiceDistrito>();
+        services.AddTransient<IServiceFeriado, ServiceFeriado>();
+        services.AddTransient<IServiceSucursalFeriado, ServiceSucursalFeriado>();
+    }
+    public static void ConfigureAutoMapper(this IServiceCollection services)
+    {
+        services.AddAutoMapper(config =>
         {
-            services.AddTransient<IServiceUsuario, ServiceUsuario>();
-            services.AddTransient<IServiceProducto, ServiceProducto>();
-            services.AddTransient<IServiceRol, ServiceRol>();
-            services.AddTransient<IServiceDetalleFactura, ServiceDetalleFactura>();
-            services.AddTransient<IServiceFactura, ServiceFactura>();
-            services.AddTransient<IServiceSucursal, ServiceSucursal>();
-            services.AddTransient<IServiceReserva, ServiceReserva>();
-            services.AddTransient<IServiceServicio, ServiceServicio>();
-            services.AddTransient<IServiceReservaPregunta, ServiceReservaPregunta>();
-            services.AddTransient<IServiceUnidadMedida, ServiceUnidadMedida>();
-            services.AddTransient<IServiceCategoria, ServiceCategoria>();
-            services.AddTransient<IServiceHorario, ServiceHorario>();
-            services.AddTransient<IServiceTipoServicio, ServiceTipoServicio>();            
-            services.AddTransient<IServiceProvincia, ServiceProvincia>();
-            services.AddTransient<IServiceCanton, ServiceCanton>();
-            services.AddTransient<IServiceDistrito, ServiceDistrito>();
-        }
-        public static void ConfigureAutoMapper(this IServiceCollection services)
-        {
-            services.AddAutoMapper(config =>
-            {
-                config.AddProfile<ModelToDTOApplicationProfile>();
-                config.AddProfile<DTOToModelApplicationProfile>();
-            });
-        }
+            config.AddProfile<ModelToDTOApplicationProfile>();
+            config.AddProfile<DTOToModelApplicationProfile>();
+        });
     }
 }

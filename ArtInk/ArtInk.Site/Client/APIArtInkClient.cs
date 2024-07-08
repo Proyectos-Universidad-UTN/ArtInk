@@ -17,7 +17,7 @@ namespace ArtInk.Site.Client
         public bool Error { set; get; }
         public string MensajeError { set; get; } = null!;
 
-        private string BaseUrlAPI { set; get; } = null!;
+        public string BaseUrlAPI { init; get; } = null!;
 
         public APIArtInkClient(IConfiguration configuration)
         {

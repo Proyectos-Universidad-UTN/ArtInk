@@ -41,6 +41,14 @@ public static class ExceptionHandlingConfigurationExtension
                 httpStatusCode = HttpStatusCode.UnprocessableEntity;
                 logLevel = LogLevel.Information;
                 break;
+            case ListNotAddedExecption:
+                httpStatusCode = HttpStatusCode.Conflict;
+                logLevel = LogLevel.Information;
+                break;
+            case BadRequestException:
+                httpStatusCode = HttpStatusCode.BadRequest;
+                logLevel = LogLevel.Information;
+                break;
             default:
                 httpStatusCode = HttpStatusCode.InternalServerError;
                 logLevel = LogLevel.Error;

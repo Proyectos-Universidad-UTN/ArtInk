@@ -1,16 +1,15 @@
 ﻿using ArtInk.Application.DTOs;
 using ArtInk.Application.RequestDTOs;
 
-namespace ArtInk.Application.Services.Interfaces
+namespace ArtInk.Application.Services.Interfaces;
+
+public interface IServiceSucursal
 {
-    public interface IServiceSucursal
-    {
-        Task<ICollection<SucursalDTO>> ListAsync();
+    Task<ICollection<SucursalDTO>> ListAsync();
 
-        Task<SucursalDTO> FindByIdAsync(byte id);
+    Task<SucursalDTO> FindByIdAsync(byte id);
 
-        Task<SucursalDTO> CreateSucursalAsync(RequestSucursalDTO sucursalDTO);
+    Task<SucursalDTO> CreateSucursalAsync(RequestSucursalDTO sucursalDTO);
 
-        Task<SucursalDTO> UpdateSucursalAsync(byte id, RequestSucursalDTO sucursalDTO);
-    }
+    Task<SucursalDTO> UpdateSucursalAsync(byte id, RequestSucursalDTO sucursalDTO);
 }

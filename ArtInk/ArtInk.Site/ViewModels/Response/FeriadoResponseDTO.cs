@@ -1,4 +1,7 @@
-﻿namespace ArtInk.Site.ViewModels.Response
+﻿using System.ComponentModel;
+using ArtInk.Site.ViewModels.Common;
+
+namespace ArtInk.Site.ViewModels.Response
 {
     public record FeriadoResponseDTO
     {
@@ -6,9 +9,12 @@
 
         public string Nombre { get; set; } = null!;
 
-        public DateOnly? Fecha { get; set; }
-
         public bool Activo { get; set; }
+
+        public MesEnum Mes { get; set; }
+
+        [DisplayName("Día")]
+        public byte Dia { get; set; }
 
         public virtual ICollection<SucursalFeriadoResponseDTO> SucursalFeriados { get; set; } = new List<SucursalFeriadoResponseDTO>();
     }
