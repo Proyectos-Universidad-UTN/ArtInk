@@ -10,6 +10,5 @@ public record RequestReservaPreguntaDTO
 
     public bool Activo { get; set; }
 
-        public string? Respuesta { get; set; }
-    }   
+    public string? Respuesta { get; set; }
 }
