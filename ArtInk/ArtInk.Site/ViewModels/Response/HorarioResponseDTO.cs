@@ -7,9 +7,6 @@ namespace ArtInk.Site.ViewModels.Response
     {
         public short Id { get; set; }
 
-        [DisplayName("Sucursal")]
-        public byte IdSucursal { get; set; }
-
         [DisplayName("Día")]
         public DiaSemana Dia { get; set; }
 
@@ -18,8 +15,6 @@ namespace ArtInk.Site.ViewModels.Response
 
         [DisplayName("Hora Final")]
         public TimeOnly HoraFin { get; set; }
-
-        public virtual SucursalResponseDTO Sucursal { get; set; } = null!;
 
         public virtual ICollection<SucursalHorarioResponseDTO> SucursalHorarios { get; set; } = new List<SucursalHorarioResponseDTO>();
     }

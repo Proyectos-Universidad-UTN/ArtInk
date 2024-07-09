@@ -9,12 +9,10 @@ namespace ArtInk.Infraestructure.Repository.Interfaces
 {
     public interface IRepositorySucursalHorario
     {
-        Task<ICollection<SucursalHorario>> GetSucursalHorarioBySucursalAsync(byte idSucursal);
+        Task<ICollection<SucursalHorario>> GetHorariosBySucursalAsync(byte idSucursal);
 
-        Task<SucursalHorario> CreateSucursalHorarioAsync(SucursalHorario sucursalHorario);
+        Task<SucursalHorario?> GetSucursalHorarioByIdAsync(short id);
 
-        Task<IEnumerable<SucursalHorario>> CreateSucursalHorarioAsync(byte idSucursal, IEnumerable<SucursalHorario> sucursalHorarios);
-
-        Task<SucursalHorario> UpdateSucursalHorarioAsync(SucursalHorario sucursalHorario);
+        Task<bool> CreateSucursalHorariosAsync(byte idSucursal, IEnumerable<SucursalHorario> sucursalHorarios);
     }
 }

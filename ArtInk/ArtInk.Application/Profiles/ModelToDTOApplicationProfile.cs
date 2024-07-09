@@ -44,8 +44,7 @@ namespace ArtInk.Application.Profiles
             CreateMap<SucursalHorario, SucursalHorarioDTO>()
                 .ForMember(dest => dest.Horario, inp => inp.MapFrom(ori => ori.IdHorarioNavigation))
                 .ForMember(dest => dest.Sucursal, inp => inp.MapFrom(ori => ori.IdSucursalNavigation));
-            CreateMap<Horario, HorarioDTO>()
-                .ForMember(dest => dest.Sucursal, inp => inp.MapFrom(ori => ori.IdSucursalNavigation));
+            CreateMap<Horario, HorarioDTO>();
             CreateMap<Distrito, DistritoDTO>()
                 .ForMember(dest => dest.Canton, inp => inp.MapFrom(ori => ori.IdCantonNavigation));
             CreateMap<ReservaServicio, ReservaServicioDTO>()

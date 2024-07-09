@@ -8,8 +8,6 @@ public partial class Horario
 {
     public short Id { get; set; }
 
-    public byte IdSucursal { get; set; }
-
     public DiaSemana Dia { get; set; }
 
     public TimeOnly HoraInicio { get; set; }
@@ -23,8 +21,6 @@ public partial class Horario
     public DateTime? FechaModificacion { get; set; }
 
     public string? UsuarioModificacion { get; set; }
-
-    public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
 
     public virtual ICollection<SucursalHorario> SucursalHorarios { get; set; } = new List<SucursalHorario>();
 }

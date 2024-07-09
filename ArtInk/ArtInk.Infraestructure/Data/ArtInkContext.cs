@@ -271,11 +271,6 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
             entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
             entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
             entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
-
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Horarios)
-                .HasForeignKey(d => d.IdSucursal)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Horario_Sucursal");
         });
 
         modelBuilder.Entity<Impuesto>(entity =>

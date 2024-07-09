@@ -6,9 +6,6 @@ namespace ArtInk.Site.ViewModels.Request
     {
         public short Id { get; set; }
 
-        [DisplayName("Sucursal")]
-        public byte IdSucursal { get; set; }
-
         [DisplayName("Día")]
         public DateOnly Dia { get; set; }
 

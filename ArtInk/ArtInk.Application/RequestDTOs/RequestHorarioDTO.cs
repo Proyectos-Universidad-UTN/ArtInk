@@ -4,8 +4,6 @@ public record RequestHorarioDTO
 {
     public short Id { get; set; }
 
-    public byte IdSucursal { get; set; }
-
     public DateOnly Dia { get; set; }
 
     public TimeOnly HoraInicio { get; set; }

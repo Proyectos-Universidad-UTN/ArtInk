@@ -42,6 +42,9 @@
         //Url Horarios
         public const string GETALLHORARIOS = "horario"; 
         public const string GETHORARIOBYID = "horario/{0}";
+        public const string POSTHORARIO = "horario";
+        public const string PUTHORARIO = "horario/{0}";
+        public const string DELETEHORARIO = "horario/{0}";
 
         //Url Facturas
         public const string GETALLFACTURAS = "factura"; 

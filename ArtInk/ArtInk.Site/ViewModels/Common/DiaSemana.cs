@@ -4,6 +4,7 @@ namespace ArtInk.Site.ViewModels.Common
 {
     public enum DiaSemana
     {
+        SeleccioneUnDia = 0,
         Lunes = 1,
         Martes = 2,
         [Description("Miércoles")]
