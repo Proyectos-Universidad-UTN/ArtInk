@@ -1,0 +1,103 @@
+﻿@using ArtInk.Site.ViewModels.Response
+@model ArtInk.Site.ViewModels.Request.ProductoRequestDTO
+
+@{
+    ViewData["Title"] = "Actualizar Producto";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Formulario de Producto Nº @Model.Id</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" class="form-object">
+                <div hidden>
+                    <input asp-for="Id" />
+                    <input asp-for="Activo" />
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-3">
+                            <label asp-for="Nombre" class="form-label"></label>
+                            <input asp-for="Nombre" class="form-control" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="Descripcion" style="height: 80px" class="form-control"></textarea>
+                            <label asp-for="Descripcion" class="form-label"></label>
+                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Marca" class="form-label"></label>
+                            <input asp-for="Marca" class="form-control" />
+                            <span asp-validation-for="Marca" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="IdCategoria" class="form-label"></label>
+                            <select asp-for="IdCategoria" class="form-select" asp-items="@(new SelectList(Model.Categorias,"Id","Nombre"))"></select>
+                            <span asp-validation-for="IdCategoria" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="CostoFormateado" class="form-label"></label>
+                            <input asp-for="CostoFormateado" placeholder="#,##0.00" class="form-control" data-mask="#,##0.00" data-mask-reverse="true" />
+                            <span asp-validation-for="CostoFormateado" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Sku" class="form-label"></label>
+                            <input asp-for="Sku" class="form-control" />
+                            <span asp-validation-for="Sku" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="CantidadFormateada" class="form-label"></label>
+                            <input asp-for="CantidadFormateada" placeholder="#,##0.00" class="form-control" data-mask="#,##0.00" data-mask-reverse="true"  />
+                            <span asp-validation-for="CantidadFormateada" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="IdUnidadMedida" class="form-label"></label>
+                            <select asp-for="IdUnidadMedida" class="form-select" asp-items="@(new SelectList(Model.UnidadMedidas,"Id","Nombre"))"></select>
+                            <span asp-validation-for="IdUnidadMedida" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

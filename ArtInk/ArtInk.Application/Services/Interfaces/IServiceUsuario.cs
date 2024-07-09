@@ -1,10 +1,10 @@
 ﻿using ArtInk.Application.DTOs;
 
-namespace ArtInk.Application.Services.Interfaces
+namespace ArtInk.Application.Services.Interfaces;
+
+public interface IServiceUsuario
 {
-    public interface IServiceUsuario
-    {
-        Task<ICollection<UsuarioDTO>> ListAsync();
-        Task<UsuarioDTO> FindByIdAsync(short id);
-    }
+    Task<ICollection<UsuarioDTO>> ListAsync();
+
+    Task<UsuarioDTO> FindByIdAsync(short id);
 }

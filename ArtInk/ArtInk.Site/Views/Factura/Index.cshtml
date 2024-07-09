@@ -1,0 +1,41 @@
+﻿@using ArtInk.Site.Models;
+@model IEnumerable<ArtInk.Site.ViewModels.Response.FacturaResponseDTO>
+
+@{
+    ViewData["Title"] = "Factura";
+}
+
+<h1>Factura</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-3">Inicio</a>
+</p>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            var actions = new CommonActionsUser(){
+                Id = item.Id,
+                Detalles = true
+            };
+            <div class="col-md-6 col-sm-12 col-xxl-3">
+                <div class="card mb-4 shadow-sm card-fixed-heigth sm">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Factura # @Html.DisplayFor(modelItem => item.Consecutivo)</h5>
+                        <p class="card-text">
+                            <strong>Cliente:</strong> @Html.DisplayFor(modelItem => item.NombreCliente)<br />
+                            <strong>Fecha de Emisión:</strong> @Html.DisplayFor(modelItem => item.Fecha)<br />
+                            <strong>Subtotal:</strong> @Html.DisplayFor(modelItem => item.SubTotal)<br />
+                            <strong>Impuesto:</strong> @Html.DisplayFor(modelItem => item.MontoImpuesto)<br />
+                            <strong>Total:</strong> @Html.DisplayFor(modelItem => item.MontoTotal)<br />
+                        </p>
+                        <div class="mt-auto">
+                            @await Html.PartialAsync("~/Views/Shared/_CommonActionsUser.cshtml", actions)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

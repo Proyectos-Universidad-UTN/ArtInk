@@ -5,7 +5,6 @@ namespace ArtInk.Site.ViewModels.Response
 {
     public record ProductoResponseDTO
     {
-
         public short Id { get; set; }
 
         public string Nombre { get; set; } = null!;
@@ -18,6 +17,7 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayName("Categoría")]
         public byte IdCategoria { get; set; }
 
+        [DisplayFormat(DataFormatString ="{0:C2}")]
         public decimal Costo { get; set; }
 
         public string Sku { get; set; } = null!;
@@ -29,13 +29,12 @@ namespace ArtInk.Site.ViewModels.Response
 
         public bool Activo { get; set; }
 
-
         //public virtual ICollection<DetalleFacturaProducto> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProducto>();
 
         public virtual CategoriaResponseDTO Categoria { get; set; } = null!;
 
         public virtual UnidadMedidaResponseDTO UnidadMedida { get; set; } = null!;
 
-        //public virtual ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();
+        public virtual ICollection<InventarioResponseDTO> Inventarios { get; set; } = new List<InventarioResponseDTO>();
     }
 }

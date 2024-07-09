@@ -204,17 +204,17 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.DetalleFactura", b =>
                 {
-                    b.Property<short>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<short>("Cantidad")
                         .HasColumnType("smallint");
 
-                    b.Property<short>("IdFactura")
-                        .HasColumnType("smallint");
+                    b.Property<long>("IdFactura")
+                        .HasColumnType("bigint");
 
                     b.Property<byte>("IdServicio")
                         .HasColumnType("tinyint");
@@ -246,17 +246,17 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.DetalleFacturaProducto", b =>
                 {
-                    b.Property<short>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Cantidad")
                         .HasColumnType("decimal(6, 2)");
 
-                    b.Property<short>("IdDetalleFactura")
-                        .HasColumnType("smallint");
+                    b.Property<long>("IdDetalleFactura")
+                        .HasColumnType("bigint");
 
                     b.Property<short>("IdProducto")
                         .HasColumnType("smallint");
@@ -297,11 +297,11 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Factura", b =>
                 {
-                    b.Property<short>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<short>("Consecutivo")
                         .HasColumnType("smallint");
@@ -380,14 +380,18 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
-                    b.Property<DateOnly?>("Fecha")
-                        .HasColumnType("date");
+                    b.Property<byte>("Dia")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("Mes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -731,6 +735,9 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<short>("IdSucursalHorario")
                         .HasColumnType("smallint");
 
+                    b.Property<short>("IdUsuarioSucursal")
+                        .HasColumnType("smallint");
+
                     b.Property<string>("UsuarioCreacion")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -744,6 +751,8 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasName("PK_reserva");
 
                     b.HasIndex("IdSucursalHorario");
+
+                    b.HasIndex("IdUsuarioSucursal");
 
                     b.ToTable("Reserva", (string)null);
                 });
@@ -986,6 +995,12 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
+
+                    b.Property<short>("Anno")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<byte>("IdFeriado")
                         .HasColumnType("tinyint");
@@ -1389,7 +1404,15 @@ namespace ArtInk.Infraestructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Reserva_SucursalHorario");
 
+                    b.HasOne("ArtInk.Infraestructure.Models.UsuarioSucursal", "IdUsuarioSucursalNavigation")
+                        .WithMany("Reservas")
+                        .HasForeignKey("IdUsuarioSucursal")
+                        .IsRequired()
+                        .HasConstraintName("FK_Reserva_UsuarioSucursal");
+
                     b.Navigation("IdSucursalHorarioNavigation");
+
+                    b.Navigation("IdUsuarioSucursalNavigation");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.ReservaPregunta", b =>
@@ -1661,6 +1684,8 @@ namespace ArtInk.Infraestructure.Migrations
             modelBuilder.Entity("ArtInk.Infraestructure.Models.UsuarioSucursal", b =>
                 {
                     b.Navigation("Facturas");
+
+                    b.Navigation("Reservas");
                 });
 #pragma warning restore 612, 618
         }

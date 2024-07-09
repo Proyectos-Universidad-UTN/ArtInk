@@ -2,7 +2,7 @@
 
 namespace ArtInk.Site.ViewModels.Response
 {
-    public class RolResponseDTO 
+    public record RolResponseDTO 
     {
         public byte Id { get; set; }
 

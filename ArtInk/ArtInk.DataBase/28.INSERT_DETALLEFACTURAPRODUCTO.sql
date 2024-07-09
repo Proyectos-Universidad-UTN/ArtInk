@@ -15,6 +15,4 @@ BEGIN
 	,(4,3,3,4.00)
 	,(5,4,4,2.00)
 	SET IDENTITY_INSERT dbo.DetalleFacturaProducto OFF;
-
-	
 END

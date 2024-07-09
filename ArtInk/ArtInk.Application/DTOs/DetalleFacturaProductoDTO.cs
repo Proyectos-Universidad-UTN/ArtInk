@@ -1,21 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace ArtInk.Application.DTOs;
 
 public record DetalleFacturaProductoDTO
 {
-    public short Id { get; set; }
+    public long Id { get; set; }
 
-    public short IdDetalleFactura { get; set; }
+    [DisplayName("Detalle")]
+    public long IdDetalleFactura { get; set; }
 
+    [DisplayName("Producto")]
     public short IdProducto { get; set; }
 
     public decimal Cantidad { get; set; }
 
     public virtual DetalleFacturaDTO DetalleFactura { get; set; } = null!;
 
-    public virtual ProductoDTO IdProductoNavigation { get; set; } = null!;
+    public virtual ProductoDTO Producto { get; set; } = null!;
 }

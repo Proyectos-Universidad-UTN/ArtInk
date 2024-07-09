@@ -1,0 +1,69 @@
+@model ArtInk.Site.ViewModels.Request.Misc.SucursalSucursalFeriado
+
+@await Html.PartialAsync("~/Views/Shared/_ManejoMensajes.cshtml")
+
+<div class="row px-3">
+    <div class="col-sm-12 col-md-12">
+        <label class="form-label">Agregar feriado</label>
+    </div>
+    <div class="col-sm-11 col-md-11">
+        <select id="IdFeriadoSelect" class="form-select"
+                asp-items='@(new SelectList(Model.Feriados,"Id","Nombre"))'></select>
+    </div>
+    <div class="col-sm-1 col-md-1">
+        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarFeriadoSucursal(this)">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+        </button>
+    </div>
+</div>
+<div class="row px-3 pt-3">
+    <div class="col-sm-12 col-md-12">
+        <label class="form-label">Feriados agregados</label>
+    </div>
+</div>
+<ul class="list-group px-3 pb-3">
+    @{
+        foreach(var it in Model.FeriadosSucursal.Select((x, i) => new { Value = x, Index = i }))
+        {
+            <li class="list-group-item">
+                <div class="row">
+                    <input hidden name="FeriadosSucursal[@it.Index].Anno" value="@it.Value.Anno" />
+                    <input hidden name="FeriadosSucursal[@it.Index].Feriado.Id" value="@it.Value.Feriado.Id" />
+                    <input hidden name="FeriadosSucursal[@it.Index].Feriado.Nombre" value="@it.Value.Feriado.Nombre" />
+                    <input hidden name="FeriadosSucursal[@it.Index].IdFeriado" value="@it.Value.IdFeriado" />
+                    <div class="col-sm-12 col-md-6">
+                        <label class="form-label">@it.Value.Feriado.Nombre</label>
+                    </div>
+                    <div class="col-sm-10 col-md-5">
+                        <input asp-for="@Model.FeriadosSucursal[@it.Index].Fecha" id="@it.Value.Feriado.Id" data-anno="@it.Value.Anno" data-mes='@it.Value.Fecha.ToString("MM")' class="form-control text-end datepicker-fechas">
+                        <span asp-validation-for="@Model.FeriadosSucursal[@it.Index].Fecha" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-2 col-md-1">
+                        <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-feriado="@it.Value.IdFeriado"
+                            onclick="eliminarFeriadoSucursal(this)">
+                            <span class="material-symbols-outlined">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+</ul>
+
+@await Html.PartialAsync("_ValidationScriptsPartial")
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/locales/es.js"></script>
+<script>
+    const elems = document.querySelectorAll('.datepicker-fechas');
+    elems.forEach(elem => {
+        new Datepicker(elem, {
+            format: 'dd/mm/yyyy',
+            language: 'es',
+            minDate: `01/${$(elem).data("mes")}/${$(elem).data("anno")}`
+        });
+    })
+</script>

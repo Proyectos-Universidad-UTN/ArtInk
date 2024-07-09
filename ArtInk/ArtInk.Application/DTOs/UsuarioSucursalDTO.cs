@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ArtInk.Application.DTOs;
 
 public record UsuarioSucursalDTO
@@ -14,6 +9,8 @@ public record UsuarioSucursalDTO
     public byte IdSucursal { get; set; }
 
     public virtual ICollection<FacturaDTO> Facturas { get; set; } = new List<FacturaDTO>();
+
+    public virtual ICollection<ReservaDTO> Reservas { get; set; } = new List<ReservaDTO>();
 
     public virtual SucursalDTO Sucursal { get; set; } = null!;
 

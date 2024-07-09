@@ -1,0 +1,85 @@
+﻿@model ArtInk.Site.ViewModels.Response.FacturaResponseDTO
+
+@{
+ViewData["Title"] = "Detalle Factura";
+}
+<div class="container pt-3" id="sucursalesTable">
+    <div class="row gutters">
+        <div class="col-12 col-sm-12 col-xl-12">
+            <div class="card bg-white no-transform">
+                <div class="card-body p-0">
+                    <div class="container-factura p-4">
+                        <div class="header-factura text-black">
+                            <div class="row gutters">
+                                <div class="col-sm-12 col-xl-12">
+                                    <div class="mb-5 m-auto d-flex justify-content-end">
+                                        <a href="" class="btn btn-primary m-1">
+                                            <i class="icon-download"></i>Descargar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gutters">
+                                <div class="col-sm-6 col-xl-6">
+                                    <h1>ArtInk</h1>
+                                    <div class="w-100">
+                                        <img src="~/img/logoArtInk.webp" alt="Logo Factura"
+                                            class="img-thumbnail rounded img-fluid" style="height: 200px!important" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xl-6">
+                                    <address class="text-end m-0">Dirección Local:
+                                        @Model.UsuarioSucursal.Sucursal.DireccionExacta</address>
+                                    <div class="text-end m-0">
+                                        Correo electrónico
+                                        <a
+                                            href='@String.Format("mailto:{0}",Model.UsuarioSucursal.Sucursal.CorreoElectronico)'>
+                                            @Model.UsuarioSucursal.Sucursal.CorreoElectronico
+                                        </a>
+                                    </div>
+                                    <div class="text-end m-0">Teléfono: @Model.UsuarioSucursal.Sucursal.Telefono</div>
+                                </div>
+                            </div>
+                            <div class="row gutters">
+                                <div class="col-sm-6 col-xl-6">
+                                    <div class="detalle-factura mt-3 p-3 lh-3 bg-light">
+                                        <div>Cédula: @Model.Cliente.Id</div>
+                                        <address class="m-0">@Model.NombreCliente</address>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xl-6">
+                                    <div class="detalle-factura mt-3 p-3 lh-3 text-end bg-light">
+                                        <div>Factura: @Model.Consecutivo</div>
+                                        <div>Fecha emisión: @Model.Fecha</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="body-factura">
+                            <div class="row gutters">
+                                <div class="col-12 col-sm-12 col-xl-12">
+                                    <div class="table-responsive">
+                                        @await Html.PartialAsync("~/Views/Factura/_DetalleFactura.cshtml", Model)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-factura text-black">
+                            Gracias por tu compra
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-3 mb-3">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-primary float">
+                <a asp-action="Index" style="color: black; text-decoration: none;">Regresar</a>
+            </button>
+        </div>
+    </div>
+</div>

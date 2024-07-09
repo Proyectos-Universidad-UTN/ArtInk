@@ -2,7 +2,7 @@
 
 namespace ArtInk.Site.ViewModels.Response
 {
-    public class UsuarioResponseDTO
+    public record UsuarioResponseDTO
     {
         public short Id { get; set; }
 
@@ -33,27 +33,19 @@ namespace ArtInk.Site.ViewModels.Response
 
         [DisplayName("Género")]
         public byte IdGenero { get; set; }
-
         public bool Activo { get; set; }
-
 
         public string? UrlFoto { get; set; }
 
         [DisplayName("Rol")]
         public byte IdRol { get; set; }
 
+        public virtual DistritoResponseDTO Distrito { get; set; } = null!;
 
-
-        //public virtual Distrito IdDistritoNavigation { get; set; } = null!;
-
-
-        //public virtual Genero IdGeneroNavigation { get; set; } = null!;
-
+        public virtual GeneroResponseDTO Genero { get; set; } = null!;
 
         public virtual RolResponseDTO Rol { get; set; } = null!;
-
-
-        //public virtual ICollection<UsuarioSucursal> UsuarioSucursal { get; set; } = new List<UsuarioSucursal>();
+        public virtual ICollection<UsuarioSucursalResponseDTO> UsuarioSucursal { get; set; } = new List<UsuarioSucursalResponseDTO>();
 
     }
 }

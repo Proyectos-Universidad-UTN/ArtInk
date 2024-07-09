@@ -1,0 +1,90 @@
+﻿@model ArtInk.Site.ViewModels.Response.FacturaResponseDTO
+
+<table class="table custom-table m-0" style="border: 1px solid #e0e3ec">
+    <thead class="bg-primary">
+        <tr>
+            <th class="border-0">
+                @Html.DisplayNameFor(model => model.DetalleFacturas.ToList()[0].NumeroLinea)
+            </th>
+            <th class="border-0">
+                @Html.DisplayNameFor(model => model.DetalleFacturas.ToList()[0].IdServicio)
+            </th>
+            <th class="border-0">
+                @Html.DisplayNameFor(model =>
+                model.DetalleFacturas.ToList()[0].DetalleFacturaProductos.ToList()[0].IdProducto)
+            </th>
+            <th class="border-0">
+                @Html.DisplayNameFor(model => model.DetalleFacturas.ToList()[0].Cantidad)
+            </th>
+            <th class="border-0">
+                @Html.DisplayNameFor(model => model.DetalleFacturas.ToList()[0].TarifaServicio)
+            </th>
+            <th class="border-0">
+                @Html.DisplayNameFor(model => model.DetalleFacturas.ToList()[0].MontoSubtotal)
+            </th>
+            <th class="border-0">
+                @Html.DisplayNameFor(model => model.DetalleFacturas.ToList()[0].MontoImpuesto)
+            </th>
+            <th class="border-0">
+                @Html.DisplayNameFor(model => model.DetalleFacturas.ToList()[0].MontoTotal)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.DetalleFacturas)
+        {
+        <tr>
+            <td style="border: 1px solid #e6e9f0">
+                @Html.DisplayFor(modelItem => item.NumeroLinea)
+            </td>
+            <td style="border: 1px solid #e6e9f0">
+                @Html.DisplayFor(modelItem => item.Servicio.Nombre)
+            </td>
+            <td style="border: 1px solid #e6e9f0">
+                <ul>
+                    @{
+                    foreach (var producto in item.DetalleFacturaProductos)
+                    {
+                    <li>
+                        @producto.Producto.Nombre
+                    </li>
+                    }
+                    }
+                </ul>
+            </td>
+            <td style="border: 1px solid #e6e9f0">
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td style="border: 1px solid #e6e9f0">
+                @Html.DisplayFor(modelItem => item.TarifaServicio)
+            </td>
+            <td style="border: 1px solid #e6e9f0">
+                @Html.DisplayFor(modelItem => item.MontoSubtotal)
+            </td>
+            <td style="border: 1px solid #e6e9f0">
+                @Html.DisplayFor(modelItem => item.MontoImpuesto)
+            </td>
+            <td style="border: 1px solid #e6e9f0">
+                @Html.DisplayFor(modelItem => item.MontoTotal)
+            </td>
+        </tr>
+        }
+        <tr>
+            <td style="border: 1px solid #e6e9f0" colspan="6"></td>
+            <td style="border: 1px solid #e6e9f0">
+                <p>
+                    Subtotal: <br />
+                    Impuesto: <br />
+                </p>
+                <h5 class="text-success">Total: </h5>
+            </td>
+            <td style="border: 1px solid #e6e9f0">
+                <p>
+                    @Html.DisplayFor(model => Model.SubTotal) <br />
+                    @Html.DisplayFor(model => Model.MontoImpuesto) <br />
+                </p>
+                <h5 class="text-success">@Html.DisplayFor(model => Model.MontoTotal) </h5>
+            </td>
+        </tr>
+    </tbody>
+</table>

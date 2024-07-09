@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
 public record FacturaDTO: BaseEntity
 {
-    public short Id { get; set; }
+    public long Id { get; set; }
 
     public short IdCliente { get; set; }
 
