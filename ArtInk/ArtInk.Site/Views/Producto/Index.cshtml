@@ -11,19 +11,6 @@
     <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
     <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-3">Inicio</a>
 </p>
-
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body">
-                @TempData["SuccessMessage"]
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
-}
-
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
@@ -40,6 +27,9 @@
                         <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nombre)</h5>
                         <p class="card-text">
                             <strong>Descripción:</strong> @Html.DisplayFor(modelItem => item.Descripcion)<br />
+                            <strong>Marca:</strong> @Html.DisplayFor(modelItem => item.Marca)<br />
+                            <strong>@Html.DisplayNameFor(a => a.IdCategoria):</strong> @Html.DisplayFor(modelItem => item.Categoria.Nombre)<br />
+                            <strong>Costo:</strong> @Html.DisplayFor(modelItem => item.Costo)<br />
                             <strong>SKU:</strong> @Html.DisplayFor(modelItem => item.Sku)<br />
                             <strong>Cantidad:</strong> @Html.DisplayFor(modelItem => item.Cantidad)<br />
                             <strong>Costo:</strong> @Html.DisplayFor(modelItem => item.Costo)<br />
@@ -53,33 +43,3 @@
         }
     </div>
 </div>
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            var successMessage = '@TempData["SuccessMessage"]';
-            if (successMessage) {
-                var toast = `
-                                            <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                                                <div class="d-flex">
-                                                    <div class="toast-body">
-                                                        ${successMessage}
-                                                    </div>
-                                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                                                </div>
-                                            </div>`;
-
-                $(document.body).append(toast);
-                var $toast = $('.toast');
-
-                $toast.toast({ delay: 3000 });
-                $toast.toast('show');
-
-                setTimeout(function () {
-                    $toast.fadeOut(1000, function () {
-                        $(this).remove();
-                    });
-                }, 3000);
-            }
-        });
-    </script>
-}

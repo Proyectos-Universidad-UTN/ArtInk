@@ -24,6 +24,7 @@ public partial class Reserva
     public DateTime? FechaModificacion { get; set; }
 
     public string? UsuarioModificacion { get; set; }
+    
     public short IdUsuarioSucursal { get; set; }
 
     public virtual SucursalHorario IdSucursalHorarioNavigation { get; set; } = null!;
