@@ -29,8 +29,6 @@ namespace ArtInk.Site.ViewModels.Response
 
         public bool Activo { get; set; }
 
-        //public virtual ICollection<DetalleFacturaProducto> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProducto>();
-
         public virtual CategoriaResponseDTO Categoria { get; set; } = null!;
 
         public virtual UnidadMedidaResponseDTO UnidadMedida { get; set; } = null!;

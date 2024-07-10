@@ -16,14 +16,6 @@ public class ReservaController(IServiceReserva serviceReserva) : ControllerBase
         return StatusCode(StatusCodes.Status200OK, reservas);
     }
 
-    //[HttpGet]
-    //public async Task<IActionResult> GetAllReservasByRolAsync([FromQuery]string rol)
-    //{
-    //    ArgumentNullException.ThrowIfNullOrEmpty(rol);
-    //    var reservas = await serviceReserva.ListAsync(rol);
-    //    return StatusCode(StatusCodes.Status200OK, reservas);
-    //}
-
     [HttpGet("{idReserva}")]
     public async Task<IActionResult> GetReservaByIdAsync(int idReserva)
     {

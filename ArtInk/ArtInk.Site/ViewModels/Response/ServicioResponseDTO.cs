@@ -23,10 +23,6 @@ namespace ArtInk.Site.ViewModels.Response
 
         public bool Activo { get; set; }
 
-        //public virtual ICollection<DetalleFacturaDTO> DetalleFacturas { get; set; } = new List<DetalleFacturaDTO>();
-
         public virtual TipoServicioResponseDTO TipoServicio { get; set; } = null!;
-
-        //public virtual ICollection<ReservaServicioDTO> ReservaServicios { get; set; } = new List<ReservaServicioDTO>();
     }
 }

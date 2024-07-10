@@ -14,7 +14,9 @@ public class SucursalFeriadoController(IServiceSucursalFeriado serviceSucursalFe
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetAllSucursalesAsync(byte idSucursal, [FromQuery] short? anno)
     {
-        var sucursalFeriadoDTOs = await serviceSucursalFeriado.GetFeriadosBySucursalAsync(idSucursal, anno == null ? null : anno == 0 ? (short)DateTime.Now.Year : anno.Value);
+        short? annoBusqueda = null;
+        if (anno != null) annoBusqueda = anno == 0 ? (short)DateTime.Now.Year : anno.Value;
+        var sucursalFeriadoDTOs = await serviceSucursalFeriado.GetFeriadosBySucursalAsync(idSucursal, annoBusqueda);
         return StatusCode(StatusCodes.Status200OK, sucursalFeriadoDTOs);
     }
 
