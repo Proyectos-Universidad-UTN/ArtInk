@@ -1,5 +1,4 @@
 {
-    "composer.bin": "",
     "dotnet.preferCSharpExtension": false,
     "editor.formatOnSave": false,
     "emmet.includeLanguages": {
