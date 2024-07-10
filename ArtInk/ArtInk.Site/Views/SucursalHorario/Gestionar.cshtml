@@ -1,0 +1,68 @@
+﻿@model ArtInk.Site.ViewModels.Request.Misc.SucursalSucursalHorario
+
+@{
+    ViewData["Title"] = "Crear Sucursal Horario";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Formulario de Horario para sucursal @Model.Sucursal.Nombre</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Gestionar" class="form-object">
+                <div class="row">
+                    <input hidden asp-for="Sucursal.Id" />
+                    <input hidden asp-for="Accion" id="Accion" />
+                    <input hidden asp-for="IdHorario" id="IdHorario" />
+                    <div id="horarios">
+                        @await Html.PartialAsync("~/Views/SucursalHorario/_Horarios.cshtml", Model)
+                    </div>
+                </div>
+                <div class="px-3">
+                    @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const agregarHorarioSucursal = (button) => {
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalHorario/AgregarEliminarHorarioSucursal";
+        $("#Accion").val('A')
+        $("#IdHorario").val($("#IdHorarioSelect").val())
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#horarios").html(result);
+            }
+        })
+    }
+
+    const eliminarHorarioSucursal = (buttton) => {
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalHorario/AgregarEliminarHorarioSucursal";
+        $("#Accion").val("R")
+        $("#IdHorario").val($(buttton).data("horario"))
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#horarios").html(result);
+            }
+        })
+    }
+</script>
