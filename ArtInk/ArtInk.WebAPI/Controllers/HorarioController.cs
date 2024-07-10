@@ -34,7 +34,7 @@ public class HorarioController(IServiceHorario serviceHorario) : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(HorarioDTO))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> CreateFeriadoAsync([FromBody] RequestHorarioDTO horario)
+    public async Task<IActionResult> CreateHorarioAsync([FromBody] RequestHorarioDTO horario)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(horario);

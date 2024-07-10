@@ -14,7 +14,7 @@ namespace ArtInk.Site.ViewModels.Request.Misc
 
         public List<SucursalHorarioRequestDTO> HorariosSucursal { get; set; } = null!;
 
-        public void Cargarhorarios(IEnumerable<SucursalHorarioRequestDTO> horariosExistentes, IEnumerable<HorarioResponseDTO> horarios)
+        public void CargarHorarios(IEnumerable<SucursalHorarioRequestDTO> horariosExistentes, IEnumerable<HorarioResponseDTO> horarios)
         {
             if (horariosExistentes.Count() > 0)
             {

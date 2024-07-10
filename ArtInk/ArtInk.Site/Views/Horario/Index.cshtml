@@ -1,20 +1,57 @@
-﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.SucursalResponseDTO>
+﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.HorarioResponseDTO>
 
 @{
-    ViewData["Title"] = "Horarios";
+    ViewData["Title"] = "Index";
 }
-<br />
+
 <h1>Horarios</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-3">Inicio</a>
 </p>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3 col-md-3 col-lg-3">
-            @await Html.PartialAsync("~/Views/Shared/_SucursalSelect.cshtml", Model)
-        </div>
-    </div>
-</div>
+<table id="rolesTable" class="table table-striped table-dark table-hover artink-tables">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Dia)</th>
+            <th>@Html.DisplayNameFor(model => model.HoraInicio)</th>
+            <th>@Html.DisplayNameFor(model => model.HoraFin)</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var actions = new CommonActionsUser()
+                {
+                    Id = item.Id,
+                    Editar = true,
+                    Eliminar = true
+                };
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Dia)</td>
+                <td>@Html.DisplayFor(modelItem => item.HoraInicio)</td>
+                <td>@Html.DisplayFor(modelItem => item.HoraFin)</td>
+                <td>
+                    @await Html.PartialAsync("~/Views/Shared/_CommonActionsUser.cshtml", actions)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    let idEliminar = 0;
+    $(".data-eliminar").on('click', function (btn) {
+        idEliminar = $(btn.target).data("id")
+    })
+
+    $(document).on('click', '.delete-register', function () {
+        window.location = $(this).attr('href');
+    });
+
+    const eliminar = () => {
+        console.log('dasd')
+        $('.delete-register').trigger('click');
+    }
+</script>

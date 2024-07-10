@@ -10,9 +10,7 @@ public class RepositoryHorario(ArtInkContext context) : IRepositoryHorario
     public async Task<Horario> CreateHorarioAsync(Horario horario)
     {
         var result = context.Horarios.Add(horario);
-        
         await context.SaveChangesAsync();
-       
         return result.Entity;
     }
 
@@ -28,13 +26,17 @@ public class RepositoryHorario(ArtInkContext context) : IRepositoryHorario
 
     public async Task<Horario?> FindByIdAsync(short id)
     {
-        return await context.Set<Horario>().FindAsync(id);
+        var keyProperty = context.Model.FindEntityType(typeof(Horario))!.FindPrimaryKey()!.Properties[0];
+        return await context.Set<Horario>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
     }
 
     public async Task<ICollection<Horario>> ListAsync()
     {
-        var collection = await context.Set<Horario>()
-                         .ToListAsync();
+         var collection = await context.Set<Horario>()
+                .AsNoTracking()
+                .ToListAsync();
         return collection;
     }
 

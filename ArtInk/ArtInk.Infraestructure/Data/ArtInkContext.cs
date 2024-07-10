@@ -264,7 +264,7 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
             entity.HasKey(e => e.Id).HasName("PK_horario");
 
             entity.ToTable("Horario");
-
+          
             entity.Property(a => a.Dia).HasConversion(m => m.ToString(), b => (DiaSemana)Enum.Parse(typeof(DiaSemana), b));
 
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");

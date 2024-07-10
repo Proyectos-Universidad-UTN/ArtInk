@@ -23,7 +23,7 @@ public class SucursalHorarioController(IServiceSucursalHorario serviceSucursalHo
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> CreateSucursalAsync(byte idSucursal, [FromBody] IEnumerable<RequestSucursalHorarioDTO> sucursalHorarios)
+    public async Task<IActionResult> CreateSucursalHorarioAsync(byte idSucursal, [FromBody] IEnumerable<RequestSucursalHorarioDTO> sucursalHorarios)
     {
         ArgumentNullException.ThrowIfNull(sucursalHorarios);
         var result = await serviceSucursalHorario.CreateSucursalHorarioAsync(idSucursal, sucursalHorarios);

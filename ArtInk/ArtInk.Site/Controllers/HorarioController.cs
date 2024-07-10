@@ -73,5 +73,6 @@ namespace ArtInk.Site.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

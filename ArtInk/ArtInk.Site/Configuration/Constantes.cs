@@ -89,5 +89,9 @@
         // Url sucursal feriados
         public const string GETSUCURSALFERIADO = "Sucursal/{0}/Feriado?Anno={1}";
         public const string POSTSUCURSALFERIADO = "Sucursal/{0}/Feriado";
+
+        // Url sucursal horarios
+        public const string GETSUCURSALHORARIO = "Sucursal/Horario";
+        public const string POSTSUCURSALHORARIO = "Sucursal/{0}/Horario";
     }
 }

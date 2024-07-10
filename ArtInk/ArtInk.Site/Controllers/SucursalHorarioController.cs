@@ -6,6 +6,7 @@ using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ArtInk.Utils;
 
 namespace ArtInk.Site.Controllers
 {
@@ -20,9 +21,6 @@ namespace ArtInk.Site.Controllers
                 TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction("Index", "Home");
             }
-
-            var annos = new List<int>();
-            for (int i = 2014; i <= DateTime.Now.Year + 2; i++) annos.Add(i);
 
             var sucursalHorarios = new SucursalHorarios()
             {
@@ -85,5 +83,71 @@ namespace ArtInk.Site.Controllers
             return PartialView("~/Views/SucursalHorario/_Horarios.cshtml", sucursalSucursalHorario);
         }
 
+        public async Task<IActionResult> Gestionar(byte idSucursal)
+        {
+            if (idSucursal == 0 )
+            {
+                TempData["ErrorMessage"] = "Asegurese de seleccionar una sucursal";
+                return RedirectToAction("Index");
+            }
+
+            var url = string.Format(Constantes.GETSUCURSALHORARIO, idSucursal);
+            var sucursalHorarios = await cliente.ConsumirAPIAsync<IEnumerable<SucursalHorarioResponseDTO>>(Constantes.GET, url);
+            if (sucursalHorarios == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index");
+            }
+
+            url = string.Format(Constantes.GETSUCURSALBYID, idSucursal);
+            var sucursal = await cliente.ConsumirAPIAsync<SucursalResponseDTO>(Constantes.GET, url);
+            if (sucursal == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index");
+            }
+
+            var horarios = await cliente.ConsumirAPIAsync<List<HorarioResponseDTO>>(Constantes.GET, Constantes.GETALLHORARIOS);
+            if (horarios == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index");
+            }
+
+            var sucursalSucursalHorario = new SucursalSucursalHorario()
+            {
+                Sucursal = sucursal,
+            };
+            sucursalSucursalHorario.CargarHorarios(mapper.Map<IEnumerable<SucursalHorarioRequestDTO>>(sucursalHorarios), horarios);
+
+            horarios.Insert(0, new HorarioResponseDTO() { Id = 0, Dia=  DiaSemana.SeleccioneUnDia });
+            sucursalSucursalHorario.Horarios = horarios;
+
+            return View(sucursalSucursalHorario);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Gestionar(SucursalSucursalHorario sucursalSucursalHorario)
+        {
+            var url = string.Format(Constantes.POSTSUCURSALHORARIO, sucursalSucursalHorario.Sucursal.Id);
+            var horario = await cliente.ConsumirAPIAsync<bool?>(Constantes.POST, url, valoresConsumo: Serialization.Serialize(sucursalSucursalHorario.HorariosSucursal));
+            if (horario != null)
+            {
+                TempData["SuccessMessage"] = "Horarios guardados correctamente";
+                return RedirectToAction("Index");
+            }
+
+            var horarios = await cliente.ConsumirAPIAsync<List<HorarioResponseDTO>>(Constantes.GET, Constantes.GETALLHORARIOS);
+            if (horarios == null)
+            {
+                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+                return RedirectToAction("Index");
+            }
+            //horarios.Insert(0, new HorarioResponseDTO() { Id = 0, Dia = DiaSemana.SeleccioneUnDia });
+            sucursalSucursalHorario.Horarios = horarios;
+
+            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            return View(sucursalSucursalHorario);
+        }
     }
 }

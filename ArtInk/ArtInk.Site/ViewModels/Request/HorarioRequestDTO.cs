@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ArtInk.Site.ViewModels.Common;
+using System.ComponentModel;
 
 namespace ArtInk.Site.ViewModels.Request
 {
@@ -7,7 +8,7 @@ namespace ArtInk.Site.ViewModels.Request
         public short Id { get; set; }
 
         [DisplayName("Día")]
-        public DateOnly Dia { get; set; }
+        public DiaSemana Dia { get; set; }
 
         [DisplayName("Hora Inicio")]
         public TimeOnly HoraInicio { get; set; }
