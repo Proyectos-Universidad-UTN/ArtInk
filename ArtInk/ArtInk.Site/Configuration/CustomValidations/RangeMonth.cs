@@ -5,6 +5,14 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ArtInk.Site.Configuration.CustomValidations;
 
+/// <summary>
+/// El método RangeMonth es una clase de validación personalizada
+/// que hereda de ValidationAttribute e implementa la interfaz IClientModelValidator. 
+/// Esta clase se utiliza para validar
+/// que un valor de día del mes sea válido según 
+/// el mes especificado en otra propiedad del mismo objeto.
+/// </summary>
+
 public class RangeMonth : ValidationAttribute, IClientModelValidator
 {
     private readonly int min;

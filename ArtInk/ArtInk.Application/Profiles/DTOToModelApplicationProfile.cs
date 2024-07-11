@@ -14,5 +14,8 @@ public class DTOToModelApplicationProfile : Profile
         CreateMap<RequestTipoServicioDTO, TipoServicio>();
         CreateMap<RequestFeriadoDTO, Feriado>();
         CreateMap<RequestSucursalFeriadoDTO, SucursalFeriado>();
+        CreateMap<RequestHorarioDTO, Horario>();
+        CreateMap<RequestSucursalHorarioDTO, SucursalHorario>();
+        CreateMap<RequestSucursalHorarioBloqueoDTO, SucursalHorarioBloqueo>();
     }
 }

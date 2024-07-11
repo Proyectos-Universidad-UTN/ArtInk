@@ -438,8 +438,9 @@ namespace ArtInk.Infraestructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
 
-                    b.Property<DateOnly>("Dia")
-                        .HasColumnType("date");
+                    b.Property<string>("Dia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime");
@@ -453,9 +454,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<TimeOnly>("HoraInicio")
                         .HasColumnType("time");
 
-                    b.Property<byte>("IdSucursal")
-                        .HasColumnType("tinyint");
-
                     b.Property<string>("UsuarioCreacion")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -467,8 +465,6 @@ namespace ArtInk.Infraestructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_horario");
-
-                    b.HasIndex("IdSucursal");
 
                     b.ToTable("Horario", (string)null);
                 });
@@ -1041,6 +1037,39 @@ namespace ArtInk.Infraestructure.Migrations
                     b.ToTable("SucursalHorario", (string)null);
                 });
 
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.SucursalHorarioBloqueo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly>("HoraFin")
+                        .HasColumnType("time");
+
+                    b.Property<TimeOnly>("HoraInicio")
+                        .HasColumnType("time");
+
+                    b.Property<short>("IdSucursalHorario")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id")
+                        .HasName("PK_SucursalHorarioBloqueo");
+
+                    b.HasIndex("IdSucursalHorario");
+
+                    b.ToTable("SucursalHorarioBloqueo", (string)null);
+                });
+
             modelBuilder.Entity("ArtInk.Infraestructure.Models.TipoPago", b =>
                 {
                     b.Property<byte>("Id")
@@ -1336,17 +1365,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("IdUsuarioSucursalNavigation");
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.Horario", b =>
-                {
-                    b.HasOne("ArtInk.Infraestructure.Models.Sucursal", "IdSucursalNavigation")
-                        .WithMany("Horarios")
-                        .HasForeignKey("IdSucursal")
-                        .IsRequired()
-                        .HasConstraintName("FK_Horario_Sucursal");
-
-                    b.Navigation("IdSucursalNavigation");
-                });
-
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Inventario", b =>
                 {
                     b.HasOne("ArtInk.Infraestructure.Models.Producto", "IdProductoNavigation")
@@ -1505,6 +1523,17 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("IdSucursalNavigation");
                 });
 
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.SucursalHorarioBloqueo", b =>
+                {
+                    b.HasOne("ArtInk.Infraestructure.Models.SucursalHorario", "IdSucursalHorarioNavigation")
+                        .WithMany("SucursalHorarioBloqueos")
+                        .HasForeignKey("IdSucursalHorario")
+                        .IsRequired()
+                        .HasConstraintName("FK_SucursalHorarioBloqueo_SucursalHorario");
+
+                    b.Navigation("IdSucursalHorarioNavigation");
+                });
+
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Usuario", b =>
                 {
                     b.HasOne("ArtInk.Infraestructure.Models.Distrito", "IdDistritoNavigation")
@@ -1645,8 +1674,6 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Sucursal", b =>
                 {
-                    b.Navigation("Horarios");
-
                     b.Navigation("Inventarios");
 
                     b.Navigation("SucursalFeriados");
@@ -1659,6 +1686,8 @@ namespace ArtInk.Infraestructure.Migrations
             modelBuilder.Entity("ArtInk.Infraestructure.Models.SucursalHorario", b =>
                 {
                     b.Navigation("Reservas");
+
+                    b.Navigation("SucursalHorarioBloqueos");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.TipoPago", b =>

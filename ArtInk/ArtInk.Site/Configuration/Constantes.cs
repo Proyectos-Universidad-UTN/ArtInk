@@ -42,6 +42,9 @@
         //Url Horarios
         public const string GETALLHORARIOS = "horario"; 
         public const string GETHORARIOBYID = "horario/{0}";
+        public const string POSTHORARIO = "horario";
+        public const string PUTHORARIO = "horario/{0}";
+        public const string DELETEHORARIO = "horario/{0}";
 
         //Url Facturas
         public const string GETALLFACTURAS = "factura"; 
@@ -86,5 +89,10 @@
         // Url sucursal feriados
         public const string GETSUCURSALFERIADO = "Sucursal/{0}/Feriado?Anno={1}";
         public const string POSTSUCURSALFERIADO = "Sucursal/{0}/Feriado";
+
+        // Url sucursal horarios
+        public const string GETSUCURSALHORARIO = "SucursalHorario/{0}";
+        public const string GETHORARIOBYSUCURSAL = "Sucursal/{0}/Horario";
+        public const string POSTSUCURSALHORARIO = "Sucursal/{0}/Horario";
     }
 }

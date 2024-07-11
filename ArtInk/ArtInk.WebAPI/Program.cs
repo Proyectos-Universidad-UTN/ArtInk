@@ -37,8 +37,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: ArtInkSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:5000",
-                                            "https://localhost:5000");
+                          policy.WithOrigins("http://localhost:44378",
+                                            "https://localhost:44378");
                       });
 });
 

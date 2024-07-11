@@ -12,8 +12,6 @@ public static class FluentValidationConfiguration
 
         services.AddValidatorsFromAssemblyContaining<SucursalValidator>();
 
-        services.AddValidatorsFromAssemblyContaining<ServicioValidator>();
-
         services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ArtInk.Site.ViewModels.Common;
+using System.ComponentModel;
 
 namespace ArtInk.Site.ViewModels.Response
 {
@@ -6,11 +7,8 @@ namespace ArtInk.Site.ViewModels.Response
     {
         public short Id { get; set; }
 
-        [DisplayName("Sucursal")]
-        public byte IdSucursal { get; set; }
-
         [DisplayName("Día")]
-        public DateOnly Dia { get; set; }
+        public DiaSemana Dia { get; set; }
 
         [DisplayName("Hora Inicio")]
         public TimeOnly HoraInicio { get; set; }
@@ -18,8 +16,28 @@ namespace ArtInk.Site.ViewModels.Response
         [DisplayName("Hora Final")]
         public TimeOnly HoraFin { get; set; }
 
-        public virtual SucursalResponseDTO Sucursal { get; set; } = null!;
-
         public virtual ICollection<SucursalHorarioResponseDTO> SucursalHorarios { get; set; } = new List<SucursalHorarioResponseDTO>();
+
+        public string HorarioFormateado
+        {
+            get
+            {
+                return $"{HoraInicio}-{HoraFin}";
+            }
+        }
+        private string? NombreSelectFormateado;
+
+        public string NombreSelect
+        {
+            get
+            {
+                return NombreSelectFormateado ?? $"{Dia}-{HorarioFormateado}";
+            }
+
+            set 
+            {
+                NombreSelectFormateado = value; 
+            }
+        }
     }
 }

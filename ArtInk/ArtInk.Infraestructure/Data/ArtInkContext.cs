@@ -67,6 +67,8 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
 
     public virtual DbSet<SucursalFeriado> SucursalFeriados { get; set; }
 
+    public virtual DbSet<SucursalHorarioBloqueo> SucursalHorarioBloqueos { get; set; }
+
     public IDbConnection Connection => Database.GetDbConnection();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -262,16 +264,13 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
             entity.HasKey(e => e.Id).HasName("PK_horario");
 
             entity.ToTable("Horario");
+          
+            entity.Property(a => a.Dia).HasConversion(m => m.ToString(), b => (DiaSemana)Enum.Parse(typeof(DiaSemana), b));
 
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
             entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
             entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
             entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
-
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Horarios)
-                .HasForeignKey(d => d.IdSucursal)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Horario_Sucursal");
         });
 
         modelBuilder.Entity<Impuesto>(entity =>
@@ -595,6 +594,20 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SucursalFeriado_Sucursal");
+        });
+
+        modelBuilder.Entity<SucursalHorarioBloqueo>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_SucursalHorarioBloqueo");
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.ToTable("SucursalHorarioBloqueo");
+
+            entity.Property(e => e.Activo).HasDefaultValue(true);
+
+            entity.HasOne(d => d.IdSucursalHorarioNavigation).WithMany(p => p.SucursalHorarioBloqueos)
+                .HasForeignKey(d => d.IdSucursalHorario)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SucursalHorarioBloqueo_SucursalHorario");
         });
 
         OnModelCreatingPartial(modelBuilder);

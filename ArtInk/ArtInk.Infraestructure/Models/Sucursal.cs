@@ -26,8 +26,6 @@ public partial class Sucursal
 
     public string? UsuarioModificacion { get; set; }
 
-    public virtual ICollection<Horario> Horarios { get; set; } = new List<Horario>();
-
     public virtual Distrito IdDistritoNavigation { get; set; } = null!;
 
     public virtual ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();
