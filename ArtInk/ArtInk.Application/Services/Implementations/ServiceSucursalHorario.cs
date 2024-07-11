@@ -28,6 +28,14 @@ namespace ArtInk.Application.Services.Implementations
             return result;
         }
 
+        public async Task<ICollection<SucursalHorarioDTO>> GetHorariosBySucursalAsync(byte idSucursal)
+        {
+            var list = await repository.GetHorariosBySucursalAsync(idSucursal);
+            var collection = mapper.Map<ICollection<SucursalHorarioDTO>>(list);
+
+            return collection;
+        }
+
         public async Task<SucursalHorarioDTO?> GetSucursalHorarioByIdAsync(short id)
         {
             var sucursalHorario = await repository.GetSucursalHorarioByIdAsync(id);

@@ -19,6 +19,16 @@ public class SucursalHorarioController(IServiceSucursalHorario serviceSucursalHo
         return StatusCode(StatusCodes.Status200OK, sucursal);
     }
 
+    [HttpGet("~/api/Sucursal/{idSucursal}/Horario")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalHorarioDTO))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
+    public async Task<IActionResult> GetHorarioBySucursalAsync(byte idSucursal)
+    {
+        var sucursal = await serviceSucursalHorario.GetHorariosBySucursalAsync(idSucursal);
+        return StatusCode(StatusCodes.Status200OK, sucursal);
+    }
+
     [HttpPost("~/api/Sucursal/{idSucursal}/Horario")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]

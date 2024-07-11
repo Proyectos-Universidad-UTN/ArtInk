@@ -43,7 +43,7 @@ namespace ArtInk.Application.Services.Implementations
             return mapper.Map<ICollection<SucursalHorarioBloqueoDTO>>(bloqueos);
         }
 
-        public async Task<SucursalHorarioBloqueoDTO> UpdateSucursalHorarioBloqueoAsync(byte id, RequestSucursalHorarioBloqueoDTO bloqueoDTO)
+        public async Task<SucursalHorarioBloqueoDTO> UpdateSucursalHorarioBloqueoAsync(long id, RequestSucursalHorarioBloqueoDTO bloqueoDTO)
         {
             if (!await repository.ExisteHorarioBloqueo(id)) throw new NotFoundException("Horario bloqueo no encontrada.");
 

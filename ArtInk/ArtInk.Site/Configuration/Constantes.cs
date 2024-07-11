@@ -91,7 +91,8 @@
         public const string POSTSUCURSALFERIADO = "Sucursal/{0}/Feriado";
 
         // Url sucursal horarios
-        public const string GETSUCURSALHORARIO = "Sucursal/Horario";
+        public const string GETSUCURSALHORARIO = "SucursalHorario/{0}";
+        public const string GETHORARIOBYSUCURSAL = "Sucursal/{0}/Horario";
         public const string POSTSUCURSALHORARIO = "Sucursal/{0}/Horario";
     }
 }

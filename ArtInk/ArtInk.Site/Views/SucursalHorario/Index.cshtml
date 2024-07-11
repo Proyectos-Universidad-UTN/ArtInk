@@ -7,8 +7,8 @@
 <h1>Sucursal Horarios</h1>
 
 <p>
-    <a hidden asp-action="Gestionar" asp-route-idSucursal="0" asp-route-anno="0" id="GestionarBase" class="btn btn-primary mb-3"></a>
-    <a asp-action="Gestionar" asp-route-idSucursal="0" asp-route-anno="0" id="Gestionar" class="btn btn-primary mb-3">
+    <a hidden asp-action="Gestionar" asp-route-idSucursal="0" id="GestionarBase" class="btn btn-primary mb-3"></a>
+    <a asp-action="Gestionar" asp-route-idSucursal="0" id="Gestionar" class="btn btn-primary mb-3">
         Gestionar
         Sucursal Horario
     </a>
@@ -41,11 +41,11 @@
     })
 
     $(".reload-table").on('change', () => {
-        const url = "@Model.UrlAPI".replace("{0}", `Sucursal/${$("#IdSucursal").val()}/Horario}`);
+        const url = "@Model.UrlAPI".replace("{0}", `Sucursal/${$("#IdSucursal").val()}/Horario`);
         table.ajax.url(url);
         table.ajax.reload();
 
-        var hrefGestionar = $("#GestionarBase").attr("href").toString().replace("=0", `=${$("#IdSucursal").val()}`).toString().replace("=0", `=${$("#Anno").val()}`);
+        var hrefGestionar = $("#GestionarBase").attr("href").toString().replace("=0",`=${$("#IdSucursal").val()}`);
         $("#Gestionar").attr("href", hrefGestionar)
     })
 
@@ -69,9 +69,9 @@
                     dataSrc: ''
                 },
                 columns: [
-                    { data: "dia" },
-                    { data: "horaInicio" },
-                    { data: "horaFin" }
+                    { data: "horario.dia" },
+                    { data: "horario.horaInicio" },
+                    { data: "horario.horaFin" }
                 ]
             })
     }

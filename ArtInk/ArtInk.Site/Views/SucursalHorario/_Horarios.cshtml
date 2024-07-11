@@ -8,7 +8,7 @@
     </div>
     <div class="col-sm-11 col-md-11">
         <select id="IdHorarioSelect" class="form-select"
-                asp-items='@(new SelectList(Model.Horarios,"Id","Nombre"))'></select>
+                asp-items='@(new SelectList(Model.Horarios,"Id","NombreSelect"))'></select>
     </div>
     <div class="col-sm-1 col-md-1">
         <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarHorarioSucursal(this)">
@@ -29,19 +29,16 @@
         {
             <li class="list-group-item">
                 <div class="row">
-                    <input hidden name="HorariosSucursal[@it.Index].Horario.Id" value="@it.Value.Horario.Id" />
-                    <input hidden name="HorariosSucursal[@it.Index].Horario.Dia" value="@it.Value.Horario.Dia" />
+                    <input hidden name="HorariosSucursal[@it.Index].Horario.Id" value="@it.Value.Horario.Id" /> 
+                    <input hidden name="HorariosSucursal[@it.Index].Horario.Dia" value="@it.Value.Horario.Dia" /> 
+                    <input hidden name="HorariosSucursal[@it.Index].Horario.HoraInicio" value="@it.Value.Horario.HoraInicio" /> 
+                    <input hidden name="HorariosSucursal[@it.Index].Horario.HoraFin" value="@it.Value.Horario.HoraFin" /> 
                     <input hidden name="HorariosSucursal[@it.Index].IdHorario" value="@it.Value.IdHorario" />
                     <div class="col-sm-12 col-md-6">
                         <label class="form-label">@it.Value.Horario.Dia</label>
                     </div>
                     <div class="col-sm-10 col-md-5">
-                        <input asp-for="@Model.HorariosSucursal[@it.Index].Horario.HoraInicio" id="@it.Value.Horario.Id"  class="form-control text-end datepicker-fechas">
-                        <span asp-validation-for="@Model.HorariosSucursal[@it.Index].Horario.HoraInicio" class="text-danger"></span>
-                    </div>
-                    <div class="col-sm-10 col-md-5">
-                        <input asp-for="@Model.HorariosSucursal[@it.Index].Horario.HoraFin" id="@it.Value.Horario.Id" class="form-control text-end datepicker-fechas">
-                        <span asp-validation-for="@Model.HorariosSucursal[@it.Index].Horario.HoraFin" class="text-danger"></span>
+                        <label class="form-label">@it.Value.Horario.HorarioFormateado</label>
                     </div>
                     <div class="col-sm-2 col-md-1">
                         <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-horario="@it.Value.IdHorario"
@@ -58,15 +55,3 @@
 </ul>
 
 @await Html.PartialAsync("_ValidationScriptsPartial")
-<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/locales/es.js"></script>
-<script>
-    const elems = document.querySelectorAll('.datepicker-fechas');
-    elems.forEach(elem => {
-        new Datepicker(elem, {
-            format: 'dd/mm/yyyy',
-            language: 'es',
-            minDate: `01/${$(elem).data("mes")}/${$(elem).data("anno")}`
-        });
-    })
-</script>

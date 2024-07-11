@@ -41,13 +41,8 @@ namespace ArtInk.Site.Controllers
                 return PartialView("~/Views/SucursalHorario/_Horarios.cshtml", sucursalSucursalHorario);
             }
 
-            horarios.Insert(0, new HorarioResponseDTO()
-            {
-                Id = 0,
-                Dia = DiaSemana.SeleccioneUnDia, 
-                HoraInicio = default,
-                HoraFin = default
-            });
+            horarios.Insert(0, new HorarioResponseDTO() { Id = 0, NombreSelect = "Seleccione un horario." });
+
             sucursalSucursalHorario.Horarios = horarios;
 
             if (sucursalSucursalHorario.Accion == 'R')
@@ -68,7 +63,7 @@ namespace ArtInk.Site.Controllers
             if (horario == null)
             {
                 TempData["ErrorMessagePartial"] = cliente.Error ? cliente.MensajeError : null;
-                return PartialView("~/Views/SucursalHorario/_Horarioss.cshtml", sucursalSucursalHorario);
+                return PartialView("~/Views/SucursalHorario/_Horarios.cshtml", sucursalSucursalHorario);
             }
 
             sucursalSucursalHorario.HorariosSucursal.Add(new SucursalHorarioRequestDTO()
@@ -79,7 +74,7 @@ namespace ArtInk.Site.Controllers
 
             TempData["SuccessMessagePartial"] = "Horario agregado a lista preliminar";
 
-            sucursalSucursalHorario.HorariosSucursal = sucursalSucursalHorario.HorariosSucursal.OrderBy(m => m.Horario).ToList();
+            sucursalSucursalHorario.HorariosSucursal = sucursalSucursalHorario.HorariosSucursal.OrderBy(m => m.IdHorario).ToList();
             return PartialView("~/Views/SucursalHorario/_Horarios.cshtml", sucursalSucursalHorario);
         }
 
@@ -91,7 +86,7 @@ namespace ArtInk.Site.Controllers
                 return RedirectToAction("Index");
             }
 
-            var url = string.Format(Constantes.GETSUCURSALHORARIO, idSucursal);
+            var url = string.Format(Constantes.GETHORARIOBYSUCURSAL, idSucursal);
             var sucursalHorarios = await cliente.ConsumirAPIAsync<IEnumerable<SucursalHorarioResponseDTO>>(Constantes.GET, url);
             if (sucursalHorarios == null)
             {
@@ -120,7 +115,7 @@ namespace ArtInk.Site.Controllers
             };
             sucursalSucursalHorario.CargarHorarios(mapper.Map<IEnumerable<SucursalHorarioRequestDTO>>(sucursalHorarios), horarios);
 
-            horarios.Insert(0, new HorarioResponseDTO() { Id = 0, Dia=  DiaSemana.SeleccioneUnDia });
+            horarios.Insert(0, new HorarioResponseDTO() { Id = 0, NombreSelect = "Seleccione un horario." });
             sucursalSucursalHorario.Horarios = horarios;
 
             return View(sucursalSucursalHorario);
@@ -143,7 +138,7 @@ namespace ArtInk.Site.Controllers
                 TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
                 return RedirectToAction("Index");
             }
-            //horarios.Insert(0, new HorarioResponseDTO() { Id = 0, Dia = DiaSemana.SeleccioneUnDia });
+            horarios.Insert(0, new HorarioResponseDTO() { Id = 0, NombreSelect = "Seleccione un horario." });
             sucursalSucursalHorario.Horarios = horarios;
 
             TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;

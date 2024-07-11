@@ -17,5 +17,27 @@ namespace ArtInk.Site.ViewModels.Response
         public TimeOnly HoraFin { get; set; }
 
         public virtual ICollection<SucursalHorarioResponseDTO> SucursalHorarios { get; set; } = new List<SucursalHorarioResponseDTO>();
+
+        public string HorarioFormateado
+        {
+            get
+            {
+                return $"{HoraInicio}-{HoraFin}";
+            }
+        }
+        private string? NombreSelectFormateado;
+
+        public string NombreSelect
+        {
+            get
+            {
+                return NombreSelectFormateado ?? $"{Dia}-{HorarioFormateado}";
+            }
+
+            set 
+            {
+                NombreSelectFormateado = value; 
+            }
+        }
     }
 }

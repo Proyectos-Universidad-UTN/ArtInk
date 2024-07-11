@@ -16,6 +16,6 @@ namespace ArtInk.Application.Services.Interfaces
 
         Task<SucursalHorarioBloqueoDTO> CreateSucursalHorarioBloqueoAsync(RequestSucursalHorarioBloqueoDTO bloqueoDTO);
 
-        Task<SucursalHorarioBloqueoDTO> UpdateSucursalHorarioBloqueoAsync(byte id, RequestSucursalHorarioBloqueoDTO bloqueoDTO);
+        Task<SucursalHorarioBloqueoDTO> UpdateSucursalHorarioBloqueoAsync(long id, RequestSucursalHorarioBloqueoDTO bloqueoDTO);
     }
 }
