@@ -1,5 +1,4 @@
 {
-    "composer.bin": "",
     "dotnet.preferCSharpExtension": false,
     "editor.formatOnSave": false,
     "emmet.includeLanguages": {
@@ -24,5 +23,9 @@
             "username": "sa",
             "password": "!Al3j0sMSSQLServer"
         }
-    ]
+    ],
+    "sonarlint.connectedMode.project": {
+        "connectionId": "proyectos-universidad-utn",
+        "projectKey": "Proyectos-Universidad-UTN_ArtInk"
+    }
 }
