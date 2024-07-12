@@ -14,6 +14,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
 {
     const string INDEX = "Index";
     const string ERRORMESSAGE = "ErrorMessage";
+    const string SUCCESSMESSAGE = "SuccessMessagePartial";
 
     public async Task<IActionResult> Index()
     {
@@ -50,14 +51,14 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
 
         if (!ModelState.IsValid)
         {
-            TempData["SuccessMessagePartial"] = "Formulario no cumple con valores requeridos";
+            TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
             return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
         }
 
         if (sucursalSucursalHorario.Accion == 'R')
         {
             sucursalSucursalHorario.HorariosSucursal = sucursalSucursalHorario.HorariosSucursal.Where(m => m.IdHorario != sucursalSucursalHorario.IdHorario).ToList();
-            TempData["SuccessMessagePartial"] = "Horario removido de la lista preliminar";
+            TempData[SUCCESSMESSAGE] = "Horario removido de la lista preliminar";
             return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
         }
 
@@ -81,7 +82,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
             Horario = horario
         });
 
-        TempData["SuccessMessagePartial"] = "Horario agregado a lista preliminar";
+        TempData[SUCCESSMESSAGE] = "Horario agregado a lista preliminar";
 
         sucursalSucursalHorario.HorariosSucursal = sucursalSucursalHorario.HorariosSucursal.OrderBy(m => m.IdHorario).ToList();
         return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
@@ -152,7 +153,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
 
         if (!ModelState.IsValid)
         {
-            TempData["SuccessMessagePartial"] = "Formulario no cumple con valores requeridos";
+            TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
             return View(sucursalSucursalHorario);
         }
 

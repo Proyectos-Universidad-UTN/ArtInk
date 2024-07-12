@@ -16,8 +16,13 @@ public class ApiArtInkClient : IApiArtInkClient
 
     public ApiArtInkClient(IConfiguration configuration)
     {
-        var artInkAPI = configuration.GetSection("ArtInkAPI") ?? throw new ArgumentNullException("La sección ArtInkAPI no está configurada.");
-        BaseUrlAPI = artInkAPI.GetValue<string>("BaseUrl") ?? throw new ArgumentNullException("El valor de BaseUrl no está configurado.");
+        var sectionArtInkApi = configuration.GetSection("ArtInkAPI");
+        if (sectionArtInkApi == null) throw new ArgumentNullException(nameof(sectionArtInkApi), "La sección ArtInkAPI no está configurada.");
+        var artInkAPI = sectionArtInkApi;
+
+        var baseUrl = artInkAPI.GetValue<string>("BaseUrl");
+        if (baseUrl == null) throw new ArgumentNullException(nameof(baseUrl), "El valor de BaseUrl no está configurado.");
+        BaseUrlAPI = baseUrl;
     }
 
     public async Task<T> ConsumirAPIAsync<T>(string tipoLlamado, string url, string mediaType = Constantes.MEDIATYPEJSON,
@@ -28,12 +33,9 @@ public class ApiArtInkClient : IApiArtInkClient
         {
             HttpClientHandler clientHandler = new HttpClientHandler();
             HttpResponseMessage responseMessage = new HttpResponseMessage();
-            string contenidoAPI = String.Empty;
             var inputMessage = new HttpRequestMessage();
 
             Error = false;
-
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
             using (var client = new HttpClient(clientHandler))
             {
@@ -56,7 +58,7 @@ public class ApiArtInkClient : IApiArtInkClient
                         break;
                     case "POST":
                     case "PUT":
-                        contenidoAPI = valoresConsumo[0].ToString()!;
+                        string contenidoAPI = valoresConsumo[0].ToString()!;
                         inputMessage.Content = new StringContent(contenidoAPI, Encoding.UTF8, mediaType);
                         if (tipoLlamado.Equals("POST"))
                         {
@@ -89,7 +91,7 @@ public class ApiArtInkClient : IApiArtInkClient
         }
         catch (Exception excepcion)
         {
-            throw new Exception(excepcion.Message);
+            throw new ArtInkApiClientException(excepcion.Message);
         }
     }
 }

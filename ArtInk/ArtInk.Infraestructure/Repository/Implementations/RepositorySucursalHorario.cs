@@ -1,6 +1,8 @@
 ﻿using ArtInk.Infraestructure.Data;
 using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
+using Azure;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtInk.Infraestructure.Repository.Implementations;
@@ -46,7 +48,7 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
             catch (Exception exc)
             {
                 await transaccion.RollbackAsync();
-                throw new Exception("Error al guardar horarios");
+                throw new RequestFailedException("Error al guardar horarios", exc);
             }
         });
 

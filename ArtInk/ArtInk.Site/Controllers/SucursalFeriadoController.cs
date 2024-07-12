@@ -14,6 +14,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
 {
     const string INDEX = "Index";
     const string ERRORMESSAGE = "ErrorMessage";
+    const string SUCCESSMESSAGE = "SuccessMessagePartial";
 
     public async Task<IActionResult> Index()
     {
@@ -54,14 +55,14 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
 
         if (!ModelState.IsValid)
         {
-            TempData["SuccessMessagePartial"] = "Formulario no cumple con valores requeridos";
+            TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
             return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
         if (sucursalSucursalFeriado.Accion == 'R')
         {
             sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.Where(m => m.IdFeriado != sucursalSucursalFeriado.IdFeriado).ToList();
-            TempData["SuccessMessagePartial"] = "Feriado removido de la lista preliminar";
+            TempData[SUCCESSMESSAGE] = "Feriado removido de la lista preliminar";
             return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
@@ -87,7 +88,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
             Anno = sucursalSucursalFeriado.Anno
         });
 
-        TempData["SuccessMessagePartial"] = "Feriado agregado a lista preliminar";
+        TempData[SUCCESSMESSAGE] = "Feriado agregado a lista preliminar";
 
         sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.OrderBy(m => m.Fecha).ToList();
         return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
@@ -159,7 +160,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
 
         if (!ModelState.IsValid)
         {
-            TempData["SuccessMessagePartial"] = "Formulario no cumple con valores requeridos";
+            TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
             return View(sucursalSucursalFeriado);
         }
 

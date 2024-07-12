@@ -14,4 +14,6 @@ public class ListNotAddedException : BaseException
     public ListNotAddedException(string mensaje) : base(mensaje)
     {
     }
+
+    protected ListNotAddedException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

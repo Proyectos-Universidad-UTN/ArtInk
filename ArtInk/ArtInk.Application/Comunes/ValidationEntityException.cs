@@ -1,4 +1,5 @@
 using System.Net;
+using System.Runtime.Serialization;
 using Microsoft.Extensions.Logging;
 
 namespace ArtInk.Application.Comunes;
@@ -13,4 +14,6 @@ public class ValidationEntityException : BaseException
     public ValidationEntityException(string mensaje) : base(mensaje)
     {    
     }
+
+    protected ValidationEntityException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
