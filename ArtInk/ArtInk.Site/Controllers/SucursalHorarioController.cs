@@ -22,7 +22,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         collection.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
         if (collection == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(INDEX, "Home");
         }
 
@@ -97,7 +97,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         var sucursalHorarios = await cliente.ConsumirAPIAsync<IEnumerable<SucursalHorarioResponseDto>>(Constantes.GET, url);
         if (sucursalHorarios == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(INDEX);
         }
 
@@ -105,7 +105,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         var sucursal = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.GET, url);
         if (sucursal == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(INDEX);
         }
 
@@ -147,7 +147,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
             return View(sucursalSucursalHorario);
         }
 
-        TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+        SetErrorMessage();
         return View(sucursalSucursalHorario);
     }
 
@@ -156,10 +156,12 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         var horarios = await cliente.ConsumirAPIAsync<List<HorarioResponseDto>>(Constantes.GET, Constantes.GETALLHORARIOS);
         if (horarios == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null)!;
         }
 
         return (false, horarios);
     }
+
+    private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
 }

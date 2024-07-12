@@ -22,7 +22,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         collection.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
         if (collection == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(INDEX, "Home");
         }
 
@@ -103,7 +103,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         var sucursalFeriados = await cliente.ConsumirAPIAsync<IEnumerable<SucursalFeriadoResponseDto>>(Constantes.GET, url);
         if (sucursalFeriados == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(INDEX);
         }
 
@@ -111,7 +111,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         var sucursal = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.GET, url);
         if (sucursal == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(INDEX);
         }
 
@@ -154,7 +154,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
             return View(sucursalSucursalFeriado);
         }
 
-        TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+        SetErrorMessage();
         return View(sucursalSucursalFeriado);
     }
 
@@ -163,9 +163,11 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         var feriados = await cliente.ConsumirAPIAsync<List<FeriadoResponseDto>>(Constantes.GET, Constantes.GETALLFERIADOS);
         if (feriados == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null)!;
         }
         return (false, feriados)!;
     }
+
+    private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
 }
