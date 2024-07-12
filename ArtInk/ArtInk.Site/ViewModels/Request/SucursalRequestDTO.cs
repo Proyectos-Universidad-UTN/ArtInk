@@ -1,12 +1,13 @@
 ﻿using ArtInk.Site.ViewModels.Common;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ArtInk.Site.ViewModels.Request;
 
 public record SucursalRequestDto : Direcciones
 {
-    [Required(ErrorMessage = "Id requerido")]
+    [JsonRequired]
     public byte Id { get; set; }
 
     [Required(ErrorMessage = "El nombre es requerido")]
@@ -17,7 +18,7 @@ public record SucursalRequestDto : Direcciones
     [MaxLength(150)]
     public string Descripcion { get; set; } = null!;
 
-    [Required(ErrorMessage = "Telefono requerido")]
+    [JsonRequired]
     public int Telefono
     {
         get
@@ -45,6 +46,6 @@ public record SucursalRequestDto : Direcciones
     [MaxLength(250)]
     public string? DireccionExacta { get; set; }
 
-    [Required(ErrorMessage = "Indicador activo requerido")]
+    [JsonRequired]
     public bool Activo { get; set; }
 }
