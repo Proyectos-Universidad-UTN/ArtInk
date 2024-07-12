@@ -17,21 +17,21 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" asp-for="Dia" class="form-label"></label>
+                            <label asp-for="Dia" class="form-label"></label>
                             <select asp-for="Dia" class="form-select" asp-items="Html.GetEnumSelectList<DiaSemana>()"></select>
                             <span asp-validation-for="Dia" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" asp-for="HoraInicio" class="form-label">Hora Inicio</label>
+                            <label asp-for="HoraInicio" class="form-label">Hora Inicio</label>
                             <input asp-for="HoraInicio" type="time" class="form-control" />
                             <span asp-validation-for="HoraInicio" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group mb-3">
-                            <label for="" asp-for="HoraFin" class="form-label">Hora Fin</label>
+                            <label asp-for="HoraFin" class="form-label">Hora Fin</label>
                             <input asp-for="HoraFin" type="time" class="form-control" />
                             <span asp-validation-for="HoraFin" class="text-danger"></span>
                         </div>

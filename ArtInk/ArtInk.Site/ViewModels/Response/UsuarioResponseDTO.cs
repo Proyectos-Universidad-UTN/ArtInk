@@ -48,5 +48,4 @@ public record UsuarioResponseDto
     public virtual RolResponseDto Rol { get; set; } = null!;
     
     public virtual ICollection<UsuarioSucursalResponseDto> UsuarioSucursal { get; set; } = new List<UsuarioSucursalResponseDto>();
-
 }
