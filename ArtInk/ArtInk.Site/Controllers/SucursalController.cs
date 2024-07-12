@@ -29,7 +29,7 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : Cont
     {
         var url = string.Format(Constantes.GETSUCURSALBYID, id);
         var sucursal = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.GET, url);
-        if (sucursal == null)
+        if (sucursal == null || !ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction("Index", "Home");
@@ -92,7 +92,7 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : Cont
     {
         var url = string.Format(Constantes.GETSUCURSALBYID, id);
         var sucursalExisting = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.GET, url);
-        if (sucursalExisting == null)
+        if (sucursalExisting == null || !ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));

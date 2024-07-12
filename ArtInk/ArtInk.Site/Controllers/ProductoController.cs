@@ -28,6 +28,12 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
         var url = string.Format(Constantes.GETPRODUCTOBYID, id);
         var collection = await cliente.ConsumirAPIAsync<ProductoResponseDto>(Constantes.GET, url);
 
+        if (!ModelState.IsValid)
+        {
+            TempData["ErrorMessage"] = "Valores de modelo invalidos";
+            return RedirectToAction(nameof(Index));
+        }
+
         return View(collection);
     }
 
@@ -75,6 +81,14 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
         producto.UnidadMedidas = unidadMedida;
         producto.Categorias = categoria;
 
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return View(producto);
+        }
+
         var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDto>(Constantes.POST, Constantes.POSTPRODUCTO, valoresConsumo: Serialization.Serialize(producto));
         if (resultado == null)
         {
@@ -91,7 +105,7 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
     {
         var url = string.Format(Constantes.GETPRODUCTOBYID, id);
         var productoExisting = await cliente.ConsumirAPIAsync<ProductoResponseDto>(Constantes.GET, url);
-        if (productoExisting == null)
+        if (productoExisting == null || !ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
@@ -138,6 +152,14 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
             return RedirectToAction(nameof(Index));
         }
         producto.Categorias = categoria;
+
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return View(producto);
+        }
 
         var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDto>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(producto));
 

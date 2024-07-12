@@ -12,12 +12,4 @@ public class ProvinciaController(IApiArtInkClient cliente) : Controller
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<ProvinciaResponseDto>>(Constantes.GET, Constantes.GETALLPROVINCIA);
         return collection;
     }
-
-    public async Task<ProvinciaResponseDto> ObtenerProvincia(byte id)
-    {
-        var url = string.Format(Constantes.GETPROVINCIABYID, id);
-        var collection = await cliente.ConsumirAPIAsync<ProvinciaResponseDto>(Constantes.GET, url);
-
-        return collection;
-    }
 }

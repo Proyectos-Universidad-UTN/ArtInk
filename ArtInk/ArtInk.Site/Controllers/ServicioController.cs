@@ -30,7 +30,7 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : Cont
     {
         var url = string.Format(Constantes.GETSERVICIOBYID, id);
         var collection = await cliente.ConsumirAPIAsync<ServicioResponseDto>(Constantes.GET, url);
-        if (collection == null)
+        if (collection == null || !ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(INDEX);
@@ -92,7 +92,7 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : Cont
     {
         var url = string.Format(Constantes.GETSERVICIOBYID, id);
         var servicioExisting = await cliente.ConsumirAPIAsync<ServicioResponseDto>(Constantes.GET, url);
-        if (servicioExisting == null)
+        if (servicioExisting == null || !ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));

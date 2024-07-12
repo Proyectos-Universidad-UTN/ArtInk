@@ -52,6 +52,12 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
         sucursalSucursalFeriado.Feriados = feriados;
 
+        if (!ModelState.IsValid)
+        {
+            TempData["SuccessMessagePartial"] = "Formulario no cumple con valores requeridos";
+            return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
+        }
+
         if (sucursalSucursalFeriado.Accion == 'R')
         {
             sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.Where(m => m.IdFeriado != sucursalSucursalFeriado.IdFeriado).ToList();
@@ -59,7 +65,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
             return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
-        if (sucursalSucursalFeriado.FeriadosSucursal.Where(m => m.IdFeriado == sucursalSucursalFeriado.IdFeriado).Any())
+        if (sucursalSucursalFeriado.FeriadosSucursal.Exists(m => m.IdFeriado == sucursalSucursalFeriado.IdFeriado))
         {
             TempData["ErrorMessagePartial"] = "Feriado ya existe en lista preliminar";
             return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
@@ -89,7 +95,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
 
     public async Task<IActionResult> Gestionar(byte idSucursal, short anno)
     {
-        if (idSucursal == 0 || anno == 0)
+        if (idSucursal == 0 || anno == 0 || !ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = "Asegurese de seleccionar una sucursal y un año";
             return RedirectToAction(INDEX);
@@ -150,6 +156,12 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         }
         feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
         sucursalSucursalFeriado.Feriados = feriados;
+
+        if (!ModelState.IsValid)
+        {
+            TempData["SuccessMessagePartial"] = "Formulario no cumple con valores requeridos";
+            return View(sucursalSucursalFeriado);
+        }
 
         TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
         return View(sucursalSucursalFeriado);

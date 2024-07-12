@@ -18,6 +18,12 @@ public class ReservaPreguntaController(IApiArtInkClient cliente) : Controller
         var url = string.Format(Constantes.GETRESERVABYID, id);
         var collection = await cliente.ConsumirAPIAsync<ReservaPreguntaResponseDto>(Constantes.GET, url);
 
+        if (!ModelState.IsValid)
+        {
+            TempData["ErrorMessage"] = "Valores de modelo invalidos";
+            return RedirectToAction(nameof(Index));
+        }
+
         return View(collection);
     }
 }

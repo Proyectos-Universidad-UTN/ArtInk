@@ -11,17 +11,21 @@ public class CantonController(IApiArtInkClient cantonCliente) : Controller
     [HttpPost]
     public async Task<IActionResult> ObtenerCantones(Direcciones direcciones)
     {
+        var collection = new List<CantonResponseDto>();
+
+        if (!ModelState.IsValid)
+        {
+            TempData["ErrorMessage"] = "Error con los valores del formulario";
+            collection.Insert(0, new CantonResponseDto() { Id = 0, Nombre = "Seleccione un cantón" });
+            direcciones.Cantones = collection;
+            return PartialView("~/Views/Shared/_CantonSelect.cshtml", direcciones);
+        }
+
         var url = string.Format(Constantes.GETALLCANTONESBYPROVINCIA, direcciones.IdProvincia);
-        var collection = await cantonCliente.ConsumirAPIAsync<List<CantonResponseDto>>(Constantes.GET, url);
+        collection = await cantonCliente.ConsumirAPIAsync<List<CantonResponseDto>>(Constantes.GET, url);
         collection.Insert(0, new CantonResponseDto() { Id = 0, Nombre = "Seleccione un cantón" });
         direcciones.Cantones = collection;
         return PartialView("~/Views/Shared/_CantonSelect.cshtml", direcciones);
     }
 
-    public async Task<CantonResponseDto> ObtenerCanton(byte id)
-    {
-        var url = string.Format(Constantes.GETCANTONBYID, id);
-        var canton = await cantonCliente.ConsumirAPIAsync<CantonResponseDto>(Constantes.GET, url);
-        return canton;
-    }
 }

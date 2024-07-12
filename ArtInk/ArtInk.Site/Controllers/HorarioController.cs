@@ -31,6 +31,14 @@ public class HorarioController(IApiArtInkClient cliente, IMapper mapper) : Contr
     [HttpPost]
     public async Task<IActionResult> Create(HorarioRequestDto horario)
     {
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return View(horario);
+        }
+        
         var resultado = await cliente.ConsumirAPIAsync<HorarioResponseDto>(Constantes.POST, Constantes.POSTHORARIO, valoresConsumo: Serialization.Serialize(horario));
         if (resultado == null)
         {
@@ -47,7 +55,7 @@ public class HorarioController(IApiArtInkClient cliente, IMapper mapper) : Contr
     {
         var url = string.Format(Constantes.GETHORARIOBYID, id);
         var horarioExisting = await cliente.ConsumirAPIAsync<HorarioResponseDto>(Constantes.GET, url);
-        if (horarioExisting == null)
+        if (horarioExisting == null || !ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
@@ -62,6 +70,14 @@ public class HorarioController(IApiArtInkClient cliente, IMapper mapper) : Contr
     public async Task<IActionResult> Edit(HorarioRequestDto horario)
     {
         var url = string.Format(Constantes.PUTHORARIO, horario.Id);
+
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return View(horario);
+        }
 
         var resultado = await cliente.ConsumirAPIAsync<HorarioResponseDto>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(horario));
 

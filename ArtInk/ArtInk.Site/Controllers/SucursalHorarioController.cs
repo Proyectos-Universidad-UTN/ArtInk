@@ -46,8 +46,13 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         }
 
         horarios.Insert(0, new HorarioResponseDto() { Id = 0, NombreSelect = "Seleccione un horario." });
-
         sucursalSucursalHorario.Horarios = horarios;
+
+        if (!ModelState.IsValid)
+        {
+            TempData["SuccessMessagePartial"] = "Formulario no cumple con valores requeridos";
+            return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
+        }
 
         if (sucursalSucursalHorario.Accion == 'R')
         {
@@ -56,7 +61,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
             return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
         }
 
-        if (sucursalSucursalHorario.HorariosSucursal.Where(m => m.IdHorario == sucursalSucursalHorario.IdHorario).Any())
+        if (sucursalSucursalHorario.HorariosSucursal.Exists(m => m.IdHorario == sucursalSucursalHorario.IdHorario))
         {
             TempData["ErrorMessagePartial"] = "Horario ya existe en lista preliminar";
             return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
@@ -84,7 +89,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
 
     public async Task<IActionResult> Gestionar(byte idSucursal)
     {
-        if (idSucursal == 0)
+        if (idSucursal == 0 || !ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = "Asegurese de seleccionar una sucursal";
             return RedirectToAction(INDEX);
@@ -144,6 +149,12 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         }
         horarios.Insert(0, new HorarioResponseDto() { Id = 0, NombreSelect = "Seleccione un horario." });
         sucursalSucursalHorario.Horarios = horarios;
+
+        if (!ModelState.IsValid)
+        {
+            TempData["SuccessMessagePartial"] = "Formulario no cumple con valores requeridos";
+            return View(sucursalSucursalHorario);
+        }
 
         TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
         return View(sucursalSucursalHorario);

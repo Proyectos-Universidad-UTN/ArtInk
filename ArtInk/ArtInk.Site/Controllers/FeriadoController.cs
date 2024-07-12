@@ -31,6 +31,14 @@ public class FeriadoController(IApiArtInkClient cliente, IMapper mapper) : Contr
     [HttpPost]
     public async Task<IActionResult> Create(FeriadoRequestDto feriado)
     {
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return View(feriado);
+        }
+
         var resultado = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.POST, Constantes.POSTFERIADO, valoresConsumo: Serialization.Serialize(feriado));
         if (resultado == null)
         {
@@ -47,7 +55,7 @@ public class FeriadoController(IApiArtInkClient cliente, IMapper mapper) : Contr
     {
         var url = string.Format(Constantes.GETFERIADOBYID, id);
         var feriadoExisting = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.GET, url);
-        if (feriadoExisting == null)
+        if (feriadoExisting == null || !ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
@@ -62,6 +70,14 @@ public class FeriadoController(IApiArtInkClient cliente, IMapper mapper) : Contr
     public async Task<IActionResult> Edit(FeriadoRequestDto feriado)
     {
         var url = string.Format(Constantes.PUTFERIADO, feriado.Id);
+
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return View(feriado);
+        }
 
         var resultado = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(feriado));
 
@@ -79,6 +95,16 @@ public class FeriadoController(IApiArtInkClient cliente, IMapper mapper) : Contr
     public async Task<ActionResult> Delete(byte id)
     {
         var url = string.Format(Constantes.DELETEFERIADO, id);
+
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return RedirectToAction(nameof(Index));
+        }
+
+
         var resultado = await cliente.ConsumirAPIAsync<bool>(Constantes.DELETE, url);
 
         if (!resultado)

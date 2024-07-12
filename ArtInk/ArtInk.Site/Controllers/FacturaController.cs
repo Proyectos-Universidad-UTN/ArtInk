@@ -16,6 +16,15 @@ public class FacturaController(IApiArtInkClient factura) : Controller
     public async Task<IActionResult> Details(long id)
     {
         var url = string.Format(Constantes.GETFACTURABYID, id);
+
+        if (!ModelState.IsValid)
+        {
+            TempData["ErrorMessage"] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return RedirectToAction(nameof(Index));
+        }
+
         var collection = await factura.ConsumirAPIAsync<FacturaResponseDto>(Constantes.GET, url);
 
         return View(collection);
