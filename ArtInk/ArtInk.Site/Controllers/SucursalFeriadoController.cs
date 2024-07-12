@@ -50,6 +50,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
         sucursalSucursalFeriado.Feriados = feriados;
 
+        RemoveSucursalRequireModel();
         if (!ModelState.IsValid)
         {
             TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
@@ -135,23 +136,24 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
     public async Task<ActionResult> Gestionar(SucursalSucursalFeriado sucursalSucursalFeriado)
     {
         var url = string.Format(Constantes.POSTSUCURSALFERIADO, sucursalSucursalFeriado.Sucursal.Id);
-        var feriado = await cliente.ConsumirAPIAsync<bool?>(Constantes.POST, url, valoresConsumo: Serialization.Serialize(sucursalSucursalFeriado.FeriadosSucursal));
-        if (feriado != null)
-        {
-            TempData["SuccessMessage"] = "Feriados guardados correctamente";
-            return RedirectToAction(INDEX);
-        }
-
         var (falloEjecucion, feriados) = await ObtenerFeriados();
         if (falloEjecucion) return RedirectToAction(INDEX);
         
         feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
         sucursalSucursalFeriado.Feriados = feriados;
 
+        RemoveSucursalRequireModel();
         if (!ModelState.IsValid)
         {
             TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
             return View(sucursalSucursalFeriado);
+        }
+
+        var feriado = await cliente.ConsumirAPIAsync<bool?>(Constantes.POST, url, valoresConsumo: Serialization.Serialize(sucursalSucursalFeriado.FeriadosSucursal));
+        if (feriado != null)
+        {
+            TempData["SuccessMessage"] = "Feriados guardados correctamente";
+            return RedirectToAction(INDEX);
         }
 
         SetErrorMessage();
@@ -170,4 +172,13 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
     }
 
     private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+
+    private void RemoveSucursalRequireModel()
+    {
+        ModelState.Remove("Sucursal.Id");
+        ModelState.Remove("Sucursal.Nombre");
+        ModelState.Remove("Sucursal.Distrito");
+        ModelState.Remove("Sucursal.Descripcion");
+        ModelState.Remove("Sucursal.CorreoElectronico");
+    }
 }

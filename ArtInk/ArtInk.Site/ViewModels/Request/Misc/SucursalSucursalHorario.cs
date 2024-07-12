@@ -10,7 +10,7 @@ public record SucursalSucursalHorario
 
     public byte IdHorario { get; set; }
 
-    public IEnumerable<HorarioResponseDto> Horarios { get; set; } = null!;
+    public List<HorarioResponseDto> Horarios { get; set; } = new List<HorarioResponseDto>();
 
     public List<SucursalHorarioRequestDto> HorariosSucursal { get; set; } = null!;
 

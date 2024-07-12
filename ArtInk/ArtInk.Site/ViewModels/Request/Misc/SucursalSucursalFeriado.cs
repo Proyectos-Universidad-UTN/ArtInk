@@ -12,7 +12,7 @@ public record SucursalSucursalFeriado
 
     public short Anno { get; set; }
 
-    public IEnumerable<FeriadoResponseDto> Feriados { get; set; } = null!;
+    public List<FeriadoResponseDto> Feriados { get; set; } = new List<FeriadoResponseDto>();
 
     public List<SucursalFeriadoRequestDto> FeriadosSucursal { get; set; } = null!;
 
