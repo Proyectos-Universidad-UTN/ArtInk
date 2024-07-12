@@ -8,6 +8,7 @@ namespace ArtInk.Site.ViewModels.Request;
 
 public record ProductoRequestDto
 {
+    [Required(ErrorMessage = "Id requerido")]
     public short Id { get; set; }
 
     [Required(ErrorMessage = "El nombre es obligatorio")]
@@ -24,6 +25,7 @@ public record ProductoRequestDto
     [Required(ErrorMessage = "La categoría es obligatoria")]
     public byte IdCategoria { get; set; }
 
+    [Required(ErrorMessage = "Costo requerido")]
     public decimal Costo
     {
         get => !string.IsNullOrEmpty(CostoFormateado) ? Decimal.Parse(CostoFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
@@ -42,6 +44,7 @@ public record ProductoRequestDto
     [Required(ErrorMessage = "El SKU es obligatorio")]
     public string Sku { get; set; } = null!;
 
+    [Required(ErrorMessage = "Cantidad requerida")]
     public decimal Cantidad
     {
         get => !string.IsNullOrEmpty(CantidadFormateada) ? Decimal.Parse(CantidadFormateada.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
@@ -61,6 +64,7 @@ public record ProductoRequestDto
     [Required(ErrorMessage = "La unidad de medida es obligatoria")]
     public byte IdUnidadMedida { get; set; }
 
+    [Required(ErrorMessage = "Indicador activo requerido")]
     public bool Activo { get; set; }
 
     [NotMapped]

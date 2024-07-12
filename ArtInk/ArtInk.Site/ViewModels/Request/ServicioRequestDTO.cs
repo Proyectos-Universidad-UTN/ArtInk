@@ -8,6 +8,7 @@ namespace ArtInk.Site.ViewModels.Request;
 
 public record ServicioRequestDto
 {
+    [Required(ErrorMessage = "Id requerido")]
     public byte Id { get; set; }
 
     [DisplayName("Servicio")]
@@ -22,6 +23,7 @@ public record ServicioRequestDto
     [DisplayName("Tipo Servicio")]
     public byte IdTipoServicio { get; set; }
 
+    [Required(ErrorMessage = "Tarifa requerida")]
     public decimal Tarifa
     {
         get => !string.IsNullOrEmpty(TarifaFormateada) ? decimal.Parse(TarifaFormateada.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
@@ -41,6 +43,7 @@ public record ServicioRequestDto
     [MaxLength(150)]
     public string? Observacion { get; set; }
 
+    [Required(ErrorMessage = "Indicador activo requerido")]
     public bool Activo { get; set; }
 
     public IEnumerable<TipoServicioResponseDto>? TipoServicios { get; set; }

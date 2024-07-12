@@ -6,6 +6,7 @@ namespace ArtInk.Site.ViewModels.Request;
 
 public record SucursalRequestDto : Direcciones
 {
+    [Required(ErrorMessage = "Id requerido")]
     public byte Id { get; set; }
 
     [Required(ErrorMessage = "El nombre es requerido")]
@@ -16,6 +17,7 @@ public record SucursalRequestDto : Direcciones
     [MaxLength(150)]
     public string Descripcion { get; set; } = null!;
 
+    [Required(ErrorMessage = "Telefono requerido")]
     public int Telefono
     {
         get
@@ -43,5 +45,6 @@ public record SucursalRequestDto : Direcciones
     [MaxLength(250)]
     public string? DireccionExacta { get; set; }
 
+    [Required(ErrorMessage = "Indicador activo requerido")]
     public bool Activo { get; set; }
 }

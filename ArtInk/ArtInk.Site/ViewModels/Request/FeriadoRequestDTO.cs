@@ -6,6 +6,7 @@ namespace ArtInk.Site.ViewModels.Request;
 
 public record FeriadoRequestDto
 {
+    [Required(ErrorMessage = "Id requerido")]
     public byte Id { get; set; }
 
     [DisplayName("Nombre")]
@@ -13,8 +14,10 @@ public record FeriadoRequestDto
     [MaxLength(80)]
     public string Nombre { get; set; } = null!;
 
+    [Required(ErrorMessage = "Indicador activo requerido")]
     public bool Activo { get; set; }
-
+    
+    [Required(ErrorMessage = "Mes requerido")]
     public Mes Mes { get; set; }
 
     [Required(ErrorMessage = "Debe ingresar el día")]
