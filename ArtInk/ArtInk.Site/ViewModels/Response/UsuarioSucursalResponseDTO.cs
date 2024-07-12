@@ -1,23 +1,22 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Response
+namespace ArtInk.Site.ViewModels.Response;
+
+public record UsuarioSucursalResponseDto
 {
-    public record UsuarioSucursalResponseDTO
-    {
-        public short Id { get; set; }
+    public short Id { get; set; }
 
-        [DisplayName("Usuario")]
-        public short IdUsuario { get; set; }
+    [DisplayName("Usuario")]
+    public short IdUsuario { get; set; }
 
-        [DisplayName("Sucursal")]
-        public byte IdSucursal { get; set; }
+    [DisplayName("Sucursal")]
+    public byte IdSucursal { get; set; }
 
-        public virtual ICollection<FacturaResponseDTO> Facturas { get; set; } = new List<FacturaResponseDTO>();
+    public virtual ICollection<FacturaResponseDto> Facturas { get; set; } = new List<FacturaResponseDto>();
 
-        public virtual ICollection<ReservaResponseDTO> Reservas { get; set; } = new List<ReservaResponseDTO>();
+    public virtual ICollection<ReservaResponseDto> Reservas { get; set; } = new List<ReservaResponseDto>();
 
-        public virtual SucursalResponseDTO Sucursal { get; set; } = null!;
+    public virtual SucursalResponseDto Sucursal { get; set; } = null!;
 
-        public virtual UsuarioResponseDTO Usuario { get; set; } = null!;
-    }
+    public virtual UsuarioResponseDto Usuario { get; set; } = null!;
 }

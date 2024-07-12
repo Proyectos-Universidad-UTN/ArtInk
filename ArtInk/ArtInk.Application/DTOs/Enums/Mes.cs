@@ -1,6 +1,6 @@
 namespace ArtInk.Application.DTOs.Enums;
 
-public enum MesEnum
+public enum Mes
 {
     Enero = 1,
 

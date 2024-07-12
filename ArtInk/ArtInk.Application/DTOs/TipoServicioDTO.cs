@@ -1,6 +1,6 @@
 namespace ArtInk.Application.DTOs;
 
-public record TipoServicioDTO
+public record TipoServicioDto
 {
     public byte Id { get; set; }
 
@@ -8,5 +8,5 @@ public record TipoServicioDTO
 
     public TimeOnly Duracion { get; set; }
 
-    public virtual ICollection<ServicioDTO> Servicios { get; set; } = new List<ServicioDTO>();
+    public virtual ICollection<ServicioDto> Servicios { get; set; } = new List<ServicioDto>();
 }

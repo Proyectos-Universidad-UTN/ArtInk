@@ -1,6 +1,5 @@
 ﻿using ArtInk.Application.DTOs;
 using ArtInk.Application.RequestDTOs;
-using ArtInk.Application.Services.Implementations;
 using ArtInk.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +9,7 @@ namespace ArtInk.WebAPI.Controllers;
 public class SucursalHorarioController(IServiceSucursalHorario serviceSucursalHorario) : ControllerBase
 {
     [HttpGet("{idSucursalHorario}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalHorarioDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalHorarioDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetSucursalByIdAsync(short idSucursalHorario)
@@ -20,7 +19,7 @@ public class SucursalHorarioController(IServiceSucursalHorario serviceSucursalHo
     }
 
     [HttpGet("~/api/Sucursal/{idSucursal}/Horario")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalHorarioDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalHorarioDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetHorarioBySucursalAsync(byte idSucursal)
@@ -33,7 +32,7 @@ public class SucursalHorarioController(IServiceSucursalHorario serviceSucursalHo
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> CreateSucursalHorarioAsync(byte idSucursal, [FromBody] IEnumerable<RequestSucursalHorarioDTO> sucursalHorarios)
+    public async Task<IActionResult> CreateSucursalHorarioAsync(byte idSucursal, [FromBody] IEnumerable<RequestSucursalHorarioDto> sucursalHorarios)
     {
         ArgumentNullException.ThrowIfNull(sucursalHorarios);
         var result = await serviceSucursalHorario.CreateSucursalHorarioAsync(idSucursal, sucursalHorarios);

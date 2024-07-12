@@ -6,88 +6,87 @@ using ArtInk.Utils;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ArtInk.Site.Controllers
+namespace ArtInk.Site.Controllers;
+
+public class FeriadoController(IAPIArtInkClient cliente, IMapper mapper) : Controller
 {
-    public class FeriadoController(IAPIArtInkClient cliente, IMapper mapper) : Controller
+    public async Task<IActionResult> Index()
     {
-        public async Task<IActionResult> Index()
+        var collection = await cliente.ConsumirAPIAsync<IEnumerable<FeriadoResponseDto>>(Constantes.GET, Constantes.GETALLFERIADOS);
+        if (collection == null)
         {
-            var collection = await cliente.ConsumirAPIAsync<IEnumerable<FeriadoResponseDTO>>(Constantes.GET, Constantes.GETALLFERIADOS);
-            if (collection == null)
-            {
-                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-                return RedirectToAction("Index", "Home");
-            }
-            return View(collection);
+            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction("Index", "Home");
         }
+        return View(collection);
+    }
 
-        public IActionResult Create()
+    public IActionResult Create()
+    {
+        return View(new FeriadoRequestDto());
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(FeriadoRequestDto feriado)
+    {
+        var resultado = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.POST, Constantes.POSTFERIADO, valoresConsumo: Serialization.Serialize(feriado));
+        if (resultado == null)
         {
-            return View(new FeriadoRequestDTO());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(FeriadoRequestDTO feriado)
-        {
-            var resultado = await cliente.ConsumirAPIAsync<FeriadoResponseDTO>(Constantes.POST, Constantes.POSTFERIADO, valoresConsumo: Serialization.Serialize(feriado));
-            if (resultado == null)
-            {
-                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-                return View(feriado);
-            }
-
-            TempData["SuccessMessage"] = "Feriado creado correctamente.";
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> Edit(byte id)
-        {
-            var url = string.Format(Constantes.GETFERIADOBYID, id);
-            var feriadoExisting = await cliente.ConsumirAPIAsync<FeriadoResponseDTO>(Constantes.GET, url);
-            if (feriadoExisting == null)
-            {
-                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-                return RedirectToAction(nameof(Index));
-            }
-
-            var feriado = mapper.Map<FeriadoRequestDTO>(feriadoExisting);
-
+            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
             return View(feriado);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(FeriadoRequestDTO feriado)
+        TempData["SuccessMessage"] = "Feriado creado correctamente.";
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Edit(byte id)
+    {
+        var url = string.Format(Constantes.GETFERIADOBYID, id);
+        var feriadoExisting = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.GET, url);
+        if (feriadoExisting == null)
         {
-            var url = string.Format(Constantes.PUTFERIADO, feriado.Id);
-
-            var resultado = await cliente.ConsumirAPIAsync<FeriadoResponseDTO>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(feriado));
-
-            if (resultado == null)
-            {
-                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-                return View(feriado);
-            }
-
-            TempData["SuccessMessage"] = "Feriado actualizado correctamente.";
-
+            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<ActionResult> Delete(byte id)
+        var feriado = mapper.Map<FeriadoRequestDto>(feriadoExisting);
+
+        return View(feriado);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(FeriadoRequestDto feriado)
+    {
+        var url = string.Format(Constantes.PUTFERIADO, feriado.Id);
+
+        var resultado = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(feriado));
+
+        if (resultado == null)
         {
-            var url = string.Format(Constantes.DELETEFERIADO, id);
-            var resultado = await cliente.ConsumirAPIAsync<bool>(Constantes.DELETE, url);
+            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            return View(feriado);
+        }
 
-            if (!resultado)
-            {
-                TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-                return RedirectToAction(nameof(Index));
-            }
+        TempData["SuccessMessage"] = "Feriado actualizado correctamente.";
 
-            TempData["SuccessMessage"] = "Feriado eliminado correctamente.";
+        return RedirectToAction(nameof(Index));
+    }
 
+    public async Task<ActionResult> Delete(byte id)
+    {
+        var url = string.Format(Constantes.DELETEFERIADO, id);
+        var resultado = await cliente.ConsumirAPIAsync<bool>(Constantes.DELETE, url);
+
+        if (!resultado)
+        {
+            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
+
+        TempData["SuccessMessage"] = "Feriado eliminado correctamente.";
+
+        return RedirectToAction(nameof(Index));
     }
 }

@@ -8,12 +8,12 @@ public class ResponseDTOToRequestDTOApplicationProfile: Profile
 {
     public ResponseDTOToRequestDTOApplicationProfile()
     {
-        CreateMap<SucursalResponseDTO, SucursalRequestDTO>();
-        CreateMap<ProductoResponseDTO, ProductoRequestDTO>();
-        CreateMap<FeriadoResponseDTO, FeriadoRequestDTO>();
-        CreateMap<SucursalFeriadoResponseDTO, SucursalFeriadoRequestDTO>();
-        CreateMap<ServicioResponseDTO, ServicioRequestDTO>();
-        CreateMap<SucursalHorarioResponseDTO, SucursalHorarioRequestDTO>();
-        CreateMap<HorarioResponseDTO, HorarioRequestDTO>();
+        CreateMap<SucursalResponseDto, SucursalRequestDto>();
+        CreateMap<ProductoResponseDto, ProductoRequestDto>();
+        CreateMap<FeriadoResponseDto, FeriadoRequestDto>();
+        CreateMap<SucursalFeriadoResponseDto, SucursalFeriadoRequestDto>();
+        CreateMap<ServicioResponseDto, ServicioRequestDto>();
+        CreateMap<SucursalHorarioResponseDto, SucursalHorarioRequestDto>();
+        CreateMap<HorarioResponseDto, HorarioRequestDto>();
     }
 }

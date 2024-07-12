@@ -1,6 +1,5 @@
 ﻿using ArtInk.Application.DTOs;
 using ArtInk.Application.RequestDTOs;
-using ArtInk.Application.Services.Implementations;
 using ArtInk.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +12,10 @@ public class SucursalHorarioBloqueoController(IServiceSucursalHorarioBloqueo ser
     
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SucursalHorarioBloqueoDTO))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SucursalHorarioBloqueoDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> CreateSucursalHorarioBloqueoAsync([FromBody] RequestSucursalHorarioBloqueoDTO bloqueo)
+    public async Task<IActionResult> CreateSucursalHorarioBloqueoAsync([FromBody] RequestSucursalHorarioBloqueoDto bloqueo)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(bloqueo);
@@ -25,11 +24,11 @@ public class SucursalHorarioBloqueoController(IServiceSucursalHorarioBloqueo ser
     }
 
     [HttpPut("{idSucursalHorarioBloqueo}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalHorarioBloqueoDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalHorarioBloqueoDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> UpdateSucursalHorarioBloqueoAsync(long idSucursalHorarioBloqueo, [FromBody] RequestSucursalHorarioBloqueoDTO bloqueo)
+    public async Task<IActionResult> UpdateSucursalHorarioBloqueoAsync(long idSucursalHorarioBloqueo, [FromBody] RequestSucursalHorarioBloqueoDto bloqueo)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(bloqueo);

@@ -2,7 +2,7 @@ using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
-public record ClienteDTO: BaseEntity
+public record ClienteDto: BaseEntity
 {
     public short Id { get; set; }
 
@@ -20,7 +20,7 @@ public record ClienteDTO: BaseEntity
 
     public bool Activo { get; set; }
 
-    public virtual ICollection<FacturaDTO> Facturas { get; set; } = new List<FacturaDTO>();
+    public virtual ICollection<FacturaDto> Facturas { get; set; } = new List<FacturaDto>();
 
-    public virtual DistritoDTO Distrito { get; set; } = null!;
+    public virtual DistritoDto Distrito { get; set; } = null!;
 }

@@ -1,11 +1,10 @@
-﻿namespace ArtInk.Site.ViewModels.Request
+﻿namespace ArtInk.Site.ViewModels.Request;
+
+public record ImpuestoRequestDto
 {
-    public record ImpuestoRequestDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        public string Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-        public decimal Porcentaje { get; set; }
-    }
+    public decimal Porcentaje { get; set; }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using ArtInk.Infraestructure.Enums;
+﻿using ArtInk.Infraestructure.Enums;
 
 namespace ArtInk.Infraestructure.Models;
 
@@ -12,7 +10,7 @@ public partial class Feriado
 
     public bool Activo { get; set; }
 
-    public MesEnum Mes { get; set; }
+    public Mes Mes { get; set; }
 
     public byte Dia { get; set; }
 
@@ -25,5 +23,4 @@ public partial class Feriado
     public string? UsuarioModificacion { get; set; }
 
     public virtual ICollection<SucursalFeriado> SucursalFeriados { get; set; } = new List<SucursalFeriado>();
-
 }

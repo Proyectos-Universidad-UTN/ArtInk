@@ -2,7 +2,7 @@ using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
-public record ServicioDTO: BaseEntity
+public record ServicioDto: BaseEntity
 {
     public byte Id { get; set; }
 
@@ -18,9 +18,9 @@ public record ServicioDTO: BaseEntity
 
     public bool Activo { get; set; }
 
-     public virtual ICollection<DetalleFacturaDTO> DetalleFacturas { get; set; } = new List<DetalleFacturaDTO>();
+     public virtual ICollection<DetalleFacturaDto> DetalleFacturas { get; set; } = new List<DetalleFacturaDto>();
 
-    public virtual TipoServicioDTO TipoServicio { get; set; } = null!;
+    public virtual TipoServicioDto TipoServicio { get; set; } = null!;
 
-    public virtual ICollection<ReservaServicioDTO> ReservaServicios { get; set; } = new List<ReservaServicioDTO>();
+    public virtual ICollection<ReservaServicioDto> ReservaServicios { get; set; } = new List<ReservaServicioDto>();
 }

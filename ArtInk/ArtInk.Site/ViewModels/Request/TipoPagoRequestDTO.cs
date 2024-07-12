@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Request
+namespace ArtInk.Site.ViewModels.Request;
+
+public record TipoPagoRequestDto
 {
-    public record TipoPagoRequestDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        [DisplayName("Descripción")]
-        public string Descripcion { get; set; } = null!;
+    [DisplayName("Descripción")]
+    public string Descripcion { get; set; } = null!;
 
-        public int Referencia { get; set; }
-    }
+    public int Referencia { get; set; }
 }

@@ -1,11 +1,10 @@
 ﻿using ArtInk.Site.ViewModels.Response;
 
-namespace ArtInk.Site.ViewModels.Common
-{
-    public record SucursalHorarios
-    {
-        public string UrlAPI { get; set; } = null!;
+namespace ArtInk.Site.ViewModels.Common;
 
-        public IEnumerable<SucursalResponseDTO> Sucursales { get; set; } = null!;
-    }
+public record SucursalHorarios
+{
+    public string UrlAPI { get; set; } = null!;
+
+    public IEnumerable<SucursalResponseDto> Sucursales { get; set; } = null!;
 }

@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace ArtInk.Application.DTOs;
 
-public record DetalleFacturaProductoDTO
+public record DetalleFacturaProductoDto
 {
     public long Id { get; set; }
 
@@ -14,7 +14,7 @@ public record DetalleFacturaProductoDTO
 
     public decimal Cantidad { get; set; }
 
-    public virtual DetalleFacturaDTO DetalleFactura { get; set; } = null!;
+    public virtual DetalleFacturaDto DetalleFactura { get; set; } = null!;
 
-    public virtual ProductoDTO Producto { get; set; } = null!;
+    public virtual ProductoDto Producto { get; set; } = null!;
 }

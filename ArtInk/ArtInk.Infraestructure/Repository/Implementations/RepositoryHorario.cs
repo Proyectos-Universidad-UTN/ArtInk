@@ -49,5 +49,3 @@ public class RepositoryHorario(ArtInkContext context) : IRepositoryHorario
             .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id) != null;
     }
 }
-
-

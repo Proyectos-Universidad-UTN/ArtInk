@@ -10,7 +10,7 @@ namespace ArtInk.WebAPI.Controllers;
 public class FeriadoController(IServiceFeriado serviceFeriado) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FeriadoDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FeriadoDto>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetAllFeriadosAsync()
     {
@@ -19,7 +19,7 @@ public class FeriadoController(IServiceFeriado serviceFeriado) : ControllerBase
     }
 
     [HttpGet("{idFeriado}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeriadoDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeriadoDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetFeriadoByIdAsync(byte idFeriado)
@@ -29,10 +29,10 @@ public class FeriadoController(IServiceFeriado serviceFeriado) : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(FeriadoDTO))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(FeriadoDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> CreateFeriadoAsync([FromBody] RequestFeriadoDTO feriado)
+    public async Task<IActionResult> CreateFeriadoAsync([FromBody] RequestFeriadoDto feriado)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(feriado);
@@ -41,11 +41,11 @@ public class FeriadoController(IServiceFeriado serviceFeriado) : ControllerBase
     }
 
     [HttpPut("{idFeriado}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeriadoDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeriadoDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> UpdateFeriadoAsync(byte idFeriado, [FromBody] RequestFeriadoDTO feriado)
+    public async Task<IActionResult> UpdateFeriadoAsync(byte idFeriado, [FromBody] RequestFeriadoDto feriado)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(feriado);
@@ -54,7 +54,7 @@ public class FeriadoController(IServiceFeriado serviceFeriado) : ControllerBase
     }
 
     [HttpDelete("{idFeriado}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeriadoDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeriadoDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> DeleteFeriado(byte idFeriado)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ArtInk.Infraestructure.Models;
+﻿namespace ArtInk.Infraestructure.Models;
 
 public partial class Genero
 {

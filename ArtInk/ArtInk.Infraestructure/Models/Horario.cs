@@ -1,6 +1,4 @@
 ﻿using ArtInk.Infraestructure.Enums;
-using System;
-using System.Collections.Generic;
 
 namespace ArtInk.Infraestructure.Models;
 

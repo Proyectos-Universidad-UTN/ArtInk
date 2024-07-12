@@ -1,6 +1,6 @@
 namespace ArtInk.Application.DTOs;
 
-public record SucursalHorarioDTO
+public record SucursalHorarioDto
 {
     public short Id { get; set; }
 
@@ -8,12 +8,11 @@ public record SucursalHorarioDTO
 
     public short IdHorario { get; set; }
 
-    public virtual HorarioDTO Horario { get; set; } = null!;
+    public virtual HorarioDto Horario { get; set; } = null!;
 
-    public virtual SucursalDTO Sucursal { get; set; } = null!;
+    public virtual SucursalDto Sucursal { get; set; } = null!;
 
-    public virtual ICollection<ReservaDTO> Reservas { get; set; } = new List<ReservaDTO>();
+    public virtual ICollection<ReservaDto> Reservas { get; set; } = new List<ReservaDto>();
 
-    public virtual ICollection<SucursalHorarioBloqueoDTO> SucursalHorarioBloqueos { get; set; } = new List<SucursalHorarioBloqueoDTO>();
-
+    public virtual ICollection<SucursalHorarioBloqueoDto> SucursalHorarioBloqueos { get; set; } = new List<SucursalHorarioBloqueoDto>();
 }

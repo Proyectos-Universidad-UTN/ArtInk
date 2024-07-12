@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Application.DTOs;
 
-public record UnidadMedidaDTO
+public record UnidadMedidaDto
 {
     public byte Id { get; set; }
 
@@ -8,5 +8,5 @@ public record UnidadMedidaDTO
 
     public string Simbolo { get; set; } = null!;
 
-    public virtual ICollection<ProductoDTO> Productos { get; set; } = new List<ProductoDTO>();
+    public virtual ICollection<ProductoDto> Productos { get; set; } = new List<ProductoDto>();
 }

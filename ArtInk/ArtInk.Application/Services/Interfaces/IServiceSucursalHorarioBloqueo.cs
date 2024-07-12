@@ -10,12 +10,12 @@ namespace ArtInk.Application.Services.Interfaces
 {
     public interface IServiceSucursalHorarioBloqueo
     {
-        Task<ICollection<SucursalHorarioBloqueoDTO>> GetSucursalHorarioBloqueosBySucursalHorarioAsync(short idSucursalHorario);
+        Task<ICollection<SucursalHorarioBloqueoDto>> GetSucursalHorarioBloqueosBySucursalHorarioAsync(short idSucursalHorario);
 
-        Task<SucursalHorarioBloqueoDTO> GetSucursalHorarioBloqueosByIdAsync(long id);
+        Task<SucursalHorarioBloqueoDto> GetSucursalHorarioBloqueosByIdAsync(long id);
 
-        Task<SucursalHorarioBloqueoDTO> CreateSucursalHorarioBloqueoAsync(RequestSucursalHorarioBloqueoDTO bloqueoDTO);
+        Task<SucursalHorarioBloqueoDto> CreateSucursalHorarioBloqueoAsync(RequestSucursalHorarioBloqueoDto bloqueoDTO);
 
-        Task<SucursalHorarioBloqueoDTO> UpdateSucursalHorarioBloqueoAsync(long id, RequestSucursalHorarioBloqueoDTO bloqueoDTO);
+        Task<SucursalHorarioBloqueoDto> UpdateSucursalHorarioBloqueoAsync(long id, RequestSucursalHorarioBloqueoDto bloqueoDTO);
     }
 }

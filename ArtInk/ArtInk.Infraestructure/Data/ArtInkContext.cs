@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using ArtInk.Infraestructure.Enums;
 using ArtInk.Infraestructure.Models;
 using Microsoft.EntityFrameworkCore;
@@ -240,7 +238,7 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
         {
             entity.ToTable("Feriado");
 
-            entity.Property(e => e.Mes).HasConversion(x => x.ToString(), y => (MesEnum)Enum.Parse(typeof(MesEnum), y));
+            entity.Property(e => e.Mes).HasConversion(x => x.ToString(), y => (Mes)Enum.Parse(typeof(Mes), y));
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Activo).HasDefaultValue(true);
@@ -636,32 +634,38 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
     //pone valores por defecto
     private void DefaultProperties()
     {
+        DateTime FechaCreacion = DateTime.Now;
+        DateTime FechaModificacion = DateTime.Now;
+        const bool Activo = true;
+        const string UsuarioCreacion = "ArtInkAPI";
+        const string UsuarioModificacion = "ArtInkAPIModify";
+
         foreach (var entry in ChangeTracker.Entries())
         {
             if (entry.State == EntityState.Added)
             {
-                if (entry.Entity.GetType().GetProperty("FechaCreacion") != null && entry.Property("FechaCreacion").CurrentValue != null) entry.Property("FechaCreacion").CurrentValue = DateTime.Now;
-                if (entry.Entity.GetType().GetProperty("Activo") != null && (bool)entry.Property("Activo").CurrentValue! == false) entry.Property("Activo").CurrentValue = true;
+                if (entry.Entity.GetType().GetProperty(nameof(FechaCreacion)) != null && entry.Property(nameof(FechaCreacion)).CurrentValue != null) entry.Property(nameof(FechaCreacion)).CurrentValue = FechaCreacion;
+                if (entry.Entity.GetType().GetProperty(nameof(Activo)) != null && !(bool)entry.Property(nameof(Activo)).CurrentValue!) entry.Property(nameof(Activo)).CurrentValue = Activo;
 
-                if (entry.Entity.GetType().GetProperty("UsuarioCreacion") != null && entry.Property("UsuarioModificacion").CurrentValue != null)
+                if (entry.Entity.GetType().GetProperty(nameof(UsuarioCreacion)) != null && entry.Property(nameof(UsuarioModificacion)).CurrentValue != null)
                 {
-                    entry.Property("UsuarioCreacion").CurrentValue = entry.Property("UsuarioModificacion").CurrentValue;
-                    entry.Property("UsuarioModificacion").CurrentValue = null;
+                    entry.Property(nameof(UsuarioCreacion)).CurrentValue = entry.Property(nameof(UsuarioModificacion)).CurrentValue;
+                    entry.Property(nameof(UsuarioModificacion)).CurrentValue = null;
                 }
 
-                if (entry.Entity.GetType().GetProperty("FechaCreacion") != null) entry.Property("UsuarioCreacion").CurrentValue = "ArtInkAPI";
-                if (entry.Entity.GetType().GetProperty("FechaModificacion") != null) entry.Property("FechaModificacion").IsModified = false;
-                if (entry.Entity.GetType().GetProperty("UsuarioModificacion") != null) entry.Property("UsuarioModificacion").IsModified = false;
+                if (entry.Entity.GetType().GetProperty(nameof(UsuarioCreacion)) != null) entry.Property(nameof(UsuarioCreacion)).CurrentValue = UsuarioCreacion;
+                if (entry.Entity.GetType().GetProperty(nameof(FechaModificacion)) != null) entry.Property(nameof(FechaModificacion)).IsModified = false;
+                if (entry.Entity.GetType().GetProperty(nameof(UsuarioModificacion)) != null) entry.Property(nameof(UsuarioModificacion)).IsModified = false;
             }
             else
             {
                 if (entry.State == EntityState.Modified)
                 {
-                    if (entry.Entity.GetType().GetProperty("FechaModificacion") != null) entry.Property("FechaModificacion").CurrentValue = DateTime.Now;
+                    if (entry.Entity.GetType().GetProperty(nameof(FechaModificacion)) != null) entry.Property(nameof(FechaModificacion)).CurrentValue = FechaModificacion;
 
-                    if (entry.Entity.GetType().GetProperty("UsuarioModificacion") != null) entry.Property("UsuarioModificacion").CurrentValue = "ArtInkAPIModify";
-                    if (entry.Entity.GetType().GetProperty("FechaCreacion") != null) entry.Property("FechaCreacion").IsModified = false;
-                    if (entry.Entity.GetType().GetProperty("UsuarioCreacion") != null) entry.Property("UsuarioCreacion").IsModified = false;
+                    if (entry.Entity.GetType().GetProperty(nameof(UsuarioModificacion)) != null) entry.Property(nameof(UsuarioModificacion)).CurrentValue = UsuarioModificacion;
+                    if (entry.Entity.GetType().GetProperty(nameof(FechaCreacion)) != null) entry.Property(nameof(FechaCreacion)).IsModified = false;
+                    if (entry.Entity.GetType().GetProperty(nameof(UsuarioCreacion)) != null) entry.Property(nameof(UsuarioCreacion)).IsModified = false;
                 }
             }
         }

@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Site.ViewModels.Response;
 
-public record SucursalHorarioBloqueoResponseDTO
+public record SucursalHorarioBloqueoResponseDto
 {
     public long Id { get; set; }
 
@@ -14,5 +14,5 @@ public record SucursalHorarioBloqueoResponseDTO
 
     public bool Activo { get; set; }
 
-    public virtual SucursalHorarioResponseDTO SucursalHorario { get; set; } = null!;
+    public virtual SucursalHorarioResponseDto SucursalHorario { get; set; } = null!;
 }

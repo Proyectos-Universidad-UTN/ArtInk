@@ -3,7 +3,7 @@ using ArtInk.Infraestructure.Models;
 
 namespace ArtInk.Application.DTOs;
 
-public record UsuarioDTO : BaseEntity
+public record UsuarioDto : BaseEntity
 {
     public short Id { get; set; }
 

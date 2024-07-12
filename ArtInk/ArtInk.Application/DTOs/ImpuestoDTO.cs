@@ -1,6 +1,6 @@
 namespace ArtInk.Application.DTOs;
 
-public record ImpuestoDTO
+public record ImpuestoDto
 {
     public byte Id { get; set; }
 
@@ -8,5 +8,5 @@ public record ImpuestoDTO
 
     public decimal Porcentaje { get; set; }
 
-    public virtual ICollection<FacturaDTO> Facturas { get; set; } = new List<FacturaDTO>();
+    public virtual ICollection<FacturaDto> Facturas { get; set; } = new List<FacturaDto>();
 }

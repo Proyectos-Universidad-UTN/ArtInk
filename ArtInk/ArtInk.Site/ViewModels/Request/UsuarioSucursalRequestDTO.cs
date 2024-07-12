@@ -1,15 +1,14 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Request
+namespace ArtInk.Site.ViewModels.Request;
+
+public record UsuarioSucursalRequestDto
 {
-    public record UsuarioSucursalRequestDTO
-    {
-        public short Id { get; set; }
+    public short Id { get; set; }
 
-        [DisplayName("Usuario")]
-        public short IdUsuario { get; set; }
+    [DisplayName("Usuario")]
+    public short IdUsuario { get; set; }
 
-        [DisplayName("Sucursal")]
-        public byte IdSucursal { get; set; }
-    }
+    [DisplayName("Sucursal")]
+    public byte IdSucursal { get; set; }
 }

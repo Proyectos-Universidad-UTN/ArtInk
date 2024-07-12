@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace ArtInk.Application.DTOs.Enums
+namespace ArtInk.Application.DTOs.Enums;
+
+public enum DiaSemana
 {
-    public enum DiaSemana
-    {
-        Lunes = 1,
-        Martes = 2,
-        [Description("Miércoles")]
-        Miercoles = 3,
-        Jueves = 4,
-        Viernes = 5,
-        [Description("Sábado")]
-        Sabado = 6,
-        Domingo = 7,
-    }
+    Lunes = 1,
+    
+    Martes = 2,
+
+    [Description("Miércoles")]
+    Miercoles = 3,
+
+    Jueves = 4,
+
+    Viernes = 5,
+
+    [Description("Sábado")]
+    Sabado = 6,
+
+    Domingo = 7,
 }

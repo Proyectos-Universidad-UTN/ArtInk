@@ -1,18 +1,22 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Common
+namespace ArtInk.Site.ViewModels.Common;
+
+public enum DiaSemana
 {
-    public enum DiaSemana
-    {
-        SeleccioneUnDia = 0,
-        Lunes = 1,
-        Martes = 2,
-        [Description("Miércoles")]
-        Miercoles = 3,
-        Jueves = 4,
-        Viernes = 5,
-        [Description("Sábado")]
-        Sabado = 6,
-        Domingo = 7,
-    }
+    Lunes = 1,
+
+    Martes = 2,
+
+    [Description("Miércoles")]
+    Miercoles = 3,
+
+    Jueves = 4,
+
+    Viernes = 5,
+
+    [Description("Sábado")]
+    Sabado = 6,
+    
+    Domingo = 7,
 }

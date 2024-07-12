@@ -5,11 +5,11 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceHorario
 {
-    Task<ICollection<HorarioDTO>> ListAsync();
+    Task<ICollection<HorarioDto>> ListAsync();
 
-    Task<HorarioDTO> FindByIdAsync(short id);
+    Task<HorarioDto> FindByIdAsync(short id);
 
-    Task<HorarioDTO> CreateHorarioAsync(RequestHorarioDTO horarioDTO);
+    Task<HorarioDto> CreateHorarioAsync(RequestHorarioDto horarioDTO);
 
-    Task<HorarioDTO> UpdateHorarioAsync(short id, RequestHorarioDTO horarioDTO);
+    Task<HorarioDto> UpdateHorarioAsync(short id, RequestHorarioDto horarioDTO);
 }

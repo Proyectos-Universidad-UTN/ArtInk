@@ -1,37 +1,36 @@
 ﻿using ArtInk.Site.ViewModels.Response;
 
-namespace ArtInk.Site.ViewModels.Request.Misc
+namespace ArtInk.Site.ViewModels.Request.Misc;
+
+public record SucursalSucursalHorario
 {
-    public record SucursalSucursalHorario
+    public SucursalResponseDto Sucursal { get; set; } = null!;
+
+    public char Accion { get; set; }
+
+    public byte IdHorario { get; set; }
+
+    public IEnumerable<HorarioResponseDto> Horarios { get; set; } = null!;
+
+    public List<SucursalHorarioRequestDto> HorariosSucursal { get; set; } = null!;
+
+    public void CargarHorarios(IEnumerable<SucursalHorarioRequestDto> horariosExistentes, IEnumerable<HorarioResponseDto> horarios)
     {
-        public SucursalResponseDTO Sucursal { get; set; } = null!;
-
-        public char Accion { get; set; }
-
-        public byte IdHorario { get; set; }
-
-        public IEnumerable<HorarioResponseDTO> Horarios { get; set; } = null!;
-
-        public List<SucursalHorarioRequestDTO> HorariosSucursal { get; set; } = null!;
-
-        public void CargarHorarios(IEnumerable<SucursalHorarioRequestDTO> horariosExistentes, IEnumerable<HorarioResponseDTO> horarios)
+        if (horariosExistentes.Any())
         {
-            if (horariosExistentes.Count() > 0)
-            {
-                HorariosSucursal = horariosExistentes.ToList();
-                return;
-            }
+            HorariosSucursal = horariosExistentes.ToList();
+            return;
+        }
 
-            HorariosSucursal = new List<SucursalHorarioRequestDTO>();
-            foreach (var item in horarios)
+        HorariosSucursal = new List<SucursalHorarioRequestDto>();
+        foreach (var item in horarios)
+        {
+            HorariosSucursal.Add(new SucursalHorarioRequestDto()
             {
-                HorariosSucursal.Add(new SucursalHorarioRequestDTO()
-                {
-                    IdHorario = item.Id,
-                    IdSucursal = Sucursal.Id,
-                    Horario =item
-                });
-            }
+                IdHorario = item.Id,
+                IdSucursal = Sucursal.Id,
+                Horario = item
+            });
         }
     }
 }

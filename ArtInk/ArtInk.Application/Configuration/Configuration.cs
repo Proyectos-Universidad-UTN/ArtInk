@@ -42,8 +42,8 @@ public static class Configuration
     {
         services.AddAutoMapper(config =>
         {
-            config.AddProfile<ModelToDTOApplicationProfile>();
-            config.AddProfile<DTOToModelApplicationProfile>();
+            config.AddProfile<ModelToDtoApplicationProfile>();
+            config.AddProfile<DtoToModelApplicationProfile>();
         });
     }
 }

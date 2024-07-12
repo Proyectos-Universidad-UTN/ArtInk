@@ -9,13 +9,13 @@ namespace ArtInk.Site.ViewModels.Common;
 public record Direcciones : IDirecciones
 {
     [NotMapped]
-    public List<ProvinciaResponseDTO> Provincias { get; set; } = new List<ProvinciaResponseDTO>();
+    public List<ProvinciaResponseDto> Provincias { get; set; } = new List<ProvinciaResponseDto>();
 
     [NotMapped]
-    public List<CantonResponseDTO> Cantones { get; set; } = new List<CantonResponseDTO>();
+    public List<CantonResponseDto> Cantones { get; set; } = new List<CantonResponseDto>();
 
     [NotMapped]
-    public List<DistritoResponseDTO> Distritos { get; set; } = new List<DistritoResponseDTO>();
+    public List<DistritoResponseDto> Distritos { get; set; } = new List<DistritoResponseDto>();
 
     [NotMapped]
     [DisplayName("Provincia")]

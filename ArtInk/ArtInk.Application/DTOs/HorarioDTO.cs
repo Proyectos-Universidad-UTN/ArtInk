@@ -3,7 +3,7 @@ using ArtInk.Infraestructure.Enums;
 
 namespace ArtInk.Application.DTOs;
 
-public record HorarioDTO : BaseEntity
+public record HorarioDto : BaseEntity
 {
     public short Id { get; set; }
 
@@ -13,5 +13,5 @@ public record HorarioDTO : BaseEntity
 
     public TimeOnly HoraFin { get; set; }
 
-    public virtual ICollection<SucursalHorarioDTO> SucursalHorarios { get; set; } = new List<SucursalHorarioDTO>();
+    public virtual ICollection<SucursalHorarioDto> SucursalHorarios { get; set; } = new List<SucursalHorarioDto>();
 }

@@ -1,6 +1,6 @@
 namespace ArtInk.Infraestructure.Enums;
 
-public enum MesEnum
+public enum Mes
 {
     Enero = 1,
 

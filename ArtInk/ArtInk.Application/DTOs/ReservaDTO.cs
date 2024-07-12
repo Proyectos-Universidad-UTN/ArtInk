@@ -2,7 +2,7 @@ using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
-public record ReservaDTO: BaseEntity
+public record ReservaDto: BaseEntity
 {
     public int Id { get; set; }
 
@@ -18,11 +18,11 @@ public record ReservaDTO: BaseEntity
 
     public short IdUsuarioSucursal { get; set; }
 
-    public virtual SucursalHorarioDTO SucursalHorario { get; set; } = null!;
+    public virtual SucursalHorarioDto SucursalHorario { get; set; } = null!;
 
-    public virtual UsuarioSucursalDTO UsuarioSucursal { get; set; } = null!;
+    public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
 
-    public virtual ICollection<ReservaPreguntaDTO> ReservaPregunta { get; set; } = new List<ReservaPreguntaDTO>();
+    public virtual ICollection<ReservaPreguntaDto> ReservaPregunta { get; set; } = new List<ReservaPreguntaDto>();
 
-    public virtual ICollection<ReservaServicioDTO> ReservaServicios { get; set; } = new List<ReservaServicioDTO>();
+    public virtual ICollection<ReservaServicioDto> ReservaServicios { get; set; } = new List<ReservaServicioDto>();
 }

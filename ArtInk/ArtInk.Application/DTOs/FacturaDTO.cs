@@ -2,7 +2,7 @@ using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
-public record FacturaDTO: BaseEntity
+public record FacturaDto: BaseEntity
 {
     public long Id { get; set; }
 
@@ -28,13 +28,13 @@ public record FacturaDTO: BaseEntity
 
     public decimal MontoTotal { get; set; }
 
-    public virtual ICollection<DetalleFacturaDTO> DetalleFacturas { get; set; } = new List<DetalleFacturaDTO>();
+    public virtual ICollection<DetalleFacturaDto> DetalleFacturas { get; set; } = new List<DetalleFacturaDto>();
 
-    public virtual ClienteDTO Cliente { get; set; } = null!;
+    public virtual ClienteDto Cliente { get; set; } = null!;
 
-    public virtual ImpuestoDTO Impuesto { get; set; } = null!;
+    public virtual ImpuestoDto Impuesto { get; set; } = null!;
 
-    public virtual TipoPagoDTO TipoPago { get; set; } = null!;
+    public virtual TipoPagoDto TipoPago { get; set; } = null!;
 
-    public virtual UsuarioSucursalDTO UsuarioSucursal { get; set; } = null!;
+    public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
 }

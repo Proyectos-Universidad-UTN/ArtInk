@@ -4,7 +4,7 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceDetalleFactura
 {
-    Task<DetalleFacturaDTO> FindByIdAsync(long idFactura, long id);
+    Task<DetalleFacturaDto> FindByIdAsync(long idFactura, long id);
 
-    Task<ICollection<DetalleFacturaDTO>> ListAsync(long idFactura);
+    Task<ICollection<DetalleFacturaDto>> ListAsync(long idFactura);
 }

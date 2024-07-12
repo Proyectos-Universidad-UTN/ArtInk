@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Request
+namespace ArtInk.Site.ViewModels.Request;
+
+public record DetalleFacturaProductoRequestDto
 {
-    public record DetalleFacturaProductoRequestDTO
-    {
-        public long Id { get; set; }
+    public long Id { get; set; }
 
-        [DisplayName("Detalle Factura")]
-        public long IdDetalleFactura { get; set; }
+    [DisplayName("Detalle Factura")]
+    public long IdDetalleFactura { get; set; }
 
-        [DisplayName("Producto")]
-        public short IdProducto { get; set; }
+    [DisplayName("Producto")]
+    public short IdProducto { get; set; }
 
-        public decimal Cantidad { get; set; }
-    }
+    public decimal Cantidad { get; set; }
 }

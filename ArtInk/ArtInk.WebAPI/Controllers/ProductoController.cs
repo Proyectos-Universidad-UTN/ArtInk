@@ -10,7 +10,7 @@ namespace ArtInk.WebAPI.Controllers;
 public class ProductoController(IServiceProducto serviceProducto) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProductoDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProductoDto>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetAllProductosAsync()
     {
@@ -19,7 +19,7 @@ public class ProductoController(IServiceProducto serviceProducto) : ControllerBa
     }
 
     [HttpGet("{idProducto}")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductoDTO))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductoDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetProductoByIdAsync(short idProducto)
@@ -29,23 +29,23 @@ public class ProductoController(IServiceProducto serviceProducto) : ControllerBa
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductoDTO))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductoDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> CreateProductoAsync([FromBody] RequestProductoDTO producto)
+    public async Task<IActionResult> CreateProductoAsync([FromBody] RequestProductoDto producto)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(producto);
         var result = await serviceProducto.CreateProductoAsync(producto);
-        return StatusCode(StatusCodes.Status201Created, producto);
+        return StatusCode(StatusCodes.Status201Created, result);
     }
 
     [HttpPut("{idProducto}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductoDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductoDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> UpdateProductoAsync(short idProducto, [FromBody] RequestProductoDTO producto)
+    public async Task<IActionResult> UpdateProductoAsync(short idProducto, [FromBody] RequestProductoDto producto)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(producto);

@@ -11,7 +11,7 @@ namespace ArtInk.WebAPI.Controllers;
 public class HorarioController(IServiceHorario serviceHorario) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<HorarioDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<HorarioDto>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetAllHorariosAsync()
@@ -21,7 +21,7 @@ public class HorarioController(IServiceHorario serviceHorario) : ControllerBase
     }
 
     [HttpGet("{idHorario}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HorarioDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HorarioDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetHorarioByIdAsync(short idHorario)
@@ -31,10 +31,10 @@ public class HorarioController(IServiceHorario serviceHorario) : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(HorarioDTO))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(HorarioDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> CreateHorarioAsync([FromBody] RequestHorarioDTO horario)
+    public async Task<IActionResult> CreateHorarioAsync([FromBody] RequestHorarioDto horario)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(horario);
@@ -43,11 +43,11 @@ public class HorarioController(IServiceHorario serviceHorario) : ControllerBase
     }
 
     [HttpPut("{idHorario}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HorarioDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HorarioDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> UpdateHorarioAsync(short idHorario, [FromBody] RequestHorarioDTO horario)
+    public async Task<IActionResult> UpdateHorarioAsync(short idHorario, [FromBody] RequestHorarioDto horario)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(horario);

@@ -2,7 +2,7 @@
 
 namespace ArtInk.Application.RequestDTOs;
 
-public record RequestFeriadoDTO
+public record RequestFeriadoDto
 {
     public byte Id { get; set; }
 
@@ -10,7 +10,7 @@ public record RequestFeriadoDTO
 
     public bool Activo { get; set; }
 
-    public MesEnum Mes { get; set; }
+    public Mes Mes { get; set; }
 
     public byte Dia { get; set; }
 }

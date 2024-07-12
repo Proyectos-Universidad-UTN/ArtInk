@@ -10,7 +10,7 @@ namespace ArtInk.WebAPI.Controllers;
 public class SucursalFeriadoController(IServiceSucursalFeriado serviceSucursalFeriado) : ControllerBase
 {
     [HttpGet("~/api/Sucursal/{idSucursal}/Feriado")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<SucursalFeriadoDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<SucursalFeriadoDto>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetAllSucursalesAsync(byte idSucursal, [FromQuery] short? anno)
     {
@@ -21,7 +21,7 @@ public class SucursalFeriadoController(IServiceSucursalFeriado serviceSucursalFe
     }
 
     [HttpGet("{idSucursalFeriado}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalFeriadoDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalFeriadoDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetSucursalByIdAsync(short idSucursalFeriado)
@@ -34,7 +34,7 @@ public class SucursalFeriadoController(IServiceSucursalFeriado serviceSucursalFe
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> CreateSucursalAsync(byte idSucursal, [FromBody] IEnumerable<RequestSucursalFeriadoDTO> sucursalFeriados)
+    public async Task<IActionResult> CreateSucursalAsync(byte idSucursal, [FromBody] IEnumerable<RequestSucursalFeriadoDto> sucursalFeriados)
     {
         ArgumentNullException.ThrowIfNull(sucursalFeriados);
         var result = await serviceSucursalFeriado.CreateSucursalFeriadosAsync(idSucursal, sucursalFeriados);

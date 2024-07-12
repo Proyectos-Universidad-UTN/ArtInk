@@ -8,18 +8,18 @@ namespace ArtInk.Application.Services.Implementations;
 
 public class ServiceRol(IRepositoryRol repository, IMapper mapper) : IServiceRol
 {
-    public async Task<RolDTO> FindByIdAsync(byte id)
+    public async Task<RolDto> FindByIdAsync(byte id)
     {
         var rol = await repository.FindByIdAsync(id);
         if (rol == null) throw new NotFoundException("Rol no encontrado.");
 
-        return mapper.Map<RolDTO>(rol);
+        return mapper.Map<RolDto>(rol);
     }
 
-    public async Task<ICollection<RolDTO>> ListAsync()
+    public async Task<ICollection<RolDto>> ListAsync()
     {
         var list = await repository.ListAsync();
-        var collection = mapper.Map<ICollection<RolDTO>>(list);
+        var collection = mapper.Map<ICollection<RolDto>>(list);
 
         return collection;
     }

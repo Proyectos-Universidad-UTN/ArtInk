@@ -1,42 +1,41 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace ArtInk.Site.ViewModels.Response
+namespace ArtInk.Site.ViewModels.Response;
+
+public record SucursalResponseDto
 {
-    public record SucursalResponseDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        public string Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-        [DisplayName("Descripción")]
-        public string Descripcion { get; set; } = null!;
+    [DisplayName("Descripción")]
+    public string Descripcion { get; set; } = null!;
 
-        [DisplayName("Teléfono")]
-        [DisplayFormat(DataFormatString ="{0:####-####}")]
-        public int Telefono { get; set; }
+    [DisplayName("Teléfono")]
+    [DisplayFormat(DataFormatString = "{0:####-####}")]
+    public int Telefono { get; set; }
 
-        [DisplayName("Correo Electrónico")]
-        public string CorreoElectronico { get; set; } = null!;
+    [DisplayName("Correo Electrónico")]
+    public string CorreoElectronico { get; set; } = null!;
 
-        [DisplayName("Distrito")]
-        public short IdDistrito { get; set; }
+    [DisplayName("Distrito")]
+    public short IdDistrito { get; set; }
 
-        [DisplayName("Dirección")]
-        public string? DireccionExacta { get; set; }
+    [DisplayName("Dirección")]
+    public string? DireccionExacta { get; set; }
 
-        public bool Activo { get; set; }
+    public bool Activo { get; set; }
 
-        public virtual ICollection<HorarioResponseDTO> Horarios { get; set; } = new List<HorarioResponseDTO>();
+    public virtual ICollection<HorarioResponseDto> Horarios { get; set; } = new List<HorarioResponseDto>();
 
-        public virtual DistritoResponseDTO Distrito { get; set; } = null!;
+    public virtual DistritoResponseDto Distrito { get; set; } = null!;
 
-        public virtual ICollection<InventarioResponseDTO> Inventarios { get; set; } = new List<InventarioResponseDTO>();
+    public virtual ICollection<InventarioResponseDto> Inventarios { get; set; } = new List<InventarioResponseDto>();
 
-        public virtual ICollection<SucursalHorarioResponseDTO> SucursalHorarios { get; set; } = new List<SucursalHorarioResponseDTO>();
+    public virtual ICollection<SucursalHorarioResponseDto> SucursalHorarios { get; set; } = new List<SucursalHorarioResponseDto>();
 
-        public virtual ICollection<UsuarioSucursalResponseDTO> UsuarioSucursals { get; set; } = new List<UsuarioSucursalResponseDTO>();
+    public virtual ICollection<UsuarioSucursalResponseDto> UsuarioSucursals { get; set; } = new List<UsuarioSucursalResponseDto>();
 
-        public virtual ICollection<SucursalFeriadoResponseDTO> SucursalFeriados { get; set; } = new List<SucursalFeriadoResponseDTO>();
-    }
+    public virtual ICollection<SucursalFeriadoResponseDto> SucursalFeriados { get; set; } = new List<SucursalFeriadoResponseDto>();
 }

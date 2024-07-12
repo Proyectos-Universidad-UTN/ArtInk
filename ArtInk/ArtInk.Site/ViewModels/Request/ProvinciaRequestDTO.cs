@@ -1,9 +1,8 @@
-﻿namespace ArtInk.Site.ViewModels.Request
-{
-    public record ProvinciaRequestDTO
-    {
-        public byte Id { get; set; }
+﻿namespace ArtInk.Site.ViewModels.Request;
 
-        public string Nombre { get; set; } = null!;
-    }
+public record ProvinciaRequestDto
+{
+    public byte Id { get; set; }
+
+    public string Nombre { get; set; } = null!;
 }

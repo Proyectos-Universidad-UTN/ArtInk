@@ -1,6 +1,6 @@
 namespace ArtInk.Application.DTOs;
 
-public record ReservaServicioDTO 
+public record ReservaServicioDto 
 {
     public int Id { get; set; }
 
@@ -8,7 +8,7 @@ public record ReservaServicioDTO
 
     public byte IdServicio { get; set; }
 
-    public virtual ReservaDTO Reserva { get; set; } = null!;
+    public virtual ReservaDto Reserva { get; set; } = null!;
 
-    public virtual ServicioDTO Servicio { get; set; } = null!;
+    public virtual ServicioDto Servicio { get; set; } = null!;
 }

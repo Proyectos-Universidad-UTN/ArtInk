@@ -1,19 +1,18 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Response
+namespace ArtInk.Site.ViewModels.Response;
+
+public record SucursalHorarioResponseDto
 {
-    public record SucursalHorarioResponseDTO
-    {
-        public short Id { get; set; }
+    public short Id { get; set; }
 
-        [DisplayName("Sucursal")]
-        public byte IdSucursal { get; set; }
+    [DisplayName("Sucursal")]
+    public byte IdSucursal { get; set; }
 
-        [DisplayName("Horario")]
-        public short IdHorario { get; set; }
+    [DisplayName("Horario")]
+    public short IdHorario { get; set; }
 
-        public virtual HorarioResponseDTO Horario { get; set; } = null!;
+    public virtual HorarioResponseDto Horario { get; set; } = null!;
 
-        public virtual SucursalResponseDTO Sucursal { get; set; } = null!;
-    }
+    public virtual SucursalResponseDto Sucursal { get; set; } = null!;
 }

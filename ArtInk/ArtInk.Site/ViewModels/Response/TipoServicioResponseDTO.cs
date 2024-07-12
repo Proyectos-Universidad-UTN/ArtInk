@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Response
+namespace ArtInk.Site.ViewModels.Response;
+
+public record TipoServicioResponseDto
 {
-    public record TipoServicioResponseDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        public string Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-        [DisplayName("Duración")]
-        public TimeOnly Duracion { get; set; }
+    [DisplayName("Duración")]
+    public TimeOnly Duracion { get; set; }
 
-        public virtual ICollection<ServicioResponseDTO> Servicios { get; set; } = new List<ServicioResponseDTO>();
-    }
+    public virtual ICollection<ServicioResponseDto> Servicios { get; set; } = new List<ServicioResponseDto>();
 }

@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Application.RequestDTOs;
 
-public record RequestImpuestoDTO
+public record RequestImpuestoDto
 {
     public byte Id { get; set; }
 

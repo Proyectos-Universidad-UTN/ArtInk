@@ -1,15 +1,14 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Request
+namespace ArtInk.Site.ViewModels.Request;
+
+public record ReservaServicioRequestDto
 {
-    public record ReservaServicioRequestDTO
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        [DisplayName("Reserva")]
-        public int IdReserva { get; set; }
+    [DisplayName("Reserva")]
+    public int IdReserva { get; set; }
 
-        [DisplayName("Servicio")]
-        public byte IdServicio { get; set; }
-    }
+    [DisplayName("Servicio")]
+    public byte IdServicio { get; set; }
 }

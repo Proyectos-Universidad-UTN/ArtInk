@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Application.RequestDTOs;
 
-public record RequestReservaDTO
+public record RequestReservaDto
 {
     public int Id { get; set; }
 

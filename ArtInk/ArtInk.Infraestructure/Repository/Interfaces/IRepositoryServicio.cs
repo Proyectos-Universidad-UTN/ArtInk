@@ -1,20 +1,16 @@
 ﻿using ArtInk.Infraestructure.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ArtInk.Infraestructure.Repository.Interfaces
+namespace ArtInk.Infraestructure.Repository.Interfaces;
+
+public interface IRepositoryServicio
 {
+    Task<ICollection<Servicio>> ListAsync();
 
-    public interface IRepositoryServicio
-    {
-        Task<ICollection<Servicio>> ListAsync();
-        Task<Servicio?> FindByIdAsync(byte id);
-        Task<Servicio> CreateServicioAsync(Servicio servicio);
-        Task<Servicio> UpdateServicioAsync(Servicio servicio);
-        Task<bool> ExisteServicio(byte id);
-    }
+    Task<Servicio?> FindByIdAsync(byte id);
 
+    Task<Servicio> CreateServicioAsync(Servicio servicio);
+
+    Task<Servicio> UpdateServicioAsync(Servicio servicio);
+
+    Task<bool> ExisteServicio(byte id);
 }

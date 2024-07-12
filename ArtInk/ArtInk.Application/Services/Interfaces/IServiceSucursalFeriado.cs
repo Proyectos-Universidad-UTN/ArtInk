@@ -5,9 +5,9 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceSucursalFeriado
 {
-    Task<ICollection<SucursalFeriadoDTO>> GetFeriadosBySucursalAsync(byte idSucursal, short? anno);
+    Task<ICollection<SucursalFeriadoDto>> GetFeriadosBySucursalAsync(byte idSucursal, short? anno);
 
-    Task<SucursalFeriadoDTO?> GetSucursalFeriadoByIdAsync(short id);
+    Task<SucursalFeriadoDto?> GetSucursalFeriadoByIdAsync(short id);
 
-    Task<bool> CreateSucursalFeriadosAsync(byte idSucursal, IEnumerable<RequestSucursalFeriadoDTO> sucursalFeriados);
+    Task<bool> CreateSucursalFeriadosAsync(byte idSucursal, IEnumerable<RequestSucursalFeriadoDto> sucursalFeriados);
 }

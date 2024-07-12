@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Application.RequestDTOs;
 
-public record RequestInventarioDTO
+public record RequestInventarioDto
 {
     public short Id { get; set; }
 

@@ -1,26 +1,18 @@
-﻿using ArtInk.Infraestructure.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ArtInk.Application.DTOs;
 
-namespace ArtInk.Application.DTOs
+public record SucursalHorarioBloqueoDto
 {
-    public record SucursalHorarioBloqueoDTO
-    {
-        public long Id { get; set; }
+    public long Id { get; set; }
 
-        public short IdSucursalHorario { get; set; }
+    public short IdSucursalHorario { get; set; }
 
-        public DateOnly Fecha { get; set; }
+    public DateOnly Fecha { get; set; }
 
-        public TimeOnly HoraInicio { get; set; }
+    public TimeOnly HoraInicio { get; set; }
 
-        public TimeOnly HoraFin { get; set; }
+    public TimeOnly HoraFin { get; set; }
 
-        public bool Activo { get; set; }
+    public bool Activo { get; set; }
 
-        public virtual SucursalHorarioDTO SucursalHorario { get; set; } = null!;
-    }
+    public virtual SucursalHorarioDto SucursalHorario { get; set; } = null!;
 }

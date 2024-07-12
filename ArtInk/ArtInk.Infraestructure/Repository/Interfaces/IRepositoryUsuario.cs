@@ -1,16 +1,10 @@
 ﻿using ArtInk.Infraestructure.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ArtInk.Infraestructure.Repository.Interfaces
+namespace ArtInk.Infraestructure.Repository.Interfaces;
+
+public interface IRepositoryUsuario
 {
-    public interface IRepositoryUsuario
-    {
-        Task<ICollection<Usuario>> ListAsync();
-        Task<Usuario?> FindByIdAsync(short id);
+    Task<ICollection<Usuario>> ListAsync();
 
-    }
+    Task<Usuario?> FindByIdAsync(short id);
 }

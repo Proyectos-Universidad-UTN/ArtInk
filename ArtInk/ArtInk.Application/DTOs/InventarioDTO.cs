@@ -3,7 +3,7 @@ using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
-public record InventarioDTO: BaseEntity
+public record InventarioDto: BaseEntity
 {
     public short Id { get; set; }
 
@@ -21,7 +21,7 @@ public record InventarioDTO: BaseEntity
     [DisplayName("M�xima")]
     public byte Maxima { get; set; }
 
-    public virtual ProductoDTO Producto { get; set; } = null!;
+    public virtual ProductoDto Producto { get; set; } = null!;
 
-    public virtual SucursalDTO Sucursal { get; set; } = null!;
+    public virtual SucursalDto Sucursal { get; set; } = null!;
 }

@@ -1,18 +1,17 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Response
+namespace ArtInk.Site.ViewModels.Response;
+
+public record CantonResponseDto
 {
-    public record CantonResponseDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        public string Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-        [DisplayName("Provincia")]
-        public byte IdProvincia { get; set; }
+    [DisplayName("Provincia")]
+    public byte IdProvincia { get; set; }
 
-        public virtual ICollection<DistritoResponseDTO> Distritos { get; set; } = new List<DistritoResponseDTO>();
+    public virtual ICollection<DistritoResponseDto> Distritos { get; set; } = new List<DistritoResponseDto>();
 
-        public virtual ProvinciaResponseDTO Provincia { get; set; } = null!;
-    }
+    public virtual ProvinciaResponseDto Provincia { get; set; } = null!;
 }

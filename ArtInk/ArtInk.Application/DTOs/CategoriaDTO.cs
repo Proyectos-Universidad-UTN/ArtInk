@@ -2,7 +2,7 @@
 
 namespace ArtInk.Application.DTOs;
 
-public record CategoriaDTO : BaseEntity
+public record CategoriaDto : BaseEntity
 {
     public byte Id { get; set; }
 
@@ -10,5 +10,5 @@ public record CategoriaDTO : BaseEntity
 
     public string Nombre { get; set; } = null!;
 
-    public virtual ICollection<ProductoDTO> Productos { get; set; } = new List<ProductoDTO>();
+    public virtual ICollection<ProductoDto> Productos { get; set; } = new List<ProductoDto>();
 }

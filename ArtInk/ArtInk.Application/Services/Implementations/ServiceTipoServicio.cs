@@ -7,18 +7,18 @@ namespace ArtInk.Application.Services.Implementations;
 
 public class ServiceTipoServicio(IRepositoryTipoServicio repository, IMapper mapper) : IServiceTipoServicio
 {
-    public async Task<TipoServicioDTO> FindByIdAsync(byte id)
+    public async Task<TipoServicioDto> FindByIdAsync(byte id)
     {
         var tipoServicio = await repository.FindByIdAsync(id);
         if (tipoServicio == null) throw new NotFoundException("Tipo de servicio no encontrado.");
 
-        return mapper.Map<TipoServicioDTO>(tipoServicio);
+        return mapper.Map<TipoServicioDto>(tipoServicio);
     }
 
-    public async Task<ICollection<TipoServicioDTO>> ListAsync()
+    public async Task<ICollection<TipoServicioDto>> ListAsync()
     {
         var list = await repository.ListAsync();
-        var collection = mapper.Map<ICollection<TipoServicioDTO>>(list);
+        var collection = mapper.Map<ICollection<TipoServicioDto>>(list);
 
         return collection;
     }

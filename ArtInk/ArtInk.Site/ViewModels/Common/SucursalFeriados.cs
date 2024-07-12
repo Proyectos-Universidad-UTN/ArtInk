@@ -8,5 +8,5 @@ public record SucursalFeriados
     
     public IEnumerable<int> Annos { get; set; } = null!;
 
-    public IEnumerable<SucursalResponseDTO> Sucursales { get; set; } = null!;
+    public IEnumerable<SucursalResponseDto> Sucursales { get; set; } = null!;
 }

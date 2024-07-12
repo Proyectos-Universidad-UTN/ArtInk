@@ -4,7 +4,7 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceUnidadMedida
 {
-    Task<ICollection<UnidadMedidaDTO>> ListAsync();
+    Task<ICollection<UnidadMedidaDto>> ListAsync();
 
-    Task<UnidadMedidaDTO> FindByIdAsync(byte id);
+    Task<UnidadMedidaDto> FindByIdAsync(byte id);
 }

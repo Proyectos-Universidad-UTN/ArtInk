@@ -4,18 +4,18 @@ using AutoMapper;
 
 namespace ArtInk.Application.Profiles;
 
-public class DTOToModelApplicationProfile : Profile
+public class DtoToModelApplicationProfile : Profile
 {
-    public DTOToModelApplicationProfile()
+    public DtoToModelApplicationProfile()
     {
-        CreateMap<RequestProductoDTO, Producto>();
-        CreateMap<RequestSucursalDTO, Sucursal>();
-        CreateMap<RequestServicioDTO, Servicio>();
-        CreateMap<RequestTipoServicioDTO, TipoServicio>();
-        CreateMap<RequestFeriadoDTO, Feriado>();
-        CreateMap<RequestSucursalFeriadoDTO, SucursalFeriado>();
-        CreateMap<RequestHorarioDTO, Horario>();
-        CreateMap<RequestSucursalHorarioDTO, SucursalHorario>();
-        CreateMap<RequestSucursalHorarioBloqueoDTO, SucursalHorarioBloqueo>();
+        CreateMap<RequestProductoDto, Producto>();
+        CreateMap<RequestSucursalDto, Sucursal>();
+        CreateMap<RequestServicioDto, Servicio>();
+        CreateMap<RequestTipoServicioDto, TipoServicio>();
+        CreateMap<RequestFeriadoDto, Feriado>();
+        CreateMap<RequestSucursalFeriadoDto, SucursalFeriado>();
+        CreateMap<RequestHorarioDto, Horario>();
+        CreateMap<RequestSucursalHorarioDto, SucursalHorario>();
+        CreateMap<RequestSucursalHorarioBloqueoDto, SucursalHorarioBloqueo>();
     }
 }

@@ -5,13 +5,13 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceFeriado
 {
-    Task<ICollection<FeriadoDTO>> ListAsync();
+    Task<ICollection<FeriadoDto>> ListAsync();
 
-    Task<FeriadoDTO> FindByIdAsync(byte id);
+    Task<FeriadoDto> FindByIdAsync(byte id);
 
-    Task<FeriadoDTO> CreateFeriadoAsync(RequestFeriadoDTO feriadoDTO);
+    Task<FeriadoDto> CreateFeriadoAsync(RequestFeriadoDto feriadoDTO);
 
-    Task<FeriadoDTO> UpdateFeriadoAsync(byte id, RequestFeriadoDTO feriadoDTO);
+    Task<FeriadoDto> UpdateFeriadoAsync(byte id, RequestFeriadoDto feriadoDTO);
 
     Task<bool> DeleteFeriadoAsync(byte id);
 }

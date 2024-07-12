@@ -1,5 +1,4 @@
-﻿using ArtInk.Application.Services.Implementations;
-using ArtInk.Application.Services.Interfaces;
+﻿using ArtInk.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.WebAPI.Controllers;

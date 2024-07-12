@@ -1,43 +1,42 @@
 ﻿using ArtInk.Site.ViewModels.Common;
 using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Response
+namespace ArtInk.Site.ViewModels.Response;
+
+public record HorarioResponseDto
 {
-    public record HorarioResponseDTO
+    public short Id { get; set; }
+
+    [DisplayName("Día")]
+    public DiaSemana Dia { get; set; }
+
+    [DisplayName("Hora Inicio")]
+    public TimeOnly HoraInicio { get; set; }
+
+    [DisplayName("Hora Final")]
+    public TimeOnly HoraFin { get; set; }
+
+    public virtual ICollection<SucursalHorarioResponseDto> SucursalHorarios { get; set; } = new List<SucursalHorarioResponseDto>();
+
+    public string HorarioFormateado
     {
-        public short Id { get; set; }
-
-        [DisplayName("Día")]
-        public DiaSemana Dia { get; set; }
-
-        [DisplayName("Hora Inicio")]
-        public TimeOnly HoraInicio { get; set; }
-
-        [DisplayName("Hora Final")]
-        public TimeOnly HoraFin { get; set; }
-
-        public virtual ICollection<SucursalHorarioResponseDTO> SucursalHorarios { get; set; } = new List<SucursalHorarioResponseDTO>();
-
-        public string HorarioFormateado
+        get
         {
-            get
-            {
-                return $"{HoraInicio}-{HoraFin}";
-            }
+            return $"{HoraInicio}-{HoraFin}";
         }
-        private string? NombreSelectFormateado;
+    }
+    private string? NombreSelectFormateado;
 
-        public string NombreSelect
+    public string NombreSelect
+    {
+        get
         {
-            get
-            {
-                return NombreSelectFormateado ?? $"{Dia}-{HorarioFormateado}";
-            }
+            return NombreSelectFormateado ?? $"{Dia}-{HorarioFormateado}";
+        }
 
-            set 
-            {
-                NombreSelectFormateado = value; 
-            }
+        set
+        {
+            NombreSelectFormateado = value;
         }
     }
 }

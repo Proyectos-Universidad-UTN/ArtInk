@@ -4,7 +4,7 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceCategoria
 {
-    Task<ICollection<CategoriaDTO>> ListAsync();
+    Task<ICollection<CategoriaDto>> ListAsync();
     
-    Task<CategoriaDTO> FindByIdAsync(byte id);
+    Task<CategoriaDto> FindByIdAsync(byte id);
 }

@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Response
+namespace ArtInk.Site.ViewModels.Response;
+
+public record TipoPagoResponseDto
 {
-    public record TipoPagoResponseDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        [DisplayName("Descripción")]
-        public string Descripcion { get; set; } = null!;
+    [DisplayName("Descripción")]
+    public string Descripcion { get; set; } = null!;
 
-        public int Referencia { get; set; }
+    public int Referencia { get; set; }
 
-        public virtual ICollection<FacturaResponseDTO> Facturas { get; set; } = new List<FacturaResponseDTO>();
-    }
+    public virtual ICollection<FacturaResponseDto> Facturas { get; set; } = new List<FacturaResponseDto>();
 }

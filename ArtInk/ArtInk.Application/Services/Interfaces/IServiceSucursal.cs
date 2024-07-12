@@ -5,11 +5,11 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceSucursal
 {
-    Task<ICollection<SucursalDTO>> ListAsync();
+    Task<ICollection<SucursalDto>> ListAsync();
 
-    Task<SucursalDTO> FindByIdAsync(byte id);
+    Task<SucursalDto> FindByIdAsync(byte id);
 
-    Task<SucursalDTO> CreateSucursalAsync(RequestSucursalDTO sucursalDTO);
+    Task<SucursalDto> CreateSucursalAsync(RequestSucursalDto sucursalDTO);
 
-    Task<SucursalDTO> UpdateSucursalAsync(byte id, RequestSucursalDTO sucursalDTO);
+    Task<SucursalDto> UpdateSucursalAsync(byte id, RequestSucursalDto sucursalDTO);
 }

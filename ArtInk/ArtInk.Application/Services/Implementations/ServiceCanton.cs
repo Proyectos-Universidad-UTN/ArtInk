@@ -8,18 +8,18 @@ namespace ArtInk.Application.Services.Implementations;
 
 public class ServiceCanton(IRepositoryCanton repository, IMapper mapper) : IServiceCanton
 {
-    public async Task<CantonDTO> FindByIdAsync(byte id)
+    public async Task<CantonDto> FindByIdAsync(byte id)
     {
         var canton = await repository.FindByIdAsync(id);
         if (canton == null) throw new NotFoundException("Cantón no encontrado.");
 
-        return mapper.Map<CantonDTO>(canton);
+        return mapper.Map<CantonDto>(canton);
     }
 
-    public async Task<ICollection<CantonDTO>> ListAsync(byte idProvincia)
+    public async Task<ICollection<CantonDto>> ListAsync(byte idProvincia)
     {
         var list = await repository.ListAsync(idProvincia);
-        var collection = mapper.Map<ICollection<CantonDTO>>(list);
+        var collection = mapper.Map<ICollection<CantonDto>>(list);
 
         return collection;
     }

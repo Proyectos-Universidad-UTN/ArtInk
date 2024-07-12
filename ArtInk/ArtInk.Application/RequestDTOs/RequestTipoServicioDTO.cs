@@ -1,11 +1,10 @@
-﻿namespace ArtInk.Application.RequestDTOs
+﻿namespace ArtInk.Application.RequestDTOs;
+
+public record RequestTipoServicioDto
 {
-    public record RequestTipoServicioDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        public string Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-        public TimeOnly Duracion { get; set; }
-    }
+    public TimeOnly Duracion { get; set; }
 }

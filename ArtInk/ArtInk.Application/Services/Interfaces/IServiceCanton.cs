@@ -4,7 +4,7 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceCanton
 {
-    Task<ICollection<CantonDTO>> ListAsync(byte idProvincia);
+    Task<ICollection<CantonDto>> ListAsync(byte idProvincia);
 
-    Task<CantonDTO> FindByIdAsync(byte id);
+    Task<CantonDto> FindByIdAsync(byte id);
 }

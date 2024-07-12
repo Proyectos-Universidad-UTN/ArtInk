@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ArtInk.Site.ViewModels.Request;
 
-public record SucursalHorarioBloqueoRequestDTO
+public record SucursalHorarioBloqueoRequestDto
 {
     public long Id { get; set; }
 

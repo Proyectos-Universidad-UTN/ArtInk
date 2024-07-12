@@ -1,4 +1,3 @@
-using ArtInk.Application.DTOs.Enums;
 using ArtInk.Infraestructure.Models;
 using FluentValidation;
 

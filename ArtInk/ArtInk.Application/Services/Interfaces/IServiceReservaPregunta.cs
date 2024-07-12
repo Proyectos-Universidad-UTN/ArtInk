@@ -4,7 +4,7 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceReservaPregunta
 {
-    Task<ICollection<ReservaPreguntaDTO>> ListAsync();
+    Task<ICollection<ReservaPreguntaDto>> ListAsync();
 
-    Task<ReservaPreguntaDTO> FindByIdAsync(int id);
+    Task<ReservaPreguntaDto> FindByIdAsync(int id);
 }

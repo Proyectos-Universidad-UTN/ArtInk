@@ -8,19 +8,19 @@ namespace ArtInk.Application.Services.Implementations;
 
 public class ServiceFactura(IRepositoryFactura repository, IMapper mapper) : IServiceFactura
 {
-    public async Task<FacturaDTO> FindByIdAsync(long id)
+    public async Task<FacturaDto> FindByIdAsync(long id)
     {
         var factura = await repository.FindByIdAsync(id);
         if (factura == null) throw new NotFoundException("Factura no encontrada.");
 
-        return mapper.Map<FacturaDTO>(factura);
+        return mapper.Map<FacturaDto>(factura);
     }
 
-    public async Task<ICollection<FacturaDTO>> ListAsync()
+    public async Task<ICollection<FacturaDto>> ListAsync()
     {
         var list = await repository.ListAsync();
         list = list.OrderByDescending(x => x.Fecha).ToList();
-        var collection = mapper.Map<ICollection<FacturaDTO>>(list);
+        var collection = mapper.Map<ICollection<FacturaDto>>(list);
 
         return collection;
     }

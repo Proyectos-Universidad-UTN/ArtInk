@@ -1,11 +1,6 @@
 ﻿using ArtInk.Infraestructure.Repository.Implementations;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArtInk.Infraestructure.Configuration;
 

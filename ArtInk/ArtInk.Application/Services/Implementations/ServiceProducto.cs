@@ -12,16 +12,16 @@ namespace ArtInk.Application.Services.Implementations;
 public class ServiceProducto(IRepositoryProducto repository, IMapper mapper,
                                   IValidator<Producto> productoValidator) : IServiceProducto
 {
-    public async Task<ProductoDTO> CreateProductoAsync(RequestProductoDTO productoDTO)
+    public async Task<ProductoDto> CreateProductoAsync(RequestProductoDto productoDTO)
     {
         var producto = await ValidarProducto(productoDTO);
 
         var result = await repository.CreateProductoAsync(producto);
         if (result == null) throw new NotFoundException("Producto no creado.");
 
-        return mapper.Map<ProductoDTO>(result);
+        return mapper.Map<ProductoDto>(result);
     }
-    public async Task<ProductoDTO> UpdateProductoAsync(short id, RequestProductoDTO productoDTO)
+    public async Task<ProductoDto> UpdateProductoAsync(short id, RequestProductoDto productoDTO)
     {
         if (!await repository.ExisteProducto(id)) throw new NotFoundException("Producto no encontrada.");
 
@@ -29,24 +29,24 @@ public class ServiceProducto(IRepositoryProducto repository, IMapper mapper,
         producto.Id = id;
         var result = await repository.UpdateProductoAsync(producto);
 
-        return mapper.Map<ProductoDTO>(result);
+        return mapper.Map<ProductoDto>(result);
     }
 
-    public async Task<ProductoDTO> FindByIdAsync(short id)
+    public async Task<ProductoDto> FindByIdAsync(short id)
     {
         var producto = await repository.FindByIdAsync(id);
         if (producto == null) throw new NotFoundException("Producto no encontrado.");
 
-        return mapper.Map<ProductoDTO>(producto);
+        return mapper.Map<ProductoDto>(producto);
     }
-    public async Task<ICollection<ProductoDTO>> ListAsync()
+    public async Task<ICollection<ProductoDto>> ListAsync()
     {
         var list = await repository.ListAsync();
-        var collection = mapper.Map<ICollection<ProductoDTO>>(list);
+        var collection = mapper.Map<ICollection<ProductoDto>>(list);
 
         return collection;
     }
-    private async Task<Producto> ValidarProducto(RequestProductoDTO productoDTO)
+    private async Task<Producto> ValidarProducto(RequestProductoDto productoDTO)
     {
         var producto = mapper.Map<Producto>(productoDTO);
         await productoValidator.ValidateAndThrowAsync(producto);

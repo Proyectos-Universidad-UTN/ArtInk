@@ -1,6 +1,6 @@
 namespace ArtInk.Application.DTOs;
 
-public record DetalleFacturaDTO
+public record DetalleFacturaDto
 {
     public long Id { get; set; }
 
@@ -20,9 +20,9 @@ public record DetalleFacturaDTO
 
     public decimal MontoTotal { get; set; }
 
-    public virtual ICollection<DetalleFacturaProductoDTO> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProductoDTO>();
+    public virtual ICollection<DetalleFacturaProductoDto> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProductoDto>();
 
-    public virtual FacturaDTO Factura { get; set; } = null!;
+    public virtual FacturaDto Factura { get; set; } = null!;
 
-    public virtual ServicioDTO Servicio { get; set; } = null!;
+    public virtual ServicioDto Servicio { get; set; } = null!;
 }

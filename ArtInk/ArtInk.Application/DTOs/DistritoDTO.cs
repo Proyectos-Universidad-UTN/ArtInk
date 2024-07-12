@@ -1,6 +1,6 @@
 namespace ArtInk.Application.DTOs;
 
-public record DistritoDTO
+public record DistritoDto
 {
     public short Id { get; set; }
 
@@ -8,13 +8,13 @@ public record DistritoDTO
 
     public byte IdCanton { get; set; }
 
-    public virtual ICollection<ClienteDTO> Clientes { get; set; } = new List<ClienteDTO>();
+    public virtual ICollection<ClienteDto> Clientes { get; set; } = new List<ClienteDto>();
 
-    public virtual CantonDTO Canton { get; set; } = null!;
+    public virtual CantonDto Canton { get; set; } = null!;
 
-    public virtual ICollection<ProveedorDTO> Proveedores { get; set; } = new List<ProveedorDTO>();
+    public virtual ICollection<ProveedorDto> Proveedores { get; set; } = new List<ProveedorDto>();
 
-    public virtual ICollection<SucursalDTO> Sucursales { get; set; } = new List<SucursalDTO>();
+    public virtual ICollection<SucursalDto> Sucursales { get; set; } = new List<SucursalDto>();
 
-    public virtual ICollection<UsuarioDTO> Usuarios { get; set; } = new List<UsuarioDTO>();
+    public virtual ICollection<UsuarioDto> Usuarios { get; set; } = new List<UsuarioDto>();
 }

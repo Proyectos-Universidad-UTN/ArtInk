@@ -1,9 +1,7 @@
 
-using Serilog.Events;
 using Serilog;
-using System.Text;
-using ArtInk.web.Middleware;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 

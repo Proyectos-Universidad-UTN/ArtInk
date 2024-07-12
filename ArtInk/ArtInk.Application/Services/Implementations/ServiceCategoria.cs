@@ -8,18 +8,18 @@ namespace ArtInk.Application.Services.Implementations;
 
 public class ServiceCategoria(IRepositoryCategoria repository, IMapper mapper) : IServiceCategoria
 {
-    public async Task<CategoriaDTO> FindByIdAsync(byte id)
+    public async Task<CategoriaDto> FindByIdAsync(byte id)
     {
         var categoria = await repository.FindByIdAsync(id);
         if (categoria == null) throw new NotFoundException("Categoría no encontrada.");
 
-        return mapper.Map<CategoriaDTO>(categoria);
+        return mapper.Map<CategoriaDto>(categoria);
     }
 
-    public async Task<ICollection<CategoriaDTO>> ListAsync()
+    public async Task<ICollection<CategoriaDto>> ListAsync()
     {
         var list = await repository.ListAsync();
-        var collection = mapper.Map<ICollection<CategoriaDTO>>(list);
+        var collection = mapper.Map<ICollection<CategoriaDto>>(list);
 
         return collection;
     }

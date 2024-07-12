@@ -4,7 +4,7 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceUsuario
 {
-    Task<ICollection<UsuarioDTO>> ListAsync();
+    Task<ICollection<UsuarioDto>> ListAsync();
 
-    Task<UsuarioDTO> FindByIdAsync(short id);
+    Task<UsuarioDto> FindByIdAsync(short id);
 }

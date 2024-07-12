@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
-
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
                                                     {
                                                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -38,7 +37,9 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("http://localhost:44378",
-                                            "https://localhost:44378");
+                                            "http://localhost:5000",
+                                            "https://localhost:44378",
+                                            "https://localhost:5000");
                       });
 });
 

@@ -36,4 +36,3 @@ public class ProductoValidator : AbstractValidator<Producto>
             .NotEmpty().WithMessage("Por favor ingrese una unidad de medida válida");
     }
 }
-

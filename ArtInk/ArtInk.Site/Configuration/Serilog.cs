@@ -1,18 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Serilog;
 using Serilog.Events;
 
 namespace ArtInk.Site.Configuration;
 
 /// <summary>
-/// El método ConfigureSerilog configura el registro de eventos (logging) en una aplicación web 
-/// utilizando la biblioteca Serilog. Esta configuración incluye diversos niveles de registro, 
-/// donde los eventos se envían tanto a la consola como a archivos de log específicos 
-/// según el nivel del evento.
+/// El mÃ©todo ConfigureSerilog configura el registro de eventos (logging) en una aplicaciï¿½n web 
+/// utilizando la biblioteca Serilog. Esta configuraciï¿½n incluye diversos niveles de registro, 
+/// donde los eventos se envï¿½an tanto a la consola como a archivos de log especï¿½ficos 
+/// segï¿½n el nivel del evento.
 /// </summary>
 
 public static class Serilog

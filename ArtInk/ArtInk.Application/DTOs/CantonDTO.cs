@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ArtInk.Application.DTOs;
 
-public record CantonDTO
+public record CantonDto
 {
     public byte Id { get; set; }
 
@@ -13,7 +13,7 @@ public record CantonDTO
 
     public byte IdProvincia { get; set; }
 
-    public virtual ICollection<DistritoDTO> Distritos { get; set; } = new List<DistritoDTO>();
+    public virtual ICollection<DistritoDto> Distritos { get; set; } = new List<DistritoDto>();
 
-    public virtual ProvinciaDTO Provincia { get; set; } = null!;
+    public virtual ProvinciaDto Provincia { get; set; } = null!;
 }

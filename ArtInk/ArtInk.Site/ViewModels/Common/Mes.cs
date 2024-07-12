@@ -1,6 +1,6 @@
 namespace ArtInk.Site.ViewModels.Common;
 
-public enum MesEnum
+public enum Mes
 {
     Enero = 1,
 

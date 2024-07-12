@@ -4,7 +4,7 @@ namespace ArtInk.Site.ViewModels.Request.Misc;
 
 public record SucursalSucursalFeriado
 {
-    public SucursalResponseDTO Sucursal { get; set; } = null!;
+    public SucursalResponseDto Sucursal { get; set; } = null!;
 
     public char Accion { get; set; }
 
@@ -12,22 +12,22 @@ public record SucursalSucursalFeriado
 
     public short Anno { get; set; }
 
-    public IEnumerable<FeriadoResponseDTO> Feriados { get; set; } = null!;
+    public IEnumerable<FeriadoResponseDto> Feriados { get; set; } = null!;
 
-    public List<SucursalFeriadoRequestDTO> FeriadosSucursal { get; set; } = null!;
+    public List<SucursalFeriadoRequestDto> FeriadosSucursal { get; set; } = null!;
 
-    public void CargarFeriados(IEnumerable<SucursalFeriadoRequestDTO> feriadosExistentes, IEnumerable<FeriadoResponseDTO> feriados, short anno)
+    public void CargarFeriados(IEnumerable<SucursalFeriadoRequestDto> feriadosExistentes, IEnumerable<FeriadoResponseDto> feriados, short anno)
     {
-        if (feriadosExistentes.Count() > 0)
+        if (feriadosExistentes.Any())
         {
             FeriadosSucursal = feriadosExistentes.ToList();
             return;
         }
 
-        FeriadosSucursal = new List<SucursalFeriadoRequestDTO>();
+        FeriadosSucursal = new List<SucursalFeriadoRequestDto>();
         foreach (var item in feriados)
         {
-            FeriadosSucursal.Add(new SucursalFeriadoRequestDTO()
+            FeriadosSucursal.Add(new SucursalFeriadoRequestDto()
             {
                 IdFeriado = item.Id,
                 IdSucursal = Sucursal.Id,

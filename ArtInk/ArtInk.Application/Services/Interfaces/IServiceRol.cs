@@ -4,7 +4,7 @@ namespace ArtInk.Application.Services.Interfaces;
 
 public interface IServiceRol
 {
-    Task<ICollection<RolDTO>> ListAsync();
+    Task<ICollection<RolDto>> ListAsync();
 
-    Task<RolDTO> FindByIdAsync(byte id);
+    Task<RolDto> FindByIdAsync(byte id);
 }

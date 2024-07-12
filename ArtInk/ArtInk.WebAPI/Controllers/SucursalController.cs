@@ -10,7 +10,7 @@ namespace ArtInk.WebAPI.Controllers;
 public class SucursalController(IServiceSucursal serviceSucursal) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<SucursalDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<SucursalDto>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetAllSucursalesAsync()
     {
@@ -19,7 +19,7 @@ public class SucursalController(IServiceSucursal serviceSucursal) : ControllerBa
     }
 
     [HttpGet("{idSucursal}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetSucursalByIdAsync(byte idSucursal)
@@ -29,10 +29,10 @@ public class SucursalController(IServiceSucursal serviceSucursal) : ControllerBa
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SucursalDTO))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SucursalDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> CreateSucursalAsync([FromBody] RequestSucursalDTO sucursal)
+    public async Task<IActionResult> CreateSucursalAsync([FromBody] RequestSucursalDto sucursal)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(sucursal);
@@ -41,11 +41,11 @@ public class SucursalController(IServiceSucursal serviceSucursal) : ControllerBa
     }
 
     [HttpPut("{idSucursal}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> UpdateSucursalAsync(byte idSucursal, [FromBody] RequestSucursalDTO sucursal)
+    public async Task<IActionResult> UpdateSucursalAsync(byte idSucursal, [FromBody] RequestSucursalDto sucursal)
     {
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(sucursal);

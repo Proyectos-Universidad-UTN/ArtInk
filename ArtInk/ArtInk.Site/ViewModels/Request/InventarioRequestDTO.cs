@@ -1,23 +1,22 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Request
+namespace ArtInk.Site.ViewModels.Request;
+
+public record InventarioRequestDto
 {
-    public record InventarioRequestDTO
-    {
-        public short Id { get; set; }
+    public short Id { get; set; }
 
-        [DisplayName("Sucursal")]
-        public byte IdSucursal { get; set; }
+    [DisplayName("Sucursal")]
+    public byte IdSucursal { get; set; }
 
-        [DisplayName("Producto")]
-        public short IdProducto { get; set; }
+    [DisplayName("Producto")]
+    public short IdProducto { get; set; }
 
-        public byte Disponible { get; set; }
+    public byte Disponible { get; set; }
 
-        [DisplayName("Mínima")]
-        public byte Minima { get; set; }
+    [DisplayName("Mínima")]
+    public byte Minima { get; set; }
 
-        [DisplayName("Máxima")]
-        public byte Maxima { get; set; }
-    }
+    [DisplayName("Máxima")]
+    public byte Maxima { get; set; }
 }

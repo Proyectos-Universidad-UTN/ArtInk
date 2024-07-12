@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace ArtInk.Application.DTOs.Enums;
 
-public enum RolEnum
+public enum Rol
 {
     [Description("Administrador")]
     ADMINISTRADOR = 1,

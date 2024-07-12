@@ -1,11 +1,10 @@
-﻿namespace ArtInk.Site.ViewModels.Response
+﻿namespace ArtInk.Site.ViewModels.Response;
+
+public record GeneroResponseDto
 {
-    public record GeneroResponseDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        public string Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-        public virtual ICollection<UsuarioResponseDTO> Usuarios { get; set; } = new List<UsuarioResponseDTO>();
-    }
+    public virtual ICollection<UsuarioResponseDto> Usuarios { get; set; } = new List<UsuarioResponseDto>();
 }

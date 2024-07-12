@@ -13,14 +13,14 @@ namespace ArtInk.Application.Services.Implementations;
 public class ServiceFeriado(IRepositoryFeriado repository, IMapper mapper,
                             IValidator<Feriado> feriadoValidator) : IServiceFeriado
 {
-    public async Task<FeriadoDTO> CreateFeriadoAsync(RequestFeriadoDTO feriadoDTO)
+    public async Task<FeriadoDto> CreateFeriadoAsync(RequestFeriadoDto feriadoDTO)
     {
         var feriado = await ValidarFeriado(feriadoDTO);
 
         var result = await repository.CreateFeriadoAsync(feriado);
         if (result == null) throw new NotFoundException("Feriado no creado.");
 
-        return mapper.Map<FeriadoDTO>(result);
+        return mapper.Map<FeriadoDto>(result);
     }
 
     public async Task<bool> DeleteFeriadoAsync(byte id)
@@ -29,23 +29,23 @@ public class ServiceFeriado(IRepositoryFeriado repository, IMapper mapper,
         return await repository.DeleteFeriadoAsync(id);
     }
 
-    public async Task<FeriadoDTO> FindByIdAsync(byte id)
+    public async Task<FeriadoDto> FindByIdAsync(byte id)
     {
         var feriado = await repository.FindByIdAsync(id);
         if (feriado == null) throw new NotFoundException("Feriado no encontrado.");
 
-        return mapper.Map<FeriadoDTO>(feriado);
+        return mapper.Map<FeriadoDto>(feriado);
     }
 
-    public async Task<ICollection<FeriadoDTO>> ListAsync()
+    public async Task<ICollection<FeriadoDto>> ListAsync()
     {
         var list = await repository.ListAsync();
-        var collection = mapper.Map<ICollection<FeriadoDTO>>(list);
+        var collection = mapper.Map<ICollection<FeriadoDto>>(list);
 
         return collection;
     }
 
-    public async Task<FeriadoDTO> UpdateFeriadoAsync(byte id, RequestFeriadoDTO feriadoDTO)
+    public async Task<FeriadoDto> UpdateFeriadoAsync(byte id, RequestFeriadoDto feriadoDTO)
     {
         if (!await repository.ExisteFeriadoAsync(id)) throw new NotFoundException("Feriado no encontrada.");
 
@@ -53,10 +53,10 @@ public class ServiceFeriado(IRepositoryFeriado repository, IMapper mapper,
         producto.Id = id;
         var result = await repository.UpdateFeriadoAsync(producto);
 
-        return mapper.Map<FeriadoDTO>(result);
+        return mapper.Map<FeriadoDto>(result);
     }
 
-    private async Task<Feriado> ValidarFeriado(RequestFeriadoDTO feriadoDTO)
+    private async Task<Feriado> ValidarFeriado(RequestFeriadoDto feriadoDTO)
     {
         var feriado = mapper.Map<Feriado>(feriadoDTO);
         await feriadoValidator.ValidateAndThrowAsync(feriado);

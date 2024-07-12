@@ -13,16 +13,16 @@ namespace ArtInk.Application.Services.Implementations;
 public class ServiceHorario(IRepositoryHorario repository, IMapper mapper,
                             IValidator<Horario> horarioValidator) : IServiceHorario
 {
-    public async Task<HorarioDTO> CreateHorarioAsync(RequestHorarioDTO horarioDTO)
+    public async Task<HorarioDto> CreateHorarioAsync(RequestHorarioDto horarioDTO)
     {
         var horario = await ValidarHorario(horarioDTO);
 
         var result = await repository.CreateHorarioAsync(horario);
         if (result == null) throw new NotFoundException("Horario no se ha creado.");
 
-        return mapper.Map<HorarioDTO>(result);
+        return mapper.Map<HorarioDto>(result);
     }
-    public async Task<HorarioDTO> UpdateHorarioAsync(short id, RequestHorarioDTO horarioDTO)
+    public async Task<HorarioDto> UpdateHorarioAsync(short id, RequestHorarioDto horarioDTO)
     {
         if (!await repository.ExisteHorario(id)) throw new NotFoundException("Horario no encontrado.");
 
@@ -30,26 +30,26 @@ public class ServiceHorario(IRepositoryHorario repository, IMapper mapper,
         horario.Id = id;
         var result = await repository.UpdateHorarioAsync(horario);
 
-        return mapper.Map<HorarioDTO>(result);
+        return mapper.Map<HorarioDto>(result);
     }
 
-    public async Task<HorarioDTO> FindByIdAsync(short id)
+    public async Task<HorarioDto> FindByIdAsync(short id)
     {
         var horario = await repository.FindByIdAsync(id);
         if (horario == null) throw new NotFoundException("Horario no encontrada.");
 
-        return mapper.Map<HorarioDTO>(horario);
+        return mapper.Map<HorarioDto>(horario);
     }
 
-    public async Task<ICollection<HorarioDTO>> ListAsync()
+    public async Task<ICollection<HorarioDto>> ListAsync()
     {
         var list = await repository.ListAsync();
-        var collection = mapper.Map<ICollection<HorarioDTO>>(list);
+        var collection = mapper.Map<ICollection<HorarioDto>>(list);
 
         return collection;
     }
 
-    private async Task<Horario> ValidarHorario(RequestHorarioDTO horarioDTO)
+    private async Task<Horario> ValidarHorario(RequestHorarioDto horarioDTO)
     {
         var horario = mapper.Map<Horario>(horarioDTO);
         await horarioValidator.ValidateAndThrowAsync(horario);

@@ -2,7 +2,7 @@ using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
-public record ReservaPreguntaDTO: BaseEntity
+public record ReservaPreguntaDto: BaseEntity
 {
     public int Id { get; set; }
 
@@ -14,5 +14,5 @@ public record ReservaPreguntaDTO: BaseEntity
 
     public string? Respuesta { get; set; }
 
-    public virtual ReservaDTO Reserva { get; set; } = null!;
+    public virtual ReservaDto Reserva { get; set; } = null!;
 }

@@ -2,7 +2,7 @@ using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
-public record ContactoDTO: BaseEntity
+public record ContactoDto: BaseEntity
 {
     public short Id { get; set; }
 
@@ -18,5 +18,5 @@ public record ContactoDTO: BaseEntity
 
     public bool Activo { get; set; }
 
-    public virtual ProveedorDTO Proveedor { get; set; } = null!;
+    public virtual ProveedorDto Proveedor { get; set; } = null!;
 }

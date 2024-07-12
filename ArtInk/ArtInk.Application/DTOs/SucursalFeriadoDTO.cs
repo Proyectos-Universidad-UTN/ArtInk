@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Application.DTOs;
 
-public record SucursalFeriadoDTO
+public record SucursalFeriadoDto
 {
     public short Id { get; set; }
 
@@ -12,7 +12,7 @@ public record SucursalFeriadoDTO
 
     public short Anno { get; set; }
 
-    public virtual FeriadoDTO Feriado { get; set; } = null!;
+    public virtual FeriadoDto Feriado { get; set; } = null!;
 
-    public virtual SucursalDTO Sucursal { get; set; } = null!;
+    public virtual SucursalDto Sucursal { get; set; } = null!;
 }

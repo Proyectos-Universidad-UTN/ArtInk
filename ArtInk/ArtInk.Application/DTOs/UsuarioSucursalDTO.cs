@@ -1,6 +1,6 @@
 namespace ArtInk.Application.DTOs;
 
-public record UsuarioSucursalDTO
+public record UsuarioSucursalDto
 {
     public short Id { get; set; }
 
@@ -8,11 +8,11 @@ public record UsuarioSucursalDTO
 
     public byte IdSucursal { get; set; }
 
-    public virtual ICollection<FacturaDTO> Facturas { get; set; } = new List<FacturaDTO>();
+    public virtual ICollection<FacturaDto> Facturas { get; set; } = new List<FacturaDto>();
 
-    public virtual ICollection<ReservaDTO> Reservas { get; set; } = new List<ReservaDTO>();
+    public virtual ICollection<ReservaDto> Reservas { get; set; } = new List<ReservaDto>();
 
-    public virtual SucursalDTO Sucursal { get; set; } = null!;
+    public virtual SucursalDto Sucursal { get; set; } = null!;
 
-    public virtual UsuarioDTO Usuario { get; set; } = null!;
+    public virtual UsuarioDto Usuario { get; set; } = null!;
 }

@@ -2,7 +2,7 @@ using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
-public record ProveedorDTO: BaseEntity
+public record ProveedorDto: BaseEntity
 {
     public byte Id { get; set; }
 
@@ -22,7 +22,7 @@ public record ProveedorDTO: BaseEntity
 
     public bool Activo { get; set; }
 
-    public virtual ICollection<ContactoDTO> Contactos { get; set; } = new List<ContactoDTO>();
+    public virtual ICollection<ContactoDto> Contactos { get; set; } = new List<ContactoDto>();
 
-    public virtual DistritoDTO Distrito { get; set; } = null!;
+    public virtual DistritoDto Distrito { get; set; } = null!;
 }

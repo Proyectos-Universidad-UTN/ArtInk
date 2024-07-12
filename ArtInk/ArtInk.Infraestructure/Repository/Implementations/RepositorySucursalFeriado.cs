@@ -16,7 +16,7 @@ public class RepositorySucursalFeriado(ArtInkContext context) : IRepositorySucur
 
         await executionStrategy.Execute(async () =>
         {
-            using var transaccion = context.Database.BeginTransaction();
+            using var transaccion = await context.Database.BeginTransactionAsync();
             try
             {
                 context.SucursalFeriados.RemoveRange(feriadosExistentes);

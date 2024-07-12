@@ -1,20 +1,19 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Request
+namespace ArtInk.Site.ViewModels.Request;
+
+public record ReservaRequestDto
 {
-    public record ReservaRequestDTO
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public DateOnly Fecha { get; set; }
+    public DateOnly Fecha { get; set; }
 
-        public TimeOnly Hora { get; set; }
+    public TimeOnly Hora { get; set; }
 
-        [DisplayName("Horario")]
-        public short IdSucursalHorario { get; set; }
+    [DisplayName("Horario")]
+    public short IdSucursalHorario { get; set; }
 
-        public string Estado { get; set; } = null!;
+    public string Estado { get; set; } = null!;
 
-        public bool Activo { get; set; }
-    }
+    public bool Activo { get; set; }
 }

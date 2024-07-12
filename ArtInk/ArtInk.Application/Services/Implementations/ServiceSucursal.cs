@@ -12,17 +12,17 @@ namespace ArtInk.Application.Services.Implementations;
 public class ServiceSucursal(IRepositorySucursal repository, IMapper mapper,
                                 IValidator<Sucursal> sucursalValidator) : IServiceSucursal
 {
-    public async Task<SucursalDTO> CreateSucursalAsync(RequestSucursalDTO sucursalDTO)
+    public async Task<SucursalDto> CreateSucursalAsync(RequestSucursalDto sucursalDTO)
     {
         var sucursal = await ValidarSucursal(sucursalDTO);
 
         var result = await repository.CreateSucursalAsync(sucursal);
         if (result == null) throw new NotFoundException("Sucursal no se ha creado.");
 
-        return mapper.Map<SucursalDTO>(result);
+        return mapper.Map<SucursalDto>(result);
     }
 
-    public async Task<SucursalDTO> UpdateSucursalAsync(byte id, RequestSucursalDTO sucursalDTO)
+    public async Task<SucursalDto> UpdateSucursalAsync(byte id, RequestSucursalDto sucursalDTO)
     {
         if (!await repository.ExisteSucursal(id)) throw new NotFoundException("Sucursal no encontrada.");
 
@@ -30,26 +30,26 @@ public class ServiceSucursal(IRepositorySucursal repository, IMapper mapper,
         sucursal.Id = id;
         var result = await repository.UpdateSucursalAsync(sucursal);
 
-        return mapper.Map<SucursalDTO>(result);
+        return mapper.Map<SucursalDto>(result);
     }
 
-    public async Task<SucursalDTO> FindByIdAsync(byte id)
+    public async Task<SucursalDto> FindByIdAsync(byte id)
     {
         var sucursal = await repository.FindByIdAsync(id);
         if (sucursal == null) throw new NotFoundException("Sucursal no encontrada.");
 
-        return mapper.Map<SucursalDTO>(sucursal);
+        return mapper.Map<SucursalDto>(sucursal);
     }
 
-    public async Task<ICollection<SucursalDTO>> ListAsync()
+    public async Task<ICollection<SucursalDto>> ListAsync()
     {
         var list = await repository.ListAsync();
-        var collection = mapper.Map<ICollection<SucursalDTO>>(list);
+        var collection = mapper.Map<ICollection<SucursalDto>>(list);
 
         return collection;
     }
 
-    private async Task<Sucursal> ValidarSucursal(RequestSucursalDTO sucursalDTO)
+    private async Task<Sucursal> ValidarSucursal(RequestSucursalDto sucursalDTO)
     {
         var sucursal = mapper.Map<Sucursal>(sucursalDTO);
         await sucursalValidator.ValidateAndThrowAsync(sucursal);

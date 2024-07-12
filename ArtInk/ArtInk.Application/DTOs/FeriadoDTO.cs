@@ -3,7 +3,7 @@ using ArtInk.Application.DTOs.Enums;
 
 namespace ArtInk.Application.DTOs;
 
-public record FeriadoDTO : BaseEntity
+public record FeriadoDto : BaseEntity
 {
     public byte Id { get; set; }
 
@@ -11,9 +11,9 @@ public record FeriadoDTO : BaseEntity
 
     public bool Activo { get; set; }
 
-    public MesEnum Mes { get; set; }
+    public Mes Mes { get; set; }
 
     public byte Dia { get; set; }
 
-    public virtual ICollection<SucursalFeriadoDTO> SucursalFeriados { get; set; } = new List<SucursalFeriadoDTO>();
+    public virtual ICollection<SucursalFeriadoDto> SucursalFeriados { get; set; } = new List<SucursalFeriadoDto>();
 }

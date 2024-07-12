@@ -1,15 +1,13 @@
 ﻿using System.ComponentModel;
 
-namespace ArtInk.Site.ViewModels.Response
+namespace ArtInk.Site.ViewModels.Response;
+
+public record CategoriaResponseDto
 {
-    public record CategoriaResponseDTO
-    {
-        public byte Id { get; set; }
+    public byte Id { get; set; }
 
-        [DisplayName("Código")]
-        public string Codigo { get; set; } = null!;
+    [DisplayName("Código")]
+    public string Codigo { get; set; } = null!;
 
-        public string Nombre { get; set; } = null!;
-
-    }
+    public string Nombre { get; set; } = null!;
 }

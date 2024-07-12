@@ -2,55 +2,49 @@
 using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ArtInk.Infraestructure.Repository.Implementations
+namespace ArtInk.Infraestructure.Repository.Implementations;
+
+public class RepositoryServicio(ArtInkContext context) : IRepositoryServicio
 {
-    public class RepositoryServicio(ArtInkContext context) : IRepositoryServicio
+    public async Task<Servicio> CreateServicioAsync(Servicio servicio)
     {
-        public async Task<Servicio> CreateServicioAsync(Servicio servicio)
-        {
-            var result = context.Servicios.Add(servicio);
-            //aplica en la BD
-            await context.SaveChangesAsync();
-            //Refleja la entidad
-            return result.Entity;
-        }
+        var result = context.Servicios.Add(servicio);
+        //aplica en la BD
+        await context.SaveChangesAsync();
+        //Refleja la entidad
+        return result.Entity;
+    }
 
-        public async Task<bool> ExisteServicio(byte id)
-        {
-            var keyProperty = context.Model.FindEntityType(typeof(Servicio))!.FindPrimaryKey()!.Properties[0];
+    public async Task<bool> ExisteServicio(byte id)
+    {
+        var keyProperty = context.Model.FindEntityType(typeof(Servicio))!.FindPrimaryKey()!.Properties[0];
 
-            return await context.Set<Servicio>()
-                .AsNoTracking()
-                .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id) != null;
-        }
+        return await context.Set<Servicio>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id) != null;
+    }
 
-        public async Task<Servicio?> FindByIdAsync(byte id)
-        {
-            return await context.Set<Servicio>().FindAsync(id);
-        }
+    public async Task<Servicio?> FindByIdAsync(byte id)
+    {
+        return await context.Set<Servicio>().FindAsync(id);
+    }
 
-        public async Task<ICollection<Servicio>> ListAsync()
-        {
-            var collection = await context.Set<Servicio>()
-           .Include(a => a.IdTipoServicioNavigation)
-           .ToListAsync();
-            return collection;
-        }
+    public async Task<ICollection<Servicio>> ListAsync()
+    {
+        var collection = await context.Set<Servicio>()
+       .Include(a => a.IdTipoServicioNavigation)
+       .ToListAsync();
+        return collection;
+    }
 
-        public async Task<Servicio> UpdateServicioAsync(Servicio servicio)
-        {
-            context.Servicios.Update(servicio);
+    public async Task<Servicio> UpdateServicioAsync(Servicio servicio)
+    {
+        context.Servicios.Update(servicio);
 
-            await context.SaveChangesAsync();
+        await context.SaveChangesAsync();
 
-            var response = await FindByIdAsync(servicio.Id);
-            return response!;
-        }
+        var response = await FindByIdAsync(servicio.Id);
+        return response!;
     }
 }
