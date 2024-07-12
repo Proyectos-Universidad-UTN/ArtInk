@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using ArtInk.Site.ViewModels.Common;
 
 namespace ArtInk.Site.ViewModels.Request;
 
 public record FeriadoRequestDto
 {
-    [Required(ErrorMessage = "Id requerido")]
+    [JsonRequired]
     public byte Id { get; set; }
 
     [DisplayName("Nombre")]
@@ -14,10 +15,10 @@ public record FeriadoRequestDto
     [MaxLength(80)]
     public string Nombre { get; set; } = null!;
 
-    [Required(ErrorMessage = "Indicador activo requerido")]
+    [JsonRequired]
     public bool Activo { get; set; }
     
-    [Required(ErrorMessage = "Mes requerido")]
+    [JsonRequired]
     public Mes Mes { get; set; }
 
     [Required(ErrorMessage = "Debe ingresar el día")]
