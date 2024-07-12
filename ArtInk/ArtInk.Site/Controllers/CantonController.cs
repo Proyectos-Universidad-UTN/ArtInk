@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class CantonController(IAPIArtInkClient cantonCliente) : Controller
+public class CantonController(IApiArtInkClient cantonCliente) : Controller
 {
     [HttpPost]
     public async Task<IActionResult> ObtenerCantones(Direcciones direcciones)

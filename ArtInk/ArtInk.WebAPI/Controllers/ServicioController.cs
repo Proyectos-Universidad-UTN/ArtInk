@@ -37,7 +37,7 @@ public class ServicioController(IServiceServicio serviceServicio) : ControllerBa
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(servicio);
         var result = await serviceServicio.CreateServicioAsync(servicio);
-        return StatusCode(StatusCodes.Status201Created, servicio);
+        return StatusCode(StatusCodes.Status201Created, result);
     }
 
     [HttpPut("{idServicio}")]

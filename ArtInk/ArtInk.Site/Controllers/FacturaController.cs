@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class FacturaController(IAPIArtInkClient factura) : Controller
+public class FacturaController(IApiArtInkClient factura) : Controller
 {
     public async Task<IActionResult> Index()
     {

@@ -9,15 +9,18 @@ using System.Security.Policy;
 
 namespace ArtInk.Site.Controllers;
 
-public class ServicioController(IAPIArtInkClient cliente, IMapper mapper) : Controller
+public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
+    const string INDEX = "Index";
+    const string ERRORMESSAGE = "ErrorMessage";
+
     public async Task<IActionResult> Index()
     {
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
         if (collection == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index", "Home");
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX, "Home");
         }
 
         return View(collection);
@@ -29,8 +32,8 @@ public class ServicioController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var collection = await cliente.ConsumirAPIAsync<ServicioResponseDto>(Constantes.GET, url);
         if (collection == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index");
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX);
         }
 
         return View(collection);
@@ -41,8 +44,8 @@ public class ServicioController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var tipoServicio = await cliente.ConsumirAPIAsync<IEnumerable<TipoServicioResponseDto>>(Constantes.GET, Constantes.GETALLTIPOSERVICIOS);
         if (tipoServicio == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index");
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX);
         }
 
         var servicio = new ServicioRequestDto()
@@ -58,15 +61,15 @@ public class ServicioController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var tipoServicio = await cliente.ConsumirAPIAsync<IEnumerable<TipoServicioResponseDto>>(Constantes.GET, Constantes.GETALLTIPOSERVICIOS);
         if (tipoServicio == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index");
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX);
         }
 
         servicio.TipoServicios = tipoServicio;
 
         if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = string.Join("; ", ModelState.Values
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
                                     .SelectMany(x => x.Errors)
                                     .Select(x => x.ErrorMessage));
             return View(servicio);
@@ -76,7 +79,7 @@ public class ServicioController(IAPIArtInkClient cliente, IMapper mapper) : Cont
 
         if (resultado == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return View(servicio);
         }
 
@@ -91,14 +94,14 @@ public class ServicioController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var servicioExisting = await cliente.ConsumirAPIAsync<ServicioResponseDto>(Constantes.GET, url);
         if (servicioExisting == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
 
         var servicios = await cliente.ConsumirAPIAsync<List<TipoServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
         if (servicios == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
 
@@ -117,7 +120,7 @@ public class ServicioController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var servicios = await cliente.ConsumirAPIAsync<List<TipoServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
         if (servicios == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
 
@@ -126,7 +129,7 @@ public class ServicioController(IAPIArtInkClient cliente, IMapper mapper) : Cont
 
         if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = string.Join("; ", ModelState.Values
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
                                     .SelectMany(x => x.Errors)
                                     .Select(x => x.ErrorMessage));
             return View(servicio);
@@ -135,7 +138,7 @@ public class ServicioController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var resultado = await cliente.ConsumirAPIAsync<ServicioResponseDto>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(servicio));
         if (resultado == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return View(servicio);
         }
 

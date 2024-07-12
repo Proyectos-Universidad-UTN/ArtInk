@@ -8,14 +8,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class SucursalController(IAPIArtInkClient cliente, IMapper mapper) : Controller
+public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
+    const string ERRORMESSAGE = "ErrorMessage";
+    const string SELECCIONEPROVINCIA = "Seleccione una provincia";
+
     public async Task<IActionResult> Index()
     {
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
         if (collection == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction("Index", "Home");
         }
 
@@ -28,7 +31,7 @@ public class SucursalController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var sucursal = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.GET, url);
         if (sucursal == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction("Index", "Home");
         }
 
@@ -40,7 +43,7 @@ public class SucursalController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         try
         {
             var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDto>>(Constantes.GET, Constantes.GETALLPROVINCIA);
-            provincias.Insert(0, new ProvinciaResponseDto() { Id = 0, Nombre = "Seleccione una provincia" });
+            provincias.Insert(0, new ProvinciaResponseDto() { Id = 0, Nombre = SELECCIONEPROVINCIA });
 
             if (provincias == null) return RedirectToAction("Index", "Home");
 
@@ -62,12 +65,12 @@ public class SucursalController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDto>>(Constantes.GET, Constantes.GETALLPROVINCIA);
         if (provincias == null) return RedirectToAction(nameof(Index));
 
-        provincias.Insert(0, new ProvinciaResponseDto() { Id = 0, Nombre = "Seleccione una provincia" });
+        provincias.Insert(0, new ProvinciaResponseDto() { Id = 0, Nombre = SELECCIONEPROVINCIA });
         sucursal.Provincias = provincias;
 
         if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = string.Join("; ", ModelState.Values
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
                                     .SelectMany(x => x.Errors)
                                     .Select(x => x.ErrorMessage));
             return RedirectToAction(nameof(Index));
@@ -76,7 +79,7 @@ public class SucursalController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.POST, Constantes.POSTSUCURSAL, valoresConsumo: Serialization.Serialize(sucursal));
         if (resultado == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return View(sucursal);
         }
 
@@ -91,12 +94,12 @@ public class SucursalController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var sucursalExisting = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.GET, url);
         if (sucursalExisting == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
 
         var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDto>>(Constantes.GET, Constantes.GETALLPROVINCIA);
-        provincias.Insert(0, new ProvinciaResponseDto() { Id = 0, Nombre = "Seleccione una provincia" });
+        provincias.Insert(0, new ProvinciaResponseDto() { Id = 0, Nombre = SELECCIONEPROVINCIA });
 
         var sucursal = mapper.Map<SucursalRequestDto>(sucursalExisting);
         sucursal.Provincias = provincias;
@@ -114,12 +117,12 @@ public class SucursalController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDto>>(Constantes.GET, Constantes.GETALLPROVINCIA);
         if (provincias == null) return RedirectToAction(nameof(Index));
 
-        provincias.Insert(0, new ProvinciaResponseDto() { Id = 0, Nombre = "Seleccione una provincia" });
+        provincias.Insert(0, new ProvinciaResponseDto() { Id = 0, Nombre = SELECCIONEPROVINCIA });
         sucursal.Provincias = provincias;
 
         if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = string.Join("; ", ModelState.Values
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
                                     .SelectMany(x => x.Errors)
                                     .Select(x => x.ErrorMessage));
             return View(sucursal);
@@ -128,7 +131,7 @@ public class SucursalController(IAPIArtInkClient cliente, IMapper mapper) : Cont
         var resultado = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(sucursal));
         if (resultado == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return View(sucursal);
         }
 

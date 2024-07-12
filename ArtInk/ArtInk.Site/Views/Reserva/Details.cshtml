@@ -76,19 +76,19 @@
         </tr>
     </table>
     @{
-        foreach (var reservaPregunta in Model.ReservaPregunta.Select((value) => new { value}))
+        foreach (var reservaPregunta in Model.ReservaPregunta.Select(reservaPregunta => reservaPregunta))
         {
             <div>
                 <ul class="list-group" colspan="2">
                     <div class="row">
                     <li class="list-group-item">
                         <div class="col">
-                                @string.Format(reservaPregunta.value.Pregunta)
+                                @string.Format(reservaPregunta.Pregunta)
                         </div>
                     </li>
                     <li class="list-group-item">
                         <div class="col">
-                                @string.Format("Respuesta: {0}", reservaPregunta.value.Respuesta)
+                                @string.Format("Respuesta: {0}", reservaPregunta.Respuesta)
                         </div>
                     </li>
                 </ul>

@@ -4,9 +4,9 @@ using AutoMapper;
 
 namespace ArtInk.Site.Profiles;
 
-public class ResponseDTOToRequestDTOApplicationProfile: Profile
+public class ResponseDtoToRequestDtoApplicationProfile: Profile
 {
-    public ResponseDTOToRequestDTOApplicationProfile()
+    public ResponseDtoToRequestDtoApplicationProfile()
     {
         CreateMap<SucursalResponseDto, SucursalRequestDto>();
         CreateMap<ProductoResponseDto, ProductoRequestDto>();

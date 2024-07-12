@@ -20,7 +20,7 @@ public class SucursalHorarioBloqueoController(IServiceSucursalHorarioBloqueo ser
         //retorna una excepçión is es nulo
         ArgumentNullException.ThrowIfNull(bloqueo);
         var result = await serviceBloqueo.CreateSucursalHorarioBloqueoAsync(bloqueo);
-        return StatusCode(StatusCodes.Status201Created, bloqueo);
+        return StatusCode(StatusCodes.Status201Created, result);
     }
 
     [HttpPut("{idSucursalHorarioBloqueo}")]

@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const tables = document.querySelectorAll(".artink-tables");
     tables.forEach(table => {
-        new DataTable(table, {
+        const tableInstance = new DataTable(table, {
             pageLength: 10,
             layout: {
                 topStart: {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const elems = document.querySelectorAll('.datepicker-fechas');
     elems.forEach(elem => {
-        new Datepicker(elem, {
+        const datepicker = new Datepicker(elem, {
             format: 'dd/mm/yyyy',
             language: 'es'
         });

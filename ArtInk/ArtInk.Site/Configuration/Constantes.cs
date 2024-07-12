@@ -70,6 +70,7 @@ public static class Constantes
 
     //Url Distrito
     public const string GETALLDISTRITOS = "distrito";
+    public const string GETDISTRITOBYID = "distrito/{0}";
     public const string GETALLDISTRITOSBYCANTON = "canton/{0}/distrito";
 
     //Url Canton

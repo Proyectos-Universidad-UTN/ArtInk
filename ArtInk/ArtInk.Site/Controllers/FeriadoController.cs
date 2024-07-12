@@ -8,14 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class FeriadoController(IAPIArtInkClient cliente, IMapper mapper) : Controller
+public class FeriadoController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
+    const string ERRORMESSAGE = "ErrorMessage";
+
     public async Task<IActionResult> Index()
     {
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<FeriadoResponseDto>>(Constantes.GET, Constantes.GETALLFERIADOS);
         if (collection == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction("Index", "Home");
         }
         return View(collection);
@@ -32,7 +34,7 @@ public class FeriadoController(IAPIArtInkClient cliente, IMapper mapper) : Contr
         var resultado = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.POST, Constantes.POSTFERIADO, valoresConsumo: Serialization.Serialize(feriado));
         if (resultado == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return View(feriado);
         }
 
@@ -47,7 +49,7 @@ public class FeriadoController(IAPIArtInkClient cliente, IMapper mapper) : Contr
         var feriadoExisting = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.GET, url);
         if (feriadoExisting == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
 
@@ -65,7 +67,7 @@ public class FeriadoController(IAPIArtInkClient cliente, IMapper mapper) : Contr
 
         if (resultado == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return View(feriado);
         }
 
@@ -81,7 +83,7 @@ public class FeriadoController(IAPIArtInkClient cliente, IMapper mapper) : Contr
 
         if (!resultado)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
 

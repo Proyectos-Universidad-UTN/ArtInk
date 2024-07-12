@@ -8,7 +8,7 @@ public static class Configuration
     {
         services.AddAutoMapper(config =>
         {
-            config.AddProfile<ResponseDTOToRequestDTOApplicationProfile>();
+            config.AddProfile<ResponseDtoToRequestDtoApplicationProfile>();
         });
     }
 }

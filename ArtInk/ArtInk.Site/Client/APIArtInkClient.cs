@@ -7,14 +7,14 @@ using ArtInk.Utils;
 
 namespace ArtInk.Site.Client;
 
-public class APIArtInkClient : IAPIArtInkClient
+public class ApiArtInkClient : IApiArtInkClient
 {
     public bool Error { set; get; }
     public string MensajeError { set; get; } = null!;
 
     public string BaseUrlAPI { init; get; } = null!;
 
-    public APIArtInkClient(IConfiguration configuration)
+    public ApiArtInkClient(IConfiguration configuration)
     {
         var artInkAPI = configuration.GetSection("ArtInkAPI") ?? throw new ArgumentNullException("La sección ArtInkAPI no está configurada.");
         BaseUrlAPI = artInkAPI.GetValue<string>("BaseUrl") ?? throw new ArgumentNullException("El valor de BaseUrl no está configurado.");

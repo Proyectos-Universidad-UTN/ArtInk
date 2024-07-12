@@ -38,14 +38,14 @@
                                 asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle btnfos btnfos-5" href="#" id="sucursalesDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">Sucursal</a>
+                            <button class="nav-link dropdown-toggle btnfos btnfos-5" id="sucursalesDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">Sucursal</button>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sucursalesDropdown">
                                 <li>
                                     <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Horario"
-                                       asp-action="Index">Horario</a>
+                                        asp-action="Index">Horario</a>
                                     <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="SucursalHorario"
-                                       asp-action="Index">Sucursal Horario</a>
+                                        asp-action="Index">Sucursal Horario</a>
                                     <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Feriado"
                                         asp-action="Index">Feriados</a>
                                     <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Sucursal"
@@ -56,8 +56,8 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle btnfos btnfos-5" href="#" id="gestionesDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">Gestiones</a>
+                            <button class="nav-link dropdown-toggle btnfos btnfos-5" id="gestionesDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">Gestiones</button>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="gestionesDropdown">
                                 <li>
                                     <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Reserva"
@@ -80,8 +80,8 @@
                                 asp-action="Index">Servicios</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle btnfos btnfos-5" href="#" id="usuariosDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">Seguridad</a>
+                            <button class="nav-link dropdown-toggle btnfos btnfos-5" id="usuariosDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">Seguridad</button>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="usuariosDropdown">
                                 <li>
                                     <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Usuario"
@@ -101,7 +101,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <div class="container full-page">
-        <main role="main pt-1">
+        <main role="main">
             @await Html.PartialAsync("~/Views/Shared/_ManejoMensajes.cshtml")
             @RenderBody()
             @await Html.PartialAsync("~/Views/Shared/_ConfirmacionRemover.cshtml")
@@ -113,11 +113,10 @@
             <div class="container text-center">
                 &copy; 2024 - ArtInk.Site - <a href="#">Privacy</a>
             </div>
-             <!-- Icono de WhatsApp -->
+            <!-- Icono de WhatsApp -->
             <div class="whatsapp-icon">
                 <a href="https://wa.me/60106969" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                        alt="WhatsApp Icon" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon" />
                 </a>
             </div>
         </div>

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class ReservaController(IAPIArtInkClient cliente) : Controller
+public class ReservaController(IApiArtInkClient cliente) : Controller
 {
     public async Task<IActionResult> Index()
     {

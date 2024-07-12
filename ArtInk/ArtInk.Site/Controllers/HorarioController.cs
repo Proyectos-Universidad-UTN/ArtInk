@@ -8,14 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class HorarioController(IAPIArtInkClient cliente, IMapper mapper) : Controller
+public class HorarioController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
+    const string ERRORMESSAGE = "ErrorMessage";
+
     public async Task<IActionResult> Index()
     {
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<HorarioResponseDto>>(Constantes.GET, Constantes.GETALLHORARIOS);
         if (collection == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction("Index", "Home");
         }
         return View(collection);
@@ -32,7 +34,7 @@ public class HorarioController(IAPIArtInkClient cliente, IMapper mapper) : Contr
         var resultado = await cliente.ConsumirAPIAsync<HorarioResponseDto>(Constantes.POST, Constantes.POSTHORARIO, valoresConsumo: Serialization.Serialize(horario));
         if (resultado == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return View(horario);
         }
 
@@ -47,7 +49,7 @@ public class HorarioController(IAPIArtInkClient cliente, IMapper mapper) : Contr
         var horarioExisting = await cliente.ConsumirAPIAsync<HorarioResponseDto>(Constantes.GET, url);
         if (horarioExisting == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
 
@@ -65,7 +67,7 @@ public class HorarioController(IAPIArtInkClient cliente, IMapper mapper) : Contr
 
         if (resultado == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return View(horario);
         }
 

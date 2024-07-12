@@ -4,7 +4,7 @@
 
 <div class="row px-3">
     <div class="col-sm-12 col-md-12">
-        <label class="form-label">Agregar feriado</label>
+        <label for="" class="form-label">Agregar feriado</label>
     </div>
     <div class="col-sm-11 col-md-11">
         <select id="IdFeriadoSelect" class="form-select"
@@ -20,7 +20,7 @@
 </div>
 <div class="row px-3 pt-3">
     <div class="col-sm-12 col-md-12">
-        <label class="form-label">Feriados agregados</label>
+        <label for="" class="form-label">Feriados agregados</label>
     </div>
 </div>
 <ul class="list-group px-3 pb-3">
@@ -34,7 +34,7 @@
                     <input hidden name="FeriadosSucursal[@it.Index].Feriado.Nombre" value="@it.Value.Feriado.Nombre" />
                     <input hidden name="FeriadosSucursal[@it.Index].IdFeriado" value="@it.Value.IdFeriado" />
                     <div class="col-sm-12 col-md-6">
-                        <label class="form-label">@it.Value.Feriado.Nombre</label>
+                        <label for="" class="form-label">@it.Value.Feriado.Nombre</label>
                     </div>
                     <div class="col-sm-10 col-md-5">
                         <input asp-for="@Model.FeriadosSucursal[@it.Index].Fecha" id="@it.Value.Feriado.Id" data-anno="@it.Value.Anno" data-mes='@it.Value.Fecha.ToString("MM")' class="form-control text-end datepicker-fechas">

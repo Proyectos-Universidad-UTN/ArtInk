@@ -10,16 +10,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class SucursalFeriadoController(IAPIArtInkClient cliente, IMapper mapper) : Controller
+public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
+    const string INDEX = "Index";
+    const string ERRORMESSAGE = "ErrorMessage";
+
     public async Task<IActionResult> Index()
     {
         var collection = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
         collection.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
         if (collection == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index", "Home");
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX, "Home");
         }
 
         var annos = new List<int>();
@@ -38,11 +41,12 @@ public class SucursalFeriadoController(IAPIArtInkClient cliente, IMapper mapper)
     [HttpPost]
     public async Task<IActionResult> AgregarEliminarFeriadoSucursal(SucursalSucursalFeriado sucursalSucursalFeriado)
     {
+        const string FERIADOPARTIALVIEW = "~/Views/SucursalFeriado/_Feriados.cshtml";
         var feriados = await cliente.ConsumirAPIAsync<List<FeriadoResponseDto>>(Constantes.GET, Constantes.GETALLFERIADOS);
         if (feriados == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return PartialView("~/Views/SucursalFeriado/_Feriados.cshtml", sucursalSucursalFeriado);
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
         feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
@@ -52,13 +56,13 @@ public class SucursalFeriadoController(IAPIArtInkClient cliente, IMapper mapper)
         {
             sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.Where(m => m.IdFeriado != sucursalSucursalFeriado.IdFeriado).ToList();
             TempData["SuccessMessagePartial"] = "Feriado removido de la lista preliminar";
-            return PartialView("~/Views/SucursalFeriado/_Feriados.cshtml", sucursalSucursalFeriado);
+            return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
-        if (sucursalSucursalFeriado.FeriadosSucursal.Where(m => m.IdFeriado == sucursalSucursalFeriado.IdFeriado).Count() > 0)
+        if (sucursalSucursalFeriado.FeriadosSucursal.Where(m => m.IdFeriado == sucursalSucursalFeriado.IdFeriado).Any())
         {
             TempData["ErrorMessagePartial"] = "Feriado ya existe en lista preliminar";
-            return PartialView("~/Views/SucursalFeriado/_Feriados.cshtml", sucursalSucursalFeriado);
+            return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
         var url = string.Format(Constantes.GETFERIADOBYID, sucursalSucursalFeriado.IdFeriado);
@@ -66,13 +70,13 @@ public class SucursalFeriadoController(IAPIArtInkClient cliente, IMapper mapper)
         if (feriado == null)
         {
             TempData["ErrorMessagePartial"] = cliente.Error ? cliente.MensajeError : null;
-            return PartialView("~/Views/SucursalFeriado/_Feriados.cshtml", sucursalSucursalFeriado);
+            return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
         sucursalSucursalFeriado.FeriadosSucursal.Add(new SucursalFeriadoRequestDto()
         {
             IdFeriado = sucursalSucursalFeriado.IdFeriado,
-            Fecha = DateOnly.FromDateTime(new DateTime(sucursalSucursalFeriado.Anno, (int)feriado.Mes, feriado.Dia)),
+            Fecha = DateOnly.FromDateTime(new DateTime(sucursalSucursalFeriado.Anno, (int)feriado.Mes, feriado.Dia, 0, 0, 0, DateTimeKind.Local)),
             Feriado = feriado,
             Anno = sucursalSucursalFeriado.Anno
         });
@@ -80,38 +84,38 @@ public class SucursalFeriadoController(IAPIArtInkClient cliente, IMapper mapper)
         TempData["SuccessMessagePartial"] = "Feriado agregado a lista preliminar";
 
         sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.OrderBy(m => m.Fecha).ToList();
-        return PartialView("~/Views/SucursalFeriado/_Feriados.cshtml", sucursalSucursalFeriado);
+        return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
     }
 
     public async Task<IActionResult> Gestionar(byte idSucursal, short anno)
     {
         if (idSucursal == 0 || anno == 0)
         {
-            TempData["ErrorMessage"] = "Asegurese de seleccionar una sucursal y un año";
-            return RedirectToAction("Index");
+            TempData[ERRORMESSAGE] = "Asegurese de seleccionar una sucursal y un año";
+            return RedirectToAction(INDEX);
         }
 
         var url = string.Format(Constantes.GETSUCURSALFERIADO, idSucursal, anno);
         var sucursalFeriados = await cliente.ConsumirAPIAsync<IEnumerable<SucursalFeriadoResponseDto>>(Constantes.GET, url);
         if (sucursalFeriados == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index");
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX);
         }
 
         url = string.Format(Constantes.GETSUCURSALBYID, idSucursal);
         var sucursal = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.GET, url);
         if (sucursal == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index");
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX);
         }
 
         var feriados = await cliente.ConsumirAPIAsync<List<FeriadoResponseDto>>(Constantes.GET, Constantes.GETALLFERIADOS);
         if (feriados == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index");
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX);
         }
 
         var sucursalSucursalFeriado = new SucursalSucursalFeriado()
@@ -135,19 +139,19 @@ public class SucursalFeriadoController(IAPIArtInkClient cliente, IMapper mapper)
         if (feriado != null)
         {
             TempData["SuccessMessage"] = "Feriados guardados correctamente";
-            return RedirectToAction("Index");
+            return RedirectToAction(INDEX);
         }
 
         var feriados = await cliente.ConsumirAPIAsync<List<FeriadoResponseDto>>(Constantes.GET, Constantes.GETALLFERIADOS);
         if (feriados == null)
         {
-            TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index");
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX);
         }
         feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
         sucursalSucursalFeriado.Feriados = feriados;
 
-        TempData["ErrorMessage"] = cliente.Error ? cliente.MensajeError : null;
+        TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
         return View(sucursalSucursalFeriado);
     }
 }

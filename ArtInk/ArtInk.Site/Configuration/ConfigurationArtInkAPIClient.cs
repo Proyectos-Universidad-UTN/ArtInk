@@ -2,10 +2,10 @@
 
 namespace ArtInk.Site.Configuration;
 
-public static class ConfigurationArtInkAPIClient
+public static class ConfigurationArtInkApiClient
 {
     public static void ConfigureArtInkAPIClient(this IServiceCollection services)
     {
-        services.AddSingleton<IAPIArtInkClient, APIArtInkClient>(); // nunca va a cambiar 
+        services.AddSingleton<IApiArtInkClient, ApiArtInkClient>(); // nunca va a cambiar 
     }
 }

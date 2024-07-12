@@ -2,7 +2,7 @@
 
 namespace ArtInk.Site.Client;
 
-public interface IAPIArtInkClient
+public interface IApiArtInkClient
 {
     public bool Error { set; get; }
 

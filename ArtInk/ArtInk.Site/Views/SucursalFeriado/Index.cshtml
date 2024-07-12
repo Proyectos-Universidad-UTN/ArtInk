@@ -16,12 +16,12 @@ ViewData["Title"] = "Feriados sucursal";
 <div class="container">
     <div class="row mb-3">
         <div class="col-sm-12 col-md-4 col-lg-3">
-            <label class="form-label">Sucursal</label>
+            <label for="" class="form-label">Sucursal</label>
             <select id="IdSucursal" class="form-select reload-table"
                 asp-items='@(new SelectList(Model.Sucursales,"Id","Nombre"))'></select>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-3">
-            <label class="form-label">Año</label>
+            <label for="" class="form-label">Año</label>
             <select id="Anno" class="form-select reload-table" asp-items="@(new SelectList(Model.Annos))"></select>
         </div>
     </div>
