@@ -39,12 +39,9 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
     public async Task<IActionResult> AgregarEliminarHorarioSucursal(SucursalSucursalHorario sucursalSucursalHorario)
     {
         const string HORARIOSPARTIALVIEW = "~/Views/SucursalHorario/_Horarios.cshtml";
-        var horarios = await cliente.ConsumirAPIAsync<List<HorarioResponseDto>>(Constantes.GET, Constantes.GETALLHORARIOS);
-        if (horarios == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
-        }
+
+        var (falloEjecucion, horarios) = await ObtenerHorarios();
+        if (falloEjecucion) return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
 
         horarios.Insert(0, new HorarioResponseDto() { Id = 0, NombreSelect = "Seleccione un horario." });
         sucursalSucursalHorario.Horarios = horarios;
@@ -112,12 +109,8 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
             return RedirectToAction(INDEX);
         }
 
-        var horarios = await cliente.ConsumirAPIAsync<List<HorarioResponseDto>>(Constantes.GET, Constantes.GETALLHORARIOS);
-        if (horarios == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(INDEX);
-        }
+        var (falloEjecucion, horarios) = await ObtenerHorarios();
+        if (falloEjecucion) return RedirectToAction(INDEX);
 
         var sucursalSucursalHorario = new SucursalSucursalHorario()
         {
@@ -142,12 +135,9 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
             return RedirectToAction(INDEX);
         }
 
-        var horarios = await cliente.ConsumirAPIAsync<List<HorarioResponseDto>>(Constantes.GET, Constantes.GETALLHORARIOS);
-        if (horarios == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(INDEX);
-        }
+        var (falloEjecucion, horarios) = await ObtenerHorarios();
+        if (falloEjecucion) return RedirectToAction(INDEX);
+        
         horarios.Insert(0, new HorarioResponseDto() { Id = 0, NombreSelect = "Seleccione un horario." });
         sucursalSucursalHorario.Horarios = horarios;
 
@@ -159,5 +149,17 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
 
         TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
         return View(sucursalSucursalHorario);
+    }
+
+    private async Task<(bool fallo, List<HorarioResponseDto>)> ObtenerHorarios()
+    {
+        var horarios = await cliente.ConsumirAPIAsync<List<HorarioResponseDto>>(Constantes.GET, Constantes.GETALLHORARIOS);
+        if (horarios == null)
+        {
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return (true, null)!;
+        }
+
+        return (false, horarios);
     }
 }

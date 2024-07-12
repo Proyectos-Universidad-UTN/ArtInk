@@ -39,24 +39,13 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
 
     public async Task<IActionResult> Create()
     {
-        var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDto>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-        if (unidadMedida == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(nameof(Index));
-        }
-
-        var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDto>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-        if (categoria == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(nameof(Index));
-        }
+        var (falloEjecucion, unidadMedidas, categorias) = await ObtenerValoresInicialesSelect();
+        if (falloEjecucion) return RedirectToAction(nameof(Index));
 
         var producto = new ProductoRequestDto()
         {
-            UnidadMedidas = unidadMedida,
-            Categorias = categoria
+            UnidadMedidas = unidadMedidas,
+            Categorias = categorias
         };
         return View(producto);
     }
@@ -64,22 +53,11 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
     [HttpPost]
     public async Task<IActionResult> Create(ProductoRequestDto producto)
     {
-        var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDto>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-        if (unidadMedida == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(nameof(Index));
-        }
+        var (falloEjecucion, unidadMedidas, categorias) = await ObtenerValoresInicialesSelect();
+        if (falloEjecucion) return RedirectToAction(nameof(Index));
 
-        var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDto>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-        if (categoria == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(nameof(Index));
-        }
-
-        producto.UnidadMedidas = unidadMedida;
-        producto.Categorias = categoria;
+        producto.UnidadMedidas = unidadMedidas;
+        producto.Categorias = categorias;
 
         if (!ModelState.IsValid)
         {
@@ -111,23 +89,12 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
             return RedirectToAction(nameof(Index));
         }
 
-        var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDto>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-        if (unidadMedida == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(nameof(Index));
-        }
-
-        var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDto>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-        if (categoria == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(nameof(Index));
-        }
+        var (falloEjecucion, unidadMedidas, categorias) = await ObtenerValoresInicialesSelect();
+        if (falloEjecucion) return RedirectToAction(nameof(Index));
 
         var producto = mapper.Map<ProductoRequestDto>(productoExisting);
-        producto.UnidadMedidas = unidadMedida;
-        producto.Categorias = categoria;
+        producto.UnidadMedidas = unidadMedidas;
+        producto.Categorias = categorias;
 
         return View(producto);
     }
@@ -137,21 +104,11 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
     {
         var url = string.Format(Constantes.PUTPRODUCTO, producto.Id);
 
-        var unidadMedida = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDto>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
-        if (unidadMedida == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(nameof(Index));
-        }
-        producto.UnidadMedidas = unidadMedida;
+        var (falloEjecucion, unidadMedidas, categorias) = await ObtenerValoresInicialesSelect();
+        if (falloEjecucion) return RedirectToAction(nameof(Index));
 
-        var categoria = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDto>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
-        if (categoria == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(nameof(Index));
-        }
-        producto.Categorias = categoria;
+        producto.UnidadMedidas = unidadMedidas;
+        producto.Categorias = categorias;
 
         if (!ModelState.IsValid)
         {
@@ -174,4 +131,22 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
         return RedirectToAction(nameof(Index));
     }
 
+    private async Task<(bool fallo, IEnumerable<UnidadMedidaResponseDto>, IEnumerable<CategoriaResponseDto>)> ObtenerValoresInicialesSelect()
+    {
+        var unidadMedidas = await cliente.ConsumirAPIAsync<IEnumerable<UnidadMedidaResponseDto>>(Constantes.GET, Constantes.GETALLUNIDAMEDIDAS);
+        if (unidadMedidas == null)
+        {
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return (true, null, null)!;
+        }
+
+        var categorias = await cliente.ConsumirAPIAsync<IEnumerable<CategoriaResponseDto>>(Constantes.GET, Constantes.GETALLCATEGORIAS);
+        if (categorias == null)
+        {
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return (true, null, null)!;
+        }
+
+        return (false, unidadMedidas, categorias);
+    }
 }
