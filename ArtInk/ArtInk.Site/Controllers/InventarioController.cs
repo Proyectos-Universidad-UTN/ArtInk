@@ -38,8 +38,6 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
         var (falloEjecucion, sucursales) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
-        sucursales.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
-
         var inventario = new InventarioRequestDto()
         {
             Sucursales = sucursales
@@ -52,8 +50,6 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
     {
         var (falloEjecucion, sucursales) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
-
-        sucursales.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
 
         inventario.Sucursales = sucursales;
 
@@ -95,8 +91,6 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
             return RedirectToAction(nameof(Index));
         }
 
-        sucursales.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
-
         var producto = mapper.Map<InventarioRequestDto>(inventarioExisting);
         producto.Sucursales = sucursales;
 
@@ -114,8 +108,6 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction(nameof(Index));
         }
-
-        sucursales.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
 
         inventario.Sucursales = sucursales;
 
@@ -180,6 +172,7 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return (true, null)!;
         }
+        sucursales.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
 
         return (false, sucursales);
     }
