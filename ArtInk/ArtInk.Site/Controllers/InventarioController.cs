@@ -16,18 +16,13 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
 
     public async Task<IActionResult> Index()
     {
-        var collection = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
-        collection.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
-        if (collection == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index", "Home");
-        }
+        var (falloEjecucion, sucursales) = await ObtenerValoresInicialesSelect();
+        if (falloEjecucion) return RedirectToAction("Index", "Home");
 
         var sucursalFeriado = new SucursalInventario()
         {
             UrlAPI = cliente.BaseUrlAPI,
-            Sucursales = collection
+            Sucursales = sucursales
         };
 
         return View(sucursalFeriado);
