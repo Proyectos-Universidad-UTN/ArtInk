@@ -10,6 +10,8 @@ public record RequestReservaDto
 
     public short IdSucursalHorario { get; set; }
 
+    public byte IdSucursal { get; set; }
+
     public string Estado { get; set; } = null!;
 
     public bool Activo { get; set; }

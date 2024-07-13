@@ -10,8 +10,9 @@ public record ReservaRequestDto
 
     public TimeOnly Hora { get; set; }
 
-    [DisplayName("Horario")]
     public short IdSucursalHorario { get; set; }
+
+    public byte IdSucursal { get; set; }
 
     public string Estado { get; set; } = null!;
 

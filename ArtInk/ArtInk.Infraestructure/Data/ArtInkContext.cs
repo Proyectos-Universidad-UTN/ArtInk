@@ -382,10 +382,10 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
             entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
             entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
 
-            entity.HasOne(d => d.IdSucursalHorarioNavigation).WithMany(p => p.Reservas)
-                .HasForeignKey(d => d.IdSucursalHorario)
+            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Reservas)
+                .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Reserva_SucursalHorario");
+                .HasConstraintName("FK_Reserva_Sucursal");
 
             entity.HasOne(d => d.IdUsuarioSucursalNavigation).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.IdUsuarioSucursal)

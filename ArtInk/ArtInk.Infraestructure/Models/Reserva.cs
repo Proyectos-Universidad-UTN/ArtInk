@@ -8,8 +8,6 @@ public partial class Reserva
 
     public TimeOnly Hora { get; set; }
 
-    public short IdSucursalHorario { get; set; }
-
     public string Estado { get; set; } = null!;
 
     public bool Activo { get; set; }
@@ -24,9 +22,11 @@ public partial class Reserva
     
     public short IdUsuarioSucursal { get; set; }
 
-    public virtual SucursalHorario IdSucursalHorarioNavigation { get; set; } = null!;
+    public byte IdSucursal { get; set; }
 
     public virtual UsuarioSucursal IdUsuarioSucursalNavigation { get; set; } = null!;
+
+    public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
 
     public virtual ICollection<ReservaPregunta> ReservaPregunta { get; set; } = new List<ReservaPregunta>();
 

@@ -12,15 +12,15 @@ public record ReservaDto: BaseEntity
 
     public short IdSucursalHorario { get; set; }
 
+    public byte IdSucursal { get; set; }
+
     public string Estado { get; set; } = null!;
 
     public bool Activo { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
-    public virtual SucursalHorarioDto SucursalHorario { get; set; } = null!;
-
     public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
+
+    public virtual SucursalDto Sucursal { get; set; } = null!;
 
     public virtual ICollection<ReservaPreguntaDto> ReservaPregunta { get; set; } = new List<ReservaPreguntaDto>();
 

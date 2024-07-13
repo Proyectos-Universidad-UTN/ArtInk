@@ -11,17 +11,17 @@ public record ReservaResponseDto
 
     public TimeOnly Hora { get; set; }
 
-    public short IdSucursalHorario { get; set; }
-
     public string Estado { get; set; } = null!;
 
     public bool Activo { get; set; }
 
     public short IdUsuarioSucursal { get; set; }
 
-    public virtual SucursalHorarioResponseDto SucursalHorario { get; set; } = null!;
+    public byte IdSucursal { get; set; }
 
     public virtual UsuarioSucursalResponseDto UsuarioSucursal { get; set; } = null!;
+
+    public virtual SucursalResponseDto Sucursal { get; set; } = null!;
 
     public virtual ICollection<ReservaPreguntaResponseDto> ReservaPregunta { get; set; } = new List<ReservaPreguntaResponseDto>();
 
