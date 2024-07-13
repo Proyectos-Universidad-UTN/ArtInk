@@ -13,22 +13,15 @@ public class RepositoryReserva(ArtInkContext context) : IRepositoryReserva
         return await context.Set<Reserva>()
             .Include(a => a.ReservaServicios)
             .ThenInclude(a => a.IdServicioNavigation)
-            .Include(a => a.IdSucursalHorarioNavigation)
-            .ThenInclude(a => a.IdHorarioNavigation)
-            .Include(a => a.IdSucursalHorarioNavigation)
-            .ThenInclude(a => a.IdSucursalNavigation)
+            .Include(a => a.IdSucursalNavigation)
             .Include(a => a.ReservaPregunta)
         .FirstOrDefaultAsync(a => EF.Property<int>(a, keyProperty.Name) == id);
     }
 
-
     public async Task<ICollection<Reserva>> ListAsync(byte rol)
     {
         var collection = await context.Set<Reserva>()
-            .Include(a => a.IdSucursalHorarioNavigation)
-            .ThenInclude(a => a.IdSucursalNavigation)
-            .Include(a => a.IdSucursalHorarioNavigation)
-            .ThenInclude(a => a.IdHorarioNavigation)
+            .Include(a => a.IdSucursalNavigation)
             .Include(a => a.IdUsuarioSucursalNavigation)
             .ThenInclude(a => a.IdUsuarioNavigation)
             .Where(a => a.IdUsuarioSucursalNavigation.IdUsuarioNavigation.IdRol == rol)

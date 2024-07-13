@@ -12,7 +12,5 @@ public partial class SucursalHorario
     
     public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
 
-    public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
-
     public virtual ICollection<SucursalHorarioBloqueo> SucursalHorarioBloqueos { get; set; } = new List<SucursalHorarioBloqueo>();
 }
