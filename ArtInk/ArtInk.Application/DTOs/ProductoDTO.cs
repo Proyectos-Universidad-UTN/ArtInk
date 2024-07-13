@@ -31,4 +31,6 @@ public record ProductoDto : BaseEntity
     public virtual UnidadMedidaDto UnidadMedida { get; set; } = null!;
 
     public virtual ICollection<InventarioDto> Inventarios { get; set; } = new List<InventarioDto>();
+
+    public virtual ICollection<InventarioProductoDto> InventarioProductos { get; set; } = new List<InventarioProductoDto>();
 }

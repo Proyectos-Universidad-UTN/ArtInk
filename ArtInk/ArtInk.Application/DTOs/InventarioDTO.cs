@@ -7,21 +7,14 @@ public record InventarioDto: BaseEntity
 {
     public short Id { get; set; }
 
+    public string Nombre { get; set; } = null!;
+
     [DisplayName("Sucursal")]
     public byte IdSucursal { get; set; }
 
-    [DisplayName("Producto")]
-    public short IdProducto { get; set; }
-
-    public byte Disponible { get; set; }
-
-    [DisplayName("M�nima")]
-    public byte Minima { get; set; }
-
-    [DisplayName("M�xima")]
-    public byte Maxima { get; set; }
-
-    public virtual ProductoDto Producto { get; set; } = null!;
+    public bool Activo { get; set; }
 
     public virtual SucursalDto Sucursal { get; set; } = null!;
+
+    public virtual ICollection<InventarioProductoDto> InventarioProductos { get; set; } = new List<InventarioProductoDto>();
 }

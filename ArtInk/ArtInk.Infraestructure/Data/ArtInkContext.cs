@@ -35,6 +35,8 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
 
     public virtual DbSet<Producto> Productos { get; set; }
 
+    public virtual DbSet<InventarioProducto> InventarioProducto { get; set; }
+
     public virtual DbSet<Proveedor> Proveedors { get; set; }
 
     public virtual DbSet<Provincia> Provincia { get; set; }
@@ -291,11 +293,6 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
             entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
             entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
 
-            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.Inventarios)
-                .HasForeignKey(d => d.IdProducto)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Inventario_Producto");
-
             entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Inventarios)
                 .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -331,6 +328,23 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdUnidadMedida)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Producto_UnidadMedida");
+        });
+
+        modelBuilder.Entity<InventarioProducto>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_InventarioProducto");
+
+            entity.ToTable("InventarioProducto");
+
+            entity.HasOne(d => d.IdInventarioNavigation).WithMany(p => p.InventarioProductos)
+                .HasForeignKey(d => d.IdInventario)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_InventarioProducto_Inventario");
+
+            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.InventarioProductos)
+                .HasForeignKey(d => d.IdProducto)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_InventarioProducto_Producto");
         });
 
         modelBuilder.Entity<Proveedor>(entity =>

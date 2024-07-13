@@ -37,6 +37,7 @@ public static class Configuration
         services.AddTransient<IServiceSucursalFeriado, ServiceSucursalFeriado>();
         services.AddTransient<IServiceSucursalHorario, ServiceSucursalHorario>();
         services.AddTransient<IServiceSucursalHorarioBloqueo, ServiceSucursalHorarioBloqueo>();
+        services.AddTransient<IServiceInventario, ServiceInventario>();
     }
     public static void ConfigureAutoMapper(this IServiceCollection services)
     {

@@ -1,0 +1,43 @@
+@model ArtInk.Site.ViewModels.Request.InventarioRequestDto
+
+@{
+    ViewData["Title"] = "Crear inventario";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Formulario de Inventario</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="IdSucursal" class="form-label"></label>
+                            <select asp-for="IdSucursal" class="form-select" asp-items="@(new SelectList(Model.Sucursales,"Id","Nombre"))"></select>
+                            <span asp-validation-for="IdSucursal" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Nombre" class="form-label"></label>
+                            <input asp-for="Nombre" class="form-control" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
