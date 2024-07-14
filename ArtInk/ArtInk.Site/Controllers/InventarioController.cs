@@ -19,13 +19,13 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
         var (falloEjecucion, sucursales) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction("Index", "Home");
 
-        var sucursalFeriado = new SucursalInventario()
+        var sucursalInventario = new SucursalInventario()
         {
             UrlAPI = cliente.BaseUrlAPI,
             Sucursales = sucursales
         };
 
-        return View(sucursalFeriado);
+        return View(sucursalInventario);
     }
 
     public async Task<IActionResult> Create()
@@ -33,11 +33,11 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
         var (falloEjecucion, sucursales) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
-        var inventario = new InventarioRequestDto()
+        var sucursalInventario = new InventarioRequestDto()
         {
             Sucursales = sucursales
         };
-        return View(inventario);
+        return View(sucursalInventario);
     }
 
     [HttpPost]
@@ -60,7 +60,7 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
         var resultado = await cliente.ConsumirAPIAsync<InventarioResponseDto>(Constantes.POST, url, valoresConsumo: Serialization.Serialize(inventario));
         if (resultado == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return View(inventario);
         }
 
@@ -75,14 +75,14 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
         var inventarioExisting = await cliente.ConsumirAPIAsync<InventarioResponseDto>(Constantes.GET, url);
         if (inventarioExisting == null || !ModelState.IsValid)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(nameof(Index));
         }
 
         var (falloEjecucion, sucursales) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(nameof(Index));
         }
 
@@ -100,7 +100,7 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
         var (falloEjecucion, sucursales) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(nameof(Index));
         }
 
@@ -118,7 +118,7 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
 
         if (resultado == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return View(inventario);
         }
 
@@ -144,7 +144,7 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
 
         if (!resultado)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(nameof(Index));
         }
 
@@ -159,12 +159,14 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
         return RedirectToAction("Index", "Home");
     }
 
+    private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+
     private async Task<(bool fallo, List<SucursalResponseDto>)> ObtenerValoresInicialesSelect()
     {
         var sucursales = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
         if (sucursales == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null)!;
         }
         sucursales.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
