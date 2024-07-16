@@ -61,8 +61,10 @@ namespace ArtInk.Application.Profiles
             CreateMap<Genero, GeneroDto>();
             CreateMap<Impuesto, ImpuestoDto>();
             CreateMap<Inventario, InventarioDto>()
-                .ForMember(dest => dest.Producto, inp => inp.MapFrom(ori => ori.IdProductoNavigation))
                 .ForMember(dest => dest.Sucursal, inp => inp.MapFrom(ori => ori.IdSucursalNavigation));
+            CreateMap<InventarioProducto, InventarioProductoDto>()
+                .ForMember(dest => dest.Inventario, inp => inp.MapFrom(ori => ori.IdInventarioNavigation))
+                .ForMember(dest => dest.Producto, inp => inp.MapFrom(ori => ori.IdProductoNavigation));
             CreateMap<Proveedor, ProveedorDto>()
                  .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
             CreateMap<Provincia, ProvinciaDto>();

@@ -95,4 +95,11 @@ public static class Constantes
     public const string GETSUCURSALHORARIO = "SucursalHorario/{0}";
     public const string GETHORARIOBYSUCURSAL = "Sucursal/{0}/Horario";
     public const string POSTSUCURSALHORARIO = "Sucursal/{0}/Horario";
+
+    // Url inventario
+    public const string GETINVENTARIOSBYSUCURSAL = "Sucursal/{0}/Inventario";
+    public const string GETINVENTARIOBYID = "Inventario/{0}";
+    public const string POSTINVENTARIO = "Sucursal/{0}/Inventario";
+    public const string PUTINVENTARIO = "Sucursal/{0}/Inventario/{1}";
+    public const string DELETEINVENTARIO = "Inventario/{0}";
 }

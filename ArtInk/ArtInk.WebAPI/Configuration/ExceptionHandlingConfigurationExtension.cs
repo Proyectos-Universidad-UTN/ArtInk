@@ -35,15 +35,19 @@ public static class ExceptionHandlingConfigurationExtension
                 httpStatusCode = e.HttpStatusCode;
                 logLevel = e.LogLevel;
                 break;
+            case ArtInkException e:
+                httpStatusCode = e.HttpStatusCode;
+                logLevel = e.LogLevel;
+                break;
             case ValidationException:
             case FluentValidation.ValidationException:
             case ValidationEntityException:
                 httpStatusCode = HttpStatusCode.UnprocessableEntity;
                 logLevel = LogLevel.Information;
                 break;
-            case ListNotAddedException:
-                httpStatusCode = HttpStatusCode.Conflict;
-                logLevel = LogLevel.Information;
+            case ListNotAddedException e:
+                httpStatusCode = e.HttpStatusCode;
+                logLevel = e.LogLevel;
                 break;
             case BadRequestException:
                 httpStatusCode = HttpStatusCode.BadRequest;

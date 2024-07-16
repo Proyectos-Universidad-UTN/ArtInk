@@ -10,7 +10,6 @@ public partial class Producto
 
     public string Marca { get; set; } = null!;
 
- 
     public byte IdCategoria { get; set; }
 
     public decimal Costo { get; set; }
@@ -37,5 +36,5 @@ public partial class Producto
 
     public virtual UnidadMedida IdUnidadMedidaNavigation { get; set; } = null!;
 
-    public virtual ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();
+    public virtual ICollection<InventarioProducto> InventarioProductos { get; set; } = new List<InventarioProducto>();
 }

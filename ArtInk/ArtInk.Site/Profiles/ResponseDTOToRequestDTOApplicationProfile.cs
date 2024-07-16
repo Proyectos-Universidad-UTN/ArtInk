@@ -15,5 +15,6 @@ public class ResponseDtoToRequestDtoApplicationProfile: Profile
         CreateMap<ServicioResponseDto, ServicioRequestDto>();
         CreateMap<SucursalHorarioResponseDto, SucursalHorarioRequestDto>();
         CreateMap<HorarioResponseDto, HorarioRequestDto>();
+        CreateMap<InventarioResponseDto, InventarioRequestDto>();
     }
 }

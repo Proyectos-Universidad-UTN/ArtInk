@@ -33,5 +33,5 @@ public record ProductoResponseDto
 
     public virtual UnidadMedidaResponseDto UnidadMedida { get; set; } = null!;
 
-    public virtual ICollection<InventarioResponseDto> Inventarios { get; set; } = new List<InventarioResponseDto>();
+    public virtual ICollection<InventarioProductoResponseDto> InventarioProductos { get; set; } = new List<InventarioProductoResponseDto>();
 }
