@@ -22,10 +22,6 @@ public static class Constantes
     public const string GETALLROLS = "rol";
     public const string GETROLBYID = "rol/{0}";
 
-    //Url Reserva
-    public const string GETALLRESERVASBYROL = "rol/{0}/reserva";
-    public const string GETRESERVABYID = "reserva/{0}";
-
     //Url Sucursales
     public const string GETALLSUCURSALES = "sucursal";
     public const string GETSUCURSALBYID = "sucursal/{0}";
@@ -102,4 +98,10 @@ public static class Constantes
     public const string POSTINVENTARIO = "Sucursal/{0}/Inventario";
     public const string PUTINVENTARIO = "Sucursal/{0}/Inventario/{1}";
     public const string DELETEINVENTARIO = "Inventario/{0}";
+
+    //Url Reserva
+    public const string GETALLRESERVAS = "reserva";
+    public const string GETRESERVABYID = "reserva/{0}";
+    public const string POSTRESERVA = "reserva";
+    public const string PUTRESERVA = "reserva/{0}";
 }
