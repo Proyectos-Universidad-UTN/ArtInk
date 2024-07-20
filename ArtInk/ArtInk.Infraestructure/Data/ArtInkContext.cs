@@ -69,6 +69,8 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
 
     public virtual DbSet<SucursalHorarioBloqueo> SucursalHorarioBloqueos { get; set; }
 
+    public virtual DbSet<Pedido> Pedidos { get; set; }
+
     public IDbConnection Connection => Database.GetDbConnection();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -234,6 +236,43 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdUsuarioSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Factura_UsuarioSucursal");
+        });
+
+        modelBuilder.Entity<Pedido>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_pedido");
+
+            entity.ToTable("Pedido");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.MontoImpuesto).HasColumnType("money");
+            entity.Property(e => e.MontoTotal).HasColumnType("money");
+            entity.Property(e => e.NombreCliente).HasMaxLength(160);
+            entity.Property(e => e.PorcentajeImpuesto).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.SubTotal).HasColumnType("money");
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdCliente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_Cliente");
+
+            entity.HasOne(d => d.IdImpuestoNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdImpuesto)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_Impuesto");
+
+            entity.HasOne(d => d.IdTipoPagoNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdTipoPago)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_TipoPago");
+
+            entity.HasOne(d => d.IdUsuarioSucursalNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdUsuarioSucursal)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_UsuarioSucursal");
         });
 
         modelBuilder.Entity<Feriado>(entity =>
