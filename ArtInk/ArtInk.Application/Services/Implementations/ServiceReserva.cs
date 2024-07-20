@@ -12,7 +12,7 @@ using FluentValidation;
 namespace ArtInk.Application.Services.Implementations;
 
 public class ServiceReserva(IRepositoryReserva repository, IMapper mapper,
-                            IValidator<Reserva> reservaValidator) : IServiceReserva
+                            IValidator<Reserva> reservaValidator, IRepositorySucursalHorario repositorySucursalHorario) : IServiceReserva
 {
     public async Task<ReservaDto> CreateReservaAsync(RequestReservaDto reservaDTO)
     {
@@ -55,6 +55,21 @@ public class ServiceReserva(IRepositoryReserva repository, IMapper mapper,
         var reserva = mapper.Map<Reserva>(reservaDTO);
         await reservaValidator.ValidateAndThrowAsync(reserva);
         return reserva;
+    }
+
+    public async Task<ICollection<ReservaDto>> ReservaDiaBySucursalAsync(byte idSucursal, DateOnly dia)
+    {
+        var list = await repository.ReservaDiaBySucursalAsync(idSucursal, dia);
+        var collection = mapper.Map<ICollection<ReservaDto>>(list);
+
+        return collection;
+    }
+
+    public async Task DisponibilidadHoraria(byte idSucursal, DateOnly dia)
+    {
+        var horariosSucursal = (await repositorySucursalHorario.GetHorariosBySucursalAsync(idSucursal)).ToList();
+        //horariosSucursal.ForEach(horariosSucursal => )
+    
     }
 }
 

@@ -10,7 +10,10 @@ public interface IRepositoryReserva
 
     Task<ICollection<Reserva>> ListAsync();
 
+    Task<ICollection<Reserva>> ReservaDiaBySucursalAsync(byte idSucursal, DateOnly dia);
+
     Task<Reserva?> FindByIdAsync(int id);
 
     Task<bool> ExisteReserva(int id);
+
 }

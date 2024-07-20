@@ -12,4 +12,6 @@ public interface IServiceReserva
     Task<ReservaDto> CreateReservaAsync(RequestReservaDto reservaDTO);
 
     Task<ReservaDto> UpdateReservaAsync(int id, RequestReservaDto reservaDTO);
+
+    Task<ICollection<ReservaDto>> ReservaDiaBySucursalAsync(byte idSucursal, DateOnly dia);
 }

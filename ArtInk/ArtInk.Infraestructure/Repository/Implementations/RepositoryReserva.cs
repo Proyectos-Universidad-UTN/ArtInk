@@ -51,4 +51,13 @@ public class RepositoryReserva(ArtInkContext context) : IRepositoryReserva
             .AsNoTracking()
             .FirstOrDefaultAsync(a => EF.Property<int>(a, keyProperty.Name) == id) != null;
     }
+
+    public async Task<ICollection<Reserva>> ReservaDiaBySucursalAsync(byte idSucursal, DateOnly dia)
+    {
+        var collection = await context.Set<Reserva>()
+            .AsNoTracking()
+            .Where(m => m.IdSucursal == idSucursal && m.Fecha == dia )
+            .ToListAsync();
+        return collection;
+    }
 }
