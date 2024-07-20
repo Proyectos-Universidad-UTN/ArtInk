@@ -1,4 +1,5 @@
-﻿using ArtInk.Application.RequestDTOs;
+﻿using ArtInk.Application.DTOs;
+using ArtInk.Application.RequestDTOs;
 using ArtInk.Infraestructure.Models;
 using AutoMapper;
 
@@ -19,5 +20,7 @@ public class DtoToModelApplicationProfile : Profile
         CreateMap<RequestSucursalHorarioBloqueoDto, SucursalHorarioBloqueo>();
         CreateMap<RequestInventarioDto, Inventario>();
         CreateMap<RequestInventarioProductoDto, InventarioProducto>();
+        CreateMap<RequestFacturaDto, Factura>();
+        CreateMap<DetalleFacturaDto,  DetalleFactura>();
     }
 }

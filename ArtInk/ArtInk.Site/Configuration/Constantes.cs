@@ -18,6 +18,10 @@ public static class Constantes
     public const string POSTPRODUCTO = "producto";
     public const string PUTPRODUCTO = "producto/{0}";
 
+    //Url Clientes
+    public const string GETALLCLIENTES = "cliente";
+    public const string GETCLIENTEBYID = "cliente/{0}";
+
     //Url Rol
     public const string GETALLROLS = "rol";
     public const string GETROLBYID = "rol/{0}";
@@ -49,6 +53,7 @@ public static class Constantes
     //Url Facturas
     public const string GETALLFACTURAS = "factura";
     public const string GETFACTURABYID = "factura/{0}";
+    public const string POSTFACTURA = "factura";
 
     //Url DetalleFactura
     public const string GETALLDETALLEFACTURAS = "factura/{0}/detallefactura";
@@ -80,6 +85,9 @@ public static class Constantes
     //Url TipoServicio
     public const string GETALLTIPOSERVICIOS = "tiposervicio"; //minuscula es el endpoint del API
 
+    //Url TipoPago
+    public const string GETALLTIPOPAGOS = "tipopago";
+
     // Url feriados
     public const string GETALLFERIADOS = "feriado";
     public const string GETFERIADOBYID = "feriado/{0}";
@@ -95,6 +103,12 @@ public static class Constantes
     public const string GETSUCURSALHORARIO = "SucursalHorario/{0}";
     public const string GETHORARIOBYSUCURSAL = "Sucursal/{0}/Horario";
     public const string POSTSUCURSALHORARIO = "Sucursal/{0}/Horario";
+
+    // Url usuario Sucursales
+    public const string GETALLUSUARIOSUCURSALES = "usuariosucursal";
+
+    //Url Impuestos
+    public const string GETALLIMPUESTOS = "impuesto";
 
     // Url inventario
     public const string GETINVENTARIOSBYSUCURSAL = "Sucursal/{0}/Inventario";
