@@ -11,6 +11,7 @@ namespace ArtInk.Site.Controllers;
 public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
     const string ERRORMESSAGE = "ErrorMessage";
+
     public async Task<IActionResult> Index()
     {
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<ReservaResponseDto>>(Constantes.GET, Constantes.GETALLRESERVAS);
@@ -36,18 +37,17 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
         return View(collection);
     }
 
-        public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create()
     {
-       var reserva = new ReservaRequestDto();
-       return View(reserva);
+        var servicios = await cliente.ConsumirAPIAsync<IEnumerable<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
+
+        var reserva = new ReservaRequestDto();
+        return View(reserva);
     }
-
-
 
     [HttpPost]
     public async Task<IActionResult> Create(ReservaRequestDto reserva)
     {
-      
 
         var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDto>(Constantes.POST, Constantes.POSTRESERVA, valoresConsumo: Serialization.Serialize(reserva));
         if (resultado == null)

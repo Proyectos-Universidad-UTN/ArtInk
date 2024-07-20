@@ -1,11 +1,10 @@
-﻿@using ArtInk.Site.Models;
-@model IEnumerable<ArtInk.Site.ViewModels.Response.ProductoResponseDto>
+﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.ReservaResponseDto>
 
 @{
-    ViewData["Title"] = "Producto";
+    ViewData["Title"] = "Reserva";
 }
 
-<h1>Producto</h1>
+<h1>Reserva</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
@@ -24,12 +23,12 @@
             <div class="col-md-6 col-sm-12 col-xxl-3">
                 <div class="card mb-4 shadow-sm card-fixed-heigth sm">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nombre)</h5>
+                        <h5 class="card-title"><strong>Cita: </strong>@Html.DisplayFor(modelItem => item.Id)</h5>
                         <p class="card-text">
-                            <strong>Descripción:</strong> @Html.DisplayFor(modelItem => item.Descripcion)<br />
-                            <strong>Costo:</strong> @Html.DisplayFor(modelItem => item.Costo)<br />
-                            <strong>SKU:</strong> @Html.DisplayFor(modelItem => item.Sku)<br />
-                            <strong>Cantidad:</strong> @Html.DisplayFor(modelItem => item.Cantidad)<br />
+                            <strong>Sucursal:</strong> @Html.DisplayFor(modelItem => item.Sucursal.Nombre)<br />                           
+                            <strong>Fecha:</strong> @Html.DisplayFor(modelItem => item.Fecha)<br />
+                            <strong>Hora:</strong> @Html.DisplayFor(modelItem => item.Hora)<br />
+                            <strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado)<br />
                         </p>
                         <div class="mt-auto">
                             @await Html.PartialAsync("~/Views/Shared/_CommonActionsUser.cshtml", actions)

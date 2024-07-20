@@ -104,4 +104,9 @@ public static class Constantes
     public const string GETRESERVABYID = "reserva/{0}";
     public const string POSTRESERVA = "reserva";
     public const string PUTRESERVA = "reserva/{0}";
+
+    // Url ReservaServicio
+    public const string GETRESERVASERVICIO = "ReservaServicio/{0}";
+    public const string GETSERVICIOBYRESERVA = "Reserva/{0}/Servicio";
+    public const string POSTRESERVASERVICIO = "Reserva/{0}/Servicio";
 }

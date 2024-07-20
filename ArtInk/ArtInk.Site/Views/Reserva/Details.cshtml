@@ -5,109 +5,38 @@
 }
 
 <div class="container fade-in mt-5 mb-5 detalle-artink small-content">
-    <div class="accordion" id="accordion-servicios">
-        <table class="table table-striped table-dark table-hover">
+    <table class="table table-striped table-dark table-hover">
+        <thead>
             <tr>
-                <th colspan="2" class="bg-primary text-white text-center">Informacion de servicios</th>
+                <th colspan="2" class="bg-primary text-white text-center">Detalle Reserva</th>
             </tr>
-        </table>
-        @{
-            foreach (var reservaServicio in Model.ReservaServicios.Select((value, index) => new { value, index }))
-            {
-                <div class="accordion-item" id="servicio-@reservaServicio.index">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse-@reservaServicio.index" aria-controls="collapse-@reservaServicio.index">
-                            @string.Format("Servicio: {0}", reservaServicio.value.Servicio.Nombre)
-                        </button>
-                    </h2>
-                    <div id="collapse-@reservaServicio.index" class="accordion-collapse collapse"
-                        data-bs-parent="#accordion-servicios">
-                        <div class="accordion-body text black">
-                            <div class="container text-center text-black">
-                                <div class="row">
-                                    <div class="col">
-                                        @string.Format("Descripcion: {0}", reservaServicio.value.Servicio.Descripcion)
-                                    </div>
-                                    <div class="col">
-                                        @string.Format("Observacion: {0}", reservaServicio.value.Servicio.Observacion)
-                                    </div>
-                                    <div class="col">
-                                        @string.Format("Tarifa: {0}", reservaServicio.value.Servicio.Tarifa)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-    </div>
-
-    </br>
-
-    <table class="table table-striped table-dark table-hover">
-        <tr>
-            <th colspan="2" class="bg-primary text-white text-center">Informacion de servicios</th>
-        </tr>
-        <div>
-            <tr class="text-center">
-                <th>Sucursal</th>
-                <td>@Html.DisplayFor(model => model.Sucursal.Nombre)</td>
+        </thead>
+        <tbody>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <td>@Html.DisplayFor(model => model.Id)</td>
             </tr>
-            <tr class="text-center">
-                <th>Direccion</th>
-                <td>@Html.DisplayFor(model => model.Sucursal.DireccionExacta)</td>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                <td>@Html.DisplayFor(model => model.Estado)</td>
             </tr>
-            <tr class="text-center">
-                <th>Numero telefonico</th>
-                <td>@Html.DisplayFor(model => model.Sucursal.Telefono)</td>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Activo)</th>
+                <td>@Html.DisplayFor(model => model.Activo)</td>
             </tr>
-            <tr class="text-center">
-                <th>Correo Electronico</th>
-                <td>@Html.DisplayFor(model => model.Sucursal.CorreoElectronico)</td>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.IdUsuarioSucursal)</th>
+                <td>@Html.DisplayFor(model => model.IdUsuarioSucursal)</td>
             </tr>
-        </div>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.IdSucursal)</th>
+                <td>@Html.DisplayFor(model => model.IdSucursal)</td>
+            </tr>
+        </tbody>
     </table>
-
-    <table class="table table-striped table-dark table-hover">
-        <tr>
-            <th colspan="2" class="bg-primary text-white text-center">Informacion de Preguntas</th>
-        </tr>
-    </table>
-    @{
-        foreach (var reservaPregunta in Model.ReservaPregunta.Select(reservaPregunta => reservaPregunta))
-        {
-            <div>
-                <ul class="list-group" colspan="2">
-                    <div class="row">
-                    <li class="list-group-item">
-                        <div class="col">
-                                @string.Format(reservaPregunta.Pregunta)
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="col">
-                                @string.Format("Respuesta: {0}", reservaPregunta.Respuesta)
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        }
-    }
 
     <div class="mt-3">
-        <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-primary me-2">Editar</a>
-        <a href="@Url.Action("Index")" class="btn btn-secondary">Regresar</a>
+        <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-primary btn-sm flex-fill mx-1">Editar</a>
+        <a href="@Url.Action("Index")" class="btn btn-secondary btn-sm flex-fill mx-1">Regresar</a>
     </div>
 </div>
-
-<script>
-    $(document).ready(() => {
-        const $ddBtn = $('.my-jquery-collapse')
-        const $dd = $($ddBtn.data('my-target'))
-        $ddBtn.on('click', () => {
-            $dd.toggleClass('d-none')
-        })
-    })
-</script>
