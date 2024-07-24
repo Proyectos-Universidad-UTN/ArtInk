@@ -1,4 +1,5 @@
 ﻿using ArtInk.Application.DTOs;
+using ArtInk.Application.DTOs.Enums;
 using ArtInk.Application.RequestDTOs;
 using ArtInk.Infraestructure.Models;
 

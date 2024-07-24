@@ -46,6 +46,7 @@ public static class Configuration
         {
             config.AddProfile<ModelToDtoApplicationProfile>();
             config.AddProfile<DtoToModelApplicationProfile>();
+            config.AddProfile<MiscApplicationProfile>();
         });
     }
 }

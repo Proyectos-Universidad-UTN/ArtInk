@@ -20,12 +20,22 @@ public class ReservaController(IServiceReserva serviceReserva) : ControllerBase
     }
 
     [HttpGet("{idReserva}")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ReservaDto))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReservaDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetReservaByIdAsync(int idReserva)
     {
         var reserva = await serviceReserva.FindByIdAsync(idReserva);
+        return StatusCode(StatusCodes.Status200OK, reserva);
+    }
+
+    [HttpGet("~/Sucursal/{idSucursal}/Disponibilidad-Dia/{dia}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<TimeOnly>))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
+    public async Task<IActionResult> GetDisponibilidadHorarioBySucursalByDiaAsync(byte idSucursal, DateTime dia)
+    {
+        var reserva = await serviceReserva.DisponibilidadHoraria(idSucursal, new DateOnly(dia.Year, dia.Month, dia.Day));
         return StatusCode(StatusCodes.Status200OK, reserva);
     }
 

@@ -1,13 +1,14 @@
 ﻿using ArtInk.Application.Comunes;
 using ArtInk.Application.DTOs;
-using ArtInk.Application.DTOs.Enums;
 using ArtInk.Application.RequestDTOs;
 using ArtInk.Application.Services.Interfaces;
-using ArtInk.Application.Validations;
 using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
+using ArtInk.Utils;
 using AutoMapper;
 using FluentValidation;
+using App = ArtInk.Application.DTOs.Enums;
+using Infra = ArtInk.Infraestructure.Enums;
 
 namespace ArtInk.Application.Services.Implementations;
 
@@ -65,11 +66,27 @@ public class ServiceReserva(IRepositoryReserva repository, IMapper mapper,
         return collection;
     }
 
-    public async Task DisponibilidadHoraria(byte idSucursal, DateOnly dia)
+    public async Task<ICollection<TimeOnly>> DisponibilidadHoraria(byte idSucursal, DateOnly dia)
     {
-        var horariosSucursal = (await repositorySucursalHorario.GetHorariosBySucursalAsync(idSucursal)).ToList();
-        //horariosSucursal.ForEach(horariosSucursal => )
-    
+        var nombreDiaSemana = ManejoFechaHora.ObtenerDiaSemanaCRCulture(dia);
+        App.DiaSemana diaSemana = (App.DiaSemana)Enum.Parse(typeof(App.DiaSemana), nombreDiaSemana);
+
+        var horarioSucursal = await repositorySucursalHorario.GetHorarioBySucursalByDiaAsync(idSucursal, mapper.Map<Infra.DiaSemana>(diaSemana));
+        if (horarioSucursal == null) throw new NotFoundException("No se encontro horario en la sucursal.");
+
+        var rangoHorario = ManejoFechaHora.ObtenerHoras(horarioSucursal.IdHorarioNavigation.HoraInicio, horarioSucursal.IdHorarioNavigation.HoraFin.AddHours(-1));
+
+        foreach (var item in horarioSucursal.SucursalHorarioBloqueos)
+        {
+            var rangoHorarioBloqueo = ManejoFechaHora.ObtenerHoras(item.HoraInicio, item.HoraFin.AddHours(-1));
+            rangoHorario = rangoHorario.Except(rangoHorarioBloqueo).ToList();
+        }
+
+        var reservas = await ReservaDiaBySucursalAsync(idSucursal, dia);
+
+        rangoHorario = rangoHorario.Except(reservas.Select(a => a.Hora)).ToList();
+
+        return rangoHorario;
     }
 }
 

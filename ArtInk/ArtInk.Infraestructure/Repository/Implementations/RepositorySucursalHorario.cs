@@ -1,4 +1,5 @@
 ﻿using ArtInk.Infraestructure.Data;
+using ArtInk.Infraestructure.Enums;
 using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using Azure;
@@ -56,15 +57,7 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
     }
 
     public async Task<ICollection<SucursalHorario>> GetHorariosBySucursalAsync(byte idSucursal)
-    {
-        //var query = from s in context.SucursalHorarios.AsQueryable()
-        //            join h in context.Horarios.AsQueryable()
-        //                on s.IdHorario equals h.Id
-        //            join b in context.SucursalHorarioBloqueos.AsQueryable()
-        //                on s.Id equals b.IdSucursalHorario into bloqueos
-        //            from d in bloqueos.DefaultIfEmpty()
-        //            select 
-                     
+    {          
         var collection = await context.Set<SucursalHorario>()
            .AsNoTracking()
            .Include(m => m.IdHorarioNavigation)
@@ -74,6 +67,15 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
         return collection;
     }
 
+    public async Task<SucursalHorario?> GetHorarioBySucursalByDiaAsync(byte idSucursal, DiaSemana dia)
+    {
+        var horarioSucursal = await context.Set<SucursalHorario>()
+          .AsNoTracking()
+          .Include(m => m.IdHorarioNavigation)
+          .Include(v => v.SucursalHorarioBloqueos)
+          .FirstOrDefaultAsync(m => m.IdSucursal == idSucursal && m.IdHorarioNavigation.Dia == dia);
+        return horarioSucursal;
+    }
 
     public async Task<SucursalHorario?> GetSucursalHorarioByIdAsync(short id)
     {
