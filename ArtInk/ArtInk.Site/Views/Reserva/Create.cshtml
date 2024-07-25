@@ -11,24 +11,109 @@
         </div>
         <div class="card-body">
             <form asp-action="Create">
-                <div class="col-md-4">
+                <div class="card-boby">
                     <div class="mb-4">
+                        <h6>Sucursal</h6>
                         <select id="IdSucursal" name="IdSucursal" class="form-select" asp-items="@(new SelectList(Model.Sucursales, "Id", "Nombre"))">
                             <option value="">Seleccione una sucursal</option>
                         </select>
                         <span asp-validation-for="IdSucursal" class="text-danger"></span>
                     </div>
                 </div>
-            </form>
-            <div class="card-header">
-                <h4>Calendario</h4>
-                <div class="mb-4">
-                    <label for="datepicker" class="form-label">Selecciona una fecha:</label>
-                    <input type="text" id="datepicker" name="FechaReserva" class="form-control" placeholder="Selecciona una fecha">
-                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                <div class="card-boby">
+                    <div class="mb-4">
+                        <label for="datepicker" class="form-label"></label>
+                        <h6>Selecciona una fecha</h6>
+                        <input type="text" id="datepicker" name="FechaReserva" class="form-control" placeholder="Selecciona una fecha">
+                        <span asp-validation-for="Fecha" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
+                <div class="card-boby">
+                    <h6>Horarios disponibles</h6>
+                    <div class="mb-4">
+                        <select id="HorasDisponibles" name="HorasDisponibles" class="form-select">
+                            <option value="">Seleccione una hora</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card-boby">
+                    <h6>Servicios</h6>
+                    <div class="mb-4">
+                        <select id="ServiciosDisponibles" name="ServiciosDisponibles" class="form-select">
+                            <option value="">Seleccione un servicio</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="anestesia" class="form-label">¿Con o sin anestesia?</label>
+                    <input type="text" id="anestesia" name="Anestesia" class="form-control" placeholder="Responda aquí">
+                </div>
+
+                <div class="mb-4">
+                    <label for="primeraVez" class="form-label">¿Es su primera vez?</label>
+                    <input type="text" id="primeraVez" name="PrimeraVez" class="form-control" placeholder="Responda aquí">
+                </div>
+
+                <div class="mb-4">
+                    <label for="medio" class="form-label">¿Por cuál medio sabes de ArtInk Studio?</label>
+                    <input type="text" id="medio" name="Medio" class="form-control" placeholder="Responda aquí">
+                </div>
+
+                <div class="mb-4">
+                  
+                    <button type="submit" class="btn btn-primary">Reservar</button>
+    
+                    <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("Proforma", "Home")'">Proforma</button>
+
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Regresar</a>
+                </div>
+
+            </form>
         </div>
     </div>
-
 </div>
+
+
+
+@section Scripts {
+
+
+    <script>
+        $(document).ready(function () {
+            $('#IdSucursal, #datepicker').change(function () {
+                var sucursalId = $('#IdSucursal').val();
+                var fechaReserva = $('#datepicker').val();
+
+                if (sucursalId && fechaReserva) {
+                    // Ajustar el formato de la fecha (de dd/mm/yyyy a yyyy-MM-dd)
+                    var fechaParts = fechaReserva.split('/');
+                    var formattedFecha = fechaParts[2] + '-' + fechaParts[1] + '-' + fechaParts[0];
+
+                    $.ajax({
+                        url: `/api/Reserva/Sucursal/${sucursalId}/Disponibilidad-Dia/${formattedFecha}`,
+                        type: 'GET',
+                        success: function (data) {
+                            var select = $('#HorasDisponibles');
+                            select.empty();
+                            select.append('<option value="">Seleccione una hora</option>');
+                            $.each(data, function (index, hora) {
+                                select.append('<option value="' + hora + '">' + hora + '</option>');
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                }
+            });
+
+            $('#datepicker').datepicker({
+                dateFormat: 'dd/mm/yy',
+                autoclose: true
+            });
+        });
+
+    </script>
+}
