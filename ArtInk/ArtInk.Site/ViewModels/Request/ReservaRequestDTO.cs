@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ArtInk.Site.ViewModels.Response;
+using System.ComponentModel;
 
 namespace ArtInk.Site.ViewModels.Request;
 
@@ -17,4 +18,6 @@ public record ReservaRequestDto
     public string Estado { get; set; } = null!;
 
     public bool Activo { get; set; }
+
+    public IEnumerable<SucursalResponseDto>? Sucursales { get; set; }
 }

@@ -1,7 +1,7 @@
-﻿@model ArtInk.Site.ViewModels.Response.ReservaResponseDto
+﻿@model ArtInk.Site.ViewModels.Request.ReservaRequestDto
 
 @{
-    ViewData["Title"] = "Crear";
+    ViewData["Title"] = "Crear Reserva";
 }
 
 <div class="container mt-5">
@@ -11,72 +11,24 @@
         </div>
         <div class="card-body">
             <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="Id" class="form-label"></label>
-                            <input asp-for="Id" class="form-control" />
-                            <span asp-validation-for="Id" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="Estado" class="form-label"></label>
-                            <input asp-for="Estado" class="form-control" />
-                            <span asp-validation-for="Estado" class="text-danger"></span>
-                        </div>
+                <div class="col-md-4">
+                    <div class="mb-4">
+                        <select id="IdSucursal" name="IdSucursal" class="form-select" asp-items="@(new SelectList(Model.Sucursales, "Id", "Nombre"))">
+                            <option value="">Seleccione una sucursal</option>
+                        </select>
+                        <span asp-validation-for="IdSucursal" class="text-danger"></span>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group mb-3 form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Activo" /> @Html.DisplayNameFor(model => model.Activo)
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="IdUsuarioSucursal" class="form-label"></label>
-                            <input asp-for="IdUsuarioSucursal" class="form-control" />
-                            <span asp-validation-for="IdUsuarioSucursal" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="IdSucursal" class="form-label"></label>
-                            <input asp-for="IdSucursal" class="form-control" />
-                            <span asp-validation-for="IdSucursal" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group mb-3">
-                            <input type="submit" value="Crear" class="btn btn-primary" />
-                        </div>
-                    </div>
-                </div>
-
-                @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
             </form>
+            <div class="card-header">
+                <h4>Calendario</h4>
+                <div class="mb-4">
+                    <label for="datepicker" class="form-label">Selecciona una fecha:</label>
+                    <input type="text" id="datepicker" name="FechaReserva" class="form-control" placeholder="Selecciona una fecha">
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="container mt-3">
-    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

@@ -10,6 +10,7 @@ namespace ArtInk.Site.Controllers;
 
 public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
+    const string INDEX = "Index";
     const string ERRORMESSAGE = "ErrorMessage";
 
     public async Task<IActionResult> Index()
@@ -39,9 +40,17 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
 
     public async Task<IActionResult> Create()
     {
-        var servicios = await cliente.ConsumirAPIAsync<IEnumerable<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
+        var sucursal = await cliente.ConsumirAPIAsync<IEnumerable<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
+        if (sucursal == null)
+        {
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(INDEX);
+        }
 
-        var reserva = new ReservaRequestDto();
+        var reserva = new ReservaRequestDto()
+        {
+            Sucursales = sucursal
+        };
         return View(reserva);
     }
 
@@ -49,7 +58,25 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
     public async Task<IActionResult> Create(ReservaRequestDto reserva)
     {
 
-        var resultado = await cliente.ConsumirAPIAsync<ProductoResponseDto>(Constantes.POST, Constantes.POSTRESERVA, valoresConsumo: Serialization.Serialize(reserva));
+        var sucursal = await cliente.ConsumirAPIAsync<IEnumerable<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES); 
+        if (sucursal == null)
+        {
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return View(INDEX);
+        }
+
+        reserva.Sucursales = sucursal;
+
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return View(reserva);
+        }
+
+        var resultado = await cliente.ConsumirAPIAsync<ReservaResponseDto>(Constantes.POST, Constantes.POSTRESERVA, valoresConsumo: Serialization.Serialize(reserva));
+
         if (resultado == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
@@ -59,6 +86,7 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
         TempData["SuccessMessage"] = "Reserva creada correctamente.";
 
         return RedirectToAction(nameof(Index));
+
     }
 
     public async Task<IActionResult> Edit(int id)
@@ -71,7 +99,17 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
             return RedirectToAction(nameof(Index));
         }
 
+        var reservas = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
+        if (reservas == null)
+        {
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(nameof(Index));
+        }
+
+        reservas.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una reserva" });
+
         var reserva = mapper.Map<ReservaRequestDto>(reservaExisting);
+        reserva.Sucursales = reservas;
 
         return View(reserva);
     }
@@ -80,9 +118,25 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
     public async Task<IActionResult> Edit(ReservaRequestDto reserva)
     {
         var url = string.Format(Constantes.PUTRESERVA, reserva.Id);
+        var reservas = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLRESERVAS);
+        if (reservas == null)
+        {
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return RedirectToAction(nameof(Index));
+        }
+
+        reservas.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una reserva" });
+        reserva.Sucursales = reservas;
+
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return View(reserva);
+        }
 
         var resultado = await cliente.ConsumirAPIAsync<ReservaResponseDto>(Constantes.PUT, url, valoresConsumo: Serialization.Serialize(reserva));
-
         if (resultado == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
