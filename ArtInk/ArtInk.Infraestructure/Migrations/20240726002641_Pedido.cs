@@ -12,10 +12,11 @@ namespace ArtInk.Infraestructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<long>(
-                name: "PedidoId",
-                table: "DetalleFactura",
+                name: "IdPedido",
+                table: "Factura",
                 type: "bigint",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0L);
 
             migrationBuilder.CreateTable(
                 name: "Pedido",
@@ -64,10 +65,85 @@ namespace ArtInk.Infraestructure.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DetallePedido",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPedido = table.Column<long>(type: "bigint", nullable: false),
+                    IdServicio = table.Column<byte>(type: "tinyint", nullable: false),
+                    NumeroLinea = table.Column<byte>(type: "tinyint", nullable: false),
+                    Cantidad = table.Column<short>(type: "smallint", nullable: false),
+                    TarifaServicio = table.Column<decimal>(type: "money", nullable: false),
+                    MontoSubtotal = table.Column<decimal>(type: "money", nullable: false),
+                    MontoImpuesto = table.Column<decimal>(type: "money", nullable: false),
+                    MontoTotal = table.Column<decimal>(type: "money", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_detallePedido", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DetallePedido_Pedido",
+                        column: x => x.IdPedido,
+                        principalTable: "Pedido",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DetallePedido_Servicio",
+                        column: x => x.IdServicio,
+                        principalTable: "Servicio",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DetallePedidoProducto",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdDetallePedido = table.Column<long>(type: "bigint", nullable: false),
+                    IdProducto = table.Column<short>(type: "smallint", nullable: false),
+                    Cantidad = table.Column<decimal>(type: "decimal(6,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_[DetallePedidoProducto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DetallePedidoProducto_DetallePedido",
+                        column: x => x.IdDetallePedido,
+                        principalTable: "DetallePedido",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DetallePedidoProducto_Producto",
+                        column: x => x.IdProducto,
+                        principalTable: "Producto",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_DetalleFactura_PedidoId",
-                table: "DetalleFactura",
-                column: "PedidoId");
+                name: "IX_Factura_IdPedido",
+                table: "Factura",
+                column: "IdPedido");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetallePedido_IdPedido",
+                table: "DetallePedido",
+                column: "IdPedido");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetallePedido_IdServicio",
+                table: "DetallePedido",
+                column: "IdServicio");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetallePedidoProducto_IdDetallePedido",
+                table: "DetallePedidoProducto",
+                column: "IdDetallePedido");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetallePedidoProducto_IdProducto",
+                table: "DetallePedidoProducto",
+                column: "IdProducto");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pedido_IdCliente",
@@ -90,9 +166,9 @@ namespace ArtInk.Infraestructure.Migrations
                 column: "IdUsuarioSucursal");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_DetalleFactura_Pedido_PedidoId",
-                table: "DetalleFactura",
-                column: "PedidoId",
+                name: "FK_Factura_Pedido",
+                table: "Factura",
+                column: "IdPedido",
                 principalTable: "Pedido",
                 principalColumn: "Id");
         }
@@ -101,19 +177,25 @@ namespace ArtInk.Infraestructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_DetalleFactura_Pedido_PedidoId",
-                table: "DetalleFactura");
+                name: "FK_Factura_Pedido",
+                table: "Factura");
+
+            migrationBuilder.DropTable(
+                name: "DetallePedidoProducto");
+
+            migrationBuilder.DropTable(
+                name: "DetallePedido");
 
             migrationBuilder.DropTable(
                 name: "Pedido");
 
             migrationBuilder.DropIndex(
-                name: "IX_DetalleFactura_PedidoId",
-                table: "DetalleFactura");
+                name: "IX_Factura_IdPedido",
+                table: "Factura");
 
             migrationBuilder.DropColumn(
-                name: "PedidoId",
-                table: "DetalleFactura");
+                name: "IdPedido",
+                table: "Factura");
         }
     }
 }

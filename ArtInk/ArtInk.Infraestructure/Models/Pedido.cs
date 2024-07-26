@@ -34,7 +34,9 @@
 
         public string? UsuarioModificacion { get; set; }
 
-        public virtual ICollection<DetalleFactura> DetalleFacturas { get; set; } = new List<DetalleFactura>();
+        public virtual ICollection<DetallePedido> DetallePedidos { get; set; } = new List<DetallePedido>();
+
+        public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
 
         public virtual Cliente IdClienteNavigation { get; set; } = null!;
 
