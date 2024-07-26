@@ -75,6 +75,8 @@ namespace ArtInk.Application.Profiles
                  .ForMember(dest => dest.Usuario, inp => inp.MapFrom(ori => ori.IdUsuarioNavigation));
             CreateMap<Cliente, ClienteDto>()
                   .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
+            CreateMap<InventarioProductoMovimiento, InventarioProductoMovimientoDto>()
+                .ForMember(dest => dest.InventarioProducto, inp => inp.MapFrom(ori => ori.IdInventarioProductoNavigation));
         }
     }
 }

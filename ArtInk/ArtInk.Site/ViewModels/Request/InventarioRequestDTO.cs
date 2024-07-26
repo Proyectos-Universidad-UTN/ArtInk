@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using ArtInk.Site.ViewModels.Common;
 using ArtInk.Site.ViewModels.Response;
 
 namespace ArtInk.Site.ViewModels.Request;
@@ -14,6 +15,9 @@ public record InventarioRequestDto
     [DisplayName("Sucursal")]
     [Range(1, 99, ErrorMessage = "Seleccione una sucursal")]
     public byte IdSucursal { get; set; }
+
+    [DisplayName("Tipo de inventario")]
+    public TipoInventario TipoInventario { get; set; }
 
     public bool Activo { get; set; }
 

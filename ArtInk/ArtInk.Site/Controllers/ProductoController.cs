@@ -30,7 +30,7 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
 
         if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = "Valores de modelo invalidos";
+            TempData[ERRORMESSAGE] = "Valores de modelo invalidos";
             return RedirectToAction(nameof(Index));
         }
 

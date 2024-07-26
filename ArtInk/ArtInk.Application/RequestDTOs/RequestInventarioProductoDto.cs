@@ -8,9 +8,9 @@ public class RequestInventarioProductoDto
 
     public short IdProducto { get; set; }
 
-    public byte Disponible { get; set; }
+    public decimal Disponible { get; set; }
 
-    public byte Minima { get; set; }
+    public decimal Minima { get; set; }
 
-    public byte Maxima { get; set; }
+    public decimal Maxima { get; set; }
 }

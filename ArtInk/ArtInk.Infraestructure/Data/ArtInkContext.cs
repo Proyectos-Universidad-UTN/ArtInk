@@ -69,6 +69,8 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
 
     public virtual DbSet<SucursalHorarioBloqueo> SucursalHorarioBloqueos { get; set; }
 
+    public virtual DbSet<InventarioProductoMovimiento> InventarioProductoMovimientos { get; set; }
+
     public IDbConnection Connection => Database.GetDbConnection();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -288,6 +290,8 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
 
             entity.ToTable("Inventario");
 
+            entity.Property(a => a.TipoInventario).HasConversion(m => m.ToString(), b => (TipoInventario)Enum.Parse(typeof(TipoInventario), b));
+
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
             entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
             entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
@@ -306,7 +310,6 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
             entity.ToTable("Producto");
 
             entity.Property(e => e.Activo).HasDefaultValue(true);
-            entity.Property(e => e.Cantidad).HasColumnType("decimal(6, 2)");
             entity.Property(e => e.Costo).HasColumnType("money");
             entity.Property(e => e.Descripcion).HasMaxLength(150);
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
@@ -620,6 +623,25 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdSucursalHorario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SucursalHorarioBloqueo_SucursalHorario");
+        });
+
+        modelBuilder.Entity<InventarioProductoMovimiento>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_InventarioProductoMovimiento");
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.ToTable("InventarioProductoMovimiento");
+
+            entity.Property(a => a.TipoMovimiento).HasConversion(m => m.ToString(), b => (TipoMovimientoInventario)Enum.Parse(typeof(TipoMovimientoInventario), b));
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdInventarioProductoNavigation).WithMany(p => p.InventarioProductoMovimientos)
+                .HasForeignKey(d => d.IdInventarioProducto)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_InventarioProductoMovimiento_InventarioProducto");
         });
 
         OnModelCreatingPartial(modelBuilder);

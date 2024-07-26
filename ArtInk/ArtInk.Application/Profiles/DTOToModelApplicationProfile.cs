@@ -19,5 +19,6 @@ public class DtoToModelApplicationProfile : Profile
         CreateMap<RequestSucursalHorarioBloqueoDto, SucursalHorarioBloqueo>();
         CreateMap<RequestInventarioDto, Inventario>();
         CreateMap<RequestInventarioProductoDto, InventarioProducto>();
+        CreateMap<RequestInventarioProductoMovimientoDto, InventarioProductoMovimiento>();
     }
 }

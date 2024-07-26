@@ -22,8 +22,6 @@ public record ProductoResponseDto
 
     public string Sku { get; set; } = null!;
 
-    public decimal Cantidad { get; set; }
-
     [DisplayName("Unidad Medida")]
     public byte IdUnidadMedida { get; set; }
 

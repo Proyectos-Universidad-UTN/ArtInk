@@ -30,6 +30,8 @@ public static class Configuration
         services.AddTransient<IRepositorySucursalHorarioBloqueo, RepositorySucursalHorarioBloqueo>();
         services.AddTransient<IRepositorySucursalHorario, RepositorySucursalHorario>();
         services.AddTransient<IRepositoryInventario, RepositoryInventario>();
+        services.AddTransient<IRepositoryInventarioProducto, RepositoryInventarioProducto>();
+        services.AddTransient<IRepositoryInventarioProductoMovimiento, RepositoryInventarioProductoMovimiento>();
     }
 }
 // es una extencion xq usa la palabra this

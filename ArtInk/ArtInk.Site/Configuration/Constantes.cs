@@ -14,6 +14,7 @@ public static class Constantes
 
     //Url Productos
     public const string GETALLPRODUCTOS = "producto";
+    public const string GETALLPRODUCTOSEXCLUDINGINVENTARIOPRODUCTO = "producto?excludeProductosInventario=true&idInventario={0}";
     public const string GETPRODUCTOBYID = "producto/{0}";
     public const string POSTPRODUCTO = "producto";
     public const string PUTPRODUCTO = "producto/{0}";
@@ -102,4 +103,12 @@ public static class Constantes
     public const string POSTINVENTARIO = "Sucursal/{0}/Inventario";
     public const string PUTINVENTARIO = "Sucursal/{0}/Inventario/{1}";
     public const string DELETEINVENTARIO = "Inventario/{0}";
+
+    // Url inventario producto
+    public const string GETINVENTARIOPRODUCTO = "InventarioProducto/{0}";
+    public const string POSTINVENTARIOPRODUCTO = "InventarioProducto";
+    public const string PUTINVENTARIOPRODUCTO = "InventarioProducto/{0}";
+
+    // Url inventario producto movimiento
+    public const string POSTINVENTARIOPRODUCTOMOVIMIENTO = "InventarioProductoMovimiento";
 }
