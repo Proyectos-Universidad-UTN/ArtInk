@@ -23,6 +23,11 @@ namespace ArtInk.Application.Profiles
                 .ForMember(dest => dest.TipoPago, inp => inp.MapFrom(ori => ori.IdTipoPagoNavigation))
                 .ForMember(dest => dest.UsuarioSucursal, inp => inp.MapFrom(ori => ori.IdUsuarioSucursalNavigation))
                 .ForMember(dest => dest.Impuesto, inp => inp.MapFrom(ori => ori.IdImpuestoNavigation));
+            CreateMap<Pedido, PedidoDto>()
+               .ForMember(dest => dest.Cliente, inp => inp.MapFrom(ori => ori.IdClienteNavigation))
+               .ForMember(dest => dest.TipoPago, inp => inp.MapFrom(ori => ori.IdTipoPagoNavigation))
+               .ForMember(dest => dest.UsuarioSucursal, inp => inp.MapFrom(ori => ori.IdUsuarioSucursalNavigation))
+               .ForMember(dest => dest.Impuesto, inp => inp.MapFrom(ori => ori.IdImpuestoNavigation));
             CreateMap<Sucursal, SucursalDto>()
                 .ForMember(dest => dest.Distrito, inp => inp.MapFrom(ori => ori.IdDistritoNavigation));
             CreateMap<Inventario, InventarioDto>();
@@ -54,8 +59,14 @@ namespace ArtInk.Application.Profiles
             CreateMap<DetalleFactura, DetalleFacturaDto>()
                 .ForMember(dest => dest.Factura, inp => inp.MapFrom(ori => ori.IdFacturaNavigation))
                 .ForMember(dest => dest.Servicio, inp => inp.MapFrom(ori => ori.IdServicioNavigation));
+            CreateMap<DetallePedido, DetallePedidoDto>()
+                .ForMember(dest => dest.Pedido, inp => inp.MapFrom(ori => ori.IdPedidoNavigation))
+                .ForMember(dest => dest.Servicio, inp => inp.MapFrom(ori => ori.IdServicioNavigation));
             CreateMap<DetalleFacturaProducto, DetalleFacturaProductoDto>()
                 .ForMember(dest => dest.DetalleFactura, inp => inp.MapFrom(ori => ori.IdDetalleFacturaNavigation))
+                .ForMember(dest => dest.Producto, inp => inp.MapFrom(ori => ori.IdProductoNavigation));
+            CreateMap<DetallePedidoProducto, DetallePedidoProductoDto>()
+                .ForMember(dest => dest.DetallePedido, inp => inp.MapFrom(ori => ori.IdDetallePedidoNavigation))
                 .ForMember(dest => dest.Producto, inp => inp.MapFrom(ori => ori.IdProductoNavigation));
             CreateMap<Feriado, FeriadoDto>();
             CreateMap<Genero, GeneroDto>();

@@ -21,6 +21,9 @@ public class DtoToModelApplicationProfile : Profile
         CreateMap<RequestInventarioDto, Inventario>();
         CreateMap<RequestInventarioProductoDto, InventarioProducto>();
         CreateMap<RequestFacturaDto, Factura>();
-        CreateMap<DetalleFacturaDto,  DetalleFactura>();
+        CreateMap<RequestDetalleFacturaDto,  DetalleFactura>();
+        CreateMap<RequestPedidoDto, Pedido>();
+        CreateMap<RequestDetallePedidoDto, DetallePedido>();
+
     }
 }
