@@ -1,5 +1,6 @@
 ﻿using ArtInk.Site.Client;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.ViewModels.Common;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
@@ -12,6 +13,7 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
 {
     const string INDEX = "Index";
     const string ERRORMESSAGE = "ErrorMessage";
+    const string SINHORARIO = "Sin horarios disponibles";
 
     public async Task<IActionResult> Index()
     {
@@ -40,17 +42,24 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
 
     public async Task<IActionResult> Create()
     {
-        var sucursal = await cliente.ConsumirAPIAsync<IEnumerable<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
-        if (sucursal == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction(INDEX);
-        }
+        var (falloEjecucion, sucursales, servicios, clientes) = await ObtenerValoresInicialesCreateEdit();
+        if (falloEjecucion) return RedirectToAction(INDEX);
 
         var reserva = new ReservaRequestDto()
         {
-            Sucursales = sucursal
+            Sucursales = sucursales,
+            ServiciosReserva = servicios,
+            Fecha = DateOnly.FromDateTime(DateTime.Now),
+            Horarios = new List<ReservaHorario>() { new ReservaHorario() { Hora = SINHORARIO } },
+            Clientes = clientes,
+            ReservaPregunta = new List<ReservaPreguntaRequestDto>()
+            {
+                new ReservaPreguntaRequestDto(){ Id = 1, Pregunta = "¿Cuál es el propósito de su visita?" },
+                new ReservaPreguntaRequestDto(){ Id = 2, Pregunta = "¿Tiene alguna alergia conocida?" },
+                new ReservaPreguntaRequestDto(){ Id = 3, Pregunta = "¿Prefiere alguna hora específica?" },
+            }
         };
+
         return View(reserva);
     }
 
@@ -58,7 +67,7 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
     public async Task<IActionResult> Create(ReservaRequestDto reserva)
     {
 
-        var sucursal = await cliente.ConsumirAPIAsync<IEnumerable<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES); 
+        var sucursal = await cliente.ConsumirAPIAsync<IEnumerable<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
         if (sucursal == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
@@ -148,4 +157,50 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
         return RedirectToAction(nameof(Index));
     }
 
+    #region Carga de parciales
+
+    [HttpPost]
+    public async Task<IActionResult> CargarHorarios(ReservaRequestDto reserva)
+    {
+        const string HORARIOPARTIALVIEW = "~/Views/Reserva/_HorariosDisponibles.cshtml";
+        string url = String.Format(Constantes.GETALLHORADISPONIBLE, reserva.IdSucursal, reserva.Fecha.ToString("yyyy-MM-dd"));
+
+        var horas = await cliente.ConsumirAPIAsync<List<TimeOnly>>(Constantes.GET, url);
+        reserva.Horarios = horas == null ? new List<ReservaHorario>() { new ReservaHorario() { Hora = SINHORARIO } } : (from a in horas select new ReservaHorario() { Horario = a }).ToList();
+
+        return PartialView(HORARIOPARTIALVIEW, reserva);
+    }
+
+    #endregion
+
+    private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+
+    private async Task<(bool, List<SucursalResponseDto>, List<ServicioResponseDto>, List<ClienteResponseDto>)> ObtenerValoresInicialesCreateEdit()
+    {
+        var sucursales = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
+        if (sucursales == null)
+        {
+            SetErrorMessage();
+            return (true, null, null, null)!;
+        }
+        sucursales.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
+
+        var servicios = await cliente.ConsumirAPIAsync<List<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
+        if (servicios == null)
+        {
+            SetErrorMessage();
+            return (true, null, null, null)!;
+        }
+        servicios.Insert(0, new ServicioResponseDto() { Id = 0, Nombre = "Seleccione un servicio" });
+
+        var clientes = await cliente.ConsumirAPIAsync<List<ClienteResponseDto>>(Constantes.GET, Constantes.GETALLCLIENTES);
+        if (servicios == null)
+        {
+            SetErrorMessage();
+            return (true, null, null, null)!;
+        }
+        clientes.Insert(0, new ClienteResponseDto() { Id = 0, Nombre = "Seleccione un cliente" });
+
+        return (false, sucursales, servicios, clientes);
+    }
 }

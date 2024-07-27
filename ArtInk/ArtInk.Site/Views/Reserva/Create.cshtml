@@ -1,7 +1,7 @@
 ﻿@model ArtInk.Site.ViewModels.Request.ReservaRequestDto
 
 @{
-    ViewData["Title"] = "Crear Reserva";
+ViewData["Title"] = "Crear Reserva";
 }
 
 <div class="container mt-5">
@@ -10,64 +10,91 @@
             <h4>Formulario de Reserva</h4>
         </div>
         <div class="card-body">
-            <form asp-action="Create">
-                <div class="card-boby">
-                    <div class="mb-4">
-                        <h6>Sucursal</h6>
-                        <select id="IdSucursal" name="IdSucursal" class="form-select" asp-items="@(new SelectList(Model.Sucursales, "Id", "Nombre"))">
-                            <option value="">Seleccione una sucursal</option>
-                        </select>
+            <form asp-action="Create" class="form-object">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 mb-4">
+                        <label asp-for="IdSucursal" class="form-label"></label>
+                        <select id="IdSucursal" name="IdSucursal" class="form-select cargar-horario"
+                            asp-items='@(new SelectList(Model.Sucursales, "Id", "Nombre" ))'></select>
                         <span asp-validation-for="IdSucursal" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="card-boby">
-                    <div class="mb-4">
-                        <label for="datepicker" class="form-label"></label>
-                        <h6>Selecciona una fecha</h6>
-                        <input type="text" id="datepicker" name="FechaReserva" class="form-control" placeholder="Selecciona una fecha">
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 mb-4">
+                        <label asp-for="IdCliente" class="form-label"></label>
+                        <select asp-for="IdCliente" class="form-select nombre-cliente"
+                            asp-items='@(new SelectList(Model.Clientes, "Id", "Nombre" ))'></select>
+                        <span asp-validation-for="IdCliente" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6 col-md-6 mb-4">
+                        <label asp-for="NombreCliente" class="form-label"></label>
+                        <input asp-for="NombreCliente" id="NombreCliente" class="form-control" >
+                        <span asp-validation-for="NombreCliente" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 mb-4">
+                        <label asp-for="Fecha" class="form-label"></label>
+                        <input asp-for="Fecha" id="Fecha" class="form-control date-picker-reserva cargar-horario"
+                            placeholder="Selecciona una fecha">
                         <span asp-validation-for="Fecha" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="card-boby">
-                    <h6>Horarios disponibles</h6>
-                    <div class="mb-4">
-                        <select id="HorasDisponibles" name="HorasDisponibles" class="form-select">
-                            <option value="">Seleccione una hora</option>
-                        </select>
+                    <div class="col-sm-12 col-md-6 mb-4" id="HorariosDisponibles">
+                        @await Html.PartialAsync("~/Views/Reserva/_HorariosDisponibles.cshtml", Model)
                     </div>
                 </div>
 
-                <div class="card-boby">
-                    <h6>Servicios</h6>
-                    <div class="mb-4">
-                        <select id="ServiciosDisponibles" name="ServiciosDisponibles" class="form-select">
-                            <option value="">Seleccione un servicio</option>
-                        </select>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <label for="IdServicio" class="form-label">Servicios</label>
+                    </div>
+                    <div class="col-sm-10 col-md-11">
+                        <select id="IdServicio" class="form-select"
+                            asp-items='@(new SelectList(Model.ServiciosReserva, "Id" , "DescripcionCompletaSelect"))'></select>
+                    </div>
+                    <div class="col-sm-2 col-md-1">
+                        <button type="button" class="btn btn-success btn-sm flex-fill m-0"
+                            onclick="agregarServicio(this)">
+                            <span class="material-symbols-outlined">
+                                add
+                            </span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label for="anestesia" class="form-label">¿Con o sin anestesia?</label>
-                    <input type="text" id="anestesia" name="Anestesia" class="form-control" placeholder="Responda aquí">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 mb-4" id="ServiciosAgregados">
+                        @await Html.PartialAsync("~/Views/Reserva/_ServiciosReserva.cshtml", Model)
+                    </div>
                 </div>
 
-                <div class="mb-4">
-                    <label for="primeraVez" class="form-label">¿Es su primera vez?</label>
-                    <input type="text" id="primeraVez" name="PrimeraVez" class="form-control" placeholder="Responda aquí">
-                </div>
+                @{
+                    foreach(var it in Model.ReservaPregunta.Select((x, i) => new { Value = x, Index = i }))
+                    {
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input hidden asp-for="@Model.ReservaPregunta[it.Index].Pregunta">
+                                    <textarea asp-for="@Model.ReservaPregunta[it.Index].Respuesta" style="height: 100px" class="form-control"></textarea>
+                                    <label class="form-label">@it.Value.Pregunta</label>
+                                    <span asp-validation-for="@Model.ReservaPregunta[it.Index].Respuesta" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
 
                 <div class="mb-4">
-                    <label for="medio" class="form-label">¿Por cuál medio sabes de ArtInk Studio?</label>
-                    <input type="text" id="medio" name="Medio" class="form-control" placeholder="Responda aquí">
-                </div>
 
-                <div class="mb-4">
-                  
-                    <button type="submit" class="btn btn-primary">Reservar</button>
+                    <!-- <button type="submit" class="btn btn-primary">Reservar</button>
     
                     <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("Proforma", "Home")'">Proforma</button>
 
-                    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Regresar</a>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Regresar</a> -->
                 </div>
 
             </form>
@@ -76,44 +103,125 @@
 </div>
 
 
-
-@section Scripts {
-
-
-    <script>
-        $(document).ready(function () {
-            $('#IdSucursal, #datepicker').change(function () {
-                var sucursalId = $('#IdSucursal').val();
-                var fechaReserva = $('#datepicker').val();
-
-                if (sucursalId && fechaReserva) {
-                    // Ajustar el formato de la fecha (de dd/mm/yyyy a yyyy-MM-dd)
-                    var fechaParts = fechaReserva.split('/');
-                    var formattedFecha = fechaParts[2] + '-' + fechaParts[1] + '-' + fechaParts[0];
-
-                    $.ajax({
-                        url: `/api/Reserva/Sucursal/${sucursalId}/Disponibilidad-Dia/${formattedFecha}`,
-                        type: 'GET',
-                        success: function (data) {
-                            var select = $('#HorasDisponibles');
-                            select.empty();
-                            select.append('<option value="">Seleccione una hora</option>');
-                            $.each(data, function (index, hora) {
-                                select.append('<option value="' + hora + '">' + hora + '</option>');
-                            });
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
-                }
-            });
-
-            $('#datepicker').datepicker({
-                dateFormat: 'dd/mm/yy',
-                autoclose: true
-            });
+@await Html.PartialAsync("_ValidationScriptsPartial")
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/locales/es.js"></script>
+<script>
+    const elems = document.querySelectorAll('.date-picker-reserva');
+    elems.forEach(elem => {
+        var datePicker = new Datepicker(elem, {
+            format: 'dd/mm/yyyy',
+            language: 'es',
+            minDate: 'today'
         });
 
-    </script>
-}
+        datePicker.element.addEventListener('changeDate', (e) => {
+            cargarHorarios()
+        })
+    })
+
+    const agregarServicio = (button) => {
+        // const host = window.location.host;
+        // const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalFeriado/AgregarEliminarFeriadoSucursal";
+        // $("#Accion").val('A')
+        // $("#IdFeriado").val($("#IdFeriadoSelect").val())
+        // const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        // $.ajax({
+        //     url: url,
+        //     data: valoresForm,
+        //     type: "post",
+        //     processData: false,
+        //     contentType: false,
+        //     success: (result) => {
+        //         $("#feriados").html(result);
+        //     }
+        // })
+    }
+
+    const eliminarServicio = (buttton) => {
+        // const host = window.location.host;
+        // const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalFeriado/AgregarEliminarFeriadoSucursal";
+        // $("#Accion").val("R")
+        // $("#IdFeriado").val($(buttton).data("feriado"))
+        // const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        // $.ajax({
+        //     url: url,
+        //     data: valoresForm,
+        //     type: "post",
+        //     processData: false,
+        //     contentType: false,
+        //     success: (result) => {
+        //         $("#feriados").html(result);
+        //     }
+        // })
+    }
+
+    const cargarHorarios = () => {
+        var idSucursal = $('#IdSucursal').val();
+        var fechaReserva = $('#Fecha').val();
+        if (idSucursal == 0) return
+
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/Reserva/CargarHorarios";
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#HorariosDisponibles").html(result);
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        $(".cargar-horario").on('change', function () {
+            cargarHorarios()
+        })
+
+        $(".nombre-cliente").on('change', function(){
+            $("#NombreCliente").val($(".nombre-cliente option:selected").text())
+        })
+    })
+</script>
+
+
+
+<!-- // $(document).ready(function () {
+        //     $('#IdSucursal, #datepicker').change(function () {
+        //         var sucursalId = $('#IdSucursal').val();
+        //         var fechaReserva = $('#datepicker').val();
+
+        //         if (sucursalId && fechaReserva) {
+        //             // Ajustar el formato de la fecha (de dd/mm/yyyy a yyyy-MM-dd)
+        //             var fechaParts = fechaReserva.split('/');
+        //             var formattedFecha = fechaParts[2] + '-' + fechaParts[1] + '-' + fechaParts[0];
+
+        //             $.ajax({
+        //                 url: `/api/Reserva/Sucursal/${sucursalId}/Disponibilidad-Dia/${formattedFecha}`,
+        //                 type: 'GET',
+        //                 success: function (data) {
+        //                     var select = $('#HorasDisponibles');
+        //                     select.empty();
+        //                     select.append('<option value="">Seleccione una hora</option>');
+        //                     $.each(data, function (index, hora) {
+        //                         select.append('<option value="' + hora + '">' + hora + '</option>');
+        //                     });
+        //                 },
+        //                 error: function (xhr, status, error) {
+        //                     console.error(error);
+        //                 }
+        //             });
+        //         }
+        //     });
+
+        //     $('#datepicker').datepicker({
+        //         dateFormat: 'dd/mm/yy',
+        //         autoclose: true
+        //     });
+        // }); -->

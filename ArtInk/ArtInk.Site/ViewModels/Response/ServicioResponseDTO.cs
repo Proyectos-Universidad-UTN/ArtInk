@@ -24,4 +24,12 @@ public record ServicioResponseDto
     public bool Activo { get; set; }
 
     public virtual TipoServicioResponseDto TipoServicio { get; set; } = null!;
+
+    private string DescripcionCompleta;
+
+    public string DescripcionCompletaSelect
+    {
+        get => Id == 0 ? Nombre : $"{TipoServicio.Nombre} : {Descripcion} - {Tarifa.ToString("¢#,##0.00")}";
+        set => DescripcionCompleta = value;
+    }
 }

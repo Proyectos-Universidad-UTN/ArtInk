@@ -29,7 +29,7 @@ public class ReservaController(IServiceReserva serviceReserva) : ControllerBase
         return StatusCode(StatusCodes.Status200OK, reserva);
     }
 
-    [HttpGet("~/Sucursal/{idSucursal}/Disponibilidad-Dia/{dia}")]
+    [HttpGet("~/api/Sucursal/{idSucursal}/Disponibilidad-Dia/{dia}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<TimeOnly>))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]

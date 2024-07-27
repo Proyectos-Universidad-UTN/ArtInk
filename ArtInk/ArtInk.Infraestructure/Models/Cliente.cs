@@ -28,5 +28,7 @@ public partial class Cliente
 
     public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
 
+    public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
+
     public virtual Distrito IdDistritoNavigation { get; set; } = null!;
 }

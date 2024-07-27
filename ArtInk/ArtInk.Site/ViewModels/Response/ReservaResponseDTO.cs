@@ -21,12 +21,17 @@ public record ReservaResponseDto
     [DisplayName("Sucursal")]
     public byte IdSucursal { get; set; }
 
+    public short IdCliente { get; set; }
 
-    [DisplayName("Usuarui Sucursal")]
+    [DisplayName("Cliente")]
+    public string NombreCliente { get; set; } = null!;
+
+    [DisplayName("Usuario Sucursal")]
     public virtual UsuarioSucursalResponseDto UsuarioSucursal { get; set; } = null!;
 
     public virtual SucursalResponseDto Sucursal { get; set; } = null!;
 
+    public virtual ClienteResponseDto Cliente { get; set; } = null!;
 
     [DisplayName("Preguntas")]
     public virtual ICollection<ReservaPreguntaResponseDto> ReservaPreguntas { get; set; } = new List<ReservaPreguntaResponseDto>();

@@ -1,4 +1,6 @@
-﻿namespace ArtInk.Application.RequestDTOs;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace ArtInk.Application.RequestDTOs;
 
 public record RequestReservaDto
 {
@@ -11,6 +13,10 @@ public record RequestReservaDto
     public short IdSucursalHorario { get; set; }
 
     public byte IdSucursal { get; set; }
+
+    public short IdCliente { get; set; }
+
+    public string NombreCliente { get; set; } = null!;
 
     public string Estado { get; set; } = null!;
 
