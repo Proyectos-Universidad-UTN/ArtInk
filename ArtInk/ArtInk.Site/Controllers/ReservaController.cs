@@ -64,6 +64,28 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
     }
 
     [HttpPost]
+    public async Task<ActionResult> AgregarEliminarServicio(ReservaRequestDto reserva)
+    {
+        const string PARTIALVIEWSERVICIOS = "~/Views/Reserva/_ServiciosReserva.cshtml";
+        var servicios = await cliente.ConsumirAPIAsync<List<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
+        if (servicios == null)
+        {
+            SetErrorMessage();
+            return PartialView(PARTIALVIEWSERVICIOS, reserva);
+        }
+        
+        if (reserva.Accion == 'A') reserva.AgregarServicio(mapper.Map<ServicioRequestDto>(servicios.Single(m => m.Id == reserva.IdServicio)));
+        if (reserva.Accion == 'E') reserva.EliminarServicio(reserva.IdServicio);
+
+        var serviciosExistentesReserva = servicios.Where(m => reserva.Servicios.Exists(x => x.Id == m.Id)).ToList();
+
+        servicios.Insert(0, new ServicioResponseDto() { Id = 0, Nombre = "Seleccione un servicio" });
+        reserva.ServiciosReserva = servicios.Except(serviciosExistentesReserva).ToList();
+
+        return PartialView(PARTIALVIEWSERVICIOS, reserva);
+    }
+
+    [HttpPost]
     public async Task<IActionResult> Create(ReservaRequestDto reserva)
     {
 

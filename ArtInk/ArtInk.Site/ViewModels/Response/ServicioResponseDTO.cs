@@ -29,7 +29,7 @@ public record ServicioResponseDto
 
     public string DescripcionCompletaSelect
     {
-        get => Id == 0 ? Nombre : $"{TipoServicio.Nombre} : {Descripcion} - {Tarifa.ToString("¢#,##0.00")}";
+        get => Id == 0 ? Nombre : $"{TipoServicio.Nombre}: {Descripcion} - {Tarifa.ToString("#,##0.00")}";
         set => DescripcionCompleta = value;
     }
 }

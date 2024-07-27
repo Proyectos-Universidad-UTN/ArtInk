@@ -11,6 +11,10 @@ ViewData["Title"] = "Crear Reserva";
         </div>
         <div class="card-body">
             <form asp-action="Create" class="form-object">
+                <div hidden>
+                    <input asp-for="Accion" id="Accion" />
+                    <input asp-for="IdServicio" id="IdServicio" />
+                </div>
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="row">
@@ -47,35 +51,18 @@ ViewData["Title"] = "Crear Reserva";
                         @await Html.PartialAsync("~/Views/Reserva/_HorariosDisponibles.cshtml", Model)
                     </div>
                 </div>
+                
+                <div id="ServiciosReserva">
+                    @await Html.PartialAsync("~/Views/Reserva/_ServiciosReserva.cshtml", Model)
+                </div>
 
                 <div class="row">
                     <div class="col-sm-12 col-md-12">
-                        <label for="IdServicio" class="form-label">Servicios</label>
+                        <label class="form-label">Reserva preguntas</label>
                     </div>
-                    <div class="col-sm-10 col-md-11">
-                        <select id="IdServicio" class="form-select"
-                            asp-items='@(new SelectList(Model.ServiciosReserva, "Id" , "DescripcionCompletaSelect"))'></select>
-                    </div>
-                    <div class="col-sm-2 col-md-1">
-                        <button type="button" class="btn btn-success btn-sm flex-fill m-0"
-                            onclick="agregarServicio(this)">
-                            <span class="material-symbols-outlined">
-                                add
-                            </span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 mb-4" id="ServiciosAgregados">
-                        @await Html.PartialAsync("~/Views/Reserva/_ServiciosReserva.cshtml", Model)
-                    </div>
-                </div>
-
-                @{
-                    foreach(var it in Model.ReservaPregunta.Select((x, i) => new { Value = x, Index = i }))
-                    {
-                        <div class="row">
+                    @{
+                        foreach(var it in Model.ReservaPregunta.Select((x, i) => new { Value = x, Index = i }))
+                        {
                             <div class="col-sm-12 col-md-12">
                                 <div class="form-floating mb-3">
                                     <input hidden asp-for="@Model.ReservaPregunta[it.Index].Pregunta">
@@ -84,9 +71,9 @@ ViewData["Title"] = "Crear Reserva";
                                     <span asp-validation-for="@Model.ReservaPregunta[it.Index].Respuesta" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
-                }
+                </div>
 
                 <div class="mb-4">
 
@@ -121,41 +108,43 @@ ViewData["Title"] = "Crear Reserva";
     })
 
     const agregarServicio = (button) => {
-        // const host = window.location.host;
-        // const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalFeriado/AgregarEliminarFeriadoSucursal";
-        // $("#Accion").val('A')
-        // $("#IdFeriado").val($("#IdFeriadoSelect").val())
-        // const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+        if($("#IdServicioSelect").val() == 0) return;
+        
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/Reserva/AgregarEliminarServicio";
+        $("#Accion").val('A')
+        $("#IdServicio").val($("#IdServicioSelect").val())
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
 
-        // $.ajax({
-        //     url: url,
-        //     data: valoresForm,
-        //     type: "post",
-        //     processData: false,
-        //     contentType: false,
-        //     success: (result) => {
-        //         $("#feriados").html(result);
-        //     }
-        // })
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#ServiciosReserva").html(result);
+            }
+        })
     }
 
     const eliminarServicio = (buttton) => {
-        // const host = window.location.host;
-        // const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalFeriado/AgregarEliminarFeriadoSucursal";
-        // $("#Accion").val("R")
-        // $("#IdFeriado").val($(buttton).data("feriado"))
-        // const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/Reserva/AgregarEliminarServicio";
+        $("#Accion").val('E')
+        $("#IdServicio").val($(buttton).data("servicio"))
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
 
-        // $.ajax({
-        //     url: url,
-        //     data: valoresForm,
-        //     type: "post",
-        //     processData: false,
-        //     contentType: false,
-        //     success: (result) => {
-        //         $("#feriados").html(result);
-        //     }
-        // })
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#ServiciosReserva").html(result);
+            }
+        })
     }
 
     const cargarHorarios = () => {

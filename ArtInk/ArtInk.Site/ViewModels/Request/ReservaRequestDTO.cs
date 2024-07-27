@@ -1,6 +1,7 @@
 ﻿using ArtInk.Site.ViewModels.Common;
 using ArtInk.Site.ViewModels.Response;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArtInk.Site.ViewModels.Request;
 
@@ -27,15 +28,25 @@ public record ReservaRequestDto
 
     public bool Activo { get; set; }
 
+    [NotMapped]
+    public char Accion { get; set; } = 'A';
+
+    [NotMapped]
+    public byte IdServicio { get; set; }
+
     public IEnumerable<SucursalResponseDto>? Sucursales { get; set; }
 
     public IEnumerable<ClienteResponseDto>? Clientes { get; set; }
 
-    public List<ServicioResponseDto>? ServiciosReserva { get; set; } = new List<ServicioResponseDto>();
+    public List<ServicioResponseDto> ServiciosReserva { get; set; } = new List<ServicioResponseDto>();
 
-    public List<ServicioRequestDto>? Servicios { get; set; } = new List<ServicioRequestDto>();
+    public List<ServicioRequestDto> Servicios { get; set; } = new List<ServicioRequestDto>();
 
     public IEnumerable<ReservaHorario>? Horarios { get; set; } = new List<ReservaHorario>();
 
     public List<ReservaPreguntaRequestDto>? ReservaPregunta { get; set; } = new List<ReservaPreguntaRequestDto>();
+
+    public void AgregarServicio(ServicioRequestDto servicio) => Servicios.Add(servicio);
+
+    public void EliminarServicio(byte IdServicio) => Servicios = Servicios.Where(x => x.Id != IdServicio).ToList();
 }

@@ -1,28 +1,59 @@
 @model ArtInk.Site.ViewModels.Request.ReservaRequestDto
 
-<ul class="list-group px-3 pb-3">
-    @{
-        foreach(var it in Model.Servicios.Select((x, i) => new { Value = x, Index = i }))
-        {
-            <li class="list-group-item">
-                <div class="row">
-                    <input hidden name="Servicios[@it.Index].Id" value="@it.Value.Id" />
-                    <div class="col-sm-12 col-md-6">
-                        <label for="" class="form-label">@it.Value.Nombre</label>
-                    </div>
-                    <div class="col-sm-10 col-md-5">
-                        <input asp-for="@Model.Servicios[@it.Index].TarifaFormateada" id="Tarifa-@it.Index" disabled class="form-control text-end">
-                    </div>
-                    <div class="col-sm-2 col-md-1">
-                        <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-servicio="@it.Value.Id"
-                            onclick="eliminarServicio(this)">
-                            <span class="material-symbols-outlined">
-                                close
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </li>
-        }
-    }
-</ul>
+<div class="row mb-4">
+    <div class="col-sm-12 col-md-12">
+        <label for="IdServicio" class="form-label">Servicios</label>
+    </div>
+    <div class="col-sm-10 col-md-11">
+        <select id="IdServicioSelect" class="form-select"
+            asp-items='@(new SelectList(Model.ServiciosReserva, "Id" , "DescripcionCompletaSelect"))'></select>
+    </div>
+    <div class="col-sm-2 col-md-1">
+        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarServicio(this)">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <label for="IdServicio" class="form-label">Servicios agregados</label>
+    </div>
+    <div class="col-sm-12 col-md-12 mb-4" id="ServiciosAgregados">
+        <ul class="list-group px-3 pb-3">
+            @{
+                foreach(var it in Model.Servicios.Select((x, i) => new { Value = x, Index = i }))
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div hidden>
+                                <input name="Servicios[@it.Index].Id" value="@it.Value.Id" />
+                                <input name="Servicios[@it.Index].Nombre" value="@it.Value.Nombre" />
+                                <input name="Servicios[@it.Index].Descripcion" value="@it.Value.Descripcion" />
+                                <input name="Servicios[@it.Index].Tarifa" value="@it.Value.Tarifa" />
+                                <input name="Servicios[@it.Index].TarifaFormateada" value="@it.Value.TarifaFormateada" />
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="" class="form-label">@it.Value.Nombre: @it.Value.Descripcion</label>
+                            </div>
+                            <div class="col-sm-10 col-md-5">
+                                <input value="@it.Value.TarifaFormateada" id="Tarifa-@it.Index" disabled
+                                    class="form-control text-end">
+                            </div>
+                            <div class="col-sm-2 col-md-1">
+                                <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-servicio="@it.Value.Id"
+                                    onclick="eliminarServicio(this)">
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
