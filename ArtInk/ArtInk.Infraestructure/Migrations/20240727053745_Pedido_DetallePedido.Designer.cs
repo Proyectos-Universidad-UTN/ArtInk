@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtInk.Infraestructure.Migrations
 {
     [DbContext(typeof(ArtInkContext))]
-    [Migration("20240726002641_Pedido")]
-    partial class Pedido
+    [Migration("20240727053745_Pedido_DetallePedido")]
+    partial class Pedido_DetallePedido
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -393,7 +393,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<byte>("IdImpuesto")
                         .HasColumnType("tinyint");
 
-                    b.Property<long>("IdPedido")
+                    b.Property<long?>("IdPedido")
                         .HasColumnType("bigint");
 
                     b.Property<byte>("IdTipoPago")
@@ -1573,7 +1573,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.HasOne("ArtInk.Infraestructure.Models.Pedido", "IdPedidoNavigation")
                         .WithMany("Facturas")
                         .HasForeignKey("IdPedido")
-                        .IsRequired()
                         .HasConstraintName("FK_Factura_Pedido");
 
                     b.HasOne("ArtInk.Infraestructure.Models.TipoPago", "IdTipoPagoNavigation")

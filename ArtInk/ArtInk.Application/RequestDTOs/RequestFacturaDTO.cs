@@ -8,6 +8,8 @@ public record RequestFacturaDto
 
     public string NombreCliente { get; set; } = null!;
 
+    public long? IdPedido { get; set; }
+
     public DateOnly Fecha { get; set; }
 
     public byte IdTipoPago { get; set; }

@@ -70,7 +70,7 @@ public class ServiceInventario(IRepositoryInventario repository, IMapper mapper,
 
     private async Task<Inventario> ValidarInventario(RequestInventarioDto inventarioDto)
     {
-         var inventario = mapper.Map<Inventario>(inventarioDto);
+        var inventario = mapper.Map<Inventario>(inventarioDto);
         await inventarioValidator.ValidateAndThrowAsync(inventario);
         return inventario;
     }

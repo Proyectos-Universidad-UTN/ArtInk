@@ -6,7 +6,7 @@ public partial class Factura
 
     public short IdCliente { get; set; }
 
-    public long IdPedido { get; set; }
+    public long? IdPedido { get; set; }
 
     public string NombreCliente { get; set; } = null!;
 
@@ -38,7 +38,7 @@ public partial class Factura
 
     public virtual ICollection<DetalleFactura> DetalleFacturas { get; set; } = new List<DetalleFactura>();
 
-    public virtual Pedido IdPedidoNavigation { get; set; } = null!;
+    public virtual Pedido? IdPedidoNavigation { get; set; }
 
     public virtual Cliente IdClienteNavigation { get; set; } = null!;
 

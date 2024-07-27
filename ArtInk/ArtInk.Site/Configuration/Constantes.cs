@@ -1,4 +1,6 @@
-﻿namespace ArtInk.Site.Configuration;
+﻿using Microsoft.AspNetCore.Authentication.OAuth;
+
+namespace ArtInk.Site.Configuration;
 
 public static class Constantes
 {
@@ -116,4 +118,7 @@ public static class Constantes
     public const string POSTINVENTARIO = "Sucursal/{0}/Inventario";
     public const string PUTINVENTARIO = "Sucursal/{0}/Inventario/{1}";
     public const string DELETEINVENTARIO = "Inventario/{0}";
+
+    // Url Pedidos
+    public const string GETALLPEDIDOS = "Pedido";
 }

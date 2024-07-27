@@ -3,6 +3,7 @@ using ArtInk.Application.Configuration;
 using ArtInk.WebAPI.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using ArtInk.Utils.Converter;
 
 var ArtInkSpecificOrigins = "_artInkSpecificOrigins";
 
@@ -14,6 +15,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
                                                     {
                                                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                                                         options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                                                        options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
                                                     });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -7,7 +7,7 @@ namespace ArtInk.Infraestructure.Repository.Implementations;
 
 public class RepositoryPedido(ArtInkContext context) : IRepositoryPedido
 {
-    public async Task<Pedido> CreateFacturaAsync(Pedido pedido)
+    public async Task<Pedido> CreatePedidoAsync(Pedido pedido)
     {
         var result = context.Pedidos.Add(pedido);
         //aplica en la BD
@@ -36,6 +36,7 @@ public class RepositoryPedido(ArtInkContext context) : IRepositoryPedido
     public async Task<ICollection<Pedido>> ListAsync()
     {
         var collection = await context.Set<Pedido>()
+            .Include(a => a.IdTipoPagoNavigation)
             .ToListAsync();
         return collection;
     }

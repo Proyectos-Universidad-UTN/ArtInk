@@ -25,4 +25,6 @@ public record RequestPedidoDto
     public decimal MontoImpuesto { get; set; }
 
     public decimal MontoTotal { get; set; }
+
+    public IEnumerable<RequestDetallePedidoDto> DetallePedidos { get; set; } = null!;
 }

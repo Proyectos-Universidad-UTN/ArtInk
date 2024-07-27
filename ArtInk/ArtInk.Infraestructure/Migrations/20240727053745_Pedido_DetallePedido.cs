@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ArtInk.Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Pedido : Migration
+    public partial class Pedido_DetallePedido : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,7 @@ namespace ArtInk.Infraestructure.Migrations
                 name: "IdPedido",
                 table: "Factura",
                 type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Pedido",

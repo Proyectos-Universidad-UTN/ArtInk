@@ -390,7 +390,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<byte>("IdImpuesto")
                         .HasColumnType("tinyint");
 
-                    b.Property<long>("IdPedido")
+                    b.Property<long?>("IdPedido")
                         .HasColumnType("bigint");
 
                     b.Property<byte>("IdTipoPago")
@@ -1570,7 +1570,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.HasOne("ArtInk.Infraestructure.Models.Pedido", "IdPedidoNavigation")
                         .WithMany("Facturas")
                         .HasForeignKey("IdPedido")
-                        .IsRequired()
                         .HasConstraintName("FK_Factura_Pedido");
 
                     b.HasOne("ArtInk.Infraestructure.Models.TipoPago", "IdTipoPagoNavigation")
