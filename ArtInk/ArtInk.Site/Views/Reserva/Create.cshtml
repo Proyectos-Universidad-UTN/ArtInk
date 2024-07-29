@@ -76,14 +76,8 @@ ViewData["Title"] = "Crear Reserva";
                 </div>
 
                 <div class="mb-4">
-
-                    <!-- <button type="submit" class="btn btn-primary">Reservar</button>
-    
-                    <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("Proforma", "Home")'">Proforma</button>
-
-                    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Regresar</a> -->
                 </div>
-
+                @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
             </form>
         </div>
     </div>
@@ -178,39 +172,3 @@ ViewData["Title"] = "Crear Reserva";
         })
     })
 </script>
-
-
-
-<!-- // $(document).ready(function () {
-        //     $('#IdSucursal, #datepicker').change(function () {
-        //         var sucursalId = $('#IdSucursal').val();
-        //         var fechaReserva = $('#datepicker').val();
-
-        //         if (sucursalId && fechaReserva) {
-        //             // Ajustar el formato de la fecha (de dd/mm/yyyy a yyyy-MM-dd)
-        //             var fechaParts = fechaReserva.split('/');
-        //             var formattedFecha = fechaParts[2] + '-' + fechaParts[1] + '-' + fechaParts[0];
-
-        //             $.ajax({
-        //                 url: `/api/Reserva/Sucursal/${sucursalId}/Disponibilidad-Dia/${formattedFecha}`,
-        //                 type: 'GET',
-        //                 success: function (data) {
-        //                     var select = $('#HorasDisponibles');
-        //                     select.empty();
-        //                     select.append('<option value="">Seleccione una hora</option>');
-        //                     $.each(data, function (index, hora) {
-        //                         select.append('<option value="' + hora + '">' + hora + '</option>');
-        //                     });
-        //                 },
-        //                 error: function (xhr, status, error) {
-        //                     console.error(error);
-        //                 }
-        //             });
-        //         }
-        //     });
-
-        //     $('#datepicker').datepicker({
-        //         dateFormat: 'dd/mm/yy',
-        //         autoclose: true
-        //     });
-        // }); -->

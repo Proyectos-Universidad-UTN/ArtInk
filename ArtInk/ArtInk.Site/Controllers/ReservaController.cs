@@ -53,11 +53,12 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
             Horarios = new List<ReservaHorario>() { new ReservaHorario() { Hora = SINHORARIO } },
             Clientes = clientes,
             ReservaPregunta = new List<ReservaPreguntaRequestDto>()
-            {
-                new ReservaPreguntaRequestDto(){ Id = 1, Pregunta = "¿Cuál es el propósito de su visita?" },
-                new ReservaPreguntaRequestDto(){ Id = 2, Pregunta = "¿Tiene alguna alergia conocida?" },
-                new ReservaPreguntaRequestDto(){ Id = 3, Pregunta = "¿Prefiere alguna hora específica?" },
-            }
+        {
+            new ReservaPreguntaRequestDto(){ Id = 1, Pregunta = "¿Cuál es el propósito de su visita?" },
+            new ReservaPreguntaRequestDto(){ Id = 2, Pregunta = "¿Tiene alguna alergia conocida?" },
+            new ReservaPreguntaRequestDto(){ Id = 3, Pregunta = "¿Prefiere alguna hora específica?" },
+        },
+            Estado = "Pendiente" 
         };
 
         return View(reserva);
@@ -105,6 +106,7 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
                                     .Select(x => x.ErrorMessage));
             return View(reserva);
         }
+        reserva.Estado = "Pendiente";
 
         var resultado = await cliente.ConsumirAPIAsync<ReservaResponseDto>(Constantes.POST, Constantes.POSTRESERVA, valoresConsumo: Serialization.Serialize(reserva));
 
