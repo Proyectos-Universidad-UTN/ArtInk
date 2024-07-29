@@ -4,6 +4,7 @@ using ArtInk.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtInk.Infraestructure.Migrations
 {
     [DbContext(typeof(ArtInkContext))]
-    partial class ArtInkContextModelSnapshot : ModelSnapshot
+    [Migration("20240727053745_Pedido_DetallePedido")]
+    partial class Pedido_DetallePedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -913,19 +916,11 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<TimeOnly>("Hora")
                         .HasColumnType("time");
 
-                    b.Property<short>("IdCliente")
-                        .HasColumnType("smallint");
-
                     b.Property<byte>("IdSucursal")
                         .HasColumnType("tinyint");
 
                     b.Property<short>("IdUsuarioSucursal")
                         .HasColumnType("smallint");
-
-                    b.Property<string>("NombreCliente")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
 
                     b.Property<string>("UsuarioCreacion")
                         .IsRequired()
@@ -938,8 +933,6 @@ namespace ArtInk.Infraestructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_reserva");
-
-                    b.HasIndex("IdCliente");
 
                     b.HasIndex("IdSucursal");
 
@@ -1702,12 +1695,6 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Reserva", b =>
                 {
-                    b.HasOne("ArtInk.Infraestructure.Models.Cliente", "IdClienteNavigation")
-                        .WithMany("Reservas")
-                        .HasForeignKey("IdCliente")
-                        .IsRequired()
-                        .HasConstraintName("FK_Reserva_Cliente");
-
                     b.HasOne("ArtInk.Infraestructure.Models.Sucursal", "IdSucursalNavigation")
                         .WithMany("Reservas")
                         .HasForeignKey("IdSucursal")
@@ -1719,8 +1706,6 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasForeignKey("IdUsuarioSucursal")
                         .IsRequired()
                         .HasConstraintName("FK_Reserva_UsuarioSucursal");
-
-                    b.Navigation("IdClienteNavigation");
 
                     b.Navigation("IdSucursalNavigation");
 
@@ -1889,8 +1874,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("Facturas");
 
                     b.Navigation("Pedidos");
-
-                    b.Navigation("Reservas");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.DetalleFactura", b =>

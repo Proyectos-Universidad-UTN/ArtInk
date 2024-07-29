@@ -32,6 +32,8 @@ public partial class Producto
 
     public virtual ICollection<DetalleFacturaProducto> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProducto>();
 
+    public virtual ICollection<DetallePedidoProducto> DetallePedidoProductos { get; set; } = new List<DetallePedidoProducto>();
+
     public virtual Categoria IdCategoriaNavigation { get; set; } = null!;
 
     public virtual UnidadMedida IdUnidadMedidaNavigation { get; set; } = null!;

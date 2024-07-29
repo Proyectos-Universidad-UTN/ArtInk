@@ -1,16 +1,14 @@
-using ArtInk.Application.DTOs.Base;
+﻿using ArtInk.Application.DTOs.Base;
 
 namespace ArtInk.Application.DTOs;
 
-public record FacturaDto: BaseEntity
+public record PedidoDto : BaseEntity
 {
     public long Id { get; set; }
 
     public short IdCliente { get; set; }
 
     public string NombreCliente { get; set; } = null!;
-
-    public long? IdPedido { get; set; }
 
     public DateOnly Fecha { get; set; }
 
@@ -30,7 +28,7 @@ public record FacturaDto: BaseEntity
 
     public decimal MontoTotal { get; set; }
 
-    public virtual ICollection<DetalleFacturaDto> DetalleFacturas { get; set; } = new List<DetalleFacturaDto>();
+    public virtual ICollection<DetallePedidoDto> DetallePedidos { get; set; } = new List<DetallePedidoDto>();
 
     public virtual ClienteDto Cliente { get; set; } = null!;
 
@@ -39,6 +37,4 @@ public record FacturaDto: BaseEntity
     public virtual TipoPagoDto TipoPago { get; set; } = null!;
 
     public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
-
-    public virtual PedidoDto? Pedido { get; set; }
 }

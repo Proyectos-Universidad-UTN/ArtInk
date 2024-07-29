@@ -1,14 +1,12 @@
 ﻿namespace ArtInk.Application.RequestDTOs;
 
-public record RequestFacturaDto
+public record RequestPedidoDto
 {
     public long Id { get; set; }
 
     public short IdCliente { get; set; }
 
     public string NombreCliente { get; set; } = null!;
-
-    public long? IdPedido { get; set; }
 
     public DateOnly Fecha { get; set; }
 
@@ -27,4 +25,6 @@ public record RequestFacturaDto
     public decimal MontoImpuesto { get; set; }
 
     public decimal MontoTotal { get; set; }
+
+    public IEnumerable<RequestDetallePedidoDto> DetallePedidos { get; set; } = null!;
 }
