@@ -353,7 +353,7 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
             entity.HasKey(e => e.Id).HasName("PK_horario");
 
             entity.ToTable("Horario");
-          
+
             entity.Property(a => a.Dia).HasConversion(m => m.ToString(), b => (DiaSemana)Enum.Parse(typeof(DiaSemana), b));
 
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
@@ -494,6 +494,11 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdUsuarioSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Reserva_UsuarioSucursal");
+
+            entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Reservas)
+                .HasForeignKey(d => d.IdCliente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Reserva_Cliente");
         });
 
         modelBuilder.Entity<ReservaPregunta>(entity =>

@@ -16,7 +16,9 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
                                                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                                                         options.SerializerSettings.Converters.Add(new StringEnumConverter());
                                                         options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
+                                                        options.SerializerSettings.Converters.Add(new TimeOnlyJsonConverter());
                                                     });
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

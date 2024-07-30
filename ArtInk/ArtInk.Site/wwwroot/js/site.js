@@ -34,3 +34,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const datepickerEl = document.getElementById('datepicker');
+    if (datepickerEl) {
+        new Datepicker(datepickerEl, {
+            format: 'dd/mm/yyyy',
+            language: 'es',
+            autoHide: true
+        });
+    }
+});

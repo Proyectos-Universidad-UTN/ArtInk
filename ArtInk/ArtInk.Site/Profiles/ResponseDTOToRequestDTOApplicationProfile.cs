@@ -18,5 +18,8 @@ public class ResponseDtoToRequestDtoApplicationProfile: Profile
         CreateMap<InventarioResponseDto, InventarioRequestDto>();
         CreateMap<FacturaResponseDto, FacturaRequestDto>();
         CreateMap<DetalleFacturaResponseDto, DetalleFacturaRequestDto>();
+        CreateMap<ReservaServicioResponseDto, ReservaServicioRequestDto>();
+        CreateMap<ReservaResponseDto, ReservaRequestDto>();
+
     }
 }

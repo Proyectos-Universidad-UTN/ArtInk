@@ -4,6 +4,7 @@ using ArtInk.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtInk.Infraestructure.Migrations
 {
     [DbContext(typeof(ArtInkContext))]
-    partial class ArtInkContextModelSnapshot : ModelSnapshot
+    [Migration("20240727014022_Reserva_Cliente")]
+    partial class Reserva_Cliente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,75 +274,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.ToTable("DetalleFacturaProducto", (string)null);
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.DetallePedido", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<short>("Cantidad")
-                        .HasColumnType("smallint");
-
-                    b.Property<long>("IdPedido")
-                        .HasColumnType("bigint");
-
-                    b.Property<byte>("IdServicio")
-                        .HasColumnType("tinyint");
-
-                    b.Property<decimal>("MontoImpuesto")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("MontoSubtotal")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("MontoTotal")
-                        .HasColumnType("money");
-
-                    b.Property<byte>("NumeroLinea")
-                        .HasColumnType("tinyint");
-
-                    b.Property<decimal>("TarifaServicio")
-                        .HasColumnType("money");
-
-                    b.HasKey("Id")
-                        .HasName("PK_detallePedido");
-
-                    b.HasIndex("IdPedido");
-
-                    b.HasIndex("IdServicio");
-
-                    b.ToTable("DetallePedido", (string)null);
-                });
-
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.DetallePedidoProducto", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal>("Cantidad")
-                        .HasColumnType("decimal(6, 2)");
-
-                    b.Property<long>("IdDetallePedido")
-                        .HasColumnType("bigint");
-
-                    b.Property<short>("IdProducto")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id")
-                        .HasName("PK_[DetallePedidoProducto");
-
-                    b.HasIndex("IdDetallePedido");
-
-                    b.HasIndex("IdProducto");
-
-                    b.ToTable("DetallePedidoProducto", (string)null);
-                });
-
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Distrito", b =>
                 {
                     b.Property<short>("Id")
@@ -390,9 +324,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<byte>("IdImpuesto")
                         .HasColumnType("tinyint");
 
-                    b.Property<long?>("IdPedido")
-                        .HasColumnType("bigint");
-
                     b.Property<byte>("IdTipoPago")
                         .HasColumnType("tinyint");
 
@@ -431,8 +362,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.HasIndex("IdCliente");
 
                     b.HasIndex("IdImpuesto");
-
-                    b.HasIndex("IdPedido");
 
                     b.HasIndex("IdTipoPago");
 
@@ -649,78 +578,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.HasIndex("IdProducto");
 
                     b.ToTable("InventarioProducto", (string)null);
-                });
-
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.Pedido", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<short>("Consecutivo")
-                        .HasColumnType("smallint");
-
-                    b.Property<DateOnly>("Fecha")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("FechaModificacion")
-                        .HasColumnType("datetime");
-
-                    b.Property<short>("IdCliente")
-                        .HasColumnType("smallint");
-
-                    b.Property<byte>("IdImpuesto")
-                        .HasColumnType("tinyint");
-
-                    b.Property<byte>("IdTipoPago")
-                        .HasColumnType("tinyint");
-
-                    b.Property<short>("IdUsuarioSucursal")
-                        .HasColumnType("smallint");
-
-                    b.Property<decimal>("MontoImpuesto")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("MontoTotal")
-                        .HasColumnType("money");
-
-                    b.Property<string>("NombreCliente")
-                        .IsRequired()
-                        .HasMaxLength(160)
-                        .HasColumnType("nvarchar(160)");
-
-                    b.Property<decimal>("PorcentajeImpuesto")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<decimal>("SubTotal")
-                        .HasColumnType("money");
-
-                    b.Property<string>("UsuarioCreacion")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.Property<string>("UsuarioModificacion")
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_pedido");
-
-                    b.HasIndex("IdCliente");
-
-                    b.HasIndex("IdImpuesto");
-
-                    b.HasIndex("IdTipoPago");
-
-                    b.HasIndex("IdUsuarioSucursal");
-
-                    b.ToTable("Pedido", (string)null);
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Producto", b =>
@@ -1514,44 +1371,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("IdProductoNavigation");
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.DetallePedido", b =>
-                {
-                    b.HasOne("ArtInk.Infraestructure.Models.Pedido", "IdPedidoNavigation")
-                        .WithMany("DetallePedidos")
-                        .HasForeignKey("IdPedido")
-                        .IsRequired()
-                        .HasConstraintName("FK_DetallePedido_Pedido");
-
-                    b.HasOne("ArtInk.Infraestructure.Models.Servicio", "IdServicioNavigation")
-                        .WithMany("DetallePedidos")
-                        .HasForeignKey("IdServicio")
-                        .IsRequired()
-                        .HasConstraintName("FK_DetallePedido_Servicio");
-
-                    b.Navigation("IdPedidoNavigation");
-
-                    b.Navigation("IdServicioNavigation");
-                });
-
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.DetallePedidoProducto", b =>
-                {
-                    b.HasOne("ArtInk.Infraestructure.Models.DetallePedido", "IdDetallePedidoNavigation")
-                        .WithMany("DetallePedidoProductos")
-                        .HasForeignKey("IdDetallePedido")
-                        .IsRequired()
-                        .HasConstraintName("FK_DetallePedidoProducto_DetallePedido");
-
-                    b.HasOne("ArtInk.Infraestructure.Models.Producto", "IdProductoNavigation")
-                        .WithMany("DetallePedidoProductos")
-                        .HasForeignKey("IdProducto")
-                        .IsRequired()
-                        .HasConstraintName("FK_DetallePedidoProducto_Producto");
-
-                    b.Navigation("IdDetallePedidoNavigation");
-
-                    b.Navigation("IdProductoNavigation");
-                });
-
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Distrito", b =>
                 {
                     b.HasOne("ArtInk.Infraestructure.Models.Canton", "IdCantonNavigation")
@@ -1577,11 +1396,6 @@ namespace ArtInk.Infraestructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Factura_Impuesto");
 
-                    b.HasOne("ArtInk.Infraestructure.Models.Pedido", "IdPedidoNavigation")
-                        .WithMany("Facturas")
-                        .HasForeignKey("IdPedido")
-                        .HasConstraintName("FK_Factura_Pedido");
-
                     b.HasOne("ArtInk.Infraestructure.Models.TipoPago", "IdTipoPagoNavigation")
                         .WithMany("Facturas")
                         .HasForeignKey("IdTipoPago")
@@ -1597,8 +1411,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("IdClienteNavigation");
 
                     b.Navigation("IdImpuestoNavigation");
-
-                    b.Navigation("IdPedidoNavigation");
 
                     b.Navigation("IdTipoPagoNavigation");
 
@@ -1633,41 +1445,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("IdInventarioNavigation");
 
                     b.Navigation("IdProductoNavigation");
-                });
-
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.Pedido", b =>
-                {
-                    b.HasOne("ArtInk.Infraestructure.Models.Cliente", "IdClienteNavigation")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("IdCliente")
-                        .IsRequired()
-                        .HasConstraintName("FK_Pedido_Cliente");
-
-                    b.HasOne("ArtInk.Infraestructure.Models.Impuesto", "IdImpuestoNavigation")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("IdImpuesto")
-                        .IsRequired()
-                        .HasConstraintName("FK_Pedido_Impuesto");
-
-                    b.HasOne("ArtInk.Infraestructure.Models.TipoPago", "IdTipoPagoNavigation")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("IdTipoPago")
-                        .IsRequired()
-                        .HasConstraintName("FK_Pedido_TipoPago");
-
-                    b.HasOne("ArtInk.Infraestructure.Models.UsuarioSucursal", "IdUsuarioSucursalNavigation")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("IdUsuarioSucursal")
-                        .IsRequired()
-                        .HasConstraintName("FK_Pedido_UsuarioSucursal");
-
-                    b.Navigation("IdClienteNavigation");
-
-                    b.Navigation("IdImpuestoNavigation");
-
-                    b.Navigation("IdTipoPagoNavigation");
-
-                    b.Navigation("IdUsuarioSucursalNavigation");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Producto", b =>
@@ -1888,19 +1665,12 @@ namespace ArtInk.Infraestructure.Migrations
                 {
                     b.Navigation("Facturas");
 
-                    b.Navigation("Pedidos");
-
                     b.Navigation("Reservas");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.DetalleFactura", b =>
                 {
                     b.Navigation("DetalleFacturaProductos");
-                });
-
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.DetallePedido", b =>
-                {
-                    b.Navigation("DetallePedidoProductos");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Distrito", b =>
@@ -1937,8 +1707,6 @@ namespace ArtInk.Infraestructure.Migrations
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Impuesto", b =>
                 {
                     b.Navigation("Facturas");
-
-                    b.Navigation("Pedidos");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Inventario", b =>
@@ -1946,18 +1714,9 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("InventarioProductos");
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.Pedido", b =>
-                {
-                    b.Navigation("DetallePedidos");
-
-                    b.Navigation("Facturas");
-                });
-
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Producto", b =>
                 {
                     b.Navigation("DetalleFacturaProductos");
-
-                    b.Navigation("DetallePedidoProductos");
 
                     b.Navigation("InventarioProductos");
                 });
@@ -1988,8 +1747,6 @@ namespace ArtInk.Infraestructure.Migrations
                 {
                     b.Navigation("DetalleFacturas");
 
-                    b.Navigation("DetallePedidos");
-
                     b.Navigation("ReservaServicios");
                 });
 
@@ -2014,8 +1771,6 @@ namespace ArtInk.Infraestructure.Migrations
             modelBuilder.Entity("ArtInk.Infraestructure.Models.TipoPago", b =>
                 {
                     b.Navigation("Facturas");
-
-                    b.Navigation("Pedidos");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.TipoServicio", b =>
@@ -2036,8 +1791,6 @@ namespace ArtInk.Infraestructure.Migrations
             modelBuilder.Entity("ArtInk.Infraestructure.Models.UsuarioSucursal", b =>
                 {
                     b.Navigation("Facturas");
-
-                    b.Navigation("Pedidos");
 
                     b.Navigation("Reservas");
                 });

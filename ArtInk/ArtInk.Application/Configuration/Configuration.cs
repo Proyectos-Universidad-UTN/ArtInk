@@ -31,6 +31,8 @@ public static class Configuration
         services.AddTransient<IServiceSucursalHorarioBloqueo, ServiceSucursalHorarioBloqueo>();
         services.AddTransient<IServiceInventario, ServiceInventario>();
         services.AddTransient<IServicePedido, ServicePedido>();
+        services.AddTransient<IServiceReservaServicio, ServiceReservaServicio>();
+        services.AddTransient<IServiceCliente, ServiceCliente>();
     }
 
     public static void ConfigureAutoMapper(this IServiceCollection services)
@@ -39,6 +41,7 @@ public static class Configuration
         {
             config.AddProfile<ModelToDtoApplicationProfile>();
             config.AddProfile<DtoToModelApplicationProfile>();
+            config.AddProfile<MiscApplicationProfile>();
         });
     }
 }
