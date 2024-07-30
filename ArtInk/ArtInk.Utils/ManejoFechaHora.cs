@@ -20,6 +20,6 @@ public static class ManejoFechaHora
         return horas;
     }
 
-    public static String ObtenerDiaSemanaCRCulture(DateOnly fecha) => new CultureInfo("es-CR").DateTimeFormat.GetDayName(fecha.DayOfWeek).Capitalize();
+    public static String ObtenerDiaSemanaCRCulture(DateOnly fecha) => new CultureInfo("es-CR").DateTimeFormat.GetDayName(fecha.DayOfWeek).Capitalize().Replace("é","e").Replace("á","a");
    
 }

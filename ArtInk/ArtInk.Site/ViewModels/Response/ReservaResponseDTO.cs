@@ -34,7 +34,7 @@ public record ReservaResponseDto
     public virtual ClienteResponseDto Cliente { get; set; } = null!;
 
     [DisplayName("Preguntas")]
-    public virtual ICollection<ReservaPreguntaResponseDto> ReservaPreguntas { get; set; } = new List<ReservaPreguntaResponseDto>();
+    public virtual ICollection<ReservaPreguntaResponseDto> ReservaPregunta { get; set; } = new List<ReservaPreguntaResponseDto>();
 
     [DisplayName("Servicio")]
     public virtual ICollection<ReservaServicioResponseDto> ReservaServicios { get; set; } = new List<ReservaServicioResponseDto>();

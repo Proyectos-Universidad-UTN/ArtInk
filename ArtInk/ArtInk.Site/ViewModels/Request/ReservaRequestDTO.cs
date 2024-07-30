@@ -38,15 +38,15 @@ public record ReservaRequestDto
 
     public IEnumerable<ClienteResponseDto>? Clientes { get; set; }
 
-    public List<ServicioResponseDto> ServiciosReserva { get; set; } = new List<ServicioResponseDto>();
+    public List<ServicioResponseDto> Servicios { get; set; } = new List<ServicioResponseDto>();
 
-    public List<ServicioRequestDto> Servicios { get; set; } = new List<ServicioRequestDto>();
+    public List<ReservaServicioRequestDto> ReservaServicios { get; set; } = new List<ReservaServicioRequestDto>();
 
     public IEnumerable<ReservaHorario>? Horarios { get; set; } = new List<ReservaHorario>();
 
     public List<ReservaPreguntaRequestDto>? ReservaPregunta { get; set; } = new List<ReservaPreguntaRequestDto>();
 
-    public void AgregarServicio(ServicioRequestDto servicio) => Servicios.Add(servicio);
+    public void AgregarServicio(ReservaServicioRequestDto servicio) => ReservaServicios.Add(servicio);
 
-    public void EliminarServicio(byte IdServicio) => Servicios = Servicios.Where(x => x.Id != IdServicio).ToList();
+    public void EliminarServicio(byte IdServicio) => ReservaServicios = ReservaServicios.Where(x => x.IdServicio != IdServicio).ToList();
 }

@@ -10,8 +10,6 @@ public record ReservaDto: BaseEntity
 
     public TimeOnly Hora { get; set; }
 
-    public short IdSucursalHorario { get; set; }
-
     public byte IdSucursal { get; set; }
 
     public short IdCliente { get; set; }
@@ -21,6 +19,8 @@ public record ReservaDto: BaseEntity
     public string Estado { get; set; } = null!;
 
     public bool Activo { get; set; }
+
+    public short IdUsuarioSucursal { get; set; }
 
     public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
 

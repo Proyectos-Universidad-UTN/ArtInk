@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class FacturaController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class FacturaController(IApiArtInkClient cliente) : Controller
 {
     const string ERRORMESSAGE = "ErrorMessage";
     public async Task<IActionResult> Index()

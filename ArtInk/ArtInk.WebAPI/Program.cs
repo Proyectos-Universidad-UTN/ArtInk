@@ -16,6 +16,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
                                                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                                                         options.SerializerSettings.Converters.Add(new StringEnumConverter());
                                                         options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
+                                                        options.SerializerSettings.Converters.Add(new TimeOnlyJsonConverter());
                                                     });
 
 
