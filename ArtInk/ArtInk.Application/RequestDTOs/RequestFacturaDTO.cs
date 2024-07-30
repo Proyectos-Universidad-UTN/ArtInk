@@ -1,4 +1,6 @@
-﻿namespace ArtInk.Application.RequestDTOs;
+﻿using ArtInk.Application.DTOs;
+
+namespace ArtInk.Application.RequestDTOs;
 
 public record RequestFacturaDto
 {
@@ -27,4 +29,6 @@ public record RequestFacturaDto
     public decimal MontoImpuesto { get; set; }
 
     public decimal MontoTotal { get; set; }
+
+    public IEnumerable<DetalleFacturaDto> DetalleFacturas { get; set; }
 }
