@@ -36,6 +36,7 @@ public class RepositoryFactura(ArtInkContext context) : IRepositoryFactura
     public async Task<ICollection<Factura>> ListAsync()
     {
         var collection = await context.Set<Factura>()
+            .Include(a => a.IdTipoPagoNavigation)
             .ToListAsync();
         return collection;
     }

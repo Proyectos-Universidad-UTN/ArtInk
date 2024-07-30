@@ -11,6 +11,8 @@ namespace ArtInk.WebAPI.Controllers;
 public class FacturaController(IServiceFactura serviceFactura) : ControllerBase
 {
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FacturaDto>))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetAllFacturasAsync()
     {
         var facturas = await serviceFactura.ListAsync();

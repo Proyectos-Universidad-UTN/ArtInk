@@ -38,7 +38,7 @@ public class FacturaController(IApiArtInkClient cliente, IMapper mapper) : Contr
 
     public async Task<IActionResult> Create()
     {
-        var (falloEjecucion, clientes, tipoPagos, usuarioSucursales, impuestos) = await ObtenerValoresInicialesSelect();
+        var (falloEjecucion, clientes, tipoPagos, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
         var factura = new FacturaRequestDto()
@@ -46,7 +46,6 @@ public class FacturaController(IApiArtInkClient cliente, IMapper mapper) : Contr
             Clientes = clientes,
             TipoPagos = tipoPagos,
             Impuestos = impuestos,
-            UsuarioSucursales = usuarioSucursales
         };
         return View(factura);
     }
@@ -54,12 +53,11 @@ public class FacturaController(IApiArtInkClient cliente, IMapper mapper) : Contr
     [HttpPost]
     public async Task<IActionResult> Create(FacturaRequestDto factura)
     {
-        var (falloEjecucion, clientes, tipoPagos, usuarioSucursales, impuestos) = await ObtenerValoresInicialesSelect();
+        var (falloEjecucion, clientes, tipoPagos, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
         factura.Clientes = clientes;
         factura.TipoPagos = tipoPagos;
-        factura.UsuarioSucursales = usuarioSucursales;
         factura.Impuestos = impuestos;
 
         if (!ModelState.IsValid)
@@ -82,36 +80,29 @@ public class FacturaController(IApiArtInkClient cliente, IMapper mapper) : Contr
         return RedirectToAction(nameof(Index));
     }
 
-    private async Task<(bool fallo, IEnumerable<ClienteResponseDto>, IEnumerable<TipoPagoResponseDto>, IEnumerable<UsuarioSucursalResponseDto>, IEnumerable<ImpuestoResponseDto>)> ObtenerValoresInicialesSelect()
+    private async Task<(bool fallo, IEnumerable<ClienteResponseDto>, IEnumerable<TipoPagoResponseDto>, IEnumerable<ImpuestoResponseDto>)> ObtenerValoresInicialesSelect()
     {
         var clientes = await cliente.ConsumirAPIAsync<IEnumerable<ClienteResponseDto>>(Constantes.GET, Constantes.GETALLCLIENTES);
         if (clientes == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return (true, null, null,null,null)!;
+            return (true, null, null,null)!;
         }
 
         var tipoPagos = await cliente.ConsumirAPIAsync<IEnumerable<TipoPagoResponseDto>>(Constantes.GET, Constantes.GETALLTIPOPAGOS);
         if (tipoPagos == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return (true, null, null, null, null)!;
-        }
-
-        var usuarioSucursales = await cliente.ConsumirAPIAsync<IEnumerable<UsuarioSucursalResponseDto>>(Constantes.GET, Constantes.GETALLUSUARIOSUCURSALES);
-        if (usuarioSucursales == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return (true, null, null, null, null)!;
+            return (true, null, null, null)!;
         }
 
         var impuestos = await cliente.ConsumirAPIAsync<IEnumerable<ImpuestoResponseDto>>(Constantes.GET, Constantes.GETALLIMPUESTOS);
         if (impuestos == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return (true, null, null, null, null)!;
+            return (true, null, null, null)!;
         }
 
-        return (false, clientes, tipoPagos, usuarioSucursales, impuestos);
+        return (false, clientes, tipoPagos, impuestos);
     }
 }
