@@ -1,0 +1,47 @@
+@model IEnumerable<ArtInk.Site.ViewModels.Response.PedidoResponseDto>
+
+@{
+    ViewData["Title"] = "Proformas";
+}
+
+<h1>Proformas</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary mb-3">Crear nueva proforma</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-3">Inicio</a>
+</p>
+
+<table id="pedidosTable" class="table table-striped table-dark table-hover artink-tables">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Consecutivo)</th>
+            <th>@Html.DisplayNameFor(model => model.NombreCliente)</th>
+            <th>@Html.DisplayNameFor(model => model.Fecha)</th>
+            <th>@Html.DisplayNameFor(model => model.IdTipoPago)</th>
+            <th>@Html.DisplayNameFor(model => model.SubTotal)</th>
+            <th>@Html.DisplayNameFor(model => model.MontoImpuesto)</th>
+            <th>@Html.DisplayNameFor(model => model.MontoTotal)</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Consecutivo)</td>
+                <td>@Html.DisplayFor(modelItem => item.NombreCliente)</td>
+                <td>@Html.DisplayFor(modelItem => item.Fecha)</td>
+                <td>@Html.DisplayFor(modelItem => item.TipoPago.Descripcion)</td>
+                <td>@Html.DisplayFor(modelItem => item.SubTotal)</td>
+                <td>@Html.DisplayFor(modelItem => item.MontoImpuesto)</td>
+                <td>@Html.DisplayFor(modelItem => item.MontoTotal)</td>
+                <td>
+                    <div class="btn-group d-flex justify-content-between gap-2">
+                        @Html.ActionLink("Facturar", "Index", "Factura",  new { idPedido = item.Id }, new { @class = "btn btn-primary btn-sm flex-fill m-0" })        
+                        @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm flex-fill m-0" })  
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

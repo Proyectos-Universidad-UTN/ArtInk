@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ArtInk.Utils.Converter;
+using Newtonsoft.Json;
 
 namespace ArtInk.Utils;
 
@@ -10,6 +11,11 @@ public static class Serialization
     }
     public static T Deserialize<T>(string response)
     {
-        return JsonConvert.DeserializeObject<T>(response)!;
+        var settings = new JsonSerializerSettings();
+
+        settings.Converters.Add(new DateOnlyJsonConverter());
+        settings.Converters.Add(new TimeOnlyJsonConverter());
+
+        return JsonConvert.DeserializeObject<T>(response, settings)!;
     }
 }

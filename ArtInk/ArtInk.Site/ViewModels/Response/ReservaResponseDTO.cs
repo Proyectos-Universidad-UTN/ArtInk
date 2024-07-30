@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ArtInk.Site.ViewModels.Response;
 
@@ -17,13 +18,24 @@ public record ReservaResponseDto
 
     public short IdUsuarioSucursal { get; set; }
 
+    [DisplayName("Sucursal")]
     public byte IdSucursal { get; set; }
 
+    public short IdCliente { get; set; }
+
+    [DisplayName("Cliente")]
+    public string NombreCliente { get; set; } = null!;
+
+    [DisplayName("Usuario Sucursal")]
     public virtual UsuarioSucursalResponseDto UsuarioSucursal { get; set; } = null!;
 
     public virtual SucursalResponseDto Sucursal { get; set; } = null!;
 
+    public virtual ClienteResponseDto Cliente { get; set; } = null!;
+
+    [DisplayName("Preguntas")]
     public virtual ICollection<ReservaPreguntaResponseDto> ReservaPregunta { get; set; } = new List<ReservaPreguntaResponseDto>();
 
+    [DisplayName("Servicio")]
     public virtual ICollection<ReservaServicioResponseDto> ReservaServicios { get; set; } = new List<ReservaServicioResponseDto>();
 }

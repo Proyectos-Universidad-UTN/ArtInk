@@ -1,0 +1,62 @@
+@model ArtInk.Site.ViewModels.Request.ReservaRequestDto
+
+<div class="row mb-4">
+    <div class="col-sm-12 col-md-12">
+        <label for="IdServicio" class="form-label">Servicios</label>
+    </div>
+    <div class="col-sm-10 col-md-11">
+        <select id="IdServicioSelect" class="form-select"
+            asp-items='@(new SelectList(Model.Servicios, "Id" , "DescripcionCompletaSelect"))'></select>
+    </div>
+    <div class="col-sm-2 col-md-1">
+        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarServicio(this)">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <label for="IdServicio" class="form-label">Servicios agregados</label>
+    </div>
+    <div class="col-sm-12 col-md-12 mb-4" id="ServiciosAgregados">
+        <ul class="list-group px-3 pb-3">
+            @{
+                foreach(var it in Model.ReservaServicios.Select((x, i) => new { Value = x, Index = i }))
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div hidden>
+                                <input name="ReservaServicios[@it.Index].IdServicio" value="@it.Value.IdServicio" />
+                                <input name="ReservaServicios[@it.Index].Servicio.Id" value="@it.Value.Servicio.Id" />
+                                <input name="ReservaServicios[@it.Index].Servicio.Nombre" value="@it.Value.Servicio.Nombre" />
+                                <input name="ReservaServicios[@it.Index].Servicio.Descripcion" value="@it.Value.Servicio.Descripcion" />
+                                <input name="ReservaServicios[@it.Index].Servicio.Tarifa" value="@it.Value.Servicio.Tarifa.ToString("#,##0.00")" />
+                                <input name="ReservaServicios[@it.Index].Servicio.TipoServicio.Id" value="@it.Value.Servicio.TipoServicio.Id" />
+                                <input name="ReservaServicios[@it.Index].Servicio.TipoServicio.Nombre" value="@it.Value.Servicio.TipoServicio.Nombre" />
+
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="" class="form-label">@it.Value.Servicio.Nombre: @it.Value.Servicio.Descripcion</label>
+                            </div>
+                            <div class="col-sm-10 col-md-5">
+                                <input value="@it.Value.Servicio.Tarifa.ToString("#,##0.00")" id="Tarifa-@it.Index" disabled
+                                    class="form-control text-end">
+                            </div>
+                            <div class="col-sm-2 col-md-1">
+                                <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-servicio="@it.Value.Id"
+                                    onclick="eliminarServicio(this)">
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

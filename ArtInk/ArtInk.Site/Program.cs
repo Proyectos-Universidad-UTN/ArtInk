@@ -1,4 +1,3 @@
-
 using Serilog;
 using ArtInk.Site.Configuration;
 using ArtInk.Site.Middleware;
