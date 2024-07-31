@@ -30,6 +30,7 @@ public class RepositoryReserva(ArtInkContext context) : IRepositoryReserva
         return await context.Set<Reserva>()
             .Include(a => a.ReservaServicios)
             .ThenInclude(a => a.IdServicioNavigation)
+            .ThenInclude(a => a.IdTipoServicioNavigation)
             .Include(a => a.IdSucursalNavigation)
             .Include(a => a.ReservaPregunta)
         .FirstOrDefaultAsync(a => EF.Property<int>(a, keyProperty.Name) == id);

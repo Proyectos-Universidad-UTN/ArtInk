@@ -25,7 +25,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
 
     public async Task<IActionResult> Create(int? idReserva)
     {
-        if (idReserva == null) 
+        if (idReserva == null)
         {
             TempData[ERRORMESSAGE] = "Se necesita primero la reserva.";
             return RedirectToAction("Index", "Reserva");
@@ -40,6 +40,12 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
             return RedirectToAction("Index", "Reserva");
         }
 
+        if (reserva.Estado == "A")
+        {
+            TempData[ERRORMESSAGE] = "No se puede generar otra proforma de una reserva ya procesada";
+            return RedirectToAction("Index", "Reserva");
+        }
+
         var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
@@ -50,6 +56,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
             Clientes = clientes,
             TipoPagos = tipoPagos,
             Impuestos = impuestos,
+            PorcentajeImpuesto = 0,
             Fecha = DateOnly.FromDateTime(DateTime.Now),
             Servicios = servicios
         };
@@ -84,7 +91,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
             pedidoRequestDto.AgregarDetallePedido(detallePedido);
         }
 
-        if (pedidoRequestDto.Accion == 'E') pedidoRequestDto.EliminarDetalleImpuesto(pedidoRequestDto.IdServicio);
+        if (pedidoRequestDto.Accion == 'E') pedidoRequestDto.EliminarDetalleImpuesto(pedidoRequestDto.NumeroLineaEliminar);
 
         var serviciosExistentes = servicios.Where(m => pedidoRequestDto.DetallePedidos.Exists(x => x.IdServicio == m.Id)).ToList();
 
@@ -96,35 +103,49 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(FacturaRequestDto factura)
+    public async Task<IActionResult> Create(PedidoRequestDto pedidoRequestDto)
     {
         var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
-        factura.Clientes = clientes;
-        factura.TipoPagos = tipoPagos;
-        factura.Impuestos = impuestos;
+        pedidoRequestDto.Clientes = clientes;
+        pedidoRequestDto.TipoPagos = tipoPagos;
+        pedidoRequestDto.Impuestos = impuestos;
+        pedidoRequestDto.Servicios = servicios;
+
+        pedidoRequestDto.CalcularTotales();
+
+        if (pedidoRequestDto.MontoTotal <= 0)
+        {
+            TempData[ERRORMESSAGE] = "Una proforma no puede guardarse con un total de 0";
+            return View(pedidoRequestDto);
+        }
+
+        if (pedidoRequestDto.DetallePedidos.Count == 0)
+        {
+            TempData[ERRORMESSAGE] = "Debe agregar detalles a la proforma";
+            return View(pedidoRequestDto);
+        }
 
         if (!ModelState.IsValid)
         {
             TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
                                     .SelectMany(x => x.Errors)
                                     .Select(x => x.ErrorMessage));
-            return View(factura);
+            return View(pedidoRequestDto);
         }
 
-        var resultado = await cliente.ConsumirAPIAsync<FacturaResponseDto>(Constantes.POST, Constantes.POSTFACTURA, valoresConsumo: Serialization.Serialize(factura));
+        var resultado = await cliente.ConsumirAPIAsync<PedidoResponseDto>(Constantes.POST, Constantes.POSTPEDIDO, valoresConsumo: Serialization.Serialize(pedidoRequestDto));
         if (resultado == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return View(factura);
+            return View(pedidoRequestDto);
         }
 
-        TempData["SuccessMessage"] = "Factura creada correctamente.";
+        TempData["SuccessMessage"] = "Pedido creada correctamente.";
 
         return RedirectToAction(nameof(Index));
     }
-
 
     private async Task<(bool fallo, IEnumerable<ClienteResponseDto>, IEnumerable<TipoPagoResponseDto>, IEnumerable<ServicioResponseDto>, IEnumerable<ImpuestoResponseDto>)> ObtenerValoresInicialesSelect()
     {

@@ -9,7 +9,7 @@
             asp-items='@(new SelectList(Model.Servicios, "Id" , "DescripcionCompletaSelect"))'></select>
     </div>
     <div class="col-sm-2 col-md-1">
-        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarServicio(this)">
+        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarDetalle(this)">
             <span class="material-symbols-outlined">
                 add
             </span>
@@ -41,9 +41,11 @@
                     <tr>
                         <div hidden>
                             <input name="DetallePedidos[@item.Index].NumeroLinea" value="@item.Value.NumeroLinea" />
+                            <input name="DetallePedidos[@item.Index].IdServicio" value="@item.Value.IdServicio" />
                             <input name="DetallePedidos[@item.Index].Servicio.Nombre" value="@item.Value.Servicio.Nombre" />
-                            <input name="DetallePedidos[@item.Index].Servicio.Tarifa" value="@item.Value.Servicio.Tarifa" />
-
+                            <input name="DetallePedidos[@item.Index].Servicio.Descripcion" value="@item.Value.Servicio.Descripcion" />
+                            <input name="DetallePedidos[@item.Index].Servicio.TipoServicio.Nombre" value="@item.Value.Servicio.TipoServicio.Nombre" />
+                            <input name="DetallePedidos[@item.Index].Servicio.Tarifa" id="TarifaServicioDetalle-@item.Value.NumeroLinea" value="@item.Value.Servicio.Tarifa.ToString("#,##0.00")" />
                         </div>
                         <td>
                             @item.Value.NumeroLinea
@@ -52,22 +54,22 @@
                             @item.Value.Servicio.Nombre
                         </td>
                         <td>
-                            @item.Value.Servicio.Tarifa
+                            @item.Value.Servicio.Tarifa.ToString("#,##0.00")
+                        </td>
+                        <td class="text-right">
+                            <input name="DetallePedidos[@item.Index].CantidadFormateada" id="CantidadDetalle-@item.Value.NumeroLinea" data-mask="#,##0" data-mask-reverse="true" data-linea="@item.Value.NumeroLinea" class="form-control cantidad calculo-detalle text-end" onkeyup="calcularTotalesLinea(this)" value="@item.Value.CantidadFormateada">
                         </td>
                         <td>
-                            <input name="DetallePedidos[@item.Index].Cantidad" id="Cantidad" class="form-control" value="@item.Value.Cantidad">
+                            <input name="DetallePedidos[@item.Index].MontoSubtotal" readonly id="SubTotalDetalle-@item.Value.NumeroLinea" class="form-control subtotal text-end" value="@item.Value.MontoSubtotal">
                         </td>
                         <td>
-                            <input readonly id="SubTotal" class="form-control">
+                            <input name="DetallePedidos[@item.Index].MontoImpuesto" readonly id="ImpuestoDetalle-@item.Value.NumeroLinea" class="form-control impuesto text-end" value="@item.Value.MontoImpuesto">
                         </td>
                         <td>
-                            <input readonly id="Impuesto" class="form-control">
+                            <input name="DetallePedidos[@item.Index].MontoTotal" readonly id="TotalDetalle-@item.Value.NumeroLinea" class="form-control total text-end" value="@item.Value.MontoTotal">
                         </td>
                         <td>
-                            <input readonly id="Total" class="form-control">
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-servicio="@item.Value.NumeroLinea" onclick="eliminarServicio(this)">
+                            <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-linea="@item.Value.NumeroLinea" onclick="eliminarDetalle(this)">
                                     <span class="material-symbols-outlined">
                                         close
                                     </span>

@@ -21,6 +21,7 @@ namespace ArtInk.Site.ViewModels.Request
         public DateOnly Fecha { get; set; }
 
         [DisplayName("Tipo de pago")]
+        [Range(1, 99999, ErrorMessage = "Debe seleccionar el tipo de pago")]
         public byte IdTipoPago { get; set; }
 
         [DisplayName("Número")]
@@ -28,6 +29,8 @@ namespace ArtInk.Site.ViewModels.Request
 
         public short IdUsuarioSucursal { get; set; }
 
+        [DisplayName("Impuesto")]
+        [Range(1, 99999, ErrorMessage = "Debe seleccionar el impuesto a aplicar")]
         public byte IdImpuesto { get; set; }
 
         [DisplayName("Servicio")]
@@ -49,9 +52,7 @@ namespace ArtInk.Site.ViewModels.Request
 
         [NotMapped]
         [DisplayName("% Impuesto")]
-        [Required(ErrorMessage = "El % impuesto es obligatorio")]
-        [RegularExpression(@"^(?!0+\.00)(?=.{1,9}(\.|$))\d{1,3}(,\d{3})*(\.\d+)?$", ErrorMessage = "Ingrese un valor válido y mayor a 0")]
-        public string PorcentajeImpuestoFormateado { get; set; } = null!;
+        public string? PorcentajeImpuestoFormateado { get; set; }
 
         [JsonRequired]
         public decimal SubTotal
@@ -65,9 +66,7 @@ namespace ArtInk.Site.ViewModels.Request
 
         [NotMapped]
         [DisplayName("SubTotal ¢")]
-        [Required(ErrorMessage = "El subtotal es obligatorio")]
-        [RegularExpression(@"^(?!0+\.00)(?=.{1,9}(\.|$))\d{1,3}(,\d{3})*(\.\d+)?$", ErrorMessage = "Ingrese un valor válido y mayor a 0")]
-        public string SubTotalFormateado { get; set; } = null!;
+        public string? SubTotalFormateado { get; set; }
 
         [JsonRequired]
         public decimal MontoImpuesto
@@ -81,9 +80,7 @@ namespace ArtInk.Site.ViewModels.Request
 
         [NotMapped]
         [DisplayName("Impuesto ¢")]
-        [Required(ErrorMessage = "El monto impuesto es obligatorio")]
-        [RegularExpression(@"^(?!0+\.00)(?=.{1,9}(\.|$))\d{1,3}(,\d{3})*(\.\d+)?$", ErrorMessage = "Ingrese un valor válido y mayor a 0")]
-        public string MontoImpuestoFormateado { get; set; } = null!;
+        public string? MontoImpuestoFormateado { get; set; }
 
         [JsonRequired]
         public decimal MontoTotal
@@ -97,9 +94,7 @@ namespace ArtInk.Site.ViewModels.Request
 
         [NotMapped]
         [DisplayName("Total ¢")]
-        [Required(ErrorMessage = "El monto total es obligatorio")]
-        [RegularExpression(@"^(?!0+\.00)(?=.{1,9}(\.|$))\d{1,3}(,\d{3})*(\.\d+)?$", ErrorMessage = "Ingrese un valor válido y mayor a 0")]
-        public string MontoTotalFormateado { get; set; } = null!;
+        public string? MontoTotalFormateado { get; set; }
 
         public IEnumerable<ServicioResponseDto>? Servicios { get; set; } = null!;
 
@@ -125,7 +120,7 @@ namespace ArtInk.Site.ViewModels.Request
             OrdenarNumeroLineasDetalle();
         }
 
-        private void CalcularTotales()
+        public void CalcularTotales()
         {
             SubTotal = DetallePedidos.Sum(m => m.MontoSubtotal);
             MontoImpuesto = SubTotal * (PorcentajeImpuesto / 100);
@@ -135,12 +130,12 @@ namespace ArtInk.Site.ViewModels.Request
         private void OrdenarNumeroLineasDetalle()
         {
             var conteoTotal = DetallePedidos.Count;
-            DetallePedidos.ForEach(m => { var valorActual = conteoTotal - 1; m.NumeroLinea = (byte)(conteoTotal - valorActual); conteoTotal--; });
+            DetallePedidos.ForEach(m => { conteoTotal--; m.NumeroLinea = (byte)(DetallePedidos.Count - conteoTotal); });
         }
 
         public byte SiguienteNumeroLinea() => DetallePedidos.Count == 0 ? (byte)1 : (byte)(DetallePedidos.Max(m => m.NumeroLinea) + 1);
 
-        public void PrecargarDetalle(ICollection<ReservaServicioResponseDto> servicios) 
+        public void PrecargarDetalle(ICollection<ReservaServicioResponseDto> servicios)
         {
             foreach (var item in servicios)
             {
@@ -149,7 +144,11 @@ namespace ArtInk.Site.ViewModels.Request
                     IdServicio = item.IdServicio,
                     NumeroLinea = SiguienteNumeroLinea(),
                     Servicio = item.Servicio,
-                    TarifaServicio = item.Servicio.Tarifa
+                    TarifaServicio = item.Servicio.Tarifa,
+                    Cantidad = 0,
+                    MontoSubtotal = 0,
+                    MontoImpuesto = 0,
+                    MontoTotal = 0,
                 };
                 AgregarDetallePedido(detallePedido);
             }

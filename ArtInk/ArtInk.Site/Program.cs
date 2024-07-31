@@ -1,11 +1,12 @@
 using Serilog;
 using ArtInk.Site.Configuration;
 using ArtInk.Site.Middleware;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddViewLocalization();
 
 builder.Services.ConfigureArtInkAPIClient();
 
@@ -14,7 +15,12 @@ builder.ConfigureSerilog();
 
 builder.Services.ConfigureSiteAutoMapper();
 
+builder.Services.ConfigureLocalization();
+
 var app = builder.Build();
+
+var locOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+app.UseRequestLocalization(locOptions.Value);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
