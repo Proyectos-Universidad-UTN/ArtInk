@@ -32,7 +32,10 @@
                             <strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado)<br />
                         </p>
                         <div class="mt-auto">
-                            @await Html.PartialAsync("~/Views/Shared/_CommonActionsUser.cshtml", actions)
+                            <div class="btn-group d-flex justify-content-between gap-2">
+                                @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm flex-fill m-0" })
+                                @Html.ActionLink("Proforma", "Create", "Proforma", new { idReserva = item.Id }, new { @class = "btn btn-primary btn-sm flex-fill m-0" })
+                            </div>
                         </div>
                     </div>
                 </div>

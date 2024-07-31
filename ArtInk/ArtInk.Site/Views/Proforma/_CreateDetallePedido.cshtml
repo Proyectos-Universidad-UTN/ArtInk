@@ -1,0 +1,81 @@
+@model ArtInk.Site.ViewModels.Request.PedidoRequestDto
+
+<div class="row mb-4">
+    <div class="col-sm-12 col-md-12">
+        <label for="IdServicio" class="form-label">Servicios</label>
+    </div>
+    <div class="col-sm-10 col-md-11">
+        <select id="IdServicioSelect" class="form-select"
+            asp-items='@(new SelectList(Model.Servicios, "Id" , "DescripcionCompletaSelect"))'></select>
+    </div>
+    <div class="col-sm-2 col-md-1">
+        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarServicio(this)">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <label for="IdServicio" class="form-label">Detalle de factura</label>
+    </div>
+    <div class="col-sm-12 col-md-12 mb-4" id="DetallesAgregados">
+        <table class="w-100">
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Servicio</th>
+                    <th>Tarifa</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Impuesto</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model.DetallePedidos.Select((x, i) => new { Value = x, Index = i }))
+                {
+                    <tr>
+                        <div hidden>
+                            <input name="DetallePedidos[@item.Index].NumeroLinea" value="@item.Value.NumeroLinea" />
+                            <input name="DetallePedidos[@item.Index].Servicio.Nombre" value="@item.Value.Servicio.Nombre" />
+                            <input name="DetallePedidos[@item.Index].Servicio.Tarifa" value="@item.Value.Servicio.Tarifa" />
+
+                        </div>
+                        <td>
+                            @item.Value.NumeroLinea
+                        </td>
+                        <td>
+                            @item.Value.Servicio.Nombre
+                        </td>
+                        <td>
+                            @item.Value.Servicio.Tarifa
+                        </td>
+                        <td>
+                            <input name="DetallePedidos[@item.Index].Cantidad" id="Cantidad" class="form-control" value="@item.Value.Cantidad">
+                        </td>
+                        <td>
+                            <input readonly id="SubTotal" class="form-control">
+                        </td>
+                        <td>
+                            <input readonly id="Impuesto" class="form-control">
+                        </td>
+                        <td>
+                            <input readonly id="Total" class="form-control">
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-servicio="@item.Value.NumeroLinea" onclick="eliminarServicio(this)">
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
