@@ -53,7 +53,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
 
         // Se remueven los servicios existentes para evitar duplicados en la carga
         var serviciosExistentes = servicios.Where(m => reserva.ReservaServicios.ToList().Exists(x => x.IdServicio == m.Id)).ToList();
-        servicios = servicios.Except(serviciosExistentes).ToList();
+        servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes);
 
         var pedido = new PedidoRequestDto()
         {
@@ -74,14 +74,8 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
 
     public async Task<IActionResult> AgregarEliminarLineaPedido(PedidoRequestDto pedidoRequestDto)
     {
-        var servicios = await cliente.ConsumirAPIAsync<List<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
-        if (servicios == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return PartialView("~/Views/Proforma/_CreateDetallePedido.cshtml", pedidoRequestDto);
-        }
-
-        servicios.Insert(0, new ServicioResponseDto() { Id = 0, Nombre = "Seleccione un servicio" });
+        var (falloEjecucion, servicios) = await ObtenerValoresServicioselect();
+        if (falloEjecucion) return RedirectToAction(nameof(Index));
 
         if (pedidoRequestDto.Accion == 'A')
         {
@@ -105,10 +99,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         if (pedidoRequestDto.Accion == 'E') pedidoRequestDto.EliminarDetalleImpuesto(pedidoRequestDto.NumeroLineaEliminar);
 
         var serviciosExistentes = servicios.Where(m => pedidoRequestDto.DetallePedidos.Exists(x => x.IdServicio == m.Id)).ToList();
-
-        servicios = servicios.Except(serviciosExistentes).ToList();
-
-        pedidoRequestDto.Servicios = servicios;
+        pedidoRequestDto.Servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes);;
 
         return PartialView("~/Views/Proforma/_CreateDetallePedido.cshtml", pedidoRequestDto);
     }
@@ -126,23 +117,12 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
 
         pedidoRequestDto.CalcularTotales();
 
-        if (pedidoRequestDto.MontoTotal <= 0)
+        if (pedidoRequestDto.MontoTotal <= 0 || pedidoRequestDto.DetallePedidos.Count == 0 || !ModelState.IsValid)
         {
-            TempData[ERRORMESSAGE] = "Una proforma no puede guardarse con un total de 0";
-            return View(pedidoRequestDto);
-        }
-
-        if (pedidoRequestDto.DetallePedidos.Count == 0)
-        {
-            TempData[ERRORMESSAGE] = "Debe agregar detalles a la proforma";
-            return View(pedidoRequestDto);
-        }
-
-        if (!ModelState.IsValid)
-        {
-            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+            TempData[ERRORMESSAGE] = !ModelState.IsValid ? string.Join("; ", ModelState.Values
                                     .SelectMany(x => x.Errors)
-                                    .Select(x => x.ErrorMessage));
+                                    .Select(x => x.ErrorMessage)) : pedidoRequestDto.MontoTotal <= 0 ? "Una proforma no puede guardarse con un total de 0" : "Debe agregar detalles a la proforma";
+
             return View(pedidoRequestDto);
         }
 
@@ -187,15 +167,29 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
 
         impuestos.Insert(0, new ImpuestoResponseDto() { Id = 0, Nombre = "Seleccione un impuesto" });
 
+        var (falloEjecucion, servicios) = await ObtenerValoresServicioselect();
+        if (servicios == null)
+        {
+            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            return (falloEjecucion, null, null, null, null)!;
+        }
+
+        return (false, clientes, tipoPagos, servicios, impuestos);
+    }
+
+    private async Task<(bool fallo, IEnumerable<ServicioResponseDto>)> ObtenerValoresServicioselect()
+    {
         var servicios = await cliente.ConsumirAPIAsync<List<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
         if (servicios == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return (true, null, null, null, null)!;
+            return (true,  null)!;
         }
 
         servicios.Insert(0, new ServicioResponseDto() { Id = 0, Nombre = "Seleccione un servicio" });
 
-        return (false, clientes, tipoPagos, servicios, impuestos);
+        return (false, servicios);
     }
+
+    private List<ServicioResponseDto> FiltrarServiciosExistentes(IEnumerable<ServicioResponseDto> servicios, List<ServicioResponseDto> serviciosExistentes) => servicios.Except(serviciosExistentes).ToList();
 }
