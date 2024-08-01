@@ -17,7 +17,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<FacturaResponseDto>>(Constantes.GET, Constantes.GETALLFACTURAS);
         if (collection == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction("Index", "Home");
         }
         return View(collection);
@@ -55,14 +55,8 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
 
     public async Task<IActionResult> AgregarEliminarLineaFactura(FacturaRequestDto facturaRequestDto)
     {
-        var servicios = await cliente.ConsumirAPIAsync<List<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
-        if (servicios == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return PartialView("~/Views/Factura/_CreateDetalleFactura.cshtml",facturaRequestDto);
-        }
-
-        servicios.Insert(0, new ServicioResponseDto() { Id = 0, Nombre = "Seleccione un servicio" });
+        var (falloEjecucion, servicios) = await ObtenerValoresServicioselect();
+        if (falloEjecucion) return RedirectToAction(nameof(Index));
 
         if (facturaRequestDto.Accion == 'A')
         {
@@ -111,7 +105,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         var resultado = await cliente.ConsumirAPIAsync<FacturaResponseDto>(Constantes.POST, Constantes.POSTFACTURA, valoresConsumo: Serialization.Serialize(factura));
         if (resultado == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return View(factura);
         }
 
@@ -125,7 +119,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         var clientes = await cliente.ConsumirAPIAsync<List<ClienteResponseDto>>(Constantes.GET, Constantes.GETALLCLIENTES);
         if (clientes == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null, null, null, null)!;
         }
 
@@ -134,7 +128,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         var tipoPagos = await cliente.ConsumirAPIAsync<List<TipoPagoResponseDto>>(Constantes.GET, Constantes.GETALLTIPOPAGOS);
         if (tipoPagos == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null, null, null, null)!;
         }
 
@@ -143,21 +137,35 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         var impuestos = await cliente.ConsumirAPIAsync<List<ImpuestoResponseDto>>(Constantes.GET, Constantes.GETALLIMPUESTOS);
         if (impuestos == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null, null, null, null)!;
         }
 
         impuestos.Insert(0, new ImpuestoResponseDto() { Id = 0, Nombre = "Seleccione un impuesto" });
 
+        var (falloEjecucion, servicios) = await ObtenerValoresServicioselect();
+        if (servicios == null)
+        {
+            SetErrorMessage();
+            return (falloEjecucion, null, null, null, null)!;
+        }
+
+        return (false, clientes, tipoPagos, servicios, impuestos);
+    }
+
+    private async Task<(bool fallo, IEnumerable<ServicioResponseDto>)> ObtenerValoresServicioselect()
+    {
         var servicios = await cliente.ConsumirAPIAsync<List<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
         if (servicios == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return (true, null, null, null, null)!;
+            SetErrorMessage();
+            return (true,  null)!;
         }
 
         servicios.Insert(0, new ServicioResponseDto() { Id = 0, Nombre = "Seleccione un servicio" });
 
-        return (false, clientes, tipoPagos, servicios, impuestos);
+        return (false, servicios);
     }
+
+    private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
 }
