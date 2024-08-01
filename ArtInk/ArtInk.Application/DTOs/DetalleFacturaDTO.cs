@@ -24,5 +24,5 @@ public record DetalleFacturaDto
 
     public virtual FacturaDto Factura { get; set; } = null!;
 
-    public virtual ServicioDto Servicio { get; set; } = null!;
+    public virtual ServicioDto? Servicio { get; set; } = null!;
 }

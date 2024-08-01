@@ -23,7 +23,7 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
             return RedirectToAction("Index", "Home");
         }
-        return View(collection);
+        return View(collection.OrderByDescending(m => m.Id));
     }
 
     public async Task<IActionResult> Details(int id)

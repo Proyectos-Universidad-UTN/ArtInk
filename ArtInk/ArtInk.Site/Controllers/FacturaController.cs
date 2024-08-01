@@ -23,7 +23,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
             SetErrorMessage();
             return RedirectToAction(INDEXVIEW, "Home");
         }
-        return View(collection);
+        return View(collection.OrderByDescending(m => m.Id));
     }
 
     public async Task<IActionResult> Details(long id)
@@ -42,44 +42,34 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
 
     public async Task<IActionResult> Create(long? idPedido)
     {
-        if (idPedido == null)
-        {
-            TempData[ERRORMESSAGE] = "Se necesita la proforma.";
-            return RedirectToAction(INDEXVIEW, CONTROLLERPROFORMA);
-        }
+        PedidoResponseDto pedido = null!;
 
-        var url = string.Format(Constantes.GETPEDIDOYID, idPedido);
-        var pedido = await cliente.ConsumirAPIAsync<PedidoResponseDto>(Constantes.GET, url);
-
-        if (pedido == null)
+        if (idPedido != null)
         {
-            SetErrorMessage();
-            return RedirectToAction(INDEXVIEW, CONTROLLERPROFORMA);
+            var url = string.Format(Constantes.GETPEDIDOYID, idPedido);
+            pedido = await cliente.ConsumirAPIAsync<PedidoResponseDto>(Constantes.GET, url);
+
+            if (pedido == null)
+            {
+                SetErrorMessage();
+                return RedirectToAction(INDEXVIEW, CONTROLLERPROFORMA);
+            }
+            
+            if (pedido.Estado == 'A')
+            {
+                TempData[ERRORMESSAGE] = "No se puede generar otra proforma de una reserva ya procesada";
+                return RedirectToAction(INDEXVIEW, CONTROLLERPROFORMA);
+            }
         }
 
         var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
-        // Se remueven los servicios existentes para evitar duplicados en la carga
-        var serviciosExistentes = servicios.Where(m => pedido.DetallePedidos.ToList().Exists(x => x.IdServicio == m.Id)).ToList();
-        servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes);
+        var factura = ObtenerModelCreate(servicios, pedido);
+        factura.Clientes = clientes;
+        factura.TipoPagos = tipoPagos;
+        factura.Impuestos = impuestos;
 
-
-        var factura = new FacturaRequestDto()
-        {
-            IdCliente = pedido.IdCliente,
-            NombreCliente = pedido.NombreCliente,
-            IdPedido = idPedido.Value,
-            PorcentajeImpuesto = pedido.PorcentajeImpuesto,
-            Fecha = DateOnly.FromDateTime(DateTime.Now),
-            IdTipoPago = pedido.IdTipoPago,
-            IdImpuesto = pedido.IdImpuesto,
-            Clientes = clientes,
-            TipoPagos = tipoPagos,
-            Impuestos = impuestos,
-            Servicios = servicios
-        };
-        factura.PrecargarDetalle(pedido.DetallePedidos);
         return View(factura);
     }
 
@@ -195,7 +185,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         if (servicios == null)
         {
             SetErrorMessage();
-            return (true,  null)!;
+            return (true, null)!;
         }
 
         servicios.Insert(0, new ServicioResponseDto() { Id = 0, Nombre = "Seleccione un servicio" });
@@ -204,6 +194,36 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
     }
 
     private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+
+    private FacturaRequestDto ObtenerModelCreate(IEnumerable<ServicioResponseDto> servicios, PedidoResponseDto? pedido = null!)
+    {
+        if (pedido == null)
+        {
+            return new FacturaRequestDto()
+            {
+                Fecha = DateOnly.FromDateTime(DateTime.Now),
+                Servicios = servicios
+            };
+        }
+
+        // Se remueven los servicios existentes para evitar duplicados en la carga
+        var serviciosExistentes = servicios.Where(m => pedido.DetallePedidos.ToList().Exists(x => x.IdServicio == m.Id)).ToList();
+        servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes);
+
+        var factura = new FacturaRequestDto()
+        {
+            IdCliente = pedido.IdCliente,
+            NombreCliente = pedido.NombreCliente,
+            IdPedido = pedido.Id,
+            PorcentajeImpuesto = pedido.PorcentajeImpuesto,
+            Fecha = DateOnly.FromDateTime(DateTime.Now),
+            IdTipoPago = pedido.IdTipoPago,
+            IdImpuesto = pedido.IdImpuesto,
+            Servicios = servicios
+        };
+        factura.PrecargarDetalle(pedido.DetallePedidos);
+        return factura;
+    }
 
     private List<ServicioResponseDto> FiltrarServiciosExistentes(IEnumerable<ServicioResponseDto> servicios, List<ServicioResponseDto> serviciosExistentes) => servicios.Except(serviciosExistentes).ToList();
 }

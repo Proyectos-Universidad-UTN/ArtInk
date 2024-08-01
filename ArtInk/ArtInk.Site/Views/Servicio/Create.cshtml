@@ -35,7 +35,7 @@ ViewData["Title"] = "Crear";
                         <div class="form-group mb-3">
                             <label asp-for="IdTipoServicio" class="form-label"></label>
                             <select asp-for="IdTipoServicio" class="form-select"
-                                asp-items="@(new SelectList(Model.TipoServicios," Id","Nombre"))"></select>
+                                asp-items='@(new SelectList(Model.TipoServicios,"Id","Nombre"))'></select>
                             <span asp-validation-for="IdTipoServicio" class="text-danger"></span>
                         </div>
                     </div>

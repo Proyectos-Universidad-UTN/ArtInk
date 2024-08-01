@@ -101,6 +101,8 @@ namespace ArtInk.Site.ViewModels.Request
         [DisplayName("Total ¢")]
         public string? MontoTotalFormateado { get; set; }
 
+        public char Estado { get; set; }
+
         public IEnumerable<ServicioResponseDto>? Servicios { get; set; } = null!;
 
         public List<DetallePedidoRequestDto> DetallePedidos { get; set; } = new List<DetallePedidoRequestDto>();

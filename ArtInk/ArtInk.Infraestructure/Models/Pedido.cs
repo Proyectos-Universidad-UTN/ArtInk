@@ -28,6 +28,8 @@
 
         public decimal MontoTotal { get; set; }
 
+        public char Estado { get; set; }
+
         public DateTime FechaCreacion { get; set; }
 
         public string UsuarioCreacion { get; set; } = null!;

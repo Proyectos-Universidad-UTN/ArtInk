@@ -29,17 +29,21 @@ public class RepositoryFactura(ArtInkContext context) : IRepositoryFactura
                 }
 
                 var pedido = await context.Pedidos.FindAsync(factura.IdPedido);
-           
-                context.Pedidos.Update(pedido);
-
-                filasAfectadas = await context.SaveChangesAsync();
-
-                if (filasAfectadas == 0)
+                if (pedido != null)
                 {
-                    await transaccion.RollbackAsync();
-                    throw (new Exception("No se ha podido actualizar la factura") as SqlException)!;
-                }
+                    pedido.Estado = 'F';
 
+                    context.Pedidos.Update(pedido);
+
+                    filasAfectadas = await context.SaveChangesAsync();
+
+                    if (filasAfectadas == 0)
+                    {
+                        await transaccion.RollbackAsync();
+                        throw (new Exception("No se ha podido actualizar la factura") as SqlException)!;
+                    }
+                }
+                
                 result = tracking.Entity;
                 await transaccion.CommitAsync();
             }

@@ -52,6 +52,7 @@
                             <input name="DetallePedidos[@item.Index].Servicio.Tarifa"
                                 id="TarifaServicioDetalle-@item.Value.NumeroLinea"
                                 value="@item.Value.Servicio.Tarifa.ToString(" #,##0.00")" />
+                            <input name="DetallePedidos[@item.Index].TarifaServicio" value="@item.Value.TarifaServicio" />
                         </div>
                         <td>
                             @item.Value.NumeroLinea

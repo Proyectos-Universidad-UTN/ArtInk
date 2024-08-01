@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using ArtInk.Site.ViewModels.Response;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ArtInk.Site.ViewModels.Request;
 
@@ -20,7 +20,6 @@ public record DetalleFacturaRequestDto
     [DisplayName("Número Línea")]
     public byte NumeroLinea { get; set; }
 
-    [JsonRequired]
     public short Cantidad
     {
         get => !string.IsNullOrEmpty(CantidadFormateada) ? short.Parse(CantidadFormateada.Replace(",", ""), CultureInfo.InvariantCulture) : (short)0;
@@ -35,8 +34,6 @@ public record DetalleFacturaRequestDto
     [DisplayName("Tarifa Servicio")]
     public decimal TarifaServicio { get; set; }
 
-
-    [JsonRequired]
     public decimal MontoSubtotal
     {
         get => !string.IsNullOrEmpty(MontoSubtotalFormateado) ? decimal.Parse(MontoSubtotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
@@ -47,7 +44,6 @@ public record DetalleFacturaRequestDto
     [DisplayName("Subtotal")]
     public string MontoSubtotalFormateado { get; set; }
 
-    [JsonRequired]
     public decimal MontoImpuesto
     {
         get => !string.IsNullOrEmpty(MontoImpuestoFormateado) ? decimal.Parse(MontoImpuestoFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
@@ -58,7 +54,6 @@ public record DetalleFacturaRequestDto
     [DisplayName("Impuesto")]
     public string MontoImpuestoFormateado { get; set; }
 
-    [JsonRequired]
     public decimal MontoTotal
     {
         get => !string.IsNullOrEmpty(MontoTotalFormateado) ? decimal.Parse(MontoTotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
@@ -69,5 +64,6 @@ public record DetalleFacturaRequestDto
     [DisplayName("Total")]
     public string MontoTotalFormateado { get; set; }
 
+    [JsonIgnore]
     public ServicioResponseDto? Servicio { get; set; }
 }

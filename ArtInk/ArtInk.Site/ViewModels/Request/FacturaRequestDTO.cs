@@ -1,9 +1,9 @@
 ﻿using ArtInk.Site.ViewModels.Response;
+using Newtonsoft.Json;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
-using System.Text.Json.Serialization;
 
 namespace ArtInk.Site.ViewModels.Request;
 
@@ -44,7 +44,6 @@ public record FacturaRequestDto
 
     public byte NumeroLineaEliminar { get; set; }
 
-    [JsonRequired]
     public decimal PorcentajeImpuesto
     {
         get => !string.IsNullOrEmpty(PorcentajeImpuestoFormateado) ? Decimal.Parse(PorcentajeImpuestoFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
@@ -58,7 +57,6 @@ public record FacturaRequestDto
     [DisplayName("% Impuesto")]
     public string? PorcentajeImpuestoFormateado { get; set; } 
 
-    [JsonRequired]
     public decimal SubTotal
     {
         get => !string.IsNullOrEmpty(SubTotalFormateado) ? Decimal.Parse(SubTotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
@@ -72,7 +70,6 @@ public record FacturaRequestDto
     [DisplayName("SubTotal ¢")]
     public string? SubTotalFormateado { get; set; }
 
-    [JsonRequired]
     public decimal MontoImpuesto
     {
         get => !string.IsNullOrEmpty(MontoImpuestoFormateado) ? Decimal.Parse(MontoImpuestoFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
@@ -86,7 +83,6 @@ public record FacturaRequestDto
     [DisplayName("Impuesto ¢")]
     public string? MontoImpuestoFormateado { get; set; } 
 
-    [JsonRequired]
     public decimal MontoTotal
     {
         get => !string.IsNullOrEmpty(MontoTotalFormateado) ? Decimal.Parse(MontoTotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;

@@ -1,13 +1,14 @@
 ﻿@model ArtInk.Site.ViewModels.Request.FacturaRequestDto
 
 @{
- ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create";
+    var pedido = Model.IdPedido == null ? "" : $"Nº {Model.IdPedido}";
 }
 
 <div class="container mt-5">
     <div class="card mx-auto disable-hover" style="max-width: 1000px;">
         <div class="card-header bg-primary text-white">
-            <h4>Factura Reserva  Nº @Model.IdPedido</h4>
+            <h4>Factura Reserva @pedido</h4>
         </div>
         <div class="card-body">
             <form asp-action="Create" class="form-object">
@@ -71,7 +72,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 mb-4" id="DetallesPedido">
+                <div class="col-sm-12 col-md-12 mb-4" id="DetallesFactura">
                     @await Html.PartialAsync("~/Views/Factura/_CreateDetalleFactura.cshtml", Model)
                 </div>
 

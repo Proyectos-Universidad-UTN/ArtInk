@@ -30,6 +30,8 @@ public record PedidoDto : BaseEntity
 
     public decimal MontoTotal { get; set; }
 
+    public char Estado { get; set; }
+
     public virtual ICollection<DetallePedidoDto> DetallePedidos { get; set; } = new List<DetallePedidoDto>();
 
     public virtual ClienteDto Cliente { get; set; } = null!;
