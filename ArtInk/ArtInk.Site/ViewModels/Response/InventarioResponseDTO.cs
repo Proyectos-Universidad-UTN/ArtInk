@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using ArtInk.Site.ViewModels.Common;
 
 namespace ArtInk.Site.ViewModels.Response;
 
@@ -10,6 +11,8 @@ public record InventarioResponseDto
 
     [DisplayName("Sucursal")]
     public byte IdSucursal { get; set; }
+
+    public TipoInventario TipoInventario { get; set; }
 
     public bool Activo { get; set; }
 

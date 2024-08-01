@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using ArtInk.Application.DTOs.Base;
+using ArtInk.Application.DTOs.Enums;
 
 namespace ArtInk.Application.DTOs;
 
@@ -11,6 +12,8 @@ public record InventarioDto: BaseEntity
 
     [DisplayName("Sucursal")]
     public byte IdSucursal { get; set; }
+
+    public TipoInventario TipoInventario { get; set; }
 
     public bool Activo { get; set; }
 

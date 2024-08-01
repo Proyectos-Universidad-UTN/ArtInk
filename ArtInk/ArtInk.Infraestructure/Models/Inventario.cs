@@ -1,4 +1,6 @@
-﻿namespace ArtInk.Infraestructure.Models;
+﻿using ArtInk.Infraestructure.Enums;
+
+namespace ArtInk.Infraestructure.Models;
 
 public partial class Inventario
 {
@@ -7,6 +9,8 @@ public partial class Inventario
     public string Nombre { get; set; } = null!;
 
     public byte IdSucursal { get; set; }
+
+    public TipoInventario TipoInventario { get; set; }
 
     public bool Activo { get; set; }
 

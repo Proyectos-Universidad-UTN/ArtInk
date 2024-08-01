@@ -12,9 +12,9 @@ public class ProductoController(IServiceProducto serviceProducto) : ControllerBa
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProductoDto>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> GetAllProductosAsync()
+    public async Task<IActionResult> GetAllProductosAsync([FromQuery]bool excludeProductosInventario = false, [FromQuery]short idInventario = 0)
     {
-        var productos = await serviceProducto.ListAsync();
+        var productos = await serviceProducto.ListAsync(excludeProductosInventario, idInventario);
         return StatusCode(StatusCodes.Status200OK, productos);
     }
 

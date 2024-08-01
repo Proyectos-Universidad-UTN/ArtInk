@@ -153,6 +153,17 @@ public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Co
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpPost]
+    public async Task<IActionResult> ObtenerInventarios(SucursalInventarioProducto sucursalInventarioProducto)
+    {
+        var url = String.Format(Constantes.GETINVENTARIOSBYSUCURSAL, sucursalInventarioProducto.IdSucursal);
+        var inventarios = await cliente.ConsumirAPIAsync<List<InventarioResponseDto>>(Constantes.GET, url);
+        inventarios.Insert(0, new InventarioResponseDto() { Id = 0, Nombre = "Seleccione un inventario" });
+        sucursalInventarioProducto.Inventarios = inventarios;
+
+        return PartialView("~/Views/Shared/_InventarioSelect.cshtml", sucursalInventarioProducto);
+    }
+
     private IActionResult SetErrorMessage(string message)
     {
         TempData[ERRORMESSAGE] = message;
