@@ -10,6 +10,8 @@ namespace ArtInk.Site.Controllers;
 public class ProformaController(IApiArtInkClient cliente) : Controller
 {
     const string ERRORMESSAGE = "ErrorMessage";
+    const string INDEXVIEW = "Index";
+    const string CONTROLLERRESERVA = "Reserva";
 
     public async Task<IActionResult> Index()
     {
@@ -17,7 +19,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         if (collection == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(INDEXVIEW, "Home");
 
         }
         return View(collection);
@@ -28,7 +30,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         if (idReserva == null)
         {
             TempData[ERRORMESSAGE] = "Se necesita primero la reserva.";
-            return RedirectToAction("Index", "Reserva");
+            return RedirectToAction(INDEXVIEW, CONTROLLERRESERVA);
         }
 
         var url = string.Format(Constantes.GETRESERVABYID, idReserva);
@@ -37,13 +39,13 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         if (reserva == null)
         {
             TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return RedirectToAction("Index", "Reserva");
+            return RedirectToAction(INDEXVIEW, CONTROLLERRESERVA);
         }
 
         if (reserva.Estado == "A")
         {
             TempData[ERRORMESSAGE] = "No se puede generar otra proforma de una reserva ya procesada";
-            return RedirectToAction("Index", "Reserva");
+            return RedirectToAction(INDEXVIEW, CONTROLLERRESERVA);
         }
 
         var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
