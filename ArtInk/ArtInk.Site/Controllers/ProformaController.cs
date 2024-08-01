@@ -18,7 +18,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<PedidoResponseDto>>(Constantes.GET, Constantes.GETALLPEDIDOS);
         if (collection == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(INDEXVIEW, "Home");
 
         }
@@ -38,7 +38,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
 
         if (reserva == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction(INDEXVIEW, CONTROLLERRESERVA);
         }
 
@@ -129,7 +129,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         var resultado = await cliente.ConsumirAPIAsync<PedidoResponseDto>(Constantes.POST, Constantes.POSTPEDIDO, valoresConsumo: Serialization.Serialize(pedidoRequestDto));
         if (resultado == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return View(pedidoRequestDto);
         }
 
@@ -143,7 +143,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         var clientes = await cliente.ConsumirAPIAsync<List<ClienteResponseDto>>(Constantes.GET, Constantes.GETALLCLIENTES);
         if (clientes == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null, null, null, null)!;
         }
 
@@ -152,7 +152,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         var tipoPagos = await cliente.ConsumirAPIAsync<List<TipoPagoResponseDto>>(Constantes.GET, Constantes.GETALLTIPOPAGOS);
         if (tipoPagos == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null, null, null, null)!;
         }
 
@@ -161,7 +161,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         var impuestos = await cliente.ConsumirAPIAsync<List<ImpuestoResponseDto>>(Constantes.GET, Constantes.GETALLIMPUESTOS);
         if (impuestos == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null, null, null, null)!;
         }
 
@@ -170,7 +170,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         var (falloEjecucion, servicios) = await ObtenerValoresServicioselect();
         if (servicios == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (falloEjecucion, null, null, null, null)!;
         }
 
@@ -182,7 +182,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         var servicios = await cliente.ConsumirAPIAsync<List<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
         if (servicios == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true,  null)!;
         }
 
@@ -190,6 +190,8 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
 
         return (false, servicios);
     }
+
+    private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
 
     private List<ServicioResponseDto> FiltrarServiciosExistentes(IEnumerable<ServicioResponseDto> servicios, List<ServicioResponseDto> serviciosExistentes) => servicios.Except(serviciosExistentes).ToList();
 }
