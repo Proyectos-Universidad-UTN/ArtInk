@@ -19,7 +19,7 @@ public class ProductoController(IServiceProducto serviceProducto) : ControllerBa
     }
 
     [HttpGet("{idProducto}")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductoDto))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductoDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetProductoByIdAsync(short idProducto)

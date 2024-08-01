@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ArtInk.Site.ViewModels.Response;
+using System.ComponentModel;
 
 namespace ArtInk.Site.ViewModels.Request;
 
@@ -11,4 +12,6 @@ public record ReservaServicioRequestDto
 
     [DisplayName("Servicio")]
     public byte IdServicio { get; set; }
+
+    public ServicioResponseDto Servicio { get; set; } = null!;
 }

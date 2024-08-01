@@ -10,6 +10,8 @@ public record FacturaDto: BaseEntity
 
     public string NombreCliente { get; set; } = null!;
 
+    public long? IdPedido { get; set; }
+
     public DateOnly Fecha { get; set; }
 
     public byte IdTipoPago { get; set; }
@@ -37,4 +39,6 @@ public record FacturaDto: BaseEntity
     public virtual TipoPagoDto TipoPago { get; set; } = null!;
 
     public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
+
+    public virtual PedidoDto? Pedido { get; set; }
 }

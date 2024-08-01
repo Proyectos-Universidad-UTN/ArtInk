@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ArtInk.Site.ViewModels.Response;
+using System.ComponentModel;
 
 namespace ArtInk.Site.ViewModels.Request;
 
@@ -36,4 +37,13 @@ public record FacturaRequestDto
 
     [DisplayName("Total")]
     public decimal MontoTotal { get; set; }
+
+    public IEnumerable<ClienteResponseDto>? Clientes { get; set; } = null!;
+
+    public IEnumerable<TipoPagoResponseDto>? TipoPagos { get; set; } = null!;
+
+    public IEnumerable<ImpuestoResponseDto>? Impuestos { get; set; } = null!;
+
+    public IEnumerable<UsuarioSucursalResponseDto>? UsuarioSucursales { get; set; } = null!;
+
 }

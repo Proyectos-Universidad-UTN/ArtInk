@@ -48,5 +48,4 @@ public class ServiceSucursalHorario(IRepositorySucursalHorario repository, IMapp
         }
         return horariosExistentes;
     }
-
 }

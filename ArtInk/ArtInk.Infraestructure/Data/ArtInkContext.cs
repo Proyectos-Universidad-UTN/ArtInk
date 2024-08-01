@@ -17,7 +17,11 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
 
     public virtual DbSet<DetalleFactura> DetalleFacturas { get; set; }
 
+    public virtual DbSet<DetallePedido> DetallePedidos { get; set; }
+
     public virtual DbSet<DetalleFacturaProducto> DetalleFacturaProductos { get; set; }
+
+    public virtual DbSet<DetallePedidoProducto> DetallePedidoProductos { get; set; }
 
     public virtual DbSet<Distrito> Distritos { get; set; }
 
@@ -68,6 +72,8 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
     public virtual DbSet<SucursalFeriado> SucursalFeriados { get; set; }
 
     public virtual DbSet<SucursalHorarioBloqueo> SucursalHorarioBloqueos { get; set; }
+
+    public virtual DbSet<Pedido> Pedidos { get; set; }
 
     public virtual DbSet<InventarioProductoMovimiento> InventarioProductoMovimientos { get; set; }
 
@@ -168,6 +174,28 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasConstraintName("FK_DetalleFactura_Servicio");
         });
 
+        modelBuilder.Entity<DetallePedido>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_detallePedido");
+
+            entity.ToTable("DetallePedido");
+
+            entity.Property(e => e.MontoImpuesto).HasColumnType("money");
+            entity.Property(e => e.MontoSubtotal).HasColumnType("money");
+            entity.Property(e => e.MontoTotal).HasColumnType("money");
+            entity.Property(e => e.TarifaServicio).HasColumnType("money");
+
+            entity.HasOne(d => d.IdPedidoNavigation).WithMany(p => p.DetallePedidos)
+                .HasForeignKey(d => d.IdPedido)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetallePedido_Pedido");
+
+            entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.DetallePedidos)
+                .HasForeignKey(d => d.IdServicio)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetallePedido_Servicio");
+        });
+
         modelBuilder.Entity<DetalleFacturaProducto>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_[DetalleFacturaProducto");
@@ -185,6 +213,25 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdProducto)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetalleFacturaProducto_Producto");
+        });
+
+        modelBuilder.Entity<DetallePedidoProducto>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_[DetallePedidoProducto");
+
+            entity.ToTable("DetallePedidoProducto");
+
+            entity.Property(e => e.Cantidad).HasColumnType("decimal(6, 2)");
+
+            entity.HasOne(d => d.IdDetallePedidoNavigation).WithMany(p => p.DetallePedidoProductos)
+                .HasForeignKey(d => d.IdDetallePedido)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetallePedidoProducto_DetallePedido");
+
+            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.DetallePedidoProductos)
+                .HasForeignKey(d => d.IdProducto)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetallePedidoProducto_Producto");
         });
 
         modelBuilder.Entity<Distrito>(entity =>
@@ -222,6 +269,11 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Factura_Cliente");
 
+            entity.HasOne(d => d.IdPedidoNavigation).WithMany(p => p.Facturas)
+                .HasForeignKey(d => d.IdPedido)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Factura_Pedido");
+
             entity.HasOne(d => d.IdImpuestoNavigation).WithMany(p => p.Facturas)
                 .HasForeignKey(d => d.IdImpuesto)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -236,6 +288,43 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdUsuarioSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Factura_UsuarioSucursal");
+        });
+
+        modelBuilder.Entity<Pedido>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_pedido");
+
+            entity.ToTable("Pedido");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.MontoImpuesto).HasColumnType("money");
+            entity.Property(e => e.MontoTotal).HasColumnType("money");
+            entity.Property(e => e.NombreCliente).HasMaxLength(160);
+            entity.Property(e => e.PorcentajeImpuesto).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.SubTotal).HasColumnType("money");
+            entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
+            entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
+
+            entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdCliente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_Cliente");
+
+            entity.HasOne(d => d.IdImpuestoNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdImpuesto)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_Impuesto");
+
+            entity.HasOne(d => d.IdTipoPagoNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdTipoPago)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_TipoPago");
+
+            entity.HasOne(d => d.IdUsuarioSucursalNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdUsuarioSucursal)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_UsuarioSucursal");
         });
 
         modelBuilder.Entity<Feriado>(entity =>
@@ -266,7 +355,7 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
             entity.HasKey(e => e.Id).HasName("PK_horario");
 
             entity.ToTable("Horario");
-          
+
             entity.Property(a => a.Dia).HasConversion(m => m.ToString(), b => (DiaSemana)Enum.Parse(typeof(DiaSemana), b));
 
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
@@ -408,6 +497,11 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdUsuarioSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Reserva_UsuarioSucursal");
+
+            entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Reservas)
+                .HasForeignKey(d => d.IdCliente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Reserva_Cliente");
         });
 
         modelBuilder.Entity<ReservaPregunta>(entity =>

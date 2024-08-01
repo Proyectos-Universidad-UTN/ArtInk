@@ -7,6 +7,15 @@ namespace ArtInk.Infraestructure.Repository.Implementations;
 
 public class RepositoryFactura(ArtInkContext context) : IRepositoryFactura
 {
+    public async Task<Factura> CreateFacturaAsync(Factura factura)
+    {
+        var result = context.Facturas.Add(factura);
+        //aplica en la BD
+        await context.SaveChangesAsync();
+        //Refleja la entidad
+        return result.Entity;
+    }
+
     public async Task<Factura?> FindByIdAsync(long id)
     {
         var keyProperty = context.Model.FindEntityType(typeof(Factura))!.FindPrimaryKey()!.Properties[0];

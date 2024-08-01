@@ -9,4 +9,6 @@ public partial class Impuesto
     public decimal Porcentaje { get; set; }
 
     public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
+
+    public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
 }

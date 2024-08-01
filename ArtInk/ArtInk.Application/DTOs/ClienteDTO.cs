@@ -22,5 +22,7 @@ public record ClienteDto: BaseEntity
 
     public virtual ICollection<FacturaDto> Facturas { get; set; } = new List<FacturaDto>();
 
+    public virtual ICollection<ReservaDto> Reservas { get; set; } = new List<ReservaDto>();
+
     public virtual DistritoDto Distrito { get; set; } = null!;
 }
