@@ -26,6 +26,14 @@ public class ServicePedido(IRepositoryPedido repository, IMapper mapper, IValida
         return mapper.Map<PedidoDto>(result);
     }
 
+    public async Task<PedidoDto> FindByIdAsync(long id)
+    {
+        var pedido = await repository.FindByIdAsync(id);
+        if (pedido == null) throw new NotFoundException("Proforma no creada.");
+
+        return mapper.Map<PedidoDto>(pedido);
+    }
+
     public async Task<ICollection<PedidoDto>> ListAsync()
     {
         var list = await repository.ListAsync();

@@ -67,12 +67,19 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
 
         var factura = new FacturaRequestDto()
         {
+            IdCliente = pedido.IdCliente,
+            NombreCliente = pedido.NombreCliente,
+            IdPedido = idPedido.Value,
+            PorcentajeImpuesto = pedido.PorcentajeImpuesto,
+            Fecha = DateOnly.FromDateTime(DateTime.Now),
+            IdTipoPago = pedido.IdTipoPago,
+            IdImpuesto = pedido.IdImpuesto,
             Clientes = clientes,
             TipoPagos = tipoPagos,
             Impuestos = impuestos,
-            Fecha = DateOnly.FromDateTime(DateTime.Now),
             Servicios = servicios
         };
+        factura.PrecargarDetalle(pedido.DetallePedidos);
         return View(factura);
     }
 
@@ -91,45 +98,51 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
                 Servicio = servicioSeleccionado,
                 TarifaServicio = servicioSeleccionado.Tarifa,
                 IdServicio = facturaRequestDto.IdServicio,
+                Cantidad = 0,
+                MontoSubtotal = 0,
+                MontoImpuesto = 0,
+                MontoTotal = 0,
             };
 
             facturaRequestDto.AgregarDetalleFactura(detalleFactura);
         }
 
-        if (facturaRequestDto.Accion == 'E') facturaRequestDto.EliminarDetalleImpuesto(facturaRequestDto.IdServicio);
+        if (facturaRequestDto.Accion == 'E') facturaRequestDto.EliminarDetalleImpuesto(facturaRequestDto.NumeroLineaEliminar);
 
         var serviciosExistentes = servicios.Where(m => facturaRequestDto.DetalleFacturas.Exists(x => x.IdServicio == m.Id)).ToList();
 
-        servicios.Except(serviciosExistentes);
-
-        facturaRequestDto.Servicios = servicios;
+        facturaRequestDto.Servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes); ;
 
         return PartialView("~/Views/Factura/_CreateDetalleFactura.cshtml", facturaRequestDto);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(FacturaRequestDto factura)
+    public async Task<IActionResult> Create(FacturaRequestDto facturaRequestDto)
     {
         var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
-        factura.Clientes = clientes;
-        factura.TipoPagos = tipoPagos;
-        factura.Impuestos = impuestos;
+        facturaRequestDto.Clientes = clientes;
+        facturaRequestDto.TipoPagos = tipoPagos;
+        facturaRequestDto.Impuestos = impuestos;
+        facturaRequestDto.Servicios = servicios;
 
-        if (!ModelState.IsValid)
+        facturaRequestDto.CalcularTotales();
+
+        if (facturaRequestDto.MontoTotal <= 0 || facturaRequestDto.DetalleFacturas.Count == 0 || !ModelState.IsValid)
         {
-            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+            TempData[ERRORMESSAGE] = !ModelState.IsValid ? string.Join("; ", ModelState.Values
                                     .SelectMany(x => x.Errors)
-                                    .Select(x => x.ErrorMessage));
-            return View(factura);
+                                    .Select(x => x.ErrorMessage)) : facturaRequestDto.MontoTotal <= 0 ? "Una factura no puede guardarse con un total de 0" : "Debe agregar detalles a la Factura";
+
+            return View(facturaRequestDto);
         }
 
-        var resultado = await cliente.ConsumirAPIAsync<FacturaResponseDto>(Constantes.POST, Constantes.POSTFACTURA, valoresConsumo: Serialization.Serialize(factura));
+        var resultado = await cliente.ConsumirAPIAsync<FacturaResponseDto>(Constantes.POST, Constantes.POSTFACTURA, valoresConsumo: Serialization.Serialize(facturaRequestDto));
         if (resultado == null)
         {
             SetErrorMessage();
-            return View(factura);
+            return View(facturaRequestDto);
         }
 
         TempData["SuccessMessage"] = "Factura creada correctamente.";

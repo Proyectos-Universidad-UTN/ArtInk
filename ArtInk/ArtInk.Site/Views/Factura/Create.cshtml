@@ -5,24 +5,26 @@
 }
 
 <div class="container mt-5">
-    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+    <div class="card mx-auto disable-hover" style="max-width: 1000px;">
         <div class="card-header bg-primary text-white">
-            <h4>Formulario de Factura</h4>
+            <h4>Factura Reserva  Nº @Model.IdPedido</h4>
         </div>
         <div class="card-body">
             <form asp-action="Create" class="form-object">
+
                 <div hidden>
                     <input asp-for="Accion" id="Accion" />
                     <input asp-for="IdServicio" id="IdServicio" />
                     <input asp-for="NumeroLineaEliminar" id="NumeroLineaEliminar" />
+                    <input asp-for="PorcentajeImpuestoFormateado" id="PorcentajeImpuestoFormateado" />
+                    <input asp-for="IdPedido" />
                 </div>
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="row">
                     <div class="col-sm-6 col-md-6 mb-4">
                         <label asp-for="IdCliente" class="form-label"></label>
                         <select asp-for="IdCliente" class="form-select nombre-cliente"
-                            asp-items='@(new SelectList(Model.Clientes, "Id", "Nombre" ))'></select>
+                                asp-items='@(new SelectList(Model.Clientes, "Id", "Nombre" ))'></select>
                         <span asp-validation-for="IdCliente" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6 col-md-6 mb-4">
@@ -32,75 +34,72 @@
                     </div>
                 </div>
 
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                 <div class="row">
                     <div class="col-sm-12 col-md-6 mb-4">
                         <label asp-for="Fecha" class="form-label"></label>
                         <input asp-for="Fecha" id="Fecha" class="form-control date-picker-factura"
-                            placeholder="Selecciona una fecha">
+                               placeholder="Selecciona una fecha">
                         <span asp-validation-for="Fecha" class="text-danger"></span>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
+                    <div class="col-sm-12 col-md-6 mb-4">
+                        <div class="form-group">
                             <label asp-for="IdTipoPago" class="form-label"></label>
                             <select asp-for="IdTipoPago" class="form-select"
-                                asp-items='@(new SelectList(Model.TipoPagos,"Id","Descripcion"))'></select>
+                                    asp-items='@(new SelectList(Model.TipoPagos,"Id","Descripcion"))'></select>
                             <span asp-validation-for="IdTipoPago" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="IdImpuesto" class="form-label"></label>
-                            <select asp-for="IdImpuesto" class="form-select valor-impuesto"
-                                asp-items='@(new SelectList(Model.Impuestos,"Id","NombreSelect"))'></select>
-                            <span asp-validation-for="IdImpuesto" class="text-danger"></span>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="MontoImpuestoFormateado" class="form-label"></label>
-                            <input asp-for="MontoImpuestoFormateado" class="form-control" data-mask="#,##0.00"
-                                data-mask-reverse="true" />
-                            <span asp-validation-for="MontoImpuestoFormateado" class="text-danger"></span>
+                    <div class="col-sm-12 col-md-6 mb-4">
+                        <div class="form-group">
+                            <label asp-for="IdImpuesto" class="form-label"></label>
+                            <select asp-for="IdImpuesto" class="form-select valor-impuesto"
+                                    asp-items='@(new SelectList(Model.Impuestos,"Id","NombreSelect"))'></select>
+                            <span asp-validation-for="IdImpuesto" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
+                    <div class="col-sm-12 col-md-6 mb-4">
+                        <div class="form-group">
                             <label asp-for="PorcentajeImpuestoFormateado" class="form-label"></label>
-                            <input readonly asp-for="PorcentajeImpuestoFormateado" class="form-control"
-                                id="PorcentajeImpuesto" data-mask="#,##0.00" data-mask-reverse="true" />
+                            <input disabled readonly asp-for="PorcentajeImpuestoFormateado" class="form-control"
+                                   id="PorcentajeImpuesto" data-mask="#,##0.00" data-mask-reverse="true" />
                             <span asp-validation-for="PorcentajeImpuestoFormateado" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="SubTotalFormateado" class="form-label"></label>
-                            <input asp-for="SubTotalFormateado" class="form-control" data-mask="#,##0.00"
-                                data-mask-reverse="true" />
-                            <span asp-validation-for="SubTotalFormateado" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="MontoTotalFormateado" class="form-label"></label>
-                            <input asp-for="MontoTotalFormateado" class="form-control" data-mask="#,##0.00"
-                                data-mask-reverse="true" />
-                            <span asp-validation-for="MontoTotalFormateado" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 mb-4" id="DetallesFactura">
+                <div class="col-sm-12 col-md-12 mb-4" id="DetallesPedido">
                     @await Html.PartialAsync("~/Views/Factura/_CreateDetalleFactura.cshtml", Model)
-                </div>   
+                </div>
 
+                <div class="container text-end">
+                    <div class="row justify-content-end">
+                        <div class="col-sm-12">
+                            <div class="form-group mb-3">
+                                <label asp-for="SubTotalFormateado" class="form-label"></label>
+                                <p class="h3" id="SubTotal">@Model.SubTotalFormateado</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group mb-3">
+                                <label asp-for="MontoImpuestoFormateado" class="form-label"></label>
+                                <p class="h3" id="MontoImpuesto">@Model.MontoImpuestoFormateado</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group mb-3">
+                                <label asp-for="MontoTotalFormateado" class="form-label"></label>
+                                <p class="h3" id="MontoTotal">@Model.MontoTotalFormateado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+
             </form>
         </div>
     </div>
@@ -109,6 +108,7 @@
 @await Html.PartialAsync("_ValidationScriptsPartial")
 <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/locales/es.js"></script>
+<script src="~/js/totales/calculo-totales.js"></script>
 
 <script>
     const elems = document.querySelectorAll('.date-picker-factura');
@@ -118,15 +118,11 @@
             language: 'es',
             minDate: 'today'
         });
-
-        datePicker.element.addEventListener('changeDate', (e) => {
-            cargarHorarios()
-        })
     })
 
-    const agregarServicio = (button) => {
-        if($("#IdServicioSelect").val() == 0) return;
-        
+    const agregarDetalle = (button) => {
+        if ($("#IdServicioSelect").val() == 0) return;
+
         const host = window.location.host;
         const url = host.split("/").reverse().slice(2).reverse().join("/") + "/Factura/AgregarEliminarLineaFactura";
         $("#Accion").val('A')
@@ -145,11 +141,11 @@
         })
     }
 
-    const eliminarServicio = (buttton) => {
+    const eliminarDetalle = (buttton) => {
         const host = window.location.host;
         const url = host.split("/").reverse().slice(2).reverse().join("/") + "/Factura/AgregarEliminarLineaFactura";
         $("#Accion").val('E')
-        $("#NumeroLineaEliminar").val($(buttton).data("numeroLinea"))
+        $("#NumeroLineaEliminar").val($(buttton).data("linea"))
         const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
 
         $.ajax({
@@ -160,6 +156,7 @@
             contentType: false,
             success: (result) => {
                 $("#DetallesFactura").html(result);
+                actualizarTotales();
             }
         })
     }
@@ -171,13 +168,14 @@
 
         $(".valor-impuesto").on('change', () => {
             if ($(".valor-impuesto").val() == 0) {
-                $("#PorcentajeImpuesto").val("");
+                $("#PorcentajeImpuesto").val(0);
                 return 0;
             }
 
             const seleccion = $(".valor-impuesto option:selected").text();
             const valoresSeleccion = seleccion.split('-');
             $("#PorcentajeImpuesto").val(valoresSeleccion[1].replace("%", "").replace(",", ".").trim())
+            $("#PorcentajeImpuestoFormateado").val(valoresSeleccion[1].replace("%", "").trim())
         })
     })
 </script>

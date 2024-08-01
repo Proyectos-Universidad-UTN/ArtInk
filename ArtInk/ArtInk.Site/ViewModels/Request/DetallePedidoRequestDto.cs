@@ -39,7 +39,7 @@ public record DetallePedidoRequestDto
     public decimal MontoSubtotal 
     { 
         get => !string.IsNullOrEmpty(MontoSubtotalFormateado) ? decimal.Parse(MontoSubtotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;  
-        set => MontoSubtotalFormateado = value.ToString("#,##0"); 
+        set => MontoSubtotalFormateado = value.ToString("#,##0.00"); 
     }
 
     [NotMapped]
@@ -50,7 +50,7 @@ public record DetallePedidoRequestDto
     public decimal MontoImpuesto 
     { 
         get => !string.IsNullOrEmpty(MontoImpuestoFormateado) ? decimal.Parse(MontoImpuestoFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;  
-        set => MontoImpuestoFormateado = value.ToString("#,##0"); 
+        set => MontoImpuestoFormateado = value.ToString("#,##0.00"); 
     }
 
     [NotMapped]
@@ -61,7 +61,7 @@ public record DetallePedidoRequestDto
     public decimal MontoTotal 
     { 
         get => !string.IsNullOrEmpty(MontoTotalFormateado) ? decimal.Parse(MontoTotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;  
-        set => MontoTotalFormateado = value.ToString("#,##0"); 
+        set => MontoTotalFormateado = value.ToString("#,##0.00"); 
     }
 
     [NotMapped]

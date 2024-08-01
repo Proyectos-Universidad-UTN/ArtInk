@@ -18,6 +18,16 @@ public class PedidoController(IServicePedido servicePedido) : ControllerBase
         return StatusCode(StatusCodes.Status200OK, inventarios);
     }
 
+    [HttpGet("{idPedido}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PedidoDto))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
+    public async Task<IActionResult> GetPedidoByIdAsync(long idPedido)
+    {
+        var pedido = await servicePedido.FindByIdAsync(idPedido);
+        return StatusCode(StatusCodes.Status200OK, pedido);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PedidoDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
