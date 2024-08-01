@@ -22,6 +22,8 @@ public record FacturaRequestDto
     [DisplayName("Tipo Pago")]
     public byte IdTipoPago { get; set; }
 
+    public long? IdPedido { get; set; }
+
     public short Consecutivo { get; set; }
 
     [DisplayName("Usuario")]

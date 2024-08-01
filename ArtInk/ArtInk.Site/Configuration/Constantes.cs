@@ -118,6 +118,7 @@ public static class Constantes
     // Url Pedidos
     public const string GETALLPEDIDOS = "Pedido";
     public const string POSTPEDIDO = "Pedido";
+    public const string GETPEDIDOYID = "pedido/{0}";
 
     //Url Reserva
     public const string GETALLRESERVAS = "reserva";

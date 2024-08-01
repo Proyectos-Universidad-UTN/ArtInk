@@ -12,13 +12,16 @@ namespace ArtInk.Site.Controllers;
 public class FacturaController(IApiArtInkClient cliente) : Controller
 {
     const string ERRORMESSAGE = "ErrorMessage";
+    const string INDEXVIEW = "Index";
+    const string CONTROLLERPROFORMA = "Proforma";
+
     public async Task<IActionResult> Index()
     {
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<FacturaResponseDto>>(Constantes.GET, Constantes.GETALLFACTURAS);
         if (collection == null)
         {
             SetErrorMessage();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(INDEXVIEW, "Home");
         }
         return View(collection);
     }
@@ -37,10 +40,30 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         return View(collection);
     }
 
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create(long? idPedido)
     {
+        if (idPedido == null)
+        {
+            TempData[ERRORMESSAGE] = "Se necesita la proforma.";
+            return RedirectToAction(INDEXVIEW, CONTROLLERPROFORMA);
+        }
+
+        var url = string.Format(Constantes.GETPEDIDOYID, idPedido);
+        var pedido = await cliente.ConsumirAPIAsync<PedidoResponseDto>(Constantes.GET, url);
+
+        if (pedido == null)
+        {
+            SetErrorMessage();
+            return RedirectToAction(INDEXVIEW, CONTROLLERPROFORMA);
+        }
+
         var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
+
+        // Se remueven los servicios existentes para evitar duplicados en la carga
+        var serviciosExistentes = servicios.Where(m => pedido.DetallePedidos.ToList().Exists(x => x.IdServicio == m.Id)).ToList();
+        servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes);
+
 
         var factura = new FacturaRequestDto()
         {
@@ -168,4 +191,6 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
     }
 
     private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+
+    private List<ServicioResponseDto> FiltrarServiciosExistentes(IEnumerable<ServicioResponseDto> servicios, List<ServicioResponseDto> serviciosExistentes) => servicios.Except(serviciosExistentes).ToList();
 }
