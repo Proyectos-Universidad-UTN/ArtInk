@@ -1,0 +1,27 @@
+@model ArtInk.Site.ViewModels.Request.Misc.SucursalHorarioBloqueos
+
+@{
+    ViewData["Title"] = "Sucursal Horario Bloqueos";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Formulario de bloqueos por horario del día: Model.SucursalHorario.Horario.Dia y sucursal: Model.SucursalHorario.Sucursal.Nombre</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Gestionar" class="form-object">
+                <div class="row">
+                    <input hidden asp-for="Accion" id="Accion" />
+                    <input hidden asp-for="IdSucursalHorario" />
+                    <div id="bloqueos">
+                        @await Html.PartialAsync("~/Views/SucursalHorario/_Horarios.cshtml", Model)
+                    </div>
+                </div>
+                <div class="px-3">
+                    @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+@model ArtInk.Site.ViewModels.Request.Misc.SucursalHorarioBloqueos
+
+<div class="row mb-4">
+    <div class="col-12 col-sm-12">
+        <label for="" class="form-label">Bloqueo</label>
+    </div>
+    <div class="col-12 col-sm-4">
+        <input asp-for="HorarioInicio" class="form-select" />
+    </div>
+    <div class="col-12 col-sm-4">
+        <input asp-for="HorarioFin" class="form-select" />
+    </div>
+    <div class="col-12 col-sm-2 text-end">
+        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarDetalle(this)">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <label for="" class="form-label">Bloqueos agregados</label>
+    </div>
+    <div class="col-sm-12 col-md-12 mb-4" id="BloqueosAgregados">
+        <div class="table-responsive">
+            <table class="w-100 table table-sm table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width:45%">Horario Inicio</th>
+                        <th scope="col" style="width:45%">Horario Fin</th>
+                        <th style="width:10%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model.DetallePedidos.Select((x, i) => new { Value = x, Index = i }))
+                    {
+                        <tr>
+                            <div hidden>
+                                <input name="Bloqueos[@item.Index].Id" value="@item.Value.Id" />
+                                <input name="Bloqueos[@item.Index].HoraInicio" value="@item.Value.HoraInicio" />
+                                <input name="Bloqueos[@item.Index].HoraFin" value="@item.Value.HoraFin" />
+                            </div>
+                            <td class="text-right">
+                                @item.Value.HoraInicio
+                            </td>
+                            <td class="text-right">
+                                @item.Value.HoraFin
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm flex-fill m-0"
+                                    data-linea="@item.Value.Id" onclick="eliminarBloqueo(this)">
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

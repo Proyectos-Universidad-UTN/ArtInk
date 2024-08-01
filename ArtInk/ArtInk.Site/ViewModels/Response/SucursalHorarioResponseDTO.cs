@@ -15,4 +15,6 @@ public record SucursalHorarioResponseDto
     public virtual HorarioResponseDto Horario { get; set; } = null!;
 
     public virtual SucursalResponseDto Sucursal { get; set; } = null!;
+
+    public virtual ICollection<SucursalHorarioBloqueoResponseDto>? SucursalHorarioBloqueos { get; set; }
 }
