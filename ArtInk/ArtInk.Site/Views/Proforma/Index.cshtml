@@ -32,9 +32,9 @@
                 <td>@Html.DisplayFor(modelItem => item.NombreCliente)</td>
                 <td>@Html.DisplayFor(modelItem => item.Fecha)</td>
                 <td>@Html.DisplayFor(modelItem => item.TipoPago.Descripcion)</td>
-                <td>@Html.DisplayFor(modelItem => item.SubTotal)</td>
-                <td>@Html.DisplayFor(modelItem => item.MontoImpuesto)</td>
-                <td>@Html.DisplayFor(modelItem => item.MontoTotal)</td>
+                <td class="text-end">@Html.DisplayFor(modelItem => item.SubTotal)</td>
+                <td class="text-end">@Html.DisplayFor(modelItem => item.MontoImpuesto)</td>
+                <td class="text-end">@Html.DisplayFor(modelItem => item.MontoTotal)</td>
                 <td>
                     <div class="btn-group d-flex justify-content-between gap-2">
                         @Html.ActionLink("Facturar", "Index", "Factura",  new { idPedido = item.Id }, new { @class = "btn btn-primary btn-sm flex-fill m-0" })        
