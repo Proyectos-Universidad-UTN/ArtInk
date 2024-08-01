@@ -12,7 +12,7 @@ public class DateOnlyConverter :  JsonConverter<DateOnly>
         DateOnly existingValue,
         bool hasExistingValue,
         JsonSerializer serializer) =>
-        DateOnly.ParseExact((string)reader.Value, Format, CultureInfo.InvariantCulture);
+        DateOnly.ParseExact((string)reader.Value!, Format, CultureInfo.InvariantCulture);
 
     public override void WriteJson(JsonWriter writer, DateOnly value, JsonSerializer serializer) => 
         writer.WriteValue(value.ToString(Format, CultureInfo.InvariantCulture));
