@@ -40,4 +40,6 @@ public partial class Reserva
     public virtual ICollection<ReservaPregunta> ReservaPregunta { get; set; } = new List<ReservaPregunta>();
 
     public virtual ICollection<ReservaServicio> ReservaServicios { get; set; } = new List<ReservaServicio>();
+    
+    public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
 }

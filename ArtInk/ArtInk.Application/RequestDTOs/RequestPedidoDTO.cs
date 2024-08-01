@@ -18,6 +18,8 @@ public record RequestPedidoDto
 
     public byte IdImpuesto { get; set; }
 
+    public int IdReserva { get; set; }
+
     public decimal PorcentajeImpuesto { get; set; }
 
     public decimal SubTotal { get; set; }

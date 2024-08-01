@@ -20,6 +20,8 @@
 
         public decimal PorcentajeImpuesto { get; set; }
 
+        public int IdReserva { get; set; }
+
         public decimal SubTotal { get; set; }
 
         public decimal MontoImpuesto { get; set; }
@@ -45,5 +47,7 @@
         public virtual TipoPago IdTipoPagoNavigation { get; set; } = null!;
 
         public virtual UsuarioSucursal IdUsuarioSucursalNavigation { get; set; } = null!;
+
+        public virtual Reserva IdReservaNavigation { get; set; } = null!;
     }
 }
