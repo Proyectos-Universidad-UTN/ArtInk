@@ -30,7 +30,7 @@ public record DetallePedidoRequestDto
     [NotMapped]
     [Required(ErrorMessage = "Cantidad requerid")]
     [RegularExpression(@"^(?!0+\.00)(?=.{1,9}(\.|$))\d{1,3}(,\d{3})?$", ErrorMessage = "Ingrese un valor válido y mayor a 0")]
-    public string CantidadFormateada { get; set; }
+    public string? CantidadFormateada { get; set; }
 
     [DisplayName("Tarifa Servicio")]
     public decimal TarifaServicio { get; set; }
@@ -44,7 +44,7 @@ public record DetallePedidoRequestDto
 
     [NotMapped]
     [DisplayName("Subtotal")]
-    public string MontoSubtotalFormateado { get; set; }
+    public string? MontoSubtotalFormateado { get; set; }
 
     [JsonRequired]
     public decimal MontoImpuesto 
@@ -55,7 +55,7 @@ public record DetallePedidoRequestDto
 
     [NotMapped]
     [DisplayName("Impuesto")]
-    public string MontoImpuestoFormateado { get; set; }
+    public string? MontoImpuestoFormateado { get; set; }
 
     [JsonRequired]
     public decimal MontoTotal 
@@ -66,7 +66,7 @@ public record DetallePedidoRequestDto
 
     [NotMapped]
     [DisplayName("Total")]
-    public string MontoTotalFormateado { get; set; }
+    public string? MontoTotalFormateado { get; set; }
 
     public ServicioResponseDto? Servicio { get; set; }
 }

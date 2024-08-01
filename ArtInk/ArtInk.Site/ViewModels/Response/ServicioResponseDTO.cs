@@ -25,7 +25,7 @@ public record ServicioResponseDto
 
     public virtual TipoServicioResponseDto TipoServicio { get; set; } = null!;
 
-    private string DescripcionCompleta;
+    private string? DescripcionCompleta;
 
     public string DescripcionCompletaSelect
     {

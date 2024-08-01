@@ -42,15 +42,17 @@ ViewData["Title"] = "Detalle Factura";
                             </div>
                             <div class="row gutters">
                                 <div class="col-sm-6 col-xl-6">
-                                    <div class="detalle-factura mt-3 p-3 lh-3 bg-light">
+                                    <div class="detalle-factura mt-3 p-3 lh-3 bg-light" style="height: 128px;">
                                         <div>Cédula: @Model.Cliente.Id</div>
                                         <address class="m-0">@Model.NombreCliente</address>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-xl-6">
-                                    <div class="detalle-factura mt-3 p-3 lh-3 text-end bg-light">
+                                    <div class="detalle-factura mt-3 p-3 lh-3 text-md-end bg-light" style="height: 128px;">
                                         <div>Factura: @Model.Id</div>
-                                        <div>Fecha emisión: @Model.Fecha</div>
+                                        <div>Fecha emisión: @Model.Fecha.ToString("dd/MM/yyyy")</div>
+                                        <div>Tipo de pago: @Model.TipoPago.Descripcion</div>
+                                        <div>Porcentaje de Impuesto: %@Model.PorcentajeImpuesto</div>
                                     </div>
                                 </div>
                             </div>
