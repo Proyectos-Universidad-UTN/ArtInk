@@ -24,6 +24,7 @@ ViewData["Title"] = "Inventarios sucursal";
             <thead>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th>Tipo de inventario</th>
                 <th>Acciones</th>
             </thead>
         </table>
@@ -77,6 +78,7 @@ ViewData["Title"] = "Inventarios sucursal";
                 columns: [
                     { data: "id" },
                     { data: "nombre" },
+                    { data: "tipoInventario" },
                     {
                         data: null,
                         render: function (data) {

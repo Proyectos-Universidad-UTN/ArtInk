@@ -16,8 +16,6 @@ public record RequestProductoDto
 
     public string Sku { get; set; } = null!;
 
-    public decimal Cantidad { get; set; }
-
     public byte IdUnidadMedida { get; set; }
 
     public bool Activo { get; set; }
