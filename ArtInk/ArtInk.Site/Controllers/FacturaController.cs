@@ -56,7 +56,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
             
             if (pedido.Estado == 'F')
             {
-                TempData[ERRORMESSAGE] = "No se puede generar otra proforma de una reserva ya procesada";
+                TempData[ERRORMESSAGE] = "No se puede generar otra factura de una proforma ya procesada";
                 return RedirectToAction(INDEXVIEW, CONTROLLERPROFORMA);
             }
         }
