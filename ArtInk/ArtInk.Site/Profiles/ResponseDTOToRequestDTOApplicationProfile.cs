@@ -21,5 +21,6 @@ public class ResponseDtoToRequestDtoApplicationProfile: Profile
         CreateMap<ReservaServicioResponseDto, ReservaServicioRequestDto>();
         CreateMap<ReservaResponseDto, ReservaRequestDto>();
 
+        CreateMap<InventarioProductoResponseDto, InventarioProductoRequestDto>();
     }
 }

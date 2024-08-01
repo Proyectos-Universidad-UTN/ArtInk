@@ -36,12 +36,23 @@ public class RepositoryProducto(ArtInkContext context) : IRepositoryProducto
             .FirstOrDefaultAsync(a => EF.Property<short>(a, keyProperty.Name) == id);
     }
 
-    public async Task<ICollection<Producto>> ListAsync()
+    public async Task<ICollection<Producto>> ListAsync(bool excludeProductosInventario = false, short idInventario = 0)
     {
-        var collection = await context.Set<Producto>()
+        if (!excludeProductosInventario)
+        {
+            var collection = await context.Set<Producto>()
             .AsNoTracking()
             .ToListAsync();
-        return collection;
+            return collection;
+        }
+
+        var productosInventarioProducto = from a in context.Productos.AsQueryable()
+                        join b in context.InventarioProducto.AsQueryable() on a.Id equals b.IdProducto
+                        join c in context.Inventarios.AsQueryable() on b.IdInventario equals c.Id
+                        where c.Id == idInventario
+                        select a;
+
+        return await context.Set<Producto>().Except(productosInventarioProducto.AsQueryable()).AsNoTracking().ToListAsync();
     }
 
     public async Task<bool> ExisteProducto(short id)

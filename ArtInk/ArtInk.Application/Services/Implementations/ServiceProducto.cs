@@ -39,13 +39,15 @@ public class ServiceProducto(IRepositoryProducto repository, IMapper mapper,
 
         return mapper.Map<ProductoDto>(producto);
     }
-    public async Task<ICollection<ProductoDto>> ListAsync()
+
+    public async Task<ICollection<ProductoDto>> ListAsync(bool excludeProductosInventario = false, short idInventario = 0)
     {
-        var list = await repository.ListAsync();
+        var list = await repository.ListAsync(excludeProductosInventario, idInventario);
         var collection = mapper.Map<ICollection<ProductoDto>>(list);
 
         return collection;
     }
+    
     private async Task<Producto> ValidarProducto(RequestProductoDto productoDTO)
     {
         var producto = mapper.Map<Producto>(productoDTO);

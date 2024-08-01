@@ -1,0 +1,43 @@
+@model ArtInk.Site.ViewModels.Request.InventarioProductoMovimientoRequestDto
+
+@{
+    ViewData["Title"] = "Movimiento de inventario";
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 600px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Registro movimiento inventario: @Model.TipoMovimiento</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Gestion">
+                <div hidden>
+                    <input asp-for="TipoMovimiento" >
+                    <input asp-for="IdInventarioProducto" >
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group mb-3">
+                            <label asp-for="CantidadFormateada" class="form-label"></label>
+                            <input asp-for="CantidadFormateada" placeholder="#,##0.00" class="form-control" data-mask="#,##0.00" data-mask-reverse="true"  />
+                            <span asp-validation-for="CantidadFormateada" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary button-forms-h">Guardar</button>
+                    <a asp-action="Index" asp-controller="InventarioProducto" class="btn btn-secondary button-forms-h">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

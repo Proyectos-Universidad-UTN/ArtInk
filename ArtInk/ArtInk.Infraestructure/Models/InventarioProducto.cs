@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ArtInk.Infraestructure.Models;
 
 public partial class InventarioProducto
@@ -13,11 +8,11 @@ public partial class InventarioProducto
 
     public short IdProducto { get; set; }
 
-    public byte Disponible { get; set; }
+    public decimal Disponible { get; set; }
 
-    public byte Minima { get; set; }
+    public decimal Minima { get; set; }
 
-    public byte Maxima { get; set; }
+    public decimal Maxima { get; set; }
 
     public DateTime FechaCreacion { get; set; }
 
@@ -30,4 +25,6 @@ public partial class InventarioProducto
     public virtual Inventario IdInventarioNavigation { get; set; } = null!;
 
     public virtual Producto IdProductoNavigation { get; set; } = null!;
+
+    public virtual ICollection<InventarioProductoMovimiento> InventarioProductoMovimientos { get; set; } = new List<InventarioProductoMovimiento>();
 }

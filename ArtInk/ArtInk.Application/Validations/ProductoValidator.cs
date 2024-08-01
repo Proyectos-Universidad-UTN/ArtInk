@@ -29,9 +29,6 @@ public class ProductoValidator : AbstractValidator<Producto>
             .NotEmpty().WithMessage("Por favor ingrese el SKU")
             .MaximumLength(30).WithMessage("El SKU no puede tener más de 30 caracteres");
 
-        RuleFor(x => x.Cantidad)
-            .GreaterThanOrEqualTo(0).WithMessage("La cantidad no puede ser negativa");
-
         RuleFor(x => x.IdUnidadMedida)
             .NotEmpty().WithMessage("Por favor ingrese una unidad de medida válida");
     }

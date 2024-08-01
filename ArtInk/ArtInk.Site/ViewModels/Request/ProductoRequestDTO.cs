@@ -46,22 +46,6 @@ public record ProductoRequestDto
     [Required(ErrorMessage = "El SKU es obligatorio")]
     public string Sku { get; set; } = null!;
 
-    [JsonRequired]
-    public decimal Cantidad
-    {
-        get => !string.IsNullOrEmpty(CantidadFormateada) ? Decimal.Parse(CantidadFormateada.Replace(",", ""), CultureInfo.InvariantCulture) : 0;
-        set
-        {
-            CantidadFormateada = value.ToString("#,##0.00");
-        }
-    }
-
-    [NotMapped]
-    [DisplayName("Cantidad")]
-    [Required(ErrorMessage = "La cantidad es obligatoria")]
-    [RegularExpression(@"^(?!0+\.00)(?=.{1,9}(\.|$))\d{1,3}(,\d{3})*(\.\d+)?$", ErrorMessage = "Ingrese un valor válido y mayor a 0")]
-    public string CantidadFormateada { get; set; } = null!;
-
     [DisplayName("Unidad de Medida")]
     [Required(ErrorMessage = "La unidad de medida es obligatoria")]
     [JsonRequired]

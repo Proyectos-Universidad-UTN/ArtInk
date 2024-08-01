@@ -8,7 +8,7 @@ public interface IRepositoryProducto
 
     Task<Producto> UpdateProductoAsync(Producto producto);
 
-    Task<ICollection<Producto>> ListAsync();
+    Task<ICollection<Producto>> ListAsync(bool excludeProductosInventario = false, short idInventario = 0);
 
     Task<Producto?> FindByIdAsync(short id);
 

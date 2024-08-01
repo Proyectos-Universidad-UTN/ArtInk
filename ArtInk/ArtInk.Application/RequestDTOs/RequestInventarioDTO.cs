@@ -1,4 +1,6 @@
-﻿namespace ArtInk.Application.RequestDTOs;
+﻿using ArtInk.Application.DTOs.Enums;
+
+namespace ArtInk.Application.RequestDTOs;
 
 public record RequestInventarioDto
 {
@@ -7,6 +9,8 @@ public record RequestInventarioDto
     public string Nombre { get; set; } = null!;
 
     public byte IdSucursal { get; set; }
+
+    public TipoInventario TipoInventario { get; set; }
 
     public bool Activo { get; set; }
 }

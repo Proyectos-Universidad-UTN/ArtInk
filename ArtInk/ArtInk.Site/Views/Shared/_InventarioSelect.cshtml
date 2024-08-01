@@ -1,0 +1,5 @@
+@model ArtInk.Site.ViewModels.Common.SucursalInventarioProducto
+
+<label for="" class="form-label">Inventario</label>
+<select id="idInventario" class="form-select" onchange="reloadProductos()"  asp-items="@(new SelectList(Model.Inventarios, "Id","Nombre"))"> </select>
+    
