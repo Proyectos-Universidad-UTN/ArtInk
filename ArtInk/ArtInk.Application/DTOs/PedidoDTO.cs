@@ -20,6 +20,8 @@ public record PedidoDto : BaseEntity
 
     public byte IdImpuesto { get; set; }
 
+    public int IdReserva { get; set; }
+
     public decimal PorcentajeImpuesto { get; set; }
 
     public decimal SubTotal { get; set; }
@@ -37,4 +39,6 @@ public record PedidoDto : BaseEntity
     public virtual TipoPagoDto TipoPago { get; set; } = null!;
 
     public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
+
+    public virtual ReservaDto Reserva { get; set; } = null!;
 }

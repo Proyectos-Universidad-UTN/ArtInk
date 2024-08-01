@@ -325,6 +325,11 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdUsuarioSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Pedido_UsuarioSucursal");
+
+            entity.HasOne(d => d.IdReservaNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdReserva)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_Reserva");
         });
 
         modelBuilder.Entity<Feriado>(entity =>

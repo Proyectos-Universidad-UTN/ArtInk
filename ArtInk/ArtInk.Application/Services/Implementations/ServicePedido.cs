@@ -18,6 +18,7 @@ public class ServicePedido(IRepositoryPedido repository, IMapper mapper, IValida
     public async Task<PedidoDto> CreatePedidoAsync(RequestPedidoDto pedidoDto)
     {
         var pedido = await ValidarPedido(pedidoDto);
+        pedido.IdUsuarioSucursal = 1;
 
         var result = await repository.CreatePedidoAsync(pedido);
         if (result == null) throw new NotFoundException("Pedido no creado.");

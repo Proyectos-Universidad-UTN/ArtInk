@@ -5,6 +5,7 @@ using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace ArtInk.Site.Controllers;
 
@@ -16,7 +17,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         var collection = await cliente.ConsumirAPIAsync<IEnumerable<FacturaResponseDto>>(Constantes.GET, Constantes.GETALLFACTURAS);
         if (collection == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return RedirectToAction("Index", "Home");
         }
         return View(collection);
@@ -38,7 +39,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
 
     public async Task<IActionResult> Create()
     {
-        var (falloEjecucion, clientes, tipoPagos, usuarioSucursales, impuestos) = await ObtenerValoresInicialesSelect();
+        var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
         var factura = new FacturaRequestDto()
@@ -46,20 +47,51 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
             Clientes = clientes,
             TipoPagos = tipoPagos,
             Impuestos = impuestos,
-            UsuarioSucursales = usuarioSucursales
+            Fecha = DateOnly.FromDateTime(DateTime.Now),
+            Servicios = servicios
         };
         return View(factura);
+    }
+
+    public async Task<IActionResult> AgregarEliminarLineaFactura(FacturaRequestDto facturaRequestDto)
+    {
+        var (falloEjecucion, servicios) = await ObtenerValoresServicioselect();
+        if (falloEjecucion) return RedirectToAction(nameof(Index));
+
+        if (facturaRequestDto.Accion == 'A')
+        {
+            var servicioSeleccionado = servicios.Single(m => m.Id == facturaRequestDto.IdServicio);
+            var numeroLinea = facturaRequestDto.SiguienteNumeroLinea();
+            var detalleFactura = new DetalleFacturaRequestDto()
+            {
+                NumeroLinea = numeroLinea,
+                Servicio = servicioSeleccionado,
+                TarifaServicio = servicioSeleccionado.Tarifa,
+                IdServicio = facturaRequestDto.IdServicio,
+            };
+
+            facturaRequestDto.AgregarDetalleFactura(detalleFactura);
+        }
+
+        if (facturaRequestDto.Accion == 'E') facturaRequestDto.EliminarDetalleImpuesto(facturaRequestDto.IdServicio);
+
+        var serviciosExistentes = servicios.Where(m => facturaRequestDto.DetalleFacturas.Exists(x => x.IdServicio == m.Id)).ToList();
+
+        servicios.Except(serviciosExistentes);
+
+        facturaRequestDto.Servicios = servicios;
+
+        return PartialView("~/Views/Factura/_CreateDetalleFactura.cshtml", facturaRequestDto);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(FacturaRequestDto factura)
     {
-        var (falloEjecucion, clientes, tipoPagos, usuarioSucursales, impuestos) = await ObtenerValoresInicialesSelect();
+        var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
         factura.Clientes = clientes;
         factura.TipoPagos = tipoPagos;
-        factura.UsuarioSucursales = usuarioSucursales;
         factura.Impuestos = impuestos;
 
         if (!ModelState.IsValid)
@@ -73,7 +105,7 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         var resultado = await cliente.ConsumirAPIAsync<FacturaResponseDto>(Constantes.POST, Constantes.POSTFACTURA, valoresConsumo: Serialization.Serialize(factura));
         if (resultado == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return View(factura);
         }
 
@@ -82,36 +114,58 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private async Task<(bool fallo, IEnumerable<ClienteResponseDto>, IEnumerable<TipoPagoResponseDto>, IEnumerable<UsuarioSucursalResponseDto>, IEnumerable<ImpuestoResponseDto>)> ObtenerValoresInicialesSelect()
+    private async Task<(bool fallo, IEnumerable<ClienteResponseDto>, IEnumerable<TipoPagoResponseDto>, IEnumerable<ServicioResponseDto>, IEnumerable<ImpuestoResponseDto>)> ObtenerValoresInicialesSelect()
     {
-        var clientes = await cliente.ConsumirAPIAsync<IEnumerable<ClienteResponseDto>>(Constantes.GET, Constantes.GETALLCLIENTES);
+        var clientes = await cliente.ConsumirAPIAsync<List<ClienteResponseDto>>(Constantes.GET, Constantes.GETALLCLIENTES);
         if (clientes == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return (true, null, null,null,null)!;
+            SetErrorMessage();
+            return (true, null, null, null, null)!;
         }
 
-        var tipoPagos = await cliente.ConsumirAPIAsync<IEnumerable<TipoPagoResponseDto>>(Constantes.GET, Constantes.GETALLTIPOPAGOS);
+        clientes.Insert(0, new ClienteResponseDto() { Id = 0, Nombre = "Seleccione un cliente" });
+
+        var tipoPagos = await cliente.ConsumirAPIAsync<List<TipoPagoResponseDto>>(Constantes.GET, Constantes.GETALLTIPOPAGOS);
         if (tipoPagos == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null, null, null, null)!;
         }
 
-        var usuarioSucursales = await cliente.ConsumirAPIAsync<IEnumerable<UsuarioSucursalResponseDto>>(Constantes.GET, Constantes.GETALLUSUARIOSUCURSALES);
-        if (usuarioSucursales == null)
-        {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
-            return (true, null, null, null, null)!;
-        }
+        tipoPagos.Insert(0, new TipoPagoResponseDto() { Id = 0, Descripcion = "Seleccione un tipo de pago" });
 
-        var impuestos = await cliente.ConsumirAPIAsync<IEnumerable<ImpuestoResponseDto>>(Constantes.GET, Constantes.GETALLIMPUESTOS);
+        var impuestos = await cliente.ConsumirAPIAsync<List<ImpuestoResponseDto>>(Constantes.GET, Constantes.GETALLIMPUESTOS);
         if (impuestos == null)
         {
-            TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+            SetErrorMessage();
             return (true, null, null, null, null)!;
         }
 
-        return (false, clientes, tipoPagos, usuarioSucursales, impuestos);
+        impuestos.Insert(0, new ImpuestoResponseDto() { Id = 0, Nombre = "Seleccione un impuesto" });
+
+        var (falloEjecucion, servicios) = await ObtenerValoresServicioselect();
+        if (servicios == null)
+        {
+            SetErrorMessage();
+            return (falloEjecucion, null, null, null, null)!;
+        }
+
+        return (false, clientes, tipoPagos, servicios, impuestos);
     }
+
+    private async Task<(bool fallo, IEnumerable<ServicioResponseDto>)> ObtenerValoresServicioselect()
+    {
+        var servicios = await cliente.ConsumirAPIAsync<List<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
+        if (servicios == null)
+        {
+            SetErrorMessage();
+            return (true,  null)!;
+        }
+
+        servicios.Insert(0, new ServicioResponseDto() { Id = 0, Nombre = "Seleccione un servicio" });
+
+        return (false, servicios);
+    }
+
+    private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
 }

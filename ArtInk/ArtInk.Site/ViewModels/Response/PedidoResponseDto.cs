@@ -26,6 +26,8 @@ public class PedidoResponseDto
 
     public byte IdImpuesto { get; set; }
 
+    public int IdReserva { get; set; }
+
     public decimal PorcentajeImpuesto { get; set; }
 
     [DisplayName("Subtotal")]
@@ -49,4 +51,6 @@ public class PedidoResponseDto
     public virtual TipoPagoResponseDto TipoPago { get; set; } = null!;
 
     public virtual UsuarioSucursalResponseDto UsuarioSucursal { get; set; } = null!;
+
+    public virtual ReservaResponseDto Reserva { get; set; } = null!;
 }

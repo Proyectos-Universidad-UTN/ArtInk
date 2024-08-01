@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using ArtInk.Site.ViewModels.Response;
 
 namespace ArtInk.Site.ViewModels.Request;
 
@@ -28,4 +29,6 @@ public record DetalleFacturaRequestDto
 
     [DisplayName("Total")]
     public decimal MontoTotal { get; set; }
+
+    public ServicioResponseDto Servicio { get; set; }
 }
