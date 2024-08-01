@@ -8,4 +8,6 @@ public interface IServicePedido
     Task<PedidoDto> CreatePedidoAsync(RequestPedidoDto pedidoDto);
 
     Task<ICollection<PedidoDto>> ListAsync();
+
+    Task<PedidoDto> FindByIdAsync(long id);
 }

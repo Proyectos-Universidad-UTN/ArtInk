@@ -44,7 +44,7 @@
                             <input name="DetallePedidos[@item.Index].NumeroLinea" value="@item.Value.NumeroLinea" />
                             <input name="DetallePedidos[@item.Index].IdServicio" value="@item.Value.IdServicio" />
                             <input name="DetallePedidos[@item.Index].Servicio.Nombre"
-                                value="@item.Value.Servicio.Nombre" />
+                                value="@item.Value.Servicio!.Nombre" />
                             <input name="DetallePedidos[@item.Index].Servicio.Descripcion"
                                 value="@item.Value.Servicio.Descripcion" />
                             <input name="DetallePedidos[@item.Index].Servicio.TipoServicio.Nombre"
@@ -52,6 +52,7 @@
                             <input name="DetallePedidos[@item.Index].Servicio.Tarifa"
                                 id="TarifaServicioDetalle-@item.Value.NumeroLinea"
                                 value="@item.Value.Servicio.Tarifa.ToString(" #,##0.00")" />
+                            <input name="DetallePedidos[@item.Index].TarifaServicio" value="@item.Value.TarifaServicio" />
                         </div>
                         <td>
                             @item.Value.NumeroLinea

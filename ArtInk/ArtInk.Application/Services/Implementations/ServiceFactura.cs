@@ -16,10 +16,11 @@ public class ServiceFactura(IRepositoryFactura repository, IMapper mapper,
     public async Task<FacturaDto> CreateFacturaAsync(RequestFacturaDto facturaDto)
     {
         var factura = await ValidarFactura(facturaDto);
+        factura.IdUsuarioSucursal = 1;
 
         var result = await repository.CreateFacturaAsync(factura);
         if (result == null) throw new NotFoundException("Factura no creada.");
-
+        
         return mapper.Map<FacturaDto>(result);
     }
 

@@ -30,7 +30,7 @@ public record DetallePedidoRequestDto
     [NotMapped]
     [Required(ErrorMessage = "Cantidad requerid")]
     [RegularExpression(@"^(?!0+\.00)(?=.{1,9}(\.|$))\d{1,3}(,\d{3})?$", ErrorMessage = "Ingrese un valor válido y mayor a 0")]
-    public string CantidadFormateada { get; set; }
+    public string? CantidadFormateada { get; set; }
 
     [DisplayName("Tarifa Servicio")]
     public decimal TarifaServicio { get; set; }
@@ -39,34 +39,34 @@ public record DetallePedidoRequestDto
     public decimal MontoSubtotal 
     { 
         get => !string.IsNullOrEmpty(MontoSubtotalFormateado) ? decimal.Parse(MontoSubtotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;  
-        set => MontoSubtotalFormateado = value.ToString("#,##0"); 
+        set => MontoSubtotalFormateado = value.ToString("#,##0.00"); 
     }
 
     [NotMapped]
     [DisplayName("Subtotal")]
-    public string MontoSubtotalFormateado { get; set; }
+    public string? MontoSubtotalFormateado { get; set; }
 
     [JsonRequired]
     public decimal MontoImpuesto 
     { 
         get => !string.IsNullOrEmpty(MontoImpuestoFormateado) ? decimal.Parse(MontoImpuestoFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;  
-        set => MontoImpuestoFormateado = value.ToString("#,##0"); 
+        set => MontoImpuestoFormateado = value.ToString("#,##0.00"); 
     }
 
     [NotMapped]
     [DisplayName("Impuesto")]
-    public string MontoImpuestoFormateado { get; set; }
+    public string? MontoImpuestoFormateado { get; set; }
 
     [JsonRequired]
     public decimal MontoTotal 
     { 
         get => !string.IsNullOrEmpty(MontoTotalFormateado) ? decimal.Parse(MontoTotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;  
-        set => MontoTotalFormateado = value.ToString("#,##0"); 
+        set => MontoTotalFormateado = value.ToString("#,##0.00"); 
     }
 
     [NotMapped]
     [DisplayName("Total")]
-    public string MontoTotalFormateado { get; set; }
+    public string? MontoTotalFormateado { get; set; }
 
     public ServicioResponseDto? Servicio { get; set; }
 }

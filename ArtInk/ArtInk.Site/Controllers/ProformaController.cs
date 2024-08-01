@@ -22,7 +22,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
             return RedirectToAction(INDEXVIEW, "Home");
 
         }
-        return View(collection);
+        return View(collection.OrderByDescending(m => m.Id));
     }
 
     public async Task<IActionResult> Create(int? idReserva)
@@ -65,6 +65,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
             Impuestos = impuestos,
             PorcentajeImpuesto = 0,
             Fecha = DateOnly.FromDateTime(DateTime.Now),
+            Estado = 'P',
             Servicios = servicios
         };
 

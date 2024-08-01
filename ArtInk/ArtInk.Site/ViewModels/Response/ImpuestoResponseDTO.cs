@@ -8,7 +8,7 @@ public record ImpuestoResponseDto
 
     public decimal Porcentaje { get; set; }
 
-    private string nombreSelect;
+    private string? nombreSelect;
 
     public string NombreSelect
     {

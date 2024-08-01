@@ -1,6 +1,8 @@
 ﻿using ArtInk.Infraestructure.Data;
 using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
+using Azure;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtInk.Infraestructure.Repository.Implementations;
@@ -9,11 +11,51 @@ public class RepositoryFactura(ArtInkContext context) : IRepositoryFactura
 {
     public async Task<Factura> CreateFacturaAsync(Factura factura)
     {
-        var result = context.Facturas.Add(factura);
-        //aplica en la BD
-        await context.SaveChangesAsync();
-        //Refleja la entidad
-        return result.Entity;
+        Factura result = null!;
+        var executionStrategy = context.Database.CreateExecutionStrategy();
+
+        await executionStrategy.Execute(async () =>
+        {
+            using var transaccion = await context.Database.BeginTransactionAsync();
+            try
+            {
+                var tracking = context.Facturas.Add(factura);
+                var filasAfectadas = await context.SaveChangesAsync();
+
+                if (filasAfectadas == 0)
+                {
+                    await transaccion.RollbackAsync();
+                    throw (new Exception("No se ha podido guardar la factura") as SqlException)!;
+                }
+
+                var pedido = await context.Pedidos.FindAsync(factura.IdPedido);
+                if (pedido != null)
+                {
+                    pedido.Estado = 'F';
+
+                    context.Pedidos.Update(pedido);
+
+                    filasAfectadas = await context.SaveChangesAsync();
+
+                    if (filasAfectadas == 0)
+                    {
+                        await transaccion.RollbackAsync();
+                        throw (new Exception("No se ha podido actualizar la factura") as SqlException)!;
+                    }
+                }
+                
+                result = tracking.Entity;
+                await transaccion.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaccion.RollbackAsync();
+                throw new RequestFailedException(ex.Message, ex);
+            }
+
+        });
+
+        return result;
     }
 
     public async Task<Factura?> FindByIdAsync(long id)

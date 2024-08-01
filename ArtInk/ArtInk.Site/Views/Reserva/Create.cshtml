@@ -62,14 +62,14 @@
                         <label class="form-label">Reserva preguntas</label>
                     </div>
                     @{
-                        foreach(var it in Model.ReservaPregunta.Select((x, i) => new { Value = x, Index = i }))
+                        foreach(var it in Model.ReservaPregunta!.Select((x, i) => new { Value = x, Index = i }))
                         {
                             <div class="col-sm-12 col-md-12">
                                 <div class="form-floating mb-3">
-                                    <input hidden asp-for="@Model.ReservaPregunta[it.Index].Pregunta">
-                                    <textarea asp-for="@Model.ReservaPregunta[it.Index].Respuesta" style="height: 100px" class="form-control"></textarea>
+                                    <input hidden asp-for="@Model.ReservaPregunta![it.Index].Pregunta">
+                                    <textarea asp-for="@Model.ReservaPregunta![it.Index].Respuesta" style="height: 100px" class="form-control"></textarea>
                                     <label class="form-label">@it.Value.Pregunta</label>
-                                    <span asp-validation-for="@Model.ReservaPregunta[it.Index].Respuesta" class="text-danger"></span>
+                                    <span asp-validation-for="@Model.ReservaPregunta![it.Index].Respuesta" class="text-danger"></span>
                                 </div>
                             </div>
                         }

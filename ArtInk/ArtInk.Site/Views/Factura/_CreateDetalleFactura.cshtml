@@ -4,12 +4,12 @@
     <div class="col-sm-12 col-md-12">
         <label for="IdServicio" class="form-label">Servicios</label>
     </div>
-    <div class="col-sm-10 col-md-11">
+    <div class="col-10 col-md-11">
         <select id="IdServicioSelect" class="form-select"
-            asp-items='@(new SelectList(Model.Servicios, "Id" , "DescripcionCompletaSelect"))'></select>
+                asp-items='@(new SelectList(Model.Servicios, "Id" , "DescripcionCompletaSelect"))'></select>
     </div>
-    <div class="col-sm-2 col-md-1">
-        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarServicio(this)">
+    <div class="col-2 col-md-1 text-end">
+        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarDetalle(this)">
             <span class="material-symbols-outlined">
                 add
             </span>
@@ -22,60 +22,81 @@
         <label for="IdServicio" class="form-label">Detalle de factura</label>
     </div>
     <div class="col-sm-12 col-md-12 mb-4" id="DetallesAgregados">
-        <table class="w-100">
-            <thead>
-                <tr>
-                    <th>Nº</th>
-                    <th>Servicio</th>
-                    <th>Tarifa</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                    <th>Impuesto</th>
-                    <th>Total</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(var item in Model.DetalleFacturas.Select((x, i) => new { Value = x, Index = i }))
-                {
+        <div class="table-responsive">
+            <table class="w-100 table table-sm table-dark table-striped">
+                <thead>
                     <tr>
-                        <div hidden>
-                            <input name="DetalleFacturas[@item.Index].NumeroLinea" value="@item.Value.NumeroLinea" />
-                            <input name="DetalleFacturas[@item.Index].Servicio.Nombre" value="@item.Value.Servicio.Nombre" />
-                            <input name="DetalleFacturas[@item.Index].Servicio.Tarifa" value="@item.Value.Servicio.Tarifa" />
-
-                        </div>
-                        <td>
-                            @item.Value.NumeroLinea
-                        </td>
-                        <td>
-                            @item.Value.Servicio.Nombre
-                        </td>
-                        <td>
-                            @item.Value.Servicio.Tarifa
-                        </td>
-                        <td>
-                            <input name="DetalleFacturas[@item.Index].Cantidad" id="Cantidad" class="form-control" value="@item.Value.Cantidad">
-                        </td>
-                        <td>
-                            <input readonly id="SubTotal" class="form-control">
-                        </td>
-                        <td>
-                            <input readonly id="Impuesto" class="form-control">
-                        </td>
-                        <td>
-                            <input readonly id="Total" class="form-control">
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-servicio="@item.Value.NumeroLinea" onclick="eliminarServicio(this)">
+                        <th scope="col" style="width:5%">Nº</th>
+                        <th scope="col" style="width:23%">Servicio</th>
+                        <th scope="col" style="width:15%">Tarifa</th>
+                        <th scope="col" style="width:13%">Cantidad</th>
+                        <th scope="col" style="width:13%">Subtotal</th>
+                        <th scope="col" style="width:13%">Impuesto</th>
+                        <th scope="col" style="width:13%">Total</th>
+                        <th scope="col" style="width:5%"></th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var detalleFactura in Model.DetalleFacturas.Select((x, i) => new { Value = x, Index = i }))
+                    {
+                        <tr>
+                            <div hidden>
+                                <input name="DetalleFacturas[@detalleFactura.Index].NumeroLinea" value="@detalleFactura.Value.NumeroLinea" />
+                                <input name="DetalleFacturas[@detalleFactura.Index].IdServicio" value="@detalleFactura.Value.IdServicio" />
+                                <input name="DetalleFacturas[@detalleFactura.Index].Servicio.Nombre"
+                                       value="@detalleFactura.Value.Servicio!.Nombre" />
+                                <input name="DetalleFacturas[@detalleFactura.Index].Servicio.Descripcion"
+                                       value="@detalleFactura.Value.Servicio.Descripcion" />
+                                <input name="DetalleFacturas[@detalleFactura.Index].Servicio.TipoServicio.Nombre"
+                                       value="@detalleFactura.Value.Servicio.TipoServicio.Nombre" />
+                                <input name="DetalleFacturas[@detalleFactura.Index].Servicio.Tarifa"
+                                       id="TarifaServicioDetalle-@detalleFactura.Value.NumeroLinea"
+                                       value="@detalleFactura.Value.Servicio.Tarifa.ToString(" #,##0.00")" />
+                                <input name="DetalleFacturas[@detalleFactura.Index].TarifaServicio" value="@detalleFactura.Value.TarifaServicio" />
+                            </div>
+                            <td>
+                                @detalleFactura.Value.NumeroLinea
+                            </td>
+                            <td>
+                                @detalleFactura.Value.Servicio.Nombre: @detalleFactura.Value.Servicio.Descripcion
+                            </td>
+                            <td class="text-end">
+                                @detalleFactura.Value.Servicio.Tarifa.ToString("#,##0.00")
+                            </td>
+                            <td class="text-right">
+                                <input name="DetalleFacturas[@detalleFactura.Index].CantidadFormateada"
+                                       id="CantidadDetalle-@detalleFactura.Value.NumeroLinea" data-mask="#,##0" data-mask-reverse="true"
+                                       data-linea="@detalleFactura.Value.NumeroLinea"
+                                       class="form-control cantidad calculo-detalle text-end"
+                                       onkeyup="calcularTotalesLinea(this)" value="@detalleFactura.Value.CantidadFormateada">
+                            </td>
+                            <td>
+                                <input name="DetalleFacturas[@detalleFactura.Index].MontoSubtotalFormateado" readonly
+                                       id="SubTotalDetalle-@detalleFactura.Value.NumeroLinea" class="form-control subtotal text-end"
+                                       value="@detalleFactura.Value.MontoSubtotalFormateado">
+                            </td>
+                            <td>
+                                <input name="DetalleFacturas[@detalleFactura.Index].MontoImpuestoFormateado" readonly
+                                       id="ImpuestoDetalle-@detalleFactura.Value.NumeroLinea" class="form-control impuesto text-end"
+                                       value="@detalleFactura.Value.MontoImpuestoFormateado">
+                            </td>
+                            <td>
+                                <input name="DetalleFacturas[@detalleFactura.Index].MontoTotalFormateado" readonly
+                                       id="TotalDetalle-@detalleFactura.Value.NumeroLinea" class="form-control total text-end"
+                                       value="@detalleFactura.Value.MontoTotalFormateado">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm flex-fill m-0"
+                                        data-linea="@detalleFactura.Value.NumeroLinea" onclick="eliminarDetalle(this)">
                                     <span class="material-symbols-outlined">
                                         close
                                     </span>
                                 </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

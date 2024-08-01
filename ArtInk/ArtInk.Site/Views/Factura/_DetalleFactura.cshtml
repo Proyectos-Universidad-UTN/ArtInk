@@ -9,10 +9,10 @@
             <th class="border-0">
                 @Html.DisplayNameFor(model => model.DetalleFacturas.ToList()[0].IdServicio)
             </th>
-            <th class="border-0">
+            <!-- <th class="border-0">
                 @Html.DisplayNameFor(model =>
                 model.DetalleFacturas.ToList()[0].DetalleFacturaProductos.ToList()[0].IdProducto)
-            </th>
+            </th> -->
             <th class="border-0">
                 @Html.DisplayNameFor(model => model.DetalleFacturas.ToList()[0].Cantidad)
             </th>
@@ -38,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.NumeroLinea)
             </td>
             <td style="border: 1px solid #e6e9f0">
-                @Html.DisplayFor(modelItem => item.Servicio.Nombre)
+                @Html.DisplayFor(modelItem => item.Servicio.Nombre): @Html.DisplayFor(modelItem => item.Servicio.Descripcion)
             </td>
-            <td style="border: 1px solid #e6e9f0">
+            <!-- <td style="border: 1px solid #e6e9f0">
                 <ul>
                     @{
                     foreach (var producto in item.DetalleFacturaProductos)
@@ -51,26 +51,26 @@
                     }
                     }
                 </ul>
-            </td>
-            <td style="border: 1px solid #e6e9f0">
+            </td> -->
+            <td class="text-end" style="border: 1px solid #e6e9f0">
                 @Html.DisplayFor(modelItem => item.Cantidad)
             </td>
-            <td style="border: 1px solid #e6e9f0">
+            <td class="text-end" style="border: 1px solid #e6e9f0">
                 @Html.DisplayFor(modelItem => item.TarifaServicio)
             </td>
-            <td style="border: 1px solid #e6e9f0">
+            <td class="text-end" style="border: 1px solid #e6e9f0">
                 @Html.DisplayFor(modelItem => item.MontoSubtotal)
             </td>
-            <td style="border: 1px solid #e6e9f0">
+            <td class="text-end" style="border: 1px solid #e6e9f0">
                 @Html.DisplayFor(modelItem => item.MontoImpuesto)
             </td>
-            <td style="border: 1px solid #e6e9f0">
+            <td class="text-end" style="border: 1px solid #e6e9f0">
                 @Html.DisplayFor(modelItem => item.MontoTotal)
             </td>
         </tr>
         }
         <tr>
-            <td style="border: 1px solid #e6e9f0" colspan="6"></td>
+            <td style="border: 1px solid #e6e9f0" colspan="5"></td>
             <td style="border: 1px solid #e6e9f0">
                 <p>
                     Subtotal: <br />
@@ -79,11 +79,11 @@
                 <h5 class="text-success">Total: </h5>
             </td>
             <td style="border: 1px solid #e6e9f0">
-                <p>
+                <p class="text-end">
                     @Html.DisplayFor(model => Model.SubTotal) <br />
                     @Html.DisplayFor(model => Model.MontoImpuesto) <br />
                 </p>
-                <h5 class="text-success">@Html.DisplayFor(model => Model.MontoTotal) </h5>
+                <h5 class="text-success text-end">@Html.DisplayFor(model => Model.MontoTotal) </h5>
             </td>
         </tr>
     </tbody>

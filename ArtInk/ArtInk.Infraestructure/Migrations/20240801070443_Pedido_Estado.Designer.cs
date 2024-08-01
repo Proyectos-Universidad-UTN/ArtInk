@@ -4,6 +4,7 @@ using ArtInk.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtInk.Infraestructure.Migrations
 {
     [DbContext(typeof(ArtInkContext))]
-    partial class ArtInkContextModelSnapshot : ModelSnapshot
+    [Migration("20240801070443_Pedido_Estado")]
+    partial class Pedido_Estado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -588,10 +591,6 @@ namespace ArtInk.Infraestructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TipoInventario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UsuarioCreacion")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -617,8 +616,8 @@ namespace ArtInk.Infraestructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal>("Disponible")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<byte>("Disponible")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
@@ -632,11 +631,11 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<short>("IdProducto")
                         .HasColumnType("smallint");
 
-                    b.Property<decimal>("Maxima")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<byte>("Maxima")
+                        .HasColumnType("tinyint");
 
-                    b.Property<decimal>("Minima")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<byte>("Minima")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("UsuarioCreacion")
                         .IsRequired()
@@ -736,47 +735,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.ToTable("Pedido", (string)null);
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.InventarioProductoMovimiento", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal>("Cantidad")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("FechaModificacion")
-                        .HasColumnType("datetime");
-
-                    b.Property<long>("IdInventarioProducto")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("TipoMovimiento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsuarioCreacion")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.Property<string>("UsuarioModificacion")
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_InventarioProductoMovimiento");
-
-                    b.HasIndex("IdInventarioProducto");
-
-                    b.ToTable("InventarioProductoMovimiento", (string)null);
-                });
-
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Producto", b =>
                 {
                     b.Property<short>("Id")
@@ -789,6 +747,9 @@ namespace ArtInk.Infraestructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
+
+                    b.Property<decimal>("Cantidad")
+                        .HasColumnType("decimal(6, 2)");
 
                     b.Property<decimal>("Costo")
                         .HasColumnType("money");
@@ -1729,17 +1690,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("IdUsuarioSucursalNavigation");
                 });
 
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.InventarioProductoMovimiento", b =>
-                {
-                    b.HasOne("ArtInk.Infraestructure.Models.InventarioProducto", "IdInventarioProductoNavigation")
-                        .WithMany("InventarioProductoMovimientos")
-                        .HasForeignKey("IdInventarioProducto")
-                        .IsRequired()
-                        .HasConstraintName("FK_InventarioProductoMovimiento_InventarioProducto");
-
-                    b.Navigation("IdInventarioProductoNavigation");
-                });
-
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Producto", b =>
                 {
                     b.HasOne("ArtInk.Infraestructure.Models.Categoria", "IdCategoriaNavigation")
@@ -2021,11 +1971,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("DetallePedidos");
 
                     b.Navigation("Facturas");
-                });
-
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.InventarioProducto", b =>
-                {
-                    b.Navigation("InventarioProductoMovimientos");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Producto", b =>

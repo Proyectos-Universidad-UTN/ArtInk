@@ -30,5 +30,5 @@ public record RequestFacturaDto
 
     public decimal MontoTotal { get; set; }
 
-    public IEnumerable<DetalleFacturaDto> DetalleFacturas { get; set; }
+    public IEnumerable<RequestDetalleFacturaDto> DetalleFacturas { get; set; }
 }

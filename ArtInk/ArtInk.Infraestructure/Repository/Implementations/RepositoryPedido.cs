@@ -67,6 +67,7 @@ public class RepositoryPedido(ArtInkContext context) : IRepositoryPedido
             .ThenInclude(a => a.IdSucursalNavigation)
             .Include(a => a.DetallePedidos)
             .ThenInclude(a => a.IdServicioNavigation)
+            .ThenInclude(a => a.IdTipoServicioNavigation)
             .Include(a => a.DetallePedidos)
             .ThenInclude(a => a.DetallePedidoProductos)
             .ThenInclude(a => a.IdProductoNavigation)

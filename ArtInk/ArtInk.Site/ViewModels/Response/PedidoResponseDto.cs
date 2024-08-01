@@ -42,6 +42,8 @@ public class PedidoResponseDto
     [DisplayFormat(DataFormatString = "{0:C2}")]
     public decimal MontoTotal { get; set; }
 
+    public char Estado { get; set; }
+
     public virtual ICollection<DetallePedidoResponseDto> DetallePedidos { get; set; } = new List<DetallePedidoResponseDto>();
 
     public virtual ClienteResponseDto Cliente { get; set; } = null!;

@@ -1,4 +1,4 @@
-const numberFormat = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2});
+const numberFormat = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2});
 
 $(".valor-impuesto").on('change', function () {
     var impuestosDetalle = document.getElementsByClassName("calculo-detalle");

@@ -7,13 +7,14 @@ ViewData["Title"] = "Create";
 <div class="container mt-5">
     <div class="card mx-auto disable-hover" style="max-width: 1000px;">
         <div class="card-header bg-primary text-white">
-            <h4>Proforma Reserva  Nº @Model.IdReserva</h4>
+            <h4>Proforma Reserva Nº @Model.IdReserva</h4>
         </div>
         <div class="card-body">
             <form asp-action="Create" class="form-object">
 
                 <div hidden>
                     <input asp-for="Accion" id="Accion" />
+                    <input asp-for="Estado" />
                     <input asp-for="IdServicio" id="IdServicio" />
                     <input asp-for="NumeroLineaEliminar" id="NumeroLineaEliminar" />
                     <input asp-for="PorcentajeImpuestoFormateado" id="PorcentajeImpuestoFormateado" />
