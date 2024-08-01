@@ -38,4 +38,6 @@ public record ReservaResponseDto
 
     [DisplayName("Servicio")]
     public virtual ICollection<ReservaServicioResponseDto> ReservaServicios { get; set; } = new List<ReservaServicioResponseDto>();
+
+    public virtual ICollection<PedidoResponseDto> Pedidos { get; set; } = new List<PedidoResponseDto>();
 }

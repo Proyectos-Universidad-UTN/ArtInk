@@ -14,12 +14,15 @@ public static class Localization
         services.Configure<RequestLocalizationOptions>(options =>
         {
             options.DefaultRequestCulture = new RequestCulture(culture: "es-CR", uiCulture: "es-CR");
+            options.DefaultRequestCulture.Culture.NumberFormat.NumberGroupSeparator = ",";
+            options.DefaultRequestCulture.Culture.NumberFormat.NumberDecimalSeparator = ".";
+            options.DefaultRequestCulture.Culture.NumberFormat.CurrencyGroupSeparator = ",";
+            options.DefaultRequestCulture.Culture.NumberFormat.CurrencyDecimalSeparator = ".";
+
             options.DefaultRequestCulture.UICulture.NumberFormat.NumberGroupSeparator = ",";
             options.DefaultRequestCulture.UICulture.NumberFormat.NumberDecimalSeparator = ".";
             options.DefaultRequestCulture.UICulture.NumberFormat.CurrencyGroupSeparator = ",";
             options.DefaultRequestCulture.UICulture.NumberFormat.CurrencyDecimalSeparator = ".";
-
-            options.SetDefaultCulture("en-US");
         });
     }
 }

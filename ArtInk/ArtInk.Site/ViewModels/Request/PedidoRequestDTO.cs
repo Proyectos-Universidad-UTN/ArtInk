@@ -11,9 +11,11 @@ namespace ArtInk.Site.ViewModels.Request
     {
         public long Id { get; set; }
 
+        [DisplayName("Cliente")]
+        [Range(1, 99999, ErrorMessage = "Seleccione un cliente")]
         public short IdCliente { get; set; }
 
-        [DisplayName("Cliente")]
+        [DisplayName("Nombre del cliente")]
         public string NombreCliente { get; set; } = null!;
 
         [DisplayName("Fecha")]
@@ -32,6 +34,9 @@ namespace ArtInk.Site.ViewModels.Request
         [DisplayName("Impuesto")]
         [Range(1, 99999, ErrorMessage = "Debe seleccionar el impuesto a aplicar")]
         public byte IdImpuesto { get; set; }
+
+        [Range(1, 999999, ErrorMessage = "Debe indicar la reserva")]
+        public int IdReserva { get; set; }
 
         [DisplayName("Servicio")]
         public byte IdServicio { get; set; }

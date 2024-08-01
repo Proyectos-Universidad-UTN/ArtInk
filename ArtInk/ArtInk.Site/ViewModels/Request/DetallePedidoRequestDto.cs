@@ -35,14 +35,38 @@ public record DetallePedidoRequestDto
     [DisplayName("Tarifa Servicio")]
     public decimal TarifaServicio { get; set; }
 
+    [JsonRequired]
+    public decimal MontoSubtotal 
+    { 
+        get => !string.IsNullOrEmpty(MontoSubtotalFormateado) ? decimal.Parse(MontoSubtotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;  
+        set => MontoSubtotalFormateado = value.ToString("#,##0"); 
+    }
+
+    [NotMapped]
     [DisplayName("Subtotal")]
-    public decimal MontoSubtotal { get; set; }
+    public string MontoSubtotalFormateado { get; set; }
 
+    [JsonRequired]
+    public decimal MontoImpuesto 
+    { 
+        get => !string.IsNullOrEmpty(MontoImpuestoFormateado) ? decimal.Parse(MontoImpuestoFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;  
+        set => MontoImpuestoFormateado = value.ToString("#,##0"); 
+    }
+
+    [NotMapped]
     [DisplayName("Impuesto")]
-    public decimal MontoImpuesto { get; set; }
+    public string MontoImpuestoFormateado { get; set; }
 
+    [JsonRequired]
+    public decimal MontoTotal 
+    { 
+        get => !string.IsNullOrEmpty(MontoTotalFormateado) ? decimal.Parse(MontoTotalFormateado.Replace(",", ""), CultureInfo.InvariantCulture) : 0;  
+        set => MontoTotalFormateado = value.ToString("#,##0"); 
+    }
+
+    [NotMapped]
     [DisplayName("Total")]
-    public decimal MontoTotal { get; set; }
+    public string MontoTotalFormateado { get; set; }
 
     public ServicioResponseDto? Servicio { get; set; }
 }

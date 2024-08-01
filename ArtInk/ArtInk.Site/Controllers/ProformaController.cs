@@ -49,10 +49,15 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
+        // Se remueven los servicios existentes para evitar duplicados en la carga
+        var serviciosExistentes = servicios.Where(m => reserva.ReservaServicios.ToList().Exists(x => x.IdServicio == m.Id)).ToList();
+        servicios = servicios.Except(serviciosExistentes).ToList();
+
         var pedido = new PedidoRequestDto()
         {
             IdCliente = reserva.IdCliente,
             NombreCliente = reserva.NombreCliente,
+            IdReserva = idReserva.Value,
             Clientes = clientes,
             TipoPagos = tipoPagos,
             Impuestos = impuestos,
@@ -86,6 +91,10 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
                 Servicio = servicioSeleccionado,
                 TarifaServicio = servicioSeleccionado.Tarifa,
                 IdServicio = pedidoRequestDto.IdServicio,
+                Cantidad = 0,
+                MontoSubtotal = 0,
+                MontoImpuesto = 0,
+                MontoTotal = 0,
             };
 
             pedidoRequestDto.AgregarDetallePedido(detallePedido);
@@ -95,7 +104,7 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
 
         var serviciosExistentes = servicios.Where(m => pedidoRequestDto.DetallePedidos.Exists(x => x.IdServicio == m.Id)).ToList();
 
-        servicios.Except(serviciosExistentes);
+        servicios = servicios.Except(serviciosExistentes).ToList();
 
         pedidoRequestDto.Servicios = servicios;
 

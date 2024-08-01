@@ -1,3 +1,5 @@
+const numberFormat = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2});
+
 $(".valor-impuesto").on('change', function () {
     var impuestosDetalle = document.getElementsByClassName("calculo-detalle");
     setTimeout(() => {
@@ -10,11 +12,11 @@ $(".valor-impuesto").on('change', function () {
 const calcularTotalesLinea = (element) => {
     const valueCantidad = $(element).val();
     const numeroLinea = $(element).data("linea");
-    const cantidad = parseInt(valueCantidad == "" ? 0 : valueCantidad.replace(".", ""));
-    const tarifa = parseFloat($(`#TarifaServicioDetalle-${numeroLinea}`).val().replace(".", "").replace(",", "."));
+    const cantidad = parseInt(valueCantidad == "" ? 0 : valueCantidad.replace(",", ""));
+    const tarifa = parseFloat($(`#TarifaServicioDetalle-${numeroLinea}`).val().replace(",", ""));
     const subtotal = tarifa * cantidad;
 
-    $(`#SubTotalDetalle-${numeroLinea}`).val(subtotal)
+    $(`#SubTotalDetalle-${numeroLinea}`).val(numberFormat.format(subtotal))
     calcularImpuestoLinea(numeroLinea, subtotal);
 }
 
@@ -23,13 +25,13 @@ const calcularImpuestoLinea = (numeroLinea, subtotal) => {
     const porcentajeImpuesto = parseFloat(valuePorcentajeImpuesto == "" ? 0 : valuePorcentajeImpuesto);
     const montoImpuesto = subtotal * (porcentajeImpuesto / 100);
 
-    $(`#ImpuestoDetalle-${numeroLinea}`).val(montoImpuesto);
+    $(`#ImpuestoDetalle-${numeroLinea}`).val(numberFormat.format(montoImpuesto));
     calcularTotalLinea(numeroLinea, subtotal, montoImpuesto);
 }
 
 const calcularTotalLinea = (numeroLinea, subtotal, impuesto) => {
     const total = subtotal + impuesto
-    $(`#TotalDetalle-${numeroLinea}`).val(total)
+    $(`#TotalDetalle-${numeroLinea}`).val(numberFormat.format(total))
     actualizarTotales();
 }
 
@@ -39,20 +41,20 @@ const actualizarTotales = () => {
     const valoresTotales = document.getElementsByClassName("total")
 
     var arraySubtotal = []
-    $(valoresSubtotales).each((ind, el) => parseFloat(arraySubtotal.push($(el).val())))
+    $(valoresSubtotales).each((ind, el) => parseFloat(arraySubtotal.push($(el).val().replace(",", ""))))
     const subtotal = SumarArray(arraySubtotal)
 
     var arrayImpuesto = []
-    $(valoresImpuestos).each((ind, el) => parseFloat(arrayImpuesto.push($(el).val())))
+    $(valoresImpuestos).each((ind, el) => parseFloat(arrayImpuesto.push($(el).val().replace(",", ""))))
     const impuesto = SumarArray(arrayImpuesto)
 
     var arrayTotal = []
-    $(valoresTotales).each((ind, el) => parseFloat(arrayTotal.push($(el).val())))
+    $(valoresTotales).each((ind, el) => parseFloat(arrayTotal.push($(el).val().replace(",", ""))))
     const total = SumarArray(arrayTotal)
 
-    $("#SubTotal").text(subtotal)
-    $("#MontoImpuesto").text(impuesto)
-    $("#MontoTotal").text(total)
+    $("#SubTotal").text(numberFormat.format(subtotal))
+    $("#MontoImpuesto").text(numberFormat.format(impuesto))
+    $("#MontoTotal").text(numberFormat.format(total))
 }
 
 const SumarArray = (arr) => {
