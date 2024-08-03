@@ -141,14 +141,14 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         RemoveSucursalRequireModel();
         if (!ModelState.IsValid)
         {
-            TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
+            TempData[ERRORMESSAGE] = "Formulario no cumple con valores requeridos";
             return View(sucursalSucursalHorario);
         }
 
         var horario = await cliente.ConsumirAPIAsync<bool?>(Constantes.POST, url, valoresConsumo: Serialization.Serialize(sucursalSucursalHorario.HorariosSucursal));
         if (horario != null)
         {
-            TempData["SuccessMessage"] = "Horarios guardados correctamente";
+            TempData[SUCCESSMESSAGE] = "Horarios guardados correctamente";
             return RedirectToAction(INDEX);
         }
 

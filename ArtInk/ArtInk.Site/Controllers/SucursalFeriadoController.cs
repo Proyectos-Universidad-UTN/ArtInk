@@ -13,10 +13,10 @@ namespace ArtInk.Site.Controllers;
 public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
     const string INDEX = "Index";
-    const string SUCCESSMESSAGE = "SuccessMessage";
-    const string ERRORMESSAGE = "ErrorMessage";
-    const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
-    const string ERRORMESSAGEPARTIAL = "ErrorMessagePartial";
+    const string SFSUCCESSMESSAGE = "SuccessMessage";
+    const string SFERRORMESSAGE = "ErrorMessage";
+    const string SFSUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
+    const string SFERRORMESSAGEPARTIAL = "ErrorMessagePartial";
 
     public async Task<IActionResult> Index()
     {
@@ -55,20 +55,20 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         RemoveSucursalRequireModel();
         if (!ModelState.IsValid)
         {
-            TempData[ERRORMESSAGEPARTIAL] = "Formulario no cumple con valores requeridos";
+            TempData[SFERRORMESSAGEPARTIAL] = "Formulario no cumple con valores requeridos";
             return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
         if (sucursalSucursalFeriado.Accion == 'R')
         {
             sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.Where(m => m.IdFeriado != sucursalSucursalFeriado.IdFeriado).ToList();
-            TempData[SUCCESSMESSAGEPARTIAL] = "Feriado removido de la lista preliminar";
+            TempData[SFSUCCESSMESSAGEPARTIAL] = "Feriado removido de la lista preliminar";
             return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
         if (sucursalSucursalFeriado.FeriadosSucursal.Exists(m => m.IdFeriado == sucursalSucursalFeriado.IdFeriado))
         {
-            TempData[ERRORMESSAGEPARTIAL] = "Feriado ya existe en lista preliminar";
+            TempData[SFERRORMESSAGEPARTIAL] = "Feriado ya existe en lista preliminar";
             return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
@@ -76,7 +76,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         var feriado = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.GET, url);
         if (feriado == null)
         {
-            TempData[ERRORMESSAGEPARTIAL] = cliente.Error ? cliente.MensajeError : null;
+            TempData[SFERRORMESSAGEPARTIAL] = cliente.Error ? cliente.MensajeError : null;
             return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
@@ -88,7 +88,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
             Anno = sucursalSucursalFeriado.Anno
         });
 
-        TempData[SUCCESSMESSAGEPARTIAL] = "Feriado agregado a lista preliminar";
+        TempData[SFSUCCESSMESSAGEPARTIAL] = "Feriado agregado a lista preliminar";
 
         sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.OrderBy(m => m.Fecha).ToList();
         return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
@@ -98,7 +98,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
     {
         if (idSucursal == 0 || anno == 0 || !ModelState.IsValid)
         {
-            TempData[ERRORMESSAGE] = "Asegurese de seleccionar una sucursal y un año";
+            TempData[SFERRORMESSAGE] = "Asegurese de seleccionar una sucursal y un año";
             return RedirectToAction(INDEX);
         }
 
@@ -147,7 +147,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         RemoveSucursalRequireModel();
         if (!ModelState.IsValid)
         {
-            TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
+            TempData[SFSUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
             return View(sucursalSucursalFeriado);
         }
 
@@ -173,7 +173,7 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         return (false, feriados)!;
     }
 
-    private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
+    private void SetErrorMessage() => TempData[SFERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
 
     private void RemoveSucursalRequireModel()
     {
