@@ -1,27 +1,73 @@
 @model ArtInk.Site.ViewModels.Request.Misc.SucursalHorarioBloqueos
 
 @{
-    ViewData["Title"] = "Sucursal Horario Bloqueos";
+ViewData["Title"] = "Sucursal Horario Bloqueos";
 }
 
 <div class="container mt-5">
     <div class="card mx-auto disable-hover" style="max-width: 800px;">
         <div class="card-header bg-primary text-white">
-            <h4>Formulario de bloqueos por horario del día: Model.SucursalHorario.Horario.Dia y sucursal: Model.SucursalHorario.Sucursal.Nombre</h4>
+            <h4>Formulario de bloqueos por horario del día: @Model.SucursalHorario.Horario.Dia y sucursal:
+                @Model.SucursalHorario.Sucursal.Nombre</h4>
         </div>
         <div class="card-body">
-            <form asp-action="Gestionar" class="form-object">
+            <form asp-action="Gestionar" class="form-object px-3">
                 <div class="row">
                     <input hidden asp-for="Accion" id="Accion" />
                     <input hidden asp-for="IdSucursalHorario" />
+                    <input hidden asp-for="IdBloqueo" />
+                    <input hidden asp-for="SucursalHorario.Horario.HoraInicio" />
+                    <input hidden asp-for="SucursalHorario.Horario.HoraFin" />
                     <div id="bloqueos">
-                        @await Html.PartialAsync("~/Views/SucursalHorario/_Horarios.cshtml", Model)
+                        @await Html.PartialAsync("~/Views/SucursalHorarioBloqueo/_DetalleBloqueos.cshtml", Model)
                     </div>
                 </div>
-                <div class="px-3">
-                    @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary button-forms-h">Guardar</button>
+                    <a asp-action="Index" asp-controller="SucursalHorario"
+                        class="btn btn-secondary button-forms-h">Cancelar</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+<script>
+    const agregarBloqueoHorario = (button) => {
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalHorarioBloqueo/AgregarEliminarBloqueo";
+        $("#Accion").val('A')
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#bloqueos").html(result);
+            }
+        })
+    }
+
+    const eliminarHorarioBloqueo = (buttton) => {
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/SucursalHorarioBloqueo/AgregarEliminarBloqueo";
+        $("#Accion").val("E")
+        $("#IdBloqueo").val($(buttton).data("id"))
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#bloqueos").html(result);
+            }
+        })
+    }
+</script>

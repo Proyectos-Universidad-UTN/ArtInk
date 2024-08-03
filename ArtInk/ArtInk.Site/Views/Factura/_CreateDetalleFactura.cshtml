@@ -1,5 +1,7 @@
 @model ArtInk.Site.ViewModels.Request.FacturaRequestDto
 
+@await Html.PartialAsync("~/Views/Shared/_ManejoMensajesPartial.cshtml")
+
 <div class="row mb-4">
     <div class="col-sm-12 col-md-12">
         <label for="IdServicio" class="form-label">Servicios</label>
@@ -100,3 +102,6 @@
         </div>
     </div>
 </div>
+
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/toast-partial.js" asp-append-version="true"></script>

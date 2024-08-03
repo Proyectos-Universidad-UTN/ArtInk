@@ -1,17 +1,24 @@
 @model ArtInk.Site.ViewModels.Request.Misc.SucursalHorarioBloqueos
 
+@await Html.PartialAsync("~/Views/Shared/_ManejoMensajesPartial.cshtml")
+
 <div class="row mb-4">
     <div class="col-12 col-sm-12">
         <label for="" class="form-label">Bloqueo</label>
     </div>
-    <div class="col-12 col-sm-4">
-        <input asp-for="HorarioInicio" class="form-select" />
+    <div class="col-12 col-sm-5">
+        <label asp-for="HoraInicio" class="form-label"> </label>
+        <select asp-for="HoraInicio" class="form-select"
+            asp-items='@(new SelectList(Model.Horas,"Hora","Hora"))'></select>
+        <span asp-for="HoraInicio" class="text-danger"></span>
     </div>
-    <div class="col-12 col-sm-4">
-        <input asp-for="HorarioFin" class="form-select" />
+    <div class="col-12 col-sm-5">
+        <label asp-for="HoraFin" class="form-label"> </label>
+        <select asp-for="HoraFin" class="form-select" asp-items='@(new SelectList(Model.Horas,"Hora","Hora"))'></select>
+        <span asp-for="HoraFin" class="text-danger"></span>
     </div>
-    <div class="col-12 col-sm-2 text-end">
-        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarDetalle(this)">
+    <div class="col-12 col-sm-2 d-flex align-items-end">
+        <button type="button" class="btn btn-success btn-sm flex-fill m-0" onclick="agregarBloqueoHorario(this)">
             <span class="material-symbols-outlined">
                 add
             </span>
@@ -28,38 +35,41 @@
             <table class="w-100 table table-sm table-dark table-striped">
                 <thead>
                     <tr>
-                        <th scope="col" style="width:45%">Horario Inicio</th>
-                        <th scope="col" style="width:45%">Horario Fin</th>
+                        <th scope="col" style="width:45%">Horario inicio</th>
+                        <th scope="col" style="width:45%">Horario fin</th>
                         <th style="width:10%"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var item in Model.DetallePedidos.Select((x, i) => new { Value = x, Index = i }))
+                    @foreach(var item in Model.Bloqueos.Select((x, i) => new { Value = x, Index = i }))
                     {
-                        <tr>
-                            <div hidden>
-                                <input name="Bloqueos[@item.Index].Id" value="@item.Value.Id" />
-                                <input name="Bloqueos[@item.Index].HoraInicio" value="@item.Value.HoraInicio" />
-                                <input name="Bloqueos[@item.Index].HoraFin" value="@item.Value.HoraFin" />
-                            </div>
-                            <td class="text-right">
-                                @item.Value.HoraInicio
-                            </td>
-                            <td class="text-right">
-                                @item.Value.HoraFin
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger btn-sm flex-fill m-0"
-                                    data-linea="@item.Value.Id" onclick="eliminarBloqueo(this)">
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
-                                </button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <div hidden>
+                            <input name="Bloqueos[@item.Index].Id" value="@item.Value.Id" />
+                            <input name="Bloqueos[@item.Index].HoraInicio" value="@item.Value.HoraInicio" />
+                            <input name="Bloqueos[@item.Index].HoraFin" value="@item.Value.HoraFin" />
+                        </div>
+                        <td class="text-right">
+                            @item.Value.HoraInicio.ToString("HH:mm")
+                        </td>
+                        <td class="text-right">
+                            @item.Value.HoraFin.ToString("HH:mm")
+                        </td>
+                        <td class="text-end">
+                            <button type="button" class="btn btn-danger btn-sm flex-fill m-0"
+                                data-Id="@item.Value.Id" onclick="eliminarHorarioBloqueo(this)">
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/toast-partial.js" asp-append-version="true"></script>

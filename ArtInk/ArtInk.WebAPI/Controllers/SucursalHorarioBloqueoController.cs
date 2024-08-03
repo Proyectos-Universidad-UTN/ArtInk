@@ -23,6 +23,18 @@ public class SucursalHorarioBloqueoController(IServiceSucursalHorarioBloqueo ser
         return StatusCode(StatusCodes.Status201Created, result);
     }
 
+    [HttpPost("~/api/SucursalHorario/{idSucursalHorario}")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SucursalHorarioBloqueoDto))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
+    public async Task<IActionResult> CreateSucursalHorarioBloqueoAsync(short idSucursalHorario, [FromBody] IEnumerable<RequestSucursalHorarioBloqueoDto> bloqueos)
+    {
+        //retorna una excepçión is es nulo
+        ArgumentNullException.ThrowIfNull(bloqueos);
+        var result = await serviceBloqueo.CreateSucursalHorarioBloqueoAsync(idSucursalHorario, bloqueos);
+        return StatusCode(StatusCodes.Status201Created, result);
+    }
+
     [HttpPut("{idSucursalHorarioBloqueo}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SucursalHorarioBloqueoDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]

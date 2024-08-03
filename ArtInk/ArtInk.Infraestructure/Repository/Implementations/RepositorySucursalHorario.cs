@@ -82,6 +82,8 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
         var keyProperty = context.Model.FindEntityType(typeof(SucursalHorario))!.FindPrimaryKey()!.Properties[0];
         return await context.Set<SucursalHorario>()
                 .Include(m => m.IdHorarioNavigation)
+                .Include(m => m.IdSucursalNavigation)
+                .Include(m => m.SucursalHorarioBloqueos)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => EF.Property<short>(a, keyProperty.Name) == id);
     }

@@ -3,14 +3,13 @@ using ArtInk.Site.Configuration;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace ArtInk.Site.Controllers;
 
 public class FacturaController(IApiArtInkClient cliente) : Controller
 {
+    const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
     const string ERRORMESSAGE = "ErrorMessage";
     const string INDEXVIEW = "Index";
     const string CONTROLLERPROFORMA = "Proforma";
@@ -101,7 +100,10 @@ public class FacturaController(IApiArtInkClient cliente) : Controller
 
         var serviciosExistentes = servicios.Where(m => facturaRequestDto.DetalleFacturas.Exists(x => x.IdServicio == m.Id)).ToList();
 
-        facturaRequestDto.Servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes); ;
+        facturaRequestDto.Servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes);
+
+        string mensajeProceso = facturaRequestDto.Accion == 'E' ? "eliminado" : "agregado";
+        TempData[SUCCESSMESSAGEPARTIAL] = $"Detalle {mensajeProceso} correctamnete";
 
         return PartialView("~/Views/Factura/_CreateDetalleFactura.cshtml", facturaRequestDto);
     }
