@@ -48,8 +48,9 @@ public class ServiceProveedor(IRepositoryProveedor repository, IMapper mapper, I
         var query = repository.ListAllQueryable();
         var paginatedCollection = await PagedList<Proveedor>.PaginatedCollection(query, paginationParameters.PageNumber, paginationParameters.PageSize);
         var proveedores = mapper.Map<ICollection<ProveedorDto>>(paginatedCollection);
+        var count = await query.CountAsync();
         
-        return PagedList<ProveedorDto>.ToPagedList(proveedores.ToList(), query.Count(), paginationParameters.PageNumber, paginationParameters.PageSize);
+        return PagedList<ProveedorDto>.ToPagedList(proveedores.ToList(), count, paginationParameters.PageNumber, paginationParameters.PageSize);
     }
 
     public async Task<ProveedorDto> UpdateProveedorsync(byte id, RequestProveedorDto proveedorDto)

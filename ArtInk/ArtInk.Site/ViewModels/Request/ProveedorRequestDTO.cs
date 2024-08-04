@@ -7,6 +7,7 @@ namespace ArtInk.Site.ViewModels.Request;
 
 public record ProveedorRequestDto : Direcciones
 {
+    [JsonRequired]
     public byte Id { get; set; }
 
     [Required(ErrorMessage = "Nombre requerido")]
@@ -44,5 +45,6 @@ public record ProveedorRequestDto : Direcciones
     [Required(ErrorMessage = "Dirección exacta requerida")]
     public string? DireccionExacta { get; set; }
 
+    [JsonRequired]
     public bool Activo { get; set; }
 }
