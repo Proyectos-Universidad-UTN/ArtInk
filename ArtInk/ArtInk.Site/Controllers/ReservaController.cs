@@ -12,7 +12,9 @@ namespace ArtInk.Site.Controllers;
 public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
     const string INDEX = "Index";
+    const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
     const string ERRORMESSAGE = "ErrorMessage";
+    const string ERRORMESSAGEPARTIAL = "ErrorMessagePartial";
     const string SINHORARIO = "Sin horarios disponibles";
 
     public async Task<IActionResult> Index()
@@ -71,7 +73,7 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
         var servicios = await cliente.ConsumirAPIAsync<List<ServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
         if (servicios == null)
         {
-            SetErrorMessage();
+            TempData[ERRORMESSAGEPARTIAL] = cliente.Error ? cliente.MensajeError : null;
             return PartialView(PARTIALVIEWSERVICIOS, reserva);
         }
 
@@ -92,6 +94,9 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Contr
 
         servicios.Insert(0, new ServicioResponseDto() { Id = 0, Nombre = "Seleccione un servicio" });
         reserva.Servicios = servicios.Except(serviciosExistentesReserva).ToList();
+
+        string mensajeProceso = reserva.Accion == 'E' ? "eliminado" : "agregado";
+        TempData[SUCCESSMESSAGEPARTIAL] = $"Servicio {mensajeProceso} correctamnete";
 
         return PartialView(PARTIALVIEWSERVICIOS, reserva);
     }

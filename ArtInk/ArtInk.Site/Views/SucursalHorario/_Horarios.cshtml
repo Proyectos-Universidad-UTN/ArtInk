@@ -1,6 +1,6 @@
 ﻿@model ArtInk.Site.ViewModels.Request.Misc.SucursalSucursalHorario
 
-@await Html.PartialAsync("~/Views/Shared/_ManejoMensajes.cshtml")
+@await Html.PartialAsync("~/Views/Shared/_ManejoMensajesPartial.cshtml")
 
 <div class="row px-3">
     <div class="col-sm-12 col-md-12">
@@ -55,3 +55,5 @@
 </ul>
 
 @await Html.PartialAsync("_ValidationScriptsPartial")
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/toast-partial.js" asp-append-version="true"></script>

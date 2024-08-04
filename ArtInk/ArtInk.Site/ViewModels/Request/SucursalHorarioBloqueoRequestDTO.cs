@@ -10,9 +10,6 @@ public record SucursalHorarioBloqueoRequestDto
     [DisplayName("Sucursal Horario")]
     public short IdSucursalHorario { get; set; }
 
-    [Required(ErrorMessage = "Por favor ingrese una fecha")]
-    public DateOnly Fecha { get; set; }
-
     [Required(ErrorMessage = "Por favor ingrese la hora de inicio")]
     [DataType(DataType.Time)]
     [DisplayName("Hora de Inicio")]

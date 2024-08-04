@@ -1,23 +1,23 @@
-@if (TempData["SuccessMessage"] != null)
+@if (TempData["SuccessMessagePartial"] != null)
 {
     <div class="toast-container position-fixed top-5 end-0 p-3 text-white">
-        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="liveToast" class="toast toastPartial" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body bg-success d-flex">
                 <div class="flex-grow-1">
-                    @TempData["SuccessMessage"]
+                    @TempData["SuccessMessagePartial"]
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>
 }
-@if (TempData["ErrorMessage"] != null)
+@if (TempData["ErrorMessagePartial"] != null)
 {
     <div class="toast-container position-fixed top-5 end-0 p-3 text-white">
-        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="liveToast" class="toast toastPartial" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body bg-danger d-flex">
                 <div class="flex-grow-1">
-                    @TempData["ErrorMessage"]
+                    @TempData["ErrorMessagePartial"]
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>

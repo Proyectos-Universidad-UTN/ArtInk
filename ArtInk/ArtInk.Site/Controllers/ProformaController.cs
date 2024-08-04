@@ -9,6 +9,7 @@ namespace ArtInk.Site.Controllers;
 
 public class ProformaController(IApiArtInkClient cliente) : Controller
 {
+    const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
     const string ERRORMESSAGE = "ErrorMessage";
     const string INDEXVIEW = "Index";
     const string CONTROLLERRESERVA = "Reserva";
@@ -100,7 +101,10 @@ public class ProformaController(IApiArtInkClient cliente) : Controller
         if (pedidoRequestDto.Accion == 'E') pedidoRequestDto.EliminarDetalleImpuesto(pedidoRequestDto.NumeroLineaEliminar);
 
         var serviciosExistentes = servicios.Where(m => pedidoRequestDto.DetallePedidos.Exists(x => x.IdServicio == m.Id)).ToList();
-        pedidoRequestDto.Servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes);;
+        pedidoRequestDto.Servicios = FiltrarServiciosExistentes(servicios, serviciosExistentes);
+
+        string mensajeProceso = pedidoRequestDto.Accion == 'E' ? "eliminado" : "agregado";
+        TempData[SUCCESSMESSAGEPARTIAL] = $"Detalle {mensajeProceso} correctamnete";
 
         return PartialView("~/Views/Proforma/_CreateDetallePedido.cshtml", pedidoRequestDto);
     }

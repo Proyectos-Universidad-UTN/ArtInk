@@ -22,6 +22,16 @@ public class ServiceSucursalHorarioBloqueo(IRepositorySucursalHorarioBloqueo rep
         return mapper.Map<SucursalHorarioBloqueoDto>(result);
     }
 
+    public async Task<bool> CreateSucursalHorarioBloqueoAsync(short idSucursalHorario, IEnumerable<RequestSucursalHorarioBloqueoDto> bloqueos)
+    {
+        var bloqueosGuardar = await ValidarSucursalHorarioBloqueo(idSucursalHorario, bloqueos);
+
+        var result = await repository.CreateSucursalHorarioBloqueolAsync(idSucursalHorario, bloqueosGuardar);
+        if (!result) throw new ListNotAddedException("Error al guardar bloqueos");
+
+        return result;
+    }
+
     public async Task<SucursalHorarioBloqueoDto> GetSucursalHorarioBloqueosByIdAsync(long id)
     {
         var bloqueo = await repository.FindByIdAsync(id);
@@ -53,5 +63,17 @@ public class ServiceSucursalHorarioBloqueo(IRepositorySucursalHorarioBloqueo rep
         var bloqueo = mapper.Map<SucursalHorarioBloqueo>(bloqueolDTO);
         await bloqueoValidator.ValidateAndThrowAsync(bloqueo);
         return bloqueo;
+    }
+
+    private async Task<IEnumerable<SucursalHorarioBloqueo>> ValidarSucursalHorarioBloqueo(short idSucursalHorario, IEnumerable<RequestSucursalHorarioBloqueoDto> bloqueoDtos)
+    {
+        var bloqueos = mapper.Map<List<SucursalHorarioBloqueo>>(bloqueoDtos);
+        foreach (var item in bloqueos)
+        {
+            item.Id = 0;
+            item.IdSucursalHorario = idSucursalHorario;
+            await bloqueoValidator.ValidateAndThrowAsync(item);
+        }
+        return bloqueos;
     }
 }

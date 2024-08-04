@@ -127,6 +127,7 @@
         const host = window.location.host;
         const url = host.split("/").reverse().slice(2).reverse().join("/") + "/Reserva/AgregarEliminarServicio";
         $("#Accion").val('E')
+        console.log("dddd", $(buttton).data("servicio"))
         $("#IdServicio").val($(buttton).data("servicio"))
         const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
 

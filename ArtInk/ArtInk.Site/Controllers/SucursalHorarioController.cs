@@ -13,8 +13,11 @@ namespace ArtInk.Site.Controllers;
 public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper) : Controller
 {
     const string INDEX = "Index";
+    const string SUCCESSMESSAGE = "SuccessMessage";
     const string ERRORMESSAGE = "ErrorMessage";
-    const string SUCCESSMESSAGE = "SuccessMessagePartial";
+    const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
+
+    const string ERRORMESSAGEPARTIAL = "ErrorMessagePartial";
 
     public async Task<IActionResult> Index()
     {
@@ -49,20 +52,20 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         RemoveSucursalRequireModel();
         if (!ModelState.IsValid)
         {
-            TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
+            TempData[ERRORMESSAGEPARTIAL] = "Formulario no cumple con valores requeridos";
             return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
         }
 
         if (sucursalSucursalHorario.Accion == 'R')
         {
             sucursalSucursalHorario.HorariosSucursal = sucursalSucursalHorario.HorariosSucursal.Where(m => m.IdHorario != sucursalSucursalHorario.IdHorario).ToList();
-            TempData[SUCCESSMESSAGE] = "Horario removido de la lista preliminar";
+            TempData[SUCCESSMESSAGEPARTIAL] = "Horario removido de la lista preliminar";
             return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
         }
 
         if (sucursalSucursalHorario.HorariosSucursal.Exists(m => m.IdHorario == sucursalSucursalHorario.IdHorario))
         {
-            TempData["ErrorMessagePartial"] = "Horario ya existe en lista preliminar";
+            TempData[ERRORMESSAGEPARTIAL] = "Horario ya existe en lista preliminar";
             return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
         }
 
@@ -70,7 +73,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         var horario = await cliente.ConsumirAPIAsync<HorarioResponseDto>(Constantes.GET, url);
         if (horario == null)
         {
-            TempData["ErrorMessagePartial"] = cliente.Error ? cliente.MensajeError : null;
+            TempData[ERRORMESSAGEPARTIAL] = cliente.Error ? cliente.MensajeError : null;
             return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
         }
 
@@ -80,7 +83,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
             Horario = horario
         });
 
-        TempData[SUCCESSMESSAGE] = "Horario agregado a lista preliminar";
+        TempData[SUCCESSMESSAGEPARTIAL] = "Horario agregado a lista preliminar";
 
         sucursalSucursalHorario.HorariosSucursal = sucursalSucursalHorario.HorariosSucursal.OrderBy(m => m.IdHorario).ToList();
         return PartialView(HORARIOSPARTIALVIEW, sucursalSucursalHorario);
@@ -138,14 +141,14 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         RemoveSucursalRequireModel();
         if (!ModelState.IsValid)
         {
-            TempData[SUCCESSMESSAGE] = "Formulario no cumple con valores requeridos";
+            TempData[ERRORMESSAGE] = "Formulario no cumple con valores requeridos";
             return View(sucursalSucursalHorario);
         }
 
         var horario = await cliente.ConsumirAPIAsync<bool?>(Constantes.POST, url, valoresConsumo: Serialization.Serialize(sucursalSucursalHorario.HorariosSucursal));
         if (horario != null)
         {
-            TempData["SuccessMessage"] = "Horarios guardados correctamente";
+            TempData[SUCCESSMESSAGE] = "Horarios guardados correctamente";
             return RedirectToAction(INDEX);
         }
 
