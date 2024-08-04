@@ -22,6 +22,10 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
             using var transaccion = await context.Database.BeginTransactionAsync();
             try
             {
+                foreach(var horarioExistente in horariosExistentes.Select(m => m.SucursalHorarioBloqueos))
+                {
+                    context.SucursalHorarioBloqueos.RemoveRange(horarioExistente);
+                }
                 context.SucursalHorarios.RemoveRange(horariosExistentes);
                 var rowsAffected = await context.SaveChangesAsync();
 
@@ -32,6 +36,16 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
                 }
                 else
                 {
+                    foreach (var item in sucursalHorarios)
+                    {
+                        var existente = horariosExistentes.SingleOrDefault(m => m.IdSucursal == item.IdSucursal && m.IdHorario == item.IdHorario);
+                        if(existente != null && existente.SucursalHorarioBloqueos.Any())
+                        {
+                            var listaBloqueos = existente.SucursalHorarioBloqueos.ToList();
+                            listaBloqueos.ForEach(m => m.Id = 0);
+                            item.SucursalHorarioBloqueos = listaBloqueos;
+                        }
+                    }
                     context.SucursalHorarios.AddRange(sucursalHorarios);
                     rowsAffected = await context.SaveChangesAsync();
 

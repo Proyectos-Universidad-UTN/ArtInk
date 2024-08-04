@@ -22,7 +22,7 @@ public record HorarioResponseDto
     {
         get
         {
-            return $"{HoraInicio}-{HoraFin}";
+            return $"{HoraInicio.ToString("HH:mm")} - {HoraFin.ToString("HH:mm")}";
         }
     }
     private string? NombreSelectFormateado;

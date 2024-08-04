@@ -66,7 +66,7 @@ public class SucursalHorarioBloqueoController(IApiArtInkClient cliente) : Contro
 
         if(sucursalHorarioBloqueos.HorarioInicioMayorHorarioFin())
         {
-            TempData[ERRORMESSAGEPARTIAL] = "Hora inicio es mayor a hora fin son iguales";
+            TempData[ERRORMESSAGEPARTIAL] = "Hora inicio es mayor a hora fin";
             return PartialView(BLOQUEOSPARTIALVIEW, sucursalHorarioBloqueos);
         }
 
