@@ -13,7 +13,7 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
     public async Task<bool> CreateSucursalHorariosAsync(byte idSucursal, IEnumerable<SucursalHorario> sucursalHorarios)
     {
         var result = true;
-        var horariosExistentes = await GetHorariosBySucursalAsync(idSucursal);
+        var sucursalHorariosExistentes = await GetHorariosBySucursalAsync(idSucursal);
 
         var executionStrategy = context.Database.CreateExecutionStrategy();
 
@@ -22,30 +22,18 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
             using var transaccion = await context.Database.BeginTransactionAsync();
             try
             {
-                foreach(var horarioExistente in horariosExistentes.Select(m => m.SucursalHorarioBloqueos))
-                {
-                    context.SucursalHorarioBloqueos.RemoveRange(horarioExistente);
-                }
-                context.SucursalHorarios.RemoveRange(horariosExistentes);
+                RemoverBloqueos(sucursalHorariosExistentes.Select(m => m.SucursalHorarioBloqueos));
+                context.SucursalHorarios.RemoveRange(sucursalHorariosExistentes);
                 var rowsAffected = await context.SaveChangesAsync();
 
-                if (rowsAffected == 0 && horariosExistentes.Count != 0)
+                if (rowsAffected == 0 && sucursalHorariosExistentes.Count != 0)
                 {
                     await transaccion.RollbackAsync();
                     result = false;
                 }
                 else
                 {
-                    foreach (var item in sucursalHorarios)
-                    {
-                        var existente = horariosExistentes.SingleOrDefault(m => m.IdSucursal == item.IdSucursal && m.IdHorario == item.IdHorario);
-                        if(existente != null && existente.SucursalHorarioBloqueos.Any())
-                        {
-                            var listaBloqueos = existente.SucursalHorarioBloqueos.ToList();
-                            listaBloqueos.ForEach(m => m.Id = 0);
-                            item.SucursalHorarioBloqueos = listaBloqueos;
-                        }
-                    }
+                    ReordenarBloqueos(sucursalHorariosExistentes, sucursalHorarios);
                     context.SucursalHorarios.AddRange(sucursalHorarios);
                     rowsAffected = await context.SaveChangesAsync();
 
@@ -71,7 +59,7 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
     }
 
     public async Task<ICollection<SucursalHorario>> GetHorariosBySucursalAsync(byte idSucursal)
-    {          
+    {
         var collection = await context.Set<SucursalHorario>()
            .AsNoTracking()
            .Include(m => m.IdHorarioNavigation)
@@ -100,5 +88,27 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
                 .Include(m => m.SucursalHorarioBloqueos)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => EF.Property<short>(a, keyProperty.Name) == id);
+    }
+
+    private void RemoverBloqueos(IEnumerable<ICollection<SucursalHorarioBloqueo>> bloqueosExistentes)
+    {
+        foreach (var horarioExistente in bloqueosExistentes)
+        {
+            context.SucursalHorarioBloqueos.RemoveRange(horarioExistente);
+        }
+    }
+
+    private void ReordenarBloqueos(ICollection<SucursalHorario> sucursalHorariosExistentes, IEnumerable<SucursalHorario> sucursalHorarios)
+    {
+        foreach (var item in sucursalHorarios)
+        {
+            var existente = sucursalHorariosExistentes.SingleOrDefault(m => m.IdSucursal == item.IdSucursal && m.IdHorario == item.IdHorario);
+            if (existente != null && existente.SucursalHorarioBloqueos.Any())
+            {
+                var listaBloqueos = existente.SucursalHorarioBloqueos.ToList();
+                listaBloqueos.ForEach(m => m.Id = 0);
+                item.SucursalHorarioBloqueos = listaBloqueos;
+            }
+        }
     }
 }
