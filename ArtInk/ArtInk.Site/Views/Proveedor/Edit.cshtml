@@ -1,14 +1,15 @@
-@using ArtInk.Site.ViewModels.Response
-@model ArtInk.Site.ViewModels.Request.SucursalRequestDto
+@model ArtInk.Site.ViewModels.Request.ProveedorRequestDto
 
 @{
-ViewData["Title"] = "Actualizar";
+    ViewData["Title"] = "Crear";
 }
+
+@await Html.PartialAsync("~/Views/Shared/_ManejoMensajesPartial.cshtml")
 
 <div class="container mt-5">
     <div class="card mx-auto disable-hover" style="max-width: 800px;">
         <div class="card-header bg-primary text-white">
-            <h4>Formulario de Sucursal Nº @Model.Id</h4>
+            <h4>Formulario de Proveedor Nº @Model.Id</h4>
         </div>
         <div class="card-body">
             <form asp-action="Edit" class="form-object">
@@ -21,44 +22,48 @@ ViewData["Title"] = "Actualizar";
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12 col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Nombre" class="form-label"></label>
-                            <input asp-for="Nombre" class="form-control" />
+                            <label for="Nombre" asp-for="Nombre" class="form-label"></label>
+                            <input id="Nombre" asp-for="Nombre" class="form-control" />
                             <span asp-validation-for="Nombre" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-floating mb-3">
-                            <textarea asp-for="Descripcion" style="height: 80px" class="form-control"></textarea>
-                            <label asp-for="Descripcion" class="form-label"></label>
-                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="CedulaJuridica" class="form-label"></label>
+                            <input asp-for="CedulaJuridica" class="form-control" data-mask="0-000-000000" />
+                            <span asp-validation-for="CedulaJuridica" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group mb-3">
+                            <label for="RasonSocial" asp-for="RasonSocial" class="form-label"></label>
+                            <input asp-for="RasonSocial" class="form-control" />
+                            <span asp-validation-for="RasonSocial" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
                         <div class="form-group mb-3">
                             <label asp-for="TelefonoFormateado" class="form-label"></label>
                             <input asp-for="TelefonoFormateado" class="form-control" data-mask="0000-0000" />
                             <span asp-validation-for="TelefonoFormateado" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
                         <div class="form-group mb-3">
                             <label asp-for="CorreoElectronico" class="form-label"></label>
                             <input asp-for="CorreoElectronico" class="form-control" />
                             <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-6">
                         <div class="form-group mb-3">
                             <label asp-for="IdProvincia" class="form-label"></label>
                             <select asp-for="IdProvincia" class="form-select"
@@ -66,7 +71,10 @@ ViewData["Title"] = "Actualizar";
                             <span asp-validation-for="IdProvincia" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
                         <div class="form-group mb-3">
                             <label asp-for="IdCanton" class="form-label"></label>
                             <div id="cantonSelect">
@@ -74,7 +82,7 @@ ViewData["Title"] = "Actualizar";
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-6">
                         <div class="form-group mb-3">
                             <label asp-for="IdDistrito" class="form-label"></label>
                             <div id="distritoSelect">
@@ -101,9 +109,11 @@ ViewData["Title"] = "Actualizar";
 </div>
 
 @section Scripts {
-@{
-await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
 <script src="~/js/direcciones/canton-select.js"></script>
 <script src="~/js/direcciones/distrito-select.js"></script>
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/toast-partial.js" asp-append-version="true"></script>

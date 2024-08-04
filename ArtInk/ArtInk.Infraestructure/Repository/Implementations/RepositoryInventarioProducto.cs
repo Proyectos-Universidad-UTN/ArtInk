@@ -40,7 +40,7 @@ public class RepositoryInventarioProducto(ArtInkContext context) : IRepositoryIn
     }
 
     public async Task<ICollection<InventarioProducto>> ListByInventarioAsync(short idInventario) =>
-        await context.InventarioProducto.Include(m => m.IdProductoNavigation).Where(m => m.IdInventario == idInventario).ToListAsync();
+        await context.InventarioProducto.Include(m => m.IdProductoNavigation).Where(m => m.IdInventario == idInventario).AsNoTracking().ToListAsync();
 
     public async Task<ICollection<InventarioProducto>> ListByProductoAsync(short idProducto) =>
         await context.InventarioProducto.Where(m => m.IdProducto == idProducto).ToListAsync();

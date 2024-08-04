@@ -66,6 +66,7 @@ public class RepositoryInventarioProductoMovimiento(ArtInkContext context, IRepo
             .Include(m => m.IdInventarioProductoNavigation)
             .ThenInclude(m => m.IdInventarioNavigation)
             .Where(m => m.IdInventarioProductoNavigation.IdInventario == idInventario)
+            .AsNoTracking()
             .ToListAsync();
 
         return collection;
@@ -80,6 +81,7 @@ public class RepositoryInventarioProductoMovimiento(ArtInkContext context, IRepo
             .Include(m => m.IdInventarioProductoNavigation)
             .ThenInclude(m => m.IdInventarioNavigation)
             .Where(m => m.IdInventarioProductoNavigation.IdProducto == idProducto)
+            .AsNoTracking()
             .ToListAsync();
             
         return collection;

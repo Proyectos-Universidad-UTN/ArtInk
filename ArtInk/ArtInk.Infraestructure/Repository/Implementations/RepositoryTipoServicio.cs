@@ -14,7 +14,7 @@ public class RepositoryTipoServicio(ArtInkContext context) : IRepositoryTipoServ
 
     public async Task<ICollection<TipoServicio>> ListAsync()
     {
-        var collection = await context.Set<TipoServicio>().ToListAsync();
+        var collection = await context.Set<TipoServicio>().AsNoTracking().ToListAsync();
         return collection;
     }
 }

@@ -78,7 +78,6 @@ public class RepositorySucursalHorarioBloqueo(ArtInkContext context) : IReposito
         var keyProperty = context.Model.FindEntityType(typeof(SucursalHorarioBloqueo))!.FindPrimaryKey()!.Properties[0];
 
         return await context.Set<SucursalHorarioBloqueo>()
-
             .AsNoTracking()
             .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
     }
@@ -87,6 +86,7 @@ public class RepositorySucursalHorarioBloqueo(ArtInkContext context) : IReposito
     {
         var collection = await context.Set<SucursalHorarioBloqueo>()
          .Where(a => a.IdSucursalHorario == idSucursalHorario)
+         .AsNoTracking()
          .ToListAsync();
         return collection;
     }

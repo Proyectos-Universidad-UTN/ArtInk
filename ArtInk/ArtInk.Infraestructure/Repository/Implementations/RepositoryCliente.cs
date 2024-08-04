@@ -8,5 +8,5 @@ namespace ArtInk.Infraestructure.Repository.Implementations;
 
 public class RepositoryCliente(ArtInkContext context) : IRepositoryCliente
 {
-    public async Task<ICollection<Cliente>> ListAllAsync() => await context.Set<Cliente>().ToListAsync();
+    public async Task<ICollection<Cliente>> ListAllAsync() => await context.Set<Cliente>().AsNoTracking().ToListAsync();
 }

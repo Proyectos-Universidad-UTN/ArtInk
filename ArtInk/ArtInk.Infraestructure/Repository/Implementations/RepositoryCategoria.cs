@@ -14,7 +14,7 @@ public class RepositoryCategoria(ArtInkContext context) : IRepositoryCategoria
 
     public async Task<ICollection<Categoria>> ListAsync()
     {
-        var collection = await context.Set<Categoria>().ToListAsync();
+        var collection = await context.Set<Categoria>().AsNoTracking().ToListAsync();
         return collection;
     }
 }

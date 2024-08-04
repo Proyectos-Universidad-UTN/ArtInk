@@ -34,6 +34,7 @@ public class RepositoryServicio(ArtInkContext context) : IRepositoryServicio
     {
         var collection = await context.Set<Servicio>()
        .Include(a => a.IdTipoServicioNavigation)
+       .AsNoTracking()
        .ToListAsync();
         return collection;
     }

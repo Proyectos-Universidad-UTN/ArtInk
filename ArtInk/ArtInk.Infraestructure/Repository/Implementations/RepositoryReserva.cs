@@ -33,6 +33,7 @@ public class RepositoryReserva(ArtInkContext context) : IRepositoryReserva
             .ThenInclude(a => a.IdTipoServicioNavigation)
             .Include(a => a.IdSucursalNavigation)
             .Include(a => a.ReservaPregunta)
+            .AsNoTracking()
         .FirstOrDefaultAsync(a => EF.Property<int>(a, keyProperty.Name) == id);
     }
 

@@ -62,6 +62,7 @@ public class RepositorySucursalFeriado(ArtInkContext context) : IRepositorySucur
                 .AsNoTracking()
                 .Include(m => m.IdFeriadoNavigation)
                 .Where(m => m.IdSucursal == idSucursal)
+                .AsNoTracking()
                 .ToListAsync();
         return collection;
     }
@@ -72,6 +73,7 @@ public class RepositorySucursalFeriado(ArtInkContext context) : IRepositorySucur
                 .AsNoTracking()
                 .Include(m => m.IdFeriadoNavigation)
                 .Where(m => m.IdSucursal == idSucursal && m.Anno == anno)
+                .AsNoTracking()
                 .ToListAsync();
         return collection;
     }

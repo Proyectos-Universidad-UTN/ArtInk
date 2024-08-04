@@ -17,6 +17,6 @@ public class RepositoryUnidadMedida(ArtInkContext context) : IRepositoryUnidadMe
         //AsQueryable hace el acceso más sencillo
         var collection = from unidades in context.Set<UnidadMedida>().AsQueryable()
                          select unidades;
-        return await collection.ToListAsync();
+        return await collection.AsNoTracking().ToListAsync();
     }
 }
