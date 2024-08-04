@@ -14,6 +14,7 @@ public class RepositoryDetalleFactura(ArtInkContext context) : IRepositoryDetall
             .Include(a => a.IdFacturaNavigation)
             .Include(a => a.IdServicioNavigation)
             .Where(a => a.IdFactura == idFactura)
+            .AsNoTracking()
         .FirstOrDefaultAsync(a => EF.Property<long>(a, keyProperty.Name) == id);
     }
 
@@ -23,6 +24,7 @@ public class RepositoryDetalleFactura(ArtInkContext context) : IRepositoryDetall
             .Include(a => a.IdFacturaNavigation)
             .Include(a => a.IdServicioNavigation)
             .Where(a => a.IdFactura == idFactura)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }

@@ -35,6 +35,7 @@ public class RepositorySucursal(ArtInkContext context) : IRepositorySucursal
             .Include(m => m.IdDistritoNavigation)
             .ThenInclude(m => m.IdCantonNavigation)
             .ThenInclude(m => m.IdProvinciaNavigation)
+            .AsNoTracking()
             .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
     }
 
@@ -54,6 +55,7 @@ public class RepositorySucursal(ArtInkContext context) : IRepositorySucursal
             .Include(a => a.IdDistritoNavigation)
             .ThenInclude(m => m.IdCantonNavigation)
             .ThenInclude(m => m.IdProvinciaNavigation)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }

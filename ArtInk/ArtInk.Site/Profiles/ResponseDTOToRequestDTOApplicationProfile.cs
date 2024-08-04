@@ -22,7 +22,7 @@ public class ResponseDtoToRequestDtoApplicationProfile: Profile
         CreateMap<ReservaResponseDto, ReservaRequestDto>();
         CreateMap<PedidoResponseDto, PedidoRequestDto>();
         CreateMap<DetallePedidoResponseDto, DetallePedidoRequestDto>();
-        
         CreateMap<InventarioProductoResponseDto, InventarioProductoRequestDto>();
+        CreateMap<ProveedorResponseDto, ProveedorRequestDto>();    
     }
 }

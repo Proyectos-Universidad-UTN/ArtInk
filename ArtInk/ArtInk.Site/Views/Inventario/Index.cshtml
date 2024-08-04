@@ -46,14 +46,16 @@ ViewData["Title"] = "Inventarios sucursal";
 
     $(".data-eliminar").on('click', function (btn) {
         idEliminar = $(btn.target).data("id")
+        $("#ConfirmacionEliminar").attr("data-id", idEliminar)
     })
 
     $(document).on('click', '.delete-register', function () {
         window.location = $(this).attr('href');
     });
 
-    const eliminar = () => {
-        $('.delete-register').trigger('click');
+    const eliminar = (btn) => {
+        const idDelete = $(btn).data("id");
+        $(`a[data-delete=${idDelete}]`).trigger('click');
     }
 
     const cargarInventarios = () => {

@@ -28,5 +28,6 @@ public class DtoToModelApplicationProfile : Profile
         CreateMap<RequestReservaPreguntaDto, ReservaPregunta>();
         CreateMap<RequestReservaServicioDto, ReservaServicio>();
         CreateMap<RequestInventarioProductoMovimientoDto, InventarioProductoMovimiento>();
+        CreateMap<RequestProveedorDto, Proveedor>();
     }
 }

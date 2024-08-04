@@ -72,13 +72,14 @@ public class RepositoryFactura(ArtInkContext context) : IRepositoryFactura
             .Include(a => a.DetalleFacturas)
             .ThenInclude(a => a.DetalleFacturaProductos)
             .ThenInclude(a => a.IdProductoNavigation)
+            .AsNoTracking()
             .FirstOrDefaultAsync(a => EF.Property<long>(a, keyProperty.Name) == id);
     }
 
     public async Task<ICollection<Factura>> ListAsync()
     {
         var collection = await context.Set<Factura>()
-            .Include(a => a.IdTipoPagoNavigation)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }

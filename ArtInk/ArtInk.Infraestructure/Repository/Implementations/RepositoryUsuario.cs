@@ -26,6 +26,7 @@ public class RepositoryUsuario(ArtInkContext context) : IRepositoryUsuario
     {
         var collection = await context.Set<Usuario>()
             .Include(a => a.IdRolNavigation)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }

@@ -24,7 +24,7 @@ public class ServiceInventario(IRepositoryInventario repository, IMapper mapper,
 
     public async Task<bool> DeleteInventarioAsync(short id)
     {
-        if (!await repository.ExisteInventario(id)) throw new NotFoundException("Feriado no encontrada.");
+        if (!await repository.ExisteInventario(id)) throw new NotFoundException("Inventario no encontrada.");
 
         var inventario = await FindByIdAsync(id);
         if(inventario!.InventarioProductos.Any(m => m.Disponible != 0)) throw new ArtInkException("No puede eliminar un inventario con productos disponibles, asegurese que todos los productos tengan cantidad 0 antes de eliminar el inventario");

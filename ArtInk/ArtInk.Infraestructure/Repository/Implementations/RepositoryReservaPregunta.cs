@@ -12,6 +12,7 @@ public class RepositoryReservaPregunta(ArtInkContext context) : IRepositoryReser
         var keyProperty = context.Model.FindEntityType(typeof(Producto))!.FindPrimaryKey()!.Properties[0];
         return await context.Set<ReservaPregunta>()
             .Include(a => a.IdReservaNavigation)
+            .AsNoTracking()
             .FirstOrDefaultAsync(a => EF.Property<short>(a, keyProperty.Name) == id);
     }
 
@@ -20,6 +21,7 @@ public class RepositoryReservaPregunta(ArtInkContext context) : IRepositoryReser
     {
         var collection = await context.Set<ReservaPregunta>()
             .Include(a => a.IdReservaNavigation)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }

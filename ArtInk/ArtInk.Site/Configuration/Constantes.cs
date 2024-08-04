@@ -144,4 +144,11 @@ public static class Constantes
 
     // Url inventario producto movimiento
     public const string POSTINVENTARIOPRODUCTOMOVIMIENTO = "InventarioProductoMovimiento";
+
+    // Url proveedor
+    public const string GETALLPROVEEDOR = "Proveedor";
+    public const string GETPROVEEDORBYID = "Proveedor/{0}";
+    public const string POSTPROVEEDOR = "Proveedor";
+    public const string PUTPROVEEDOR = "Proveedor/{0}";
+    public const string DELETEPROVEEDOR = "Proveedor/{0}";
 }

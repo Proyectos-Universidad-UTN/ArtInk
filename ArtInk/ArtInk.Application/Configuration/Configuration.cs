@@ -37,6 +37,7 @@ public static class Configuration
         services.AddTransient<IServiceInventarioProductoMovimiento, ServiceInventarioProductoMovimiento>();
         services.AddTransient<IServiceTipoPago, ServiceTipoPago>();
         services.AddTransient<IServiceImpuesto, ServiceImpuesto>();
+        services.AddTransient<IServiceProveedor, ServiceProveedor>();
     }
 
     public static void ConfigureAutoMapper(this IServiceCollection services)

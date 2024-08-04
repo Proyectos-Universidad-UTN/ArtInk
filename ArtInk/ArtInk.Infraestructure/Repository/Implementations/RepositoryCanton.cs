@@ -12,6 +12,7 @@ public class RepositoryCanton(ArtInkContext context) : IRepositoryCanton
         var keyProperty = context.Model.FindEntityType(typeof(Canton))!.FindPrimaryKey()!.Properties[0];
         return await context.Set<Canton>()
                     .Include(m => m.IdProvinciaNavigation)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
     }
 
@@ -19,6 +20,7 @@ public class RepositoryCanton(ArtInkContext context) : IRepositoryCanton
     {
         var collection = await context.Set<Canton>()
             .Where(m => m.IdProvincia == idProvincia)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }

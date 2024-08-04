@@ -13,12 +13,14 @@ public class RepositoryDistrito(ArtInkContext context) : IRepositoryDistrito
         return await context.Set<Distrito>()
                     .Include(m => m.IdCantonNavigation)
                     .ThenInclude(m => m.IdProvinciaNavigation)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
     }
     public async Task<ICollection<Distrito>> ListAsync(byte idCanton)
     {
         var collection = await context.Set<Distrito>()
             .Where(m => m.IdCanton == idCanton)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }

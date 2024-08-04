@@ -71,6 +71,7 @@ public class RepositoryPedido(ArtInkContext context) : IRepositoryPedido
             .Include(a => a.DetallePedidos)
             .ThenInclude(a => a.DetallePedidoProductos)
             .ThenInclude(a => a.IdProductoNavigation)
+            .AsNoTracking()
             .FirstOrDefaultAsync(a => EF.Property<long>(a, keyProperty.Name) == id);
     }
 
@@ -78,6 +79,7 @@ public class RepositoryPedido(ArtInkContext context) : IRepositoryPedido
     {
         var collection = await context.Set<Pedido>()
             .Include(a => a.IdTipoPagoNavigation)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }

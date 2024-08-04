@@ -12,17 +12,7 @@ public class DistritoController(IApiArtInkClient distritoCliente) : Controller
     public async Task<IActionResult> ObtenerDistritos(Direcciones direcciones)
     {
         var url = string.Format(Constantes.GETALLDISTRITOSBYCANTON, direcciones.IdCanton);
-        var collection = new List<DistritoResponseDto>();
-
-        if (!ModelState.IsValid)
-        {
-            TempData["ErrorMessage"] = "Error con los valores del formulario";
-            collection.Insert(0, new DistritoResponseDto() { Id = 0, Nombre = "Seleccione un distrito" });
-            direcciones.Distritos = collection;
-            return PartialView("~/Views/Shared/_DistritoSelect.cshtml", direcciones);
-        }
-
-        collection = await distritoCliente.ConsumirAPIAsync<List<DistritoResponseDto>>(Constantes.GET, url);
+        var collection = await distritoCliente.ConsumirAPIAsync<List<DistritoResponseDto>>(Constantes.GET, url);
         collection.Insert(0, new DistritoResponseDto() { Id = 0, Nombre = "Seleccione un distrito" });
         direcciones.Distritos = collection;
         return PartialView("~/Views/Shared/_DistritoSelect.cshtml", direcciones);

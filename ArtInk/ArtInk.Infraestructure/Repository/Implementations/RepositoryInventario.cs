@@ -46,8 +46,8 @@ public class RepositoryInventario(ArtInkContext context) : IRepositoryInventario
     public async Task<ICollection<Inventario>> ListAsync()
     {
         var collection = await context.Set<Inventario>()
-            .AsNoTracking()
             .Where(a => a.Activo)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }
@@ -55,8 +55,8 @@ public class RepositoryInventario(ArtInkContext context) : IRepositoryInventario
     public async Task<ICollection<Inventario>> ListAsync(byte idSucursal)
     {
         var collection = await context.Set<Inventario>()
-            .AsNoTracking()
             .Where(m => m.IdSucursal == idSucursal && m.Activo)
+            .AsNoTracking()
             .ToListAsync();
         return collection;
     }

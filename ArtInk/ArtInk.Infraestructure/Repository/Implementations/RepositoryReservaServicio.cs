@@ -68,8 +68,8 @@ public class RepositoryReservaServicio(ArtInkContext context) : IRepositoryReser
     public async Task<ICollection<ReservaServicio>> GetServiciosByReservaAsync(int idReserva)
     {
         var collection = await context.Set<ReservaServicio>()
-         .AsNoTracking()
          .Include(m => m.IdServicioNavigation)
+         .AsNoTracking()
          .Where(m => m.IdReserva == idReserva)
          .ToListAsync();
         return collection;
