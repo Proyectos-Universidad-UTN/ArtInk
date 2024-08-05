@@ -151,4 +151,8 @@ public static class Constantes
     public const string POSTPROVEEDOR = "Proveedor";
     public const string PUTPROVEEDOR = "Proveedor/{0}";
     public const string DELETEPROVEEDOR = "Proveedor/{0}";
+
+    // Url authentication
+    public const string GETAUTHTOKEN = "Authentication";
+    public const string GETREFRESHTOKEN = "Authentication/refresh";
 }

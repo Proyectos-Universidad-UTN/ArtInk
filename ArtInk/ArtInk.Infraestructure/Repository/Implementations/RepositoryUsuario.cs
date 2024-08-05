@@ -30,4 +30,9 @@ public class RepositoryUsuario(ArtInkContext context) : IRepositoryUsuario
             .ToListAsync();
         return collection;
     }
+
+    public async Task<Usuario?> LoginAsync(string correoElectronico, string contrasenna)
+    {
+        return await context.Set<Usuario>().Include(m => m.IdRolNavigation).AsNoTracking().FirstOrDefaultAsync(m => m.CorreoElectronico == correoElectronico && m.Contrasenna == contrasenna);
+    }
 }

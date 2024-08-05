@@ -77,6 +77,8 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
 
     public virtual DbSet<InventarioProductoMovimiento> InventarioProductoMovimientos { get; set; }
 
+    public virtual DbSet<TokenMaster> TokenMasters { get; set; }
+
     public IDbConnection Connection => Database.GetDbConnection();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -741,6 +743,21 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdInventarioProducto)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_InventarioProductoMovimiento_InventarioProducto");
+        });
+
+        modelBuilder.Entity<TokenMaster>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_TokenMaster");
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.ToTable("TokenMaster");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaVencimiento).HasColumnType("datetime");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.TokenMasters)
+                .HasForeignKey(d => d.IdUsuario)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TokenMaster_Usuario");
         });
 
         OnModelCreatingPartial(modelBuilder);

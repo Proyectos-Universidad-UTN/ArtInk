@@ -10,7 +10,10 @@ public interface IApiArtInkClient
 
     public string BaseUrlAPI { init; get; }
 
+    public string? BearerToken { set; get; }
+
     Task<T> ConsumirAPIAsync<T>(string tipoLlamado, string url, string mediaType = Constantes.MEDIATYPEJSON,
+                                                                    bool incluyeAuthorization = false,
                                                                    Dictionary<string, string> cabecerasAcceso = default!,
                                                                    params object[] valoresConsumo);
 }

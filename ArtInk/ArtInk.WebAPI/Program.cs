@@ -35,6 +35,9 @@ builder.Services.ConfigureFluentValidation();
 //Configure database 
 builder.Services.ConfigureDataBase(configuration);
 
+//Configure authentication
+builder.Services.ConfigureAuthentication(configuration);
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: ArtInkSpecificOrigins,
@@ -62,6 +65,7 @@ app.UseHttpsRedirection();
 
 app.UseCors(ArtInkSpecificOrigins);
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

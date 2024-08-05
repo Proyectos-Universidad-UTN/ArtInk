@@ -45,4 +45,6 @@ public partial class Usuario
     public virtual Rol IdRolNavigation { get; set; } = null!;
 
     public virtual ICollection<UsuarioSucursal> UsuarioSucursals { get; set; } = new List<UsuarioSucursal>();
+    
+    public virtual ICollection<TokenMaster> TokenMasters { get; set; } = new List<TokenMaster>();
 }

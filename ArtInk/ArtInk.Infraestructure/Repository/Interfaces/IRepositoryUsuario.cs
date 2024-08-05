@@ -7,4 +7,6 @@ public interface IRepositoryUsuario
     Task<ICollection<Usuario>> ListAsync();
 
     Task<Usuario?> FindByIdAsync(short id);
+
+    Task<Usuario?> LoginAsync(string correoElectronico, string contrasenna);
 }
