@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace ArtInk.Site.Controllers;
 
-public class HomeController : Controller
+public class HomeController : BaseArtInkController
 {
     public IActionResult Index()
     {

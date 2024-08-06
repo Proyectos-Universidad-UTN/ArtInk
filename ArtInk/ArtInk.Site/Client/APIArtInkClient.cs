@@ -16,14 +16,17 @@ public class ApiArtInkClient : IApiArtInkClient
 
     public string? BearerToken { set; get; }
 
-    public ApiArtInkClient(IConfiguration configuration)
+    private readonly IHttpContextAccessor HttpContextAccessor;
+
+    public ApiArtInkClient(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
     {
+        HttpContextAccessor = httpContextAccessor;
         var artInkAPI = configuration.GetSection("ArtInkAPI") ?? throw new ApiClientWrongConfigurationException("La sección ArtInkAPI no está configurada.");
         BaseUrlAPI = artInkAPI.GetValue<string>("BaseUrl") ?? throw new ApiClientWrongConfigurationException("El valor de BaseUrl no está configurado.");
     }
 
     public async Task<T> ConsumirAPIAsync<T>(string tipoLlamado, string url, string mediaType = Constantes.MEDIATYPEJSON,
-                                                                   bool incluyeAuthorization = false,
+                                                                   bool incluyeAuthorization = true,
                                                                    Dictionary<string, string> cabecerasAcceso = default!,
                                                                    params object[] valoresConsumo)
     {
@@ -37,7 +40,14 @@ public class ApiArtInkClient : IApiArtInkClient
 
             using (var client = new HttpClient(clientHandler))
             {
-                if(incluyeAuthorization) client.DefaultRequestHeaders.Add("Authorization", $"Bearer {BearerToken}");
+                if(incluyeAuthorization)
+                {
+                    var jwtCookie = HttpContextAccessor.HttpContext!.Request.Cookies["JWT"];
+                    if(jwtCookie == null) throw new ApiClientWrongConfigurationException("JWT no se encontró");
+
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {jwtCookie}");
+                } 
+
                 if (cabecerasAcceso != null)
                 {
                     foreach (var header in cabecerasAcceso)

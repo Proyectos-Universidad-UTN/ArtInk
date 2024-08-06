@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class ProvinciaController(IApiArtInkClient cliente) : Controller
+public class ProvinciaController(IApiArtInkClient cliente) : BaseArtInkController
 {
     public async Task<IEnumerable<ProvinciaResponseDto>> ObtenerProvincias()
     {

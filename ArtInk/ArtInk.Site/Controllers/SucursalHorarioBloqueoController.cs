@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class SucursalHorarioBloqueoController(IApiArtInkClient cliente) : Controller
+public class SucursalHorarioBloqueoController(IApiArtInkClient cliente) : BaseArtInkController
 {
     const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
     const string ERRORMESSAGE = "ErrorMessage";

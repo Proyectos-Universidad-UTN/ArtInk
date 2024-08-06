@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class InventarioProductoMovimientoController(IApiArtInkClient cliente) : Controller
+public class InventarioProductoMovimientoController(IApiArtInkClient cliente) : BaseArtInkController
 {
     const string ERRORMESSAGE = "ErrorMessage";
 

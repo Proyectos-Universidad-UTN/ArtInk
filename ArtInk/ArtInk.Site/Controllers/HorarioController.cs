@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class HorarioController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class HorarioController(IApiArtInkClient cliente, IMapper mapper) : BaseArtInkController
 {
     const string ERRORMESSAGE = "ErrorMessage";
 

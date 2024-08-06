@@ -10,13 +10,12 @@ using ArtInk.Utils;
 
 namespace ArtInk.Site.Controllers;
 
-public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper) : BaseArtInkController
 {
     const string INDEX = "Index";
     const string SUCCESSMESSAGE = "SuccessMessage";
     const string ERRORMESSAGE = "ErrorMessage";
     const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
-
     const string ERRORMESSAGEPARTIAL = "ErrorMessagePartial";
 
     public async Task<IActionResult> Index()

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class InventarioController(IApiArtInkClient cliente, IMapper mapper) : BaseArtInkController
 {
     const string ERRORMESSAGE = "ErrorMessage";
     const string SUCURSALINVALIDA = "Debe ingresar una sucursal válida";

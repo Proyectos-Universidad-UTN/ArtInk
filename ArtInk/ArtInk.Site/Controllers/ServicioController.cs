@@ -5,11 +5,10 @@ using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Policy;
 
 namespace ArtInk.Site.Controllers;
 
-public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : BaseArtInkController
 {
     const string INDEX = "Index";
     const string ERRORMESSAGE = "ErrorMessage";

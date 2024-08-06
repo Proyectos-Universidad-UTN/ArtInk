@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : BaseArtInkController
 {
     const string ERRORMESSAGE = "ErrorMessage";
     const string SELECCIONEPROVINCIA = "Seleccione una provincia";
