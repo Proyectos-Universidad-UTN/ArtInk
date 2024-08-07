@@ -1,13 +1,56 @@
-using ArtInk.Site.Models;
+using ArtInk.Site.Client;
+using ArtInk.Site.Configuration;
+using ArtInk.Site.ViewModels.Request.Authentication;
+using ArtInk.Utils;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace ArtInk.Site.Controllers;
 
-public class HomeController : BaseArtInkController
+public class HomeController(IApiArtInkClient apiArtInkClient) : BaseArtInkController
 {
-    public IActionResult Index()
+    const string ERRORMESSAGE = "ErrorMessage";
+
+    public IActionResult InicioSesion(string? errorCode)
     {
+        if(errorCode != null)
+        {
+            TempData[ERRORMESSAGE] = "Favor autenticarse en el sistema";
+            HttpContext.Response.Cookies.Delete("JWT");
+            HttpContext.Response.Cookies.Delete("Refresh-Token");
+        }
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> InicioSesion(InicioSesionRequest inicioSesion)
+    {
+        if (!ModelState.IsValid)
+        {
+            TempData[ERRORMESSAGE] = string.Join("; ", ModelState.Values
+                                    .SelectMany(x => x.Errors)
+                                    .Select(x => x.ErrorMessage));
+            return View(inicioSesion);
+        }
+        
+        var respuestaInicioSesion = await apiArtInkClient.ConsumirAPIAsync<AuthenticationResponse>(Constantes.POST, Constantes.GETAUTHTOKEN, incluyeAuthorization: false, valoresConsumo: Serialization.Serialize(inicioSesion));
+        if(respuestaInicioSesion == null)
+        {
+            TempData[ERRORMESSAGE] = apiArtInkClient.MensajeError;
+            return View(inicioSesion);
+        }
+
+        HttpContext.Response.Cookies.Append("JWT", respuestaInicioSesion.Token);
+        HttpContext.Response.Cookies.Append("Refresh-Token", respuestaInicioSesion.RefreshToken);
+
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult Index(string? errorCode)
+    {
+         if(errorCode != null)
+        {
+            TempData[ERRORMESSAGE] = "No posee acceso a este recurso";
+        }
         return View();
     }
 

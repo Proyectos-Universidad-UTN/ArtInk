@@ -1,6 +1,8 @@
 ﻿using ArtInk.Application.DTOs;
+using ArtInk.Application.DTOs.Enums;
 using ArtInk.Application.RequestDTOs;
 using ArtInk.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.WebAPI.Controllers;

@@ -30,6 +30,7 @@ public class ApiArtInkClient : IApiArtInkClient
                                                                    Dictionary<string, string> cabecerasAcceso = default!,
                                                                    params object[] valoresConsumo)
     {
+        var exceptionGeneral = new ArtInkApiClientException();
         try
         {
             HttpClientHandler clientHandler = new HttpClientHandler();
@@ -40,13 +41,17 @@ public class ApiArtInkClient : IApiArtInkClient
 
             using (var client = new HttpClient(clientHandler))
             {
-                if(incluyeAuthorization)
+                if (incluyeAuthorization)
                 {
                     var jwtCookie = HttpContextAccessor.HttpContext!.Request.Cookies["JWT"];
-                    if(jwtCookie == null) throw new ApiClientWrongConfigurationException("JWT no se encontró");
+                    if (jwtCookie == null)
+                    {
+                        exceptionGeneral.HttpStatusCode = HttpStatusCode.Unauthorized;
+                        throw exceptionGeneral;
+                    }
 
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {jwtCookie}");
-                } 
+                }
 
                 if (cabecerasAcceso != null)
                 {
@@ -91,6 +96,20 @@ public class ApiArtInkClient : IApiArtInkClient
                 return Serialization.Deserialize<T>(contenido);
             }
 
+            if (responseMessage.StatusCode.Equals(HttpStatusCode.Forbidden))
+            {
+                exceptionGeneral.HttpStatusCode = HttpStatusCode.Forbidden;
+                HttpContextAccessor.HttpContext!.Session.SetString("MensajeAuth", "No posee acceso a este recurso");
+                throw exceptionGeneral;
+            }
+
+            if (responseMessage.StatusCode.Equals(HttpStatusCode.Unauthorized))
+            {
+                exceptionGeneral.HttpStatusCode = HttpStatusCode.Unauthorized;
+                HttpContextAccessor.HttpContext!.Session.SetString("MensajeAuth", "Favor autenticarse en el sistema");
+                throw exceptionGeneral;
+            }
+
             var responseError = Serialization.Deserialize<ErrorDetailsArtInk>(contenido);
 
             Error = true;
@@ -100,7 +119,9 @@ public class ApiArtInkClient : IApiArtInkClient
         }
         catch (Exception excepcion)
         {
-            throw new ArtInkApiClientException(excepcion.Message);
+            var exceptionArtInk = new ArtInkApiClientException(excepcion.Message);
+            exceptionArtInk.HttpStatusCode = exceptionGeneral.HttpStatusCode;
+            throw exceptionArtInk;
         }
     }
 }

@@ -9,4 +9,6 @@ public class ArtInkApiClientException : ApplicationException
     public HttpStatusCode HttpStatusCode { get; set; } = HttpStatusCode.Conflict;
 
     public ArtInkApiClientException(string message) : base(message) { }
+
+    public ArtInkApiClientException() : base() {}
 }

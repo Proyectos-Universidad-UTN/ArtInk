@@ -13,7 +13,7 @@ public interface IApiArtInkClient
     public string? BearerToken { set; get; }
 
     Task<T> ConsumirAPIAsync<T>(string tipoLlamado, string url, string mediaType = Constantes.MEDIATYPEJSON,
-                                                                    bool incluyeAuthorization = false,
+                                                                    bool incluyeAuthorization = true,
                                                                    Dictionary<string, string> cabecerasAcceso = default!,
                                                                    params object[] valoresConsumo);
 }
