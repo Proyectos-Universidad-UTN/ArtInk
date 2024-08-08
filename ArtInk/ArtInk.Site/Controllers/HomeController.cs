@@ -12,7 +12,7 @@ public class HomeController(IApiArtInkClient apiArtInkClient) : BaseArtInkContro
 
     public IActionResult InicioSesion(string? errorCode)
     {
-        if(errorCode != null)
+        if (errorCode != null)
         {
             TempData[ERRORMESSAGE] = "Favor autenticarse en el sistema";
             HttpContext.Response.Cookies.Delete("JWT");
@@ -31,9 +31,9 @@ public class HomeController(IApiArtInkClient apiArtInkClient) : BaseArtInkContro
                                     .Select(x => x.ErrorMessage));
             return View(inicioSesion);
         }
-        
+
         var respuestaInicioSesion = await apiArtInkClient.ConsumirAPIAsync<AuthenticationResponse>(Constantes.POST, Constantes.GETAUTHTOKEN, incluyeAuthorization: false, valoresConsumo: Serialization.Serialize(inicioSesion));
-        if(respuestaInicioSesion == null)
+        if (respuestaInicioSesion == null)
         {
             TempData[ERRORMESSAGE] = apiArtInkClient.MensajeError;
             return View(inicioSesion);
@@ -47,10 +47,14 @@ public class HomeController(IApiArtInkClient apiArtInkClient) : BaseArtInkContro
 
     public IActionResult Index(string? errorCode)
     {
-         if(errorCode != null)
+        if (errorCode != null)
         {
             TempData[ERRORMESSAGE] = "No posee acceso a este recurso";
         }
+
+        var cookie = HttpContext.Request.Cookies["JWT"];
+        if (cookie == null) return RedirectToAction(nameof(InicioSesion), new { errorCode = 2 });
+
         return View();
     }
 
