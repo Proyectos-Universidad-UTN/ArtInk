@@ -2,7 +2,7 @@
 
 namespace ArtInk.Application.RequestDTOs;
 
-public record RequestHorarioDto
+public record RequestHorarioDto: RequestBaseDTO
 {
     public short Id { get; set; }
 

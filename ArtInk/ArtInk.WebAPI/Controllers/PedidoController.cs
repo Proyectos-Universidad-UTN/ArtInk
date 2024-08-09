@@ -1,11 +1,14 @@
 using ArtInk.Application.DTOs;
 using ArtInk.Application.RequestDTOs;
 using ArtInk.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.WebAPI.Controllers;
 
 [ApiController]
+[AllowAnonymous]
+[Authorize("v1")]
 [Route("api/[controller]")]
 public class PedidoController(IServicePedido servicePedido) : ControllerBase
 {

@@ -1,8 +1,6 @@
-﻿using ArtInk.Application.DTOs;
+﻿namespace ArtInk.Application.RequestDTOs;
 
-namespace ArtInk.Application.RequestDTOs;
-
-public record RequestFacturaDto
+public record RequestFacturaDto: RequestBaseDTO
 {
     public long Id { get; set; }
 

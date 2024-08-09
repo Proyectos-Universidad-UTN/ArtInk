@@ -8,5 +8,7 @@ public interface IRepositoryUsuario
 
     Task<Usuario?> FindByIdAsync(short id);
 
+    Task<Usuario?> FindByEmailAsync(string correoElectronico);
+
     Task<Usuario?> LoginAsync(string correoElectronico, string contrasenna);
 }

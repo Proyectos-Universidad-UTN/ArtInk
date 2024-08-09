@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Infraestructure.Models;
 
-public partial class Factura
+public partial class Factura: BaseModel
 {
     public long Id { get; set; }
 
@@ -27,14 +27,6 @@ public partial class Factura
     public decimal MontoImpuesto { get; set; }
 
     public decimal MontoTotal { get; set; }
-
-    public DateTime FechaCreacion { get; set; }
-
-    public string UsuarioCreacion { get; set; } = null!;
-
-    public DateTime? FechaModificacion { get; set; }
-
-    public string? UsuarioModificacion { get; set; }
 
     public virtual ICollection<DetalleFactura> DetalleFacturas { get; set; } = new List<DetalleFactura>();
 

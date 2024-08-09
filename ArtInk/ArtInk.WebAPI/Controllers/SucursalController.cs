@@ -3,13 +3,15 @@ using ArtInk.Application.DTOs.Enums;
 using ArtInk.Application.RequestDTOs;
 using ArtInk.Application.Services.Interfaces;
 using ArtInk.WebAPI.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.WebAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[ArtInkAuthorizeAttribute(Rol.ADMINISTRADOR, Rol.MODERADOR)]
+[ArtInkAuthorize(Rol.ADMINISTRADOR, Rol.MODERADOR)]
+[Authorize(Policy = "ArtInk")]
 public class SucursalController(IServiceSucursal serviceSucursal) : ControllerBase
 {
     [HttpGet]

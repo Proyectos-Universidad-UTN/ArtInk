@@ -1,10 +1,14 @@
 ﻿using ArtInk.Application.Services.Interfaces;
+using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.WebAPI.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[AllowAnonymous]
+[ApiVersion("1.0")]
+[Route("api/[controller]")]
 public class DistritoController(IServiceDistrito serviceDistrito) : ControllerBase
 {
     [HttpGet("~/api/Canton/{idCanton}/Distrito")]

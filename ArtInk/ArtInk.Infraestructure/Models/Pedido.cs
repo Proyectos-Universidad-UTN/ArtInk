@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Infraestructure.Models
 {
-    public partial class Pedido
+    public partial class Pedido: BaseModel
     {
         public long Id { get; set; }
 
@@ -29,14 +29,6 @@
         public decimal MontoTotal { get; set; }
 
         public char Estado { get; set; }
-
-        public DateTime FechaCreacion { get; set; }
-
-        public string UsuarioCreacion { get; set; } = null!;
-
-        public DateTime? FechaModificacion { get; set; }
-
-        public string? UsuarioModificacion { get; set; }
 
         public virtual ICollection<DetallePedido> DetallePedidos { get; set; } = new List<DetallePedido>();
 

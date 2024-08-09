@@ -131,6 +131,7 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioCreacion")
+                        .IsRequired()
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
@@ -171,7 +172,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("FechaModifiacion")
+                    b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime");
 
                     b.Property<byte>("IdProveedor")

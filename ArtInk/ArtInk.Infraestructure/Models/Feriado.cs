@@ -2,7 +2,7 @@
 
 namespace ArtInk.Infraestructure.Models;
 
-public partial class Feriado
+public partial class Feriado: BaseModel
 {
     public byte Id { get; set; }
 
@@ -13,14 +13,6 @@ public partial class Feriado
     public Mes Mes { get; set; }
 
     public byte Dia { get; set; }
-
-    public DateTime FechaCreacion { get; set; }
-
-    public string UsuarioCreacion { get; set; } = null!;
-
-    public DateTime? FechaModificacion { get; set; }
-
-    public string? UsuarioModificacion { get; set; }
 
     public virtual ICollection<SucursalFeriado> SucursalFeriados { get; set; } = new List<SucursalFeriado>();
 }

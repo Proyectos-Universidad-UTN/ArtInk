@@ -2,7 +2,7 @@ using ArtInk.Application.DTOs.Enums;
 
 namespace ArtInk.Application.RequestDTOs;
 
-public record RequestInventarioProductoMovimientoDto
+public record RequestInventarioProductoMovimientoDto: RequestBaseDTO
 {
     public long Id { get; set; }
 

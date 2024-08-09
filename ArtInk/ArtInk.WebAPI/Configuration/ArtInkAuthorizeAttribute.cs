@@ -7,7 +7,7 @@ namespace ArtInk.WebAPI.Configuration;
 public class ArtInkAuthorizeAttribute : AuthorizeAttribute
 {
     public ArtInkAuthorizeAttribute() : base() { }
-    
+
     public ArtInkAuthorizeAttribute(params Rol[] roles)
     {
         var allowedRolesAsStrings = roles.Select(x => StringExtension.Capitalize(Enum.GetName(typeof(Rol), x)!));

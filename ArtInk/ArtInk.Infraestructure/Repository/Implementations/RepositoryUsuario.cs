@@ -18,6 +18,11 @@ public class RepositoryUsuario(ArtInkContext context) : IRepositoryUsuario
         return await context.Set<Usuario>().FindAsync(id);
     }
 
+    public async Task<Usuario?> FindByEmailAsync(string correoElectronico)
+    {
+        return await context.Set<Usuario>().Include(m => m.IdRolNavigation).AsNoTracking().FirstOrDefaultAsync(m => m.CorreoElectronico == correoElectronico);
+    }
+
     /// <summary>
     /// Este metodo devuelve Colección de usuarios
     /// </summary>

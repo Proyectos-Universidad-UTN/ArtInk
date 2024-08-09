@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Infraestructure.Models;
 
-public partial class Cliente
+public partial class Cliente: BaseModel
 {
     public short Id { get; set; }
 
@@ -17,14 +17,6 @@ public partial class Cliente
     public string? DireccionExacta { get; set; }
 
     public bool Activo { get; set; }
-
-    public DateTime FechaCreacion { get; set; }
-
-    public string? UsuarioCreacion { get; set; }
-
-    public DateTime? FechaModificacion { get; set; }
-
-    public string? UsuarioModificacion { get; set; }
 
     public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
 

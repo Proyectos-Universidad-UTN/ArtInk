@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using ArtInk.Application.Configuration.Authentication;
 using ArtInk.Application.Services.Implementations;
 using ArtInk.Application.Services.Interfaces;
+using ArtInk.Application.ValueResolvers;
+using ArtInk.WebAPI.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ArtInk.WebAPI.Configuration;
@@ -51,5 +54,8 @@ public static class AuthenticationExtension
             x.SaveToken = true;
             x.TokenValidationParameters = tokenValidationParameters;
         });
+
+        services.AddTransient<CurrentUserIdResolver>();
+        services.AddScoped<IAuthorizationHandler, UserIdentityHandler>();
     }
 }

@@ -4,6 +4,8 @@ using ArtInk.WebAPI.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using ArtInk.Utils.Converter;
+using ArtInk.WebAPI.Authorization;
+using ArtInk.WebAPI.Swagger;
 
 var ArtInkSpecificOrigins = "_artInkSpecificOrigins";
 
@@ -19,18 +21,31 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
                                                         options.SerializerSettings.Converters.Add(new TimeOnlyJsonConverter());
                                                     });
 
+builder.Services.AddAuthorization(opts =>
+{
+    opts.AddPolicy("ArtInk", p =>
+    {
+        p.RequireAuthenticatedUser();
+        p.AddRequirements(new IdentifiedUser());
+        p.Build();
+    });
+});
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => options.CustomSchemaIds(type => type.ToString()));
+//Configure api versioning
+builder.Services.ConfigureApiVersioning();
 
-//configure Infrastructure
+// Add HttpContextAccessor
+builder.Services.AddHttpContextAccessor();
+
+//Configure Infrastructure IoC
 builder.Services.ConfigureInfraestructure();
 
 //Configure Application, Mapper and Fluent Validation
 builder.Services.ConfigureApplication();
 builder.Services.ConfigureAutoMapper();
 builder.Services.ConfigureFluentValidation();
+
+builder.Services.ConfigureSwagger();
 
 //Configure database 
 builder.Services.ConfigureDataBase(configuration);
@@ -55,11 +70,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.LoadSwagger();
 
 app.UseHttpsRedirection();
 
