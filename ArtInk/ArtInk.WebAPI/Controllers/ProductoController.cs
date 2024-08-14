@@ -36,6 +36,7 @@ public class ProductoController(IServiceProducto serviceProducto) : ControllerBa
     }
 
     [HttpPost]
+    [ArtInkAuthorize(Rol.ADMINISTRADOR)]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductoDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
@@ -48,6 +49,7 @@ public class ProductoController(IServiceProducto serviceProducto) : ControllerBa
     }
 
     [HttpPut("{idProducto}")]
+    [ArtInkAuthorize(Rol.ADMINISTRADOR)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductoDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]

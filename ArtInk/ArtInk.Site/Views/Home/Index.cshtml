@@ -1,9 +1,26 @@
-﻿@{
+﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.SucursalResponseDto>
+
+@{
     ViewData["Title"] = "Inicio";
 }
 
 <div class="background-image-main"></div> 
 
-<div class="text-center">
-    
+<div class="text-end mx-5 my-5">
+    Descripción: Este es un sitio de tatuajes
+
+    <div class="container mt-3">
+        <h2>Sucursales</h2>
+        @foreach(var sucursal in Model)
+        {
+            <div class="row">
+                <div class="col-12 offset-sm-8 col-sm-4 text-start border-top border-white">
+                    <p><label class="fw-bold">Nombre:</label> @sucursal.Nombre</p>
+                    <p><label class="fw-bold">Dirección:</label> @sucursal.DireccionExacta</p>
+                    <p><label class="fw-bold">Teléfono:</label> @sucursal.Telefono</p>
+                    <p><label class="fw-bold">Correo electrónico:</label> @sucursal.CorreoElectronico</p>
+                </div>
+            </div>
+        }
+    </div>
 </div>

@@ -1,4 +1,5 @@
 ﻿using ArtInk.Application.DTOs;
+using ArtInk.Application.DTOs.Enums;
 using ArtInk.Application.RequestDTOs;
 using ArtInk.Application.Services.Interfaces;
 using ArtInk.WebAPI.Configuration;
@@ -35,6 +36,7 @@ public class ServicioController(IServiceServicio serviceServicio) : ControllerBa
     }
 
     [HttpPost]
+    [ArtInkAuthorize(Rol.ADMINISTRADOR)]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ServicioDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
@@ -47,6 +49,7 @@ public class ServicioController(IServiceServicio serviceServicio) : ControllerBa
     }
 
     [HttpPut("{idServicio}")]
+    [ArtInkAuthorize(Rol.ADMINISTRADOR)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ServicioDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDetailsArtInk))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]

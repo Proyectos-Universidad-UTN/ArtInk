@@ -25,6 +25,7 @@ public class ServiceSucursalHorario(IRepositorySucursalHorario repository, IMapp
     public async Task<ICollection<SucursalHorarioDto>> GetHorariosBySucursalAsync(byte idSucursal)
     {
         var list = await repository.GetHorariosBySucursalAsync(idSucursal);
+
         var collection = mapper.Map<ICollection<SucursalHorarioDto>>(list);
 
         return collection;

@@ -1,4 +1,5 @@
-﻿using ArtInk.Application.Services.Interfaces;
+﻿using ArtInk.Application.DTOs.Enums;
+using ArtInk.Application.Services.Interfaces;
 using ArtInk.WebAPI.Configuration;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
@@ -7,10 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace ArtInk.WebAPI.Controllers;
 
 [ApiController]
-[ArtInkAuthorize]
 [ApiVersion("1.0")]
 [Route("api/[controller]")]
 [Authorize(Policy = "ArtInk")]
+[ArtInkAuthorize(Rol.ADMINISTRADOR)]
 public class UsuarioController(IServiceUsuario serviceUsuario) : ControllerBase
 {
     [HttpGet]

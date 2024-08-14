@@ -59,4 +59,25 @@ public class RepositorySucursal(ArtInkContext context) : IRepositorySucursal
             .ToListAsync();
         return collection;
     }
+
+    public async Task<ICollection<Sucursal>> ListAsync(string rol)
+    {
+         var usuarioSucursales = await context.Set<UsuarioSucursal>().AsNoTracking()
+                .Include(m => m.IdUsuarioNavigation)
+                .ThenInclude(m => m.IdRolNavigation)
+                .Where(m => m.IdUsuarioNavigation.IdRolNavigation.Descripcion == rol).ToListAsync();
+
+        if (usuarioSucursales == null) usuarioSucursales = new List<UsuarioSucursal>();
+        var listadoSucursales = usuarioSucursales.Select(m => m.IdSucursal).Distinct().ToList();
+
+        var collection = await context.Set<Sucursal>()
+            .AsNoTracking()
+            .Include(a => a.IdDistritoNavigation)
+            .ThenInclude(m => m.IdCantonNavigation)
+            .ThenInclude(m => m.IdProvinciaNavigation)
+            .Where(m => listadoSucursales.Any(x => x == m.Id))
+            .AsNoTracking()
+            .ToListAsync();
+        return collection;
+    }
 }

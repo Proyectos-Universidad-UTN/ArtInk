@@ -3,7 +3,6 @@ using ArtInk.Infraestructure.Enums;
 using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using Azure;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtInk.Infraestructure.Repository.Implementations;

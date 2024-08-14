@@ -1,6 +1,7 @@
 using ArtInk.Site.Client;
 using ArtInk.Site.Configuration;
 using ArtInk.Site.ViewModels.Request.Authentication;
+using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,17 +46,22 @@ public class HomeController(IApiArtInkClient apiArtInkClient) : BaseArtInkContro
         return RedirectToAction("Index");
     }
 
-    public IActionResult Index(string? errorCode)
+    public async Task<IActionResult> Index(string? errorCode)
     {
-        if (errorCode != null)
-        {
-            TempData[ERRORMESSAGE] = "No posee acceso a este recurso";
-        }
+        if (errorCode != null && errorCode == "1") TempData[ERRORMESSAGE] = "No posee acceso a este recurso";
 
         var cookie = HttpContext.Request.Cookies["JWT"];
-        if (cookie == null) return RedirectToAction(nameof(InicioSesion), new { errorCode = 2 });
+        if (!string.IsNullOrEmpty(errorCode) && errorCode == "1" && cookie == null) return RedirectToAction(nameof(InicioSesion), new { errorCode = 2 });
+        if(!string.IsNullOrEmpty(errorCode) && errorCode == "2") TempData[ERRORMESSAGE] = "Rol sin permisos";
 
-        return View();
+        var sucursales = await apiArtInkClient.ConsumirAPIAsync<IEnumerable<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES, incluyeAuthorization: false);
+        if (sucursales == null)
+        {
+            TempData[ERRORMESSAGE] = apiArtInkClient.Error ? apiArtInkClient.MensajeError : "Se ha presentado un error al momento de cargar las sucursales";
+            sucursales = new List<SucursalResponseDto>();
+        }
+
+        return View(sucursales);
     }
 
     public IActionResult Privacy()

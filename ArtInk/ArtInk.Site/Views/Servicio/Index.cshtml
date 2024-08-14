@@ -1,14 +1,21 @@
-﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.ServicioResponseDto>
+﻿@using ArtInk.Site.Common;
+@model IEnumerable<ArtInk.Site.ViewModels.Response.ServicioResponseDto>
+
+@inject ICurrentUserAccessor CurrentUserAccessor
 
 @{
     ViewData["Title"] = "Servicios";
+    var usuario = CurrentUserAccessor.GetCurrentUser();
+    var permiteEditar = usuario.Role == "Administrador";
 }
 
 <h1>Servicio</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-3">Inicio</a>
+    @if(usuario.Role == "Administrador")
+    {
+        <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
+    }
 </p>
 <div class="container">
     <div class="row">
@@ -16,7 +23,7 @@
         {
             var actions = new CommonActionsUser(){
                 Id = item.Id,
-                Editar = true,
+                Editar = permiteEditar,
                 Eliminar = true
             };
             <div class="col-md-6 col-sm-12 col-xxl-3">

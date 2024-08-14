@@ -2,6 +2,7 @@ using Serilog;
 using ArtInk.Site.Configuration;
 using ArtInk.Site.Middleware;
 using Microsoft.Extensions.Options;
+using ArtInk.Site.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddTransient<ICurrentUserAccessor, CurrentUserAccessor>();
 
 var app = builder.Build();
 
@@ -72,6 +75,6 @@ app.UseAntiforgery();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=InicioSesion}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 await app.RunAsync();

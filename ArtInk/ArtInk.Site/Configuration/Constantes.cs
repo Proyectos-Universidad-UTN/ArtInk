@@ -31,6 +31,7 @@ public static class Constantes
 
     //Url Sucursales
     public const string GETALLSUCURSALES = "sucursal";
+    public const string GETALLSUCURSALESBYROL = "sucursal/ByRol";
     public const string GETSUCURSALBYID = "sucursal/{0}";
     public const string POSTSUCURSAL = "sucursal";
     public const string PUTSUCURSAL = "sucursal/{0}";

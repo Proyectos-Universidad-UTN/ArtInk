@@ -1,14 +1,18 @@
-﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.ReservaResponseDto>
+﻿@using ArtInk.Site.Common;
+@model IEnumerable<ArtInk.Site.ViewModels.Response.ReservaResponseDto>
 
 @{
     ViewData["Title"] = "Reserva";
+    var usuario = CurrentUserAccessor.GetCurrentUser();
 }
 
 <h1>Reserva</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mb-3">Inicio</a>
+    if(usuario.Role != "Administrador")
+    {
+        <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
+    }
 </p>
 <div class="container">
     <div class="row">
