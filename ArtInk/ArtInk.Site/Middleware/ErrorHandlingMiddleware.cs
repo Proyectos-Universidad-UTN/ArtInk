@@ -57,7 +57,7 @@ public class ErrorHandlingMiddleware
 
             var artInkException = ex as ArtInkApiClientException;
 
-            await HandleErrorAsync(context, artInkException.HttpStatusCode);
+            await HandleErrorAsync(context, artInkException!.HttpStatusCode);
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using ArtInk.Site.Client;
 using ArtInk.Site.Common;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.Models;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
@@ -9,11 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class ServicioController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController
+public class ServicioController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController(currentUserAccessor)
 {
     const string INDEX = "Index";
     const string ERRORMESSAGE = "ErrorMessage";
-    const string ROLSINACCESO = "Rol no posee acceso";
 
     public async Task<IActionResult> Index()
     {
@@ -40,14 +40,9 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper, ICurre
         return View(collection);
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create()
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var tipoServicio = await cliente.ConsumirAPIAsync<IEnumerable<TipoServicioResponseDto>>(Constantes.GET, Constantes.GETALLTIPOSERVICIOS);
         if (tipoServicio == null)
         {
@@ -63,14 +58,9 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper, ICurre
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create(ServicioRequestDto servicio)
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var tipoServicio = await cliente.ConsumirAPIAsync<IEnumerable<TipoServicioResponseDto>>(Constantes.GET, Constantes.GETALLTIPOSERVICIOS);
         if (tipoServicio == null)
         {
@@ -101,14 +91,9 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper, ICurre
         return RedirectToAction(nameof(Index));
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(byte id)
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var url = string.Format(Constantes.GETSERVICIOBYID, id);
         var servicioExisting = await cliente.ConsumirAPIAsync<ServicioResponseDto>(Constantes.GET, url);
         if (servicioExisting == null || !ModelState.IsValid)
@@ -133,14 +118,9 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper, ICurre
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(ServicioRequestDto servicio)
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var url = string.Format(Constantes.PUTSERVICIO, servicio.Id);
         var servicios = await cliente.ConsumirAPIAsync<List<TipoServicioResponseDto>>(Constantes.GET, Constantes.GETALLSERVICIOS);
         if (servicios == null)

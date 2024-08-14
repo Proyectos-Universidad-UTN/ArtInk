@@ -6,7 +6,7 @@ namespace ArtInk.Site.ViewComponents.General;
 
 public class NavigationViewComponent(IHttpContextAccessor httpContextAccessor) : ViewComponent
 {
-    public async Task<IViewComponentResult> InvokeAsync()
+    public IViewComponentResult Invoke()
     {
         var jwtCookie = httpContextAccessor.HttpContext!.Request.Cookies["JWT"];
         if (jwtCookie == null) return View(new UsuarioJWT() { Role = string.Empty });

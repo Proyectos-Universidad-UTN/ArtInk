@@ -1,6 +1,7 @@
 ﻿using ArtInk.Site.Client;
 using ArtInk.Site.Common;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.Models;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
@@ -9,11 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class SucursalController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController()
+public class SucursalController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController(currentUserAccessor)
 {
     const string ERRORMESSAGE = "ErrorMessage";
     const string SELECCIONEPROVINCIA = "Seleccione una provincia";
-    const string ROLSINACCESO = "Rol no posee acceso";
 
     public async Task<IActionResult> Index()
     {
@@ -40,16 +40,11 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper, ICurre
         return View(sucursal);
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create()
     {
         try
         {
-            if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-            {
-                TempData[ERRORMESSAGE] = ROLSINACCESO;
-                return RedirectToAction("Index", "Home");
-            }
-
             var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDto>>(Constantes.GET, Constantes.GETALLPROVINCIA);
             provincias.Insert(0, new ProvinciaResponseDto() { Id = 0, Nombre = SELECCIONEPROVINCIA });
 
@@ -68,14 +63,9 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper, ICurre
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create(SucursalRequestDto sucursal)
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDto>>(Constantes.GET, Constantes.GETALLPROVINCIA);
         if (provincias == null) return RedirectToAction(nameof(Index));
 
@@ -102,14 +92,9 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper, ICurre
         return RedirectToAction(nameof(Index));
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(byte id)
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var url = string.Format(Constantes.GETSUCURSALBYID, id);
         var sucursalExisting = await cliente.ConsumirAPIAsync<SucursalResponseDto>(Constantes.GET, url);
         if (sucursalExisting == null || !ModelState.IsValid)
@@ -131,14 +116,9 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper, ICurre
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(SucursalRequestDto sucursal)
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var url = string.Format(Constantes.PUTSUCURSAL, sucursal.Id);
         var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDto>>(Constantes.GET, Constantes.GETALLPROVINCIA);
         if (provincias == null) return RedirectToAction(nameof(Index));

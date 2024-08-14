@@ -1,6 +1,8 @@
 ﻿@using ArtInk.Site.Common;
 @model IEnumerable<ArtInk.Site.ViewModels.Response.ReservaResponseDto>
 
+@inject ICurrentUserAccessor CurrentUserAccessor
+
 @{
     ViewData["Title"] = "Reserva";
     var usuario = CurrentUserAccessor.GetCurrentUser();

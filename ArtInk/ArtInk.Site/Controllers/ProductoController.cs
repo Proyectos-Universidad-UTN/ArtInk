@@ -1,6 +1,7 @@
 ﻿using ArtInk.Site.Client;
 using ArtInk.Site.Common;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.Models;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
@@ -9,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class ProductoController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController
+public class ProductoController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController(currentUserAccessor)
 {
     const string ERRORMESSAGE = "ErrorMessage";
-    const string ROLSINACCESO = "Rol no posee acceso";
 
     public async Task<IActionResult> Index()
     {
@@ -39,14 +39,9 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper, ICurre
         return View(collection);
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create()
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var (falloEjecucion, unidadMedidas, categorias) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
@@ -59,14 +54,9 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper, ICurre
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create(ProductoRequestDto producto)
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var (falloEjecucion, unidadMedidas, categorias) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
@@ -93,14 +83,9 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper, ICurre
         return RedirectToAction(nameof(Index));
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(short id)
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var url = string.Format(Constantes.GETPRODUCTOBYID, id);
         var productoExisting = await cliente.ConsumirAPIAsync<ProductoResponseDto>(Constantes.GET, url);
         if (productoExisting == null || !ModelState.IsValid)
@@ -120,14 +105,9 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper, ICurre
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(ProductoRequestDto producto)
     {
-        if (currentUserAccessor.GetCurrentUser().Role != "Administrador")
-        {
-            TempData[ERRORMESSAGE] = ROLSINACCESO;
-            return RedirectToAction("Index", "Home");
-        }
-
         var url = string.Format(Constantes.PUTPRODUCTO, producto.Id);
 
         var (falloEjecucion, unidadMedidas, categorias) = await ObtenerValoresInicialesSelect();
