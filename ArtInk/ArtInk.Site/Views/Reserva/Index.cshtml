@@ -11,7 +11,7 @@
 <h1>Reserva</h1>
 
 <p>
-    if(usuario.Role != "Administrador")
+    @if(usuario.Role != "Administrador")
     {
         <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
     }

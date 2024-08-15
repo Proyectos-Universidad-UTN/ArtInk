@@ -49,4 +49,6 @@ public record ReservaRequestDto
     public void AgregarServicio(ReservaServicioRequestDto servicio) => ReservaServicios.Add(servicio);
 
     public void EliminarServicio(byte IdServicio) => ReservaServicios = ReservaServicios.Where(x => x.IdServicio != IdServicio).ToList();
+
+    public string UrlAPI { get; set; } = null!;
 }

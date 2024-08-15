@@ -18,7 +18,7 @@ public class ReservaController(IServiceReserva serviceReserva) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReservaDto>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
-    public async Task<IActionResult> GetAllReservassAsync()
+    public async Task<IActionResult> GetAllReservasAsync()
     {
         var reservas = await serviceReserva.ListAsync();
         return StatusCode(StatusCodes.Status200OK, reservas);
@@ -31,6 +31,16 @@ public class ReservaController(IServiceReserva serviceReserva) : ControllerBase
     public async Task<IActionResult> GetReservaByIdAsync(int idReserva)
     {
         var reserva = await serviceReserva.FindByIdAsync(idReserva);
+        return StatusCode(StatusCodes.Status200OK, reserva);
+    }
+
+    [HttpGet("~/api/Sucursal/{idSucursal}/calendario")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<ICollection<AgendaCalendarioReserva>>))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDetailsArtInk))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
+    public async Task<IActionResult> GetAllReservasAsync(byte idSucursal, [FromQuery]DateOnly? fechaInicio, [FromQuery]DateOnly? fechaFin)
+    {
+        var reserva = await serviceReserva.ListAsync(idSucursal, fechaInicio, fechaFin);
         return StatusCode(StatusCodes.Status200OK, reserva);
     }
 
