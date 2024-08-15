@@ -1,9 +1,8 @@
 let calendar;
 let urlReservas;
-const viewEventModal = new bootstrap.Modal(document.getElementById('modal-view-event'), {})
-const addEventModal = new bootstrap.Modal(document.getElementById('modal-view-event-add'), {})
 
 $(document).ready(function () {
+    const viewEventModal = new bootstrap.Modal(document.getElementById('modal-view-event'), {})
     const calendarEl = document.getElementById('calendar');
     setUrlCargaReservas();
     const jwt = getCookie("JWT");
@@ -34,7 +33,6 @@ $(document).ready(function () {
             })
         },
         dateClick: function () {
-            addEventModal.show();
         },
         eventClick: function (info) {
             const url = $("#urlEvents").val();
