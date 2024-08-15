@@ -10,6 +10,10 @@ public interface IRepositoryReserva
 
     Task<ICollection<Reserva>> ListAsync();
 
+    Task<ICollection<Reserva>> ListAsync(byte idSucursal);
+
+    Task<ICollection<Reserva>> ListAsync(byte idSucursal, DateOnly fechaInicio, DateOnly fechaFin);
+
     Task<ICollection<Reserva>> ReservaDiaBySucursalAsync(byte idSucursal, DateOnly dia);
 
     Task<Reserva?> FindByIdAsync(int id);

@@ -1,5 +1,7 @@
 ﻿using ArtInk.Site.Client;
+using ArtInk.Site.Common;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.Models;
 using ArtInk.Site.ViewModels.Common;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
@@ -9,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : BaseArtInkController
+public class ReservaController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController
 {
     const string INDEX = "Index";
     const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
@@ -195,6 +197,33 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : BaseA
         return RedirectToAction(nameof(Index));
     }
 
+    [RolAccess(Rol.ADMINISTRADOR, Rol.MODERADOR)]
+    public async Task<IActionResult> AgendaReserva()
+    {
+        var currentUser = currentUserAccessor.GetCurrentUser();
+        var (falloEjecucion, sucursales, servicios, clientes) = await ObtenerValoresInicialesCreateEdit(currentUser.Role == "Moderador");
+        if (falloEjecucion) return RedirectToAction(INDEX);
+
+        var reserva = new ReservaRequestDto()
+        {
+            Sucursales = sucursales,
+            Servicios = servicios,
+            Fecha = DateOnly.FromDateTime(DateTime.Now),
+            Horarios = new List<ReservaHorario>() { new ReservaHorario() { Hora = SINHORARIO } },
+            Clientes = clientes,
+            Estado = "P",
+            ReservaPregunta = new List<ReservaPreguntaRequestDto>()
+            {
+                new ReservaPreguntaRequestDto(){ Id = 1, Pregunta = "¿Cuál es el propósito de su visita?" },
+                new ReservaPreguntaRequestDto(){ Id = 2, Pregunta = "¿Tiene alguna alergia conocida?" },
+                new ReservaPreguntaRequestDto(){ Id = 3, Pregunta = "¿Prefiere alguna hora específica?" },
+            },
+            UrlAPI = cliente.BaseUrlAPI,
+        };
+
+        return View(reserva);
+    }
+
     #region Carga de parciales
 
     [HttpPost]
@@ -213,9 +242,10 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : BaseA
 
     private void SetErrorMessage() => TempData[ERRORMESSAGE] = cliente.Error ? cliente.MensajeError : null;
 
-    private async Task<(bool, List<SucursalResponseDto>, List<ServicioResponseDto>, List<ClienteResponseDto>)> ObtenerValoresInicialesCreateEdit()
+    private async Task<(bool, List<SucursalResponseDto>, List<ServicioResponseDto>, List<ClienteResponseDto>)> ObtenerValoresInicialesCreateEdit(bool sucursalesByRole = false)
     {
-        var sucursales = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
+        string url = sucursalesByRole ? Constantes.GETALLSUCURSALESBYROL : Constantes.GETALLSUCURSALES;
+        var sucursales = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, url);
         if (sucursales == null)
         {
             SetErrorMessage();

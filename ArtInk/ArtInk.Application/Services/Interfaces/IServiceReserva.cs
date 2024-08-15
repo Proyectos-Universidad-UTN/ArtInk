@@ -8,6 +8,8 @@ public interface IServiceReserva
 {
     Task<ICollection<ReservaDto>> ListAsync();
 
+    Task<ICollection<AgendaCalendarioReserva>> ListAsync(byte idSucursal, DateOnly? fechaInicio, DateOnly? fechaFin);
+
     Task<ReservaDto> FindByIdAsync(int id);
 
     Task<ReservaDto> CreateReservaAsync(RequestReservaDto reservaDTO);

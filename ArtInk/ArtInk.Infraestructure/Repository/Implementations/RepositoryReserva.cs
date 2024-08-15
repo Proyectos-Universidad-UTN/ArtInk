@@ -37,14 +37,6 @@ public class RepositoryReserva(ArtInkContext context) : IRepositoryReserva
         .FirstOrDefaultAsync(a => EF.Property<int>(a, keyProperty.Name) == id);
     }
 
-    public async Task<ICollection<Reserva>> ListAsync()
-    {
-        var collection = await context.Set<Reserva>()
-            .AsNoTracking()
-            .ToListAsync();
-        return collection;
-    }
-
     public async Task<bool> ExisteReserva(int id)
     {
         var keyProperty = context.Model.FindEntityType(typeof(Reserva))!.FindPrimaryKey()!.Properties[0];
@@ -59,6 +51,32 @@ public class RepositoryReserva(ArtInkContext context) : IRepositoryReserva
         var collection = await context.Set<Reserva>()
             .AsNoTracking()
             .Where(m => m.IdSucursal == idSucursal && m.Fecha == dia )
+            .ToListAsync();
+        return collection;
+    }
+
+    public async Task<ICollection<Reserva>> ListAsync()
+    {
+        var collection = await context.Set<Reserva>()
+            .AsNoTracking()
+            .ToListAsync();
+        return collection;
+    }
+
+    public async Task<ICollection<Reserva>> ListAsync(byte idSucursal)
+    {
+        var collection = await context.Set<Reserva>()
+            .AsNoTracking()
+            .Where(m => m.IdSucursal == idSucursal)
+            .ToListAsync();
+        return collection;
+    }
+
+    public async Task<ICollection<Reserva>> ListAsync(byte idSucursal, DateOnly fechaInicio, DateOnly fechaFin)
+    {
+        var collection = await context.Set<Reserva>()
+            .AsNoTracking()
+            .Where(m => m.IdSucursal == idSucursal && m.Fecha >= fechaInicio && m.Fecha <= fechaFin)
             .ToListAsync();
         return collection;
     }
