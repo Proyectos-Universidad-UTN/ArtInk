@@ -7,6 +7,8 @@ public interface IServiceSucursal
 {
     Task<ICollection<SucursalDto>> ListAsync();
 
+    Task<ICollection<SucursalDto>> ListByRolAsync();
+
     Task<SucursalDto> FindByIdAsync(byte id);
 
     Task<SucursalDto> CreateSucursalAsync(RequestSucursalDto sucursalDTO);

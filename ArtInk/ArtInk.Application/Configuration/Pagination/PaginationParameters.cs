@@ -18,7 +18,7 @@ public class PaginationParameters
         get => _pageSize;
 
         // Seteamos el tamaño basado en si el maximo hipotetico es alcanzado o no
-        set => _pageSize = value > MAXPAGESIZE ? MAXPAGESIZE : value;
+        set => _pageSize = value > MAXPAGESIZE ? value : MAXPAGESIZE;
     }
 
     public bool Paginated { get; set; } = false;

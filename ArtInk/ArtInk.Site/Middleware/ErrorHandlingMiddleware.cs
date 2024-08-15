@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using ArtInk.Site.Models;
+using Newtonsoft.Json;
+using System.Net;
 using System.Text;
 
 namespace ArtInk.Site.Middleware;
@@ -52,13 +54,24 @@ public class ErrorHandlingMiddleware
             messagesJson = JsonConvert.SerializeObject(result);
             context.Items["ErrorMessagesJson"] = messagesJson;
             _logger.LogError("{0}", str.ToString());
-            await HandleErrorAsync(context);
+
+            var artInkException = ex as ArtInkApiClientException;
+
+            await HandleErrorAsync(context, artInkException!.HttpStatusCode);
         }
     }
 
-    private static async Task HandleErrorAsync(HttpContext context)
+    private static async Task HandleErrorAsync(HttpContext context, HttpStatusCode httpStatusCode)
     {
         string redirectUrl = $"/Home/Error";
+        if(httpStatusCode == HttpStatusCode.Forbidden)
+        {
+            redirectUrl = $"/Home?errorCode=1";
+        }
+        if(httpStatusCode == HttpStatusCode.Unauthorized)
+        {
+            redirectUrl = $"/Home/InicioSesion?errorCode=2";
+        }
         context.Response.Redirect(redirectUrl);
 
         await Task.FromResult(1);

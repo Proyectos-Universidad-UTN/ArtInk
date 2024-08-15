@@ -1,13 +1,20 @@
-﻿@model IEnumerable<ArtInk.Site.ViewModels.Response.HorarioResponseDto>
+﻿@using ArtInk.Site.Common;
+@model IEnumerable<ArtInk.Site.ViewModels.Response.HorarioResponseDto>
+
+@inject ICurrentUserAccessor CurrentUserAccessor
 
 @{
     ViewData["Title"] = "Index";
+    var usuario = CurrentUserAccessor.GetCurrentUser();
 }
 
 <h1>Horarios</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
+    @if(usuario.Role == "Administrador" || usuario.Role == "Moderador")
+    {
+        <a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
+    }
 </p>
 
 <table id="rolesTable" class="table table-striped table-dark table-hover artink-tables">

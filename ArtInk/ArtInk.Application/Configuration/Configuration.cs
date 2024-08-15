@@ -1,6 +1,8 @@
 ﻿using ArtInk.Application.Profiles;
 using ArtInk.Application.Services.Implementations;
+using ArtInk.Application.Services.Implementations.Authorization;
 using ArtInk.Application.Services.Interfaces;
+using ArtInk.Application.Services.Interfaces.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ArtInk.Application.Configuration;
@@ -38,6 +40,9 @@ public static class Configuration
         services.AddTransient<IServiceTipoPago, ServiceTipoPago>();
         services.AddTransient<IServiceImpuesto, ServiceImpuesto>();
         services.AddTransient<IServiceProveedor, ServiceProveedor>();
+
+        services.AddScoped<IServiceUserContext, ServiceUserContext>();
+        services.AddScoped<IServiceUserAuthorization, ServiceUserAuthorization>();
     }
 
     public static void ConfigureAutoMapper(this IServiceCollection services)

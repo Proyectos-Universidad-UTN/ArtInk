@@ -1,15 +1,16 @@
 ﻿using ArtInk.Site.Client;
+using ArtInk.Site.Common;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.Models;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Policy;
 
 namespace ArtInk.Site.Controllers;
 
-public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class ServicioController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController(currentUserAccessor)
 {
     const string INDEX = "Index";
     const string ERRORMESSAGE = "ErrorMessage";
@@ -39,6 +40,7 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : Cont
         return View(collection);
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create()
     {
         var tipoServicio = await cliente.ConsumirAPIAsync<IEnumerable<TipoServicioResponseDto>>(Constantes.GET, Constantes.GETALLTIPOSERVICIOS);
@@ -56,6 +58,7 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : Cont
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create(ServicioRequestDto servicio)
     {
         var tipoServicio = await cliente.ConsumirAPIAsync<IEnumerable<TipoServicioResponseDto>>(Constantes.GET, Constantes.GETALLTIPOSERVICIOS);
@@ -88,6 +91,7 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : Cont
         return RedirectToAction(nameof(Index));
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(byte id)
     {
         var url = string.Format(Constantes.GETSERVICIOBYID, id);
@@ -114,6 +118,7 @@ public class ServicioController(IApiArtInkClient cliente, IMapper mapper) : Cont
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(ServicioRequestDto servicio)
     {
         var url = string.Format(Constantes.PUTSERVICIO, servicio.Id);

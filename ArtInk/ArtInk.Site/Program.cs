@@ -2,11 +2,14 @@ using Serilog;
 using ArtInk.Site.Configuration;
 using ArtInk.Site.Middleware;
 using Microsoft.Extensions.Options;
+using ArtInk.Site.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddViewLocalization();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.ConfigureArtInkAPIClient();
 
@@ -16,6 +19,17 @@ builder.ConfigureSerilog();
 builder.Services.ConfigureSiteAutoMapper();
 
 builder.Services.ConfigureLocalization();
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddTransient<ICurrentUserAccessor, CurrentUserAccessor>();
 
 var app = builder.Build();
 
@@ -53,6 +67,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 // Activar Antiforgery
 app.UseAntiforgery();

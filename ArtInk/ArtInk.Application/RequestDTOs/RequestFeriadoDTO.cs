@@ -2,7 +2,7 @@
 
 namespace ArtInk.Application.RequestDTOs;
 
-public record RequestFeriadoDto
+public record RequestFeriadoDto: RequestBaseDto
 {
     public byte Id { get; set; }
 

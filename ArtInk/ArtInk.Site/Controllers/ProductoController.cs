@@ -1,5 +1,7 @@
 ﻿using ArtInk.Site.Client;
+using ArtInk.Site.Common;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.Models;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
@@ -8,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class ProductoController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController(currentUserAccessor)
 {
     const string ERRORMESSAGE = "ErrorMessage";
 
@@ -37,6 +39,7 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
         return View(collection);
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create()
     {
         var (falloEjecucion, unidadMedidas, categorias) = await ObtenerValoresInicialesSelect();
@@ -51,6 +54,7 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create(ProductoRequestDto producto)
     {
         var (falloEjecucion, unidadMedidas, categorias) = await ObtenerValoresInicialesSelect();
@@ -79,6 +83,7 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
         return RedirectToAction(nameof(Index));
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(short id)
     {
         var url = string.Format(Constantes.GETPRODUCTOBYID, id);
@@ -100,6 +105,7 @@ public class ProductoController(IApiArtInkClient cliente, IMapper mapper) : Cont
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(ProductoRequestDto producto)
     {
         var url = string.Format(Constantes.PUTPRODUCTO, producto.Id);

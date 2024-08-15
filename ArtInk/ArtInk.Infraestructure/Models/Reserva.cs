@@ -2,7 +2,7 @@
 
 namespace ArtInk.Infraestructure.Models;
 
-public partial class Reserva
+public partial class Reserva: BaseModel
 {
     public int Id { get; set; }
 
@@ -22,14 +22,6 @@ public partial class Reserva
     public string Estado { get; set; } = null!;
 
     public bool Activo { get; set; }
-
-    public DateTime FechaCreacion { get; set; }
-
-    public string UsuarioCreacion { get; set; } = null!;
-
-    public DateTime? FechaModificacion { get; set; }
-
-    public string? UsuarioModificacion { get; set; }
 
     public virtual UsuarioSucursal IdUsuarioSucursalNavigation { get; set; } = null!;
 

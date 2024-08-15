@@ -131,6 +131,7 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioCreacion")
+                        .IsRequired()
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
@@ -171,7 +172,7 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("FechaModifiacion")
+                    b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime");
 
                     b.Property<byte>("IdProveedor")
@@ -1355,6 +1356,44 @@ namespace ArtInk.Infraestructure.Migrations
                     b.ToTable("TipoServicio", (string)null);
                 });
 
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.TokenMaster", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("FechaVencimiento")
+                        .HasColumnType("datetime");
+
+                    b.Property<short>("IdUsuario")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("JwtId")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("Utilizado")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id")
+                        .HasName("PK_TokenMaster");
+
+                    b.HasIndex("IdUsuario");
+
+                    b.ToTable("TokenMaster", (string)null);
+                });
+
             modelBuilder.Entity("ArtInk.Infraestructure.Models.UnidadMedida", b =>
                 {
                     b.Property<byte>("Id")
@@ -1895,6 +1934,17 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("IdSucursalHorarioNavigation");
                 });
 
+            modelBuilder.Entity("ArtInk.Infraestructure.Models.TokenMaster", b =>
+                {
+                    b.HasOne("ArtInk.Infraestructure.Models.Usuario", "IdUsuarioNavigation")
+                        .WithMany("TokenMasters")
+                        .HasForeignKey("IdUsuario")
+                        .IsRequired()
+                        .HasConstraintName("FK_TokenMaster_Usuario");
+
+                    b.Navigation("IdUsuarioNavigation");
+                });
+
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Usuario", b =>
                 {
                     b.HasOne("ArtInk.Infraestructure.Models.Distrito", "IdDistritoNavigation")
@@ -2104,6 +2154,8 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Usuario", b =>
                 {
+                    b.Navigation("TokenMasters");
+
                     b.Navigation("UsuarioSucursals");
                 });
 

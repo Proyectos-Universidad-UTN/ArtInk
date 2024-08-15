@@ -77,6 +77,8 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
 
     public virtual DbSet<InventarioProductoMovimiento> InventarioProductoMovimientos { get; set; }
 
+    public virtual DbSet<TokenMaster> TokenMasters { get; set; }
+
     public IDbConnection Connection => Database.GetDbConnection();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -141,7 +143,7 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
             entity.Property(e => e.Apellidos).HasMaxLength(80);
             entity.Property(e => e.CorreoElectronico).HasMaxLength(150);
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
-            entity.Property(e => e.FechaModifiacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
             entity.Property(e => e.Nombre).HasMaxLength(80);
             entity.Property(e => e.UsuarioCreacion).HasMaxLength(70);
             entity.Property(e => e.UsuarioModificacion).HasMaxLength(70);
@@ -743,6 +745,21 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasConstraintName("FK_InventarioProductoMovimiento_InventarioProducto");
         });
 
+        modelBuilder.Entity<TokenMaster>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_TokenMaster");
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.ToTable("TokenMaster");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaVencimiento).HasColumnType("datetime");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.TokenMasters)
+                .HasForeignKey(d => d.IdUsuario)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TokenMaster_Usuario");
+        });
+
         OnModelCreatingPartial(modelBuilder);
     }
 
@@ -772,11 +789,14 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
         DateTime FechaCreacion = DateTime.Now;
         DateTime FechaModificacion = DateTime.Now;
         const bool Activo = true;
-        const string UsuarioCreacion = "ArtInkAPI";
-        const string UsuarioModificacion = "ArtInkAPIModify";
 
         foreach (var entry in ChangeTracker.Entries())
         {
+            string UsuarioCreacion = string.Empty;
+            string UsuarioModificacion = string.Empty;
+            if(entry.Entity.GetType().GetProperty("UsuarioCreacion") != null) UsuarioCreacion = entry.Property("UsuarioCreacion").CurrentValue!.ToString()!;
+            if(entry.Entity.GetType().GetProperty("UsuarioModificacion") != null) UsuarioModificacion = entry.Property("UsuarioModificacion").CurrentValue!.ToString()!;
+
             if (entry.State == EntityState.Added)
             {
                 if (entry.Entity.GetType().GetProperty(nameof(FechaCreacion)) != null && entry.Property(nameof(FechaCreacion)).CurrentValue != null) entry.Property(nameof(FechaCreacion)).CurrentValue = FechaCreacion;

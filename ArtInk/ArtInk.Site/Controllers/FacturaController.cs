@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class FacturaController(IApiArtInkClient cliente) : Controller
+public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
 {
     const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";
     const string ERRORMESSAGE = "ErrorMessage";

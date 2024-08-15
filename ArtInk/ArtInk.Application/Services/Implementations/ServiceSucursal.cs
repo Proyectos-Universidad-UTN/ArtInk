@@ -2,6 +2,7 @@
 using ArtInk.Application.DTOs;
 using ArtInk.Application.RequestDTOs;
 using ArtInk.Application.Services.Interfaces;
+using ArtInk.Application.Services.Interfaces.Authorization;
 using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using AutoMapper;
@@ -10,7 +11,7 @@ using FluentValidation;
 namespace ArtInk.Application.Services.Implementations;
 
 public class ServiceSucursal(IRepositorySucursal repository, IMapper mapper,
-                                IValidator<Sucursal> sucursalValidator) : IServiceSucursal
+                                IValidator<Sucursal> sucursalValidator, IServiceUserAuthorization serviceUserAuthorization) : IServiceSucursal
 {
     public async Task<SucursalDto> CreateSucursalAsync(RequestSucursalDto sucursalDTO)
     {
@@ -54,5 +55,15 @@ public class ServiceSucursal(IRepositorySucursal repository, IMapper mapper,
         var sucursal = mapper.Map<Sucursal>(sucursalDTO);
         await sucursalValidator.ValidateAndThrowAsync(sucursal);
         return sucursal;
+    }
+
+    public async Task<ICollection<SucursalDto>> ListByRolAsync()
+    {
+        var usuario = await serviceUserAuthorization.GetLoggedUser();
+
+        var list = await repository.ListAsync(usuario.Rol.Descripcion);
+        var collection = mapper.Map<ICollection<SucursalDto>>(list);
+
+        return collection;
     }
 }

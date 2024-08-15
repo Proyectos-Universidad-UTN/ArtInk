@@ -39,6 +39,10 @@ public static class ExceptionHandlingConfigurationExtension
                 httpStatusCode = e.HttpStatusCode;
                 logLevel = e.LogLevel;
                 break;
+            case UnAuthorizedException e:
+                httpStatusCode = e.HttpStatusCode;
+                logLevel = e.LogLevel;
+                break;
             case ValidationException:
             case FluentValidation.ValidationException:
             case ValidationEntityException:
@@ -54,7 +58,7 @@ public static class ExceptionHandlingConfigurationExtension
                 logLevel = LogLevel.Information;
                 break;
             default:
-                httpStatusCode = HttpStatusCode.InternalServerError;
+                httpStatusCode = HttpStatusCode.MethodNotAllowed;
                 logLevel = LogLevel.Error;
                 break;
         }

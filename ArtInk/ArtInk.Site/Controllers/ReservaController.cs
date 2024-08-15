@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class ReservaController(IApiArtInkClient cliente, IMapper mapper) : BaseArtInkController
 {
     const string INDEX = "Index";
     const string SUCCESSMESSAGEPARTIAL = "SuccessMessagePartial";

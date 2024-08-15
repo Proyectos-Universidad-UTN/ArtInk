@@ -10,6 +10,8 @@ public interface IRepositorySucursal
 
     Task<ICollection<Sucursal>> ListAsync();
 
+    Task<ICollection<Sucursal>> ListAsync(string rol);
+
     Task<Sucursal?> FindByIdAsync(byte id);
 
     Task<bool> ExisteSucursal(byte id);

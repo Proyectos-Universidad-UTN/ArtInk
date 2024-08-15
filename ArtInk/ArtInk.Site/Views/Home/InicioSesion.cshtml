@@ -1,0 +1,47 @@
+@model ArtInk.Site.ViewModels.Request.Authentication.InicioSesionRequest;
+
+@{
+ViewData["Title"] = "Iniciar sesión";
+Layout = "_LayoutSeguridad";
+}
+
+<form asp-action="InicioSesion" novalidate>
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <h2 class="sr-only">Inicio de sesión</h2>
+    <div class="illustration">
+        <i class="icon ion-ios-locked-outline"></i>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-12">
+            <div class="form-group mb-3">
+                <label for="CorreoElectronico" asp-for="CorreoElectronico" class="form-label"></label>
+                <input id="CorreoElectronico" asp-for="CorreoElectronico" class="form-control" />
+                <span asp-validation-for="CorreoElectronico" class="text-warning"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-12">
+            <div class="form-group mb-3">
+                <label for="Contrasenna" asp-for="Contrasenna" class="form-label"></label>
+                <input id="Contrasenna" asp-for="Contrasenna" class="form-control" type="password" />
+                <span asp-validation-for="Contrasenna" class="text-warning"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-12">
+            <div class="form-group mb-3">
+                <button class="btn btn-primary btn-block" type="submit">Iniciar sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="forgot">Forgot your email or password?</a>
+</form>
+
+@await Html.PartialAsync("_ValidationScriptsPartial")

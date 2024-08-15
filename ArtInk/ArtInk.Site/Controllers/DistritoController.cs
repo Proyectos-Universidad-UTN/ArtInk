@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class DistritoController(IApiArtInkClient distritoCliente) : Controller
+public class DistritoController(IApiArtInkClient distritoCliente) : BaseArtInkController
 {
     [HttpPost]
     public async Task<IActionResult> ObtenerDistritos(Direcciones direcciones)

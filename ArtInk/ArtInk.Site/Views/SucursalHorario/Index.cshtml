@@ -1,17 +1,24 @@
-﻿@model ArtInk.Site.ViewModels.Common.SucursalHorarios
+﻿@using ArtInk.Site.Common;
+@model ArtInk.Site.ViewModels.Common.SucursalHorarios
+
+@inject ICurrentUserAccessor CurrentUserAccessor
 
 @{
-ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
+    var usuario = CurrentUserAccessor.GetCurrentUser();
 }
 
 <h1>Sucursal Horarios</h1>
 
 <p>
-    <a hidden asp-action="Gestionar" asp-route-idSucursal="0" id="GestionarBase" class="btn btn-primary mb-3"></a>
-    <a asp-action="Gestionar" asp-route-idSucursal="0" id="Gestionar" class="btn btn-primary mb-3">
-        Gestionar
-        Sucursal Horario
-    </a>
+    @if(usuario.Role == "Administrador" || usuario.Role == "Moderador")
+    {
+        <a hidden asp-action="Gestionar" asp-route-idSucursal="0" id="GestionarBase" class="btn btn-primary mb-3"></a>
+        <a asp-action="Gestionar" asp-route-idSucursal="0" id="Gestionar" class="btn btn-primary mb-3">
+            Gestionar
+            Sucursal Horario
+        </a>
+    }
 </p>
 
 
@@ -51,6 +58,7 @@ ViewData["Title"] = "Index";
     })
 
     const cargarHorarios = () => {
+        const jwt = getCookie("JWT");
         const url = "@Model.UrlAPI".replace("{0}", `Sucursal/0/Horario`);
         table = new DataTable($("#horarios"),
             {
@@ -64,10 +72,14 @@ ViewData["Title"] = "Index";
                     url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
                 responsive: true,
+                processing: true,
                 ajax: {
                     url: url,
                     type: "GET",
-                    dataSrc: ''
+                    dataSrc: '',
+                    headers: {
+                        'Authorization': `Bearer ${jwt}`
+                    }
                 },
                 columns: [
                     { data: "horario.dia" },

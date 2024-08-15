@@ -1,5 +1,7 @@
 ﻿using ArtInk.Site.Client;
+using ArtInk.Site.Common;
 using ArtInk.Site.Configuration;
+using ArtInk.Site.Models;
 using ArtInk.Site.ViewModels.Request;
 using ArtInk.Site.ViewModels.Response;
 using ArtInk.Utils;
@@ -8,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtInk.Site.Controllers;
 
-public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : Controller
+public class SucursalController(IApiArtInkClient cliente, IMapper mapper, ICurrentUserAccessor currentUserAccessor) : BaseArtInkController(currentUserAccessor)
 {
     const string ERRORMESSAGE = "ErrorMessage";
     const string SELECCIONEPROVINCIA = "Seleccione una provincia";
@@ -38,6 +40,7 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : Cont
         return View(sucursal);
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create()
     {
         try
@@ -60,6 +63,7 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : Cont
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Create(SucursalRequestDto sucursal)
     {
         var provincias = await cliente.ConsumirAPIAsync<List<ProvinciaResponseDto>>(Constantes.GET, Constantes.GETALLPROVINCIA);
@@ -88,6 +92,7 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : Cont
         return RedirectToAction(nameof(Index));
     }
 
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(byte id)
     {
         var url = string.Format(Constantes.GETSUCURSALBYID, id);
@@ -111,6 +116,7 @@ public class SucursalController(IApiArtInkClient cliente, IMapper mapper) : Cont
     }
 
     [HttpPost]
+    [RolAccess(Rol.ADMINISTRADOR)]
     public async Task<IActionResult> Edit(SucursalRequestDto sucursal)
     {
         var url = string.Format(Constantes.PUTSUCURSAL, sucursal.Id);

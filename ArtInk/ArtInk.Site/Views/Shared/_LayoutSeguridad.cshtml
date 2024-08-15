@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - ArtInk</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/css/seguridad.css">
+</head>
+
+<body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <div class="login-dark">
+        @await Html.PartialAsync("~/Views/Shared/_ManejoMensajes.cshtml")
+        @RenderBody()
+    </div>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+
+</html>

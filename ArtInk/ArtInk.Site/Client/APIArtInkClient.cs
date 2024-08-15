@@ -14,16 +14,23 @@ public class ApiArtInkClient : IApiArtInkClient
 
     public string BaseUrlAPI { init; get; } = null!;
 
-    public ApiArtInkClient(IConfiguration configuration)
+    public string? BearerToken { set; get; }
+
+    private readonly IHttpContextAccessor HttpContextAccessor;
+
+    public ApiArtInkClient(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
     {
+        HttpContextAccessor = httpContextAccessor;
         var artInkAPI = configuration.GetSection("ArtInkAPI") ?? throw new ApiClientWrongConfigurationException("La sección ArtInkAPI no está configurada.");
         BaseUrlAPI = artInkAPI.GetValue<string>("BaseUrl") ?? throw new ApiClientWrongConfigurationException("El valor de BaseUrl no está configurado.");
     }
 
     public async Task<T> ConsumirAPIAsync<T>(string tipoLlamado, string url, string mediaType = Constantes.MEDIATYPEJSON,
+                                                                   bool incluyeAuthorization = true,
                                                                    Dictionary<string, string> cabecerasAcceso = default!,
                                                                    params object[] valoresConsumo)
     {
+        var exceptionGeneral = new ArtInkApiClientException();
         try
         {
             HttpClientHandler clientHandler = new HttpClientHandler();
@@ -34,6 +41,18 @@ public class ApiArtInkClient : IApiArtInkClient
 
             using (var client = new HttpClient(clientHandler))
             {
+                if (incluyeAuthorization)
+                {
+                    var jwtCookie = HttpContextAccessor.HttpContext!.Request.Cookies["JWT"];
+                    if (jwtCookie == null)
+                    {
+                        exceptionGeneral.HttpStatusCode = HttpStatusCode.Unauthorized;
+                        throw exceptionGeneral;
+                    }
+
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {jwtCookie}");
+                }
+
                 if (cabecerasAcceso != null)
                 {
                     foreach (var header in cabecerasAcceso)
@@ -77,6 +96,20 @@ public class ApiArtInkClient : IApiArtInkClient
                 return Serialization.Deserialize<T>(contenido);
             }
 
+            if (responseMessage.StatusCode.Equals(HttpStatusCode.Forbidden))
+            {
+                exceptionGeneral.HttpStatusCode = HttpStatusCode.Forbidden;
+                HttpContextAccessor.HttpContext!.Session.SetString("MensajeAuth", "No posee acceso a este recurso");
+                throw exceptionGeneral;
+            }
+
+            if (responseMessage.StatusCode.Equals(HttpStatusCode.Unauthorized))
+            {
+                exceptionGeneral.HttpStatusCode = HttpStatusCode.Unauthorized;
+                HttpContextAccessor.HttpContext!.Session.SetString("MensajeAuth", "Favor autenticarse en el sistema");
+                throw exceptionGeneral;
+            }
+
             var responseError = Serialization.Deserialize<ErrorDetailsArtInk>(contenido);
 
             Error = true;
@@ -86,7 +119,9 @@ public class ApiArtInkClient : IApiArtInkClient
         }
         catch (Exception excepcion)
         {
-            throw new ArtInkApiClientException(excepcion.Message);
+            var exceptionArtInk = new ArtInkApiClientException(excepcion.Message);
+            exceptionArtInk.HttpStatusCode = exceptionGeneral.HttpStatusCode;
+            throw exceptionArtInk;
         }
     }
 }

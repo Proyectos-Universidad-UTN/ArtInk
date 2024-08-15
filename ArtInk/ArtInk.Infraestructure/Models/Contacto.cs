@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Infraestructure.Models;
 
-public partial class Contacto
+public partial class Contacto: BaseModel
 {
     public short Id { get; set; }
 
@@ -15,14 +15,6 @@ public partial class Contacto
     public byte IdProveedor { get; set; }
 
     public bool Activo { get; set; }
-
-    public DateTime FechaCreacion { get; set; }
-
-    public string UsuarioCreacion { get; set; } = null!;
-
-    public DateTime? FechaModifiacion { get; set; }
-
-    public string? UsuarioModificacion { get; set; }
 
     public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
 }

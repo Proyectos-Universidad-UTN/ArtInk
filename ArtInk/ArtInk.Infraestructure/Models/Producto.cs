@@ -1,6 +1,6 @@
 ﻿namespace ArtInk.Infraestructure.Models;
 
-public partial class Producto
+public partial class Producto: BaseModel
 {
     public short Id { get; set; }
 
@@ -19,14 +19,6 @@ public partial class Producto
     public byte IdUnidadMedida { get; set; }
 
     public bool Activo { get; set; }
-
-    public DateTime FechaCreacion { get; set; }
-
-    public string UsuarioCreacion { get; set; } = null!;
-
-    public DateTime? FechaModificacion { get; set; }
-
-    public string? UsuarioModificacion { get; set; }
 
     public virtual ICollection<DetalleFacturaProducto> DetalleFacturaProductos { get; set; } = new List<DetalleFacturaProducto>();
 
