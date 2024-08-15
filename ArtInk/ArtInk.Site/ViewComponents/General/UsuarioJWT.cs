@@ -1,6 +1,6 @@
 namespace ArtInk.Site.ViewComponents.General;
 
-public class UsuarioJWT
+public class UsuarioJwt
 {
     public short IdUsuario { get; set; }
 

@@ -10,7 +10,7 @@ public class DtoToModelApplicationProfile : Profile
 {
     public DtoToModelApplicationProfile()
     {
-        CreateMap<RequestBaseDTO, BaseModel>()
+        CreateMap<RequestBaseDto, BaseModel>()
             .ForMember(m => m.UsuarioCreacion, opts =>
             {
                 opts.MapFrom<CurrentUserIdResolver>();
@@ -21,43 +21,43 @@ public class DtoToModelApplicationProfile : Profile
             });
 
         CreateMap<RequestProductoDto, Producto>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestSucursalDto, Sucursal>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestServicioDto, Servicio>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestFeriadoDto, Feriado>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestHorarioDto, Horario>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestInventarioDto, Inventario>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestInventarioProductoDto, InventarioProducto>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestFacturaDto, Factura>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
         
         CreateMap<RequestPedidoDto, Pedido>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
         
         CreateMap<RequestReservaDto, Reserva>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestReservaPreguntaDto, ReservaPregunta>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestInventarioProductoMovimientoDto, InventarioProductoMovimiento>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         CreateMap<RequestProveedorDto, Proveedor>()
-            .IncludeBase<RequestBaseDTO, BaseModel>();
+            .IncludeBase<RequestBaseDto, BaseModel>();
 
         
         CreateMap<RequestTipoServicioDto, TipoServicio>();

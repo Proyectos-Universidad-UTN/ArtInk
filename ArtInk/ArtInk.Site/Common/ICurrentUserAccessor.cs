@@ -4,5 +4,5 @@ namespace ArtInk.Site.Common;
 
 public interface ICurrentUserAccessor
 {
-    UsuarioJWT GetCurrentUser();
+    UsuarioJwt GetCurrentUser();
 }

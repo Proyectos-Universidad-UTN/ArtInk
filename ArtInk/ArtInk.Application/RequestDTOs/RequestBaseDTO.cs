@@ -1,6 +1,6 @@
 namespace ArtInk.Application.RequestDTOs;
 
-public record RequestBaseDTO
+public record RequestBaseDto
 {
 
 }

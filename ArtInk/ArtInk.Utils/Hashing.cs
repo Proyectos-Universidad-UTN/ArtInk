@@ -3,7 +3,7 @@ using System.Text;
 
 namespace ArtInk.Utils;
 
-public class Hashing
+public static class Hashing
 {
     public static string HashMd5(string input)
     {
