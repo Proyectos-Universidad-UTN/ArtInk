@@ -35,6 +35,7 @@ public record SucursalResponseDto
 
     public virtual ICollection<SucursalHorarioResponseDto> SucursalHorarios { get; set; } = new List<SucursalHorarioResponseDto>();
 
+    [DisplayName("Encargados")]
     public virtual ICollection<UsuarioSucursalResponseDto> UsuarioSucursals { get; set; } = new List<UsuarioSucursalResponseDto>();
 
     public virtual ICollection<SucursalFeriadoResponseDto> SucursalFeriados { get; set; } = new List<SucursalFeriadoResponseDto>();

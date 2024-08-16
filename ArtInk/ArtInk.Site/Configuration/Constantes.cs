@@ -13,6 +13,11 @@ public static class Constantes
 
     //Url Usuarios
     public const string GETALLUSUARIOS = "usuario"; //minuscula es el endpoint del API
+    public const string GETALLUSUARIOSBYROL = "usuario/ByRol/{0}";
+    public const string LIBREASIGNACIONSUCURSAL = "usuario/{0}/sucursal/{1}/libre-asignacion";
+
+    //Url Sucursal usuarios
+    public const string POSTUSUARIOSUCURSAL = "sucursal/{0}/usuarios";
 
     //Url Productos
     public const string GETALLPRODUCTOS = "producto";

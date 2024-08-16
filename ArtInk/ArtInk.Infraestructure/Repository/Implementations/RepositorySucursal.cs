@@ -35,6 +35,9 @@ public class RepositorySucursal(ArtInkContext context) : IRepositorySucursal
             .Include(m => m.IdDistritoNavigation)
             .ThenInclude(m => m.IdCantonNavigation)
             .ThenInclude(m => m.IdProvinciaNavigation)
+            .Include(m => m.UsuarioSucursals)
+            .ThenInclude(m => m.IdUsuarioNavigation)
+            .ThenInclude(m => m.IdRolNavigation)
             .AsNoTracking()
             .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
     }

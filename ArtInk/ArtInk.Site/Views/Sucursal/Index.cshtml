@@ -28,7 +28,11 @@
             <th>@Html.DisplayNameFor(model => model.CorreoElectronico)</th>
             <th>@Html.DisplayNameFor(model => model.DireccionExacta)</th>
             <th>@Html.DisplayNameFor(model => model.Activo)</th>
-            <th>Acciones</th>
+            @if(usuario.Role == "Administrador")
+            {
+                <th>@Html.DisplayNameFor(model => model.UsuarioSucursals)</th>
+                <th>Acciones</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -47,9 +51,17 @@
                 <td>@Html.DisplayFor(modelItem => item.CorreoElectronico)</td>
                 <td>@String.Format("{0}, {1}, {2}, {3}", item.Distrito.Canton.Provincia.Nombre, item.Distrito.Canton.Nombre, item.Distrito.Nombre, item.DireccionExacta)</td>
                 <td>@Html.DisplayFor(modelItem => item.Activo)</td>
-                <td>
-                    @await Html.PartialAsync("~/Views/Shared/_CommonActionsUser.cshtml", actions)
-                </td>
+                @if(usuario.Role == "Administrador")
+                {
+                    <td>
+                        <div class="btn-group d-flex justify-content-between gap-2">
+                            @Html.ActionLink("Asociar", "AsociarEncargados", new { id = item.Id }, new { @class = "btn btn-light text-black btn-sm flex-fill m-0" })        
+                        </div>
+                    </td>
+                    <td>
+                        @await Html.PartialAsync("~/Views/Shared/_CommonActionsUser.cshtml", actions)
+                    </td>
+                }
             </tr>
         }
     </tbody>

@@ -36,8 +36,29 @@ public class RepositoryUsuario(ArtInkContext context) : IRepositoryUsuario
         return collection;
     }
 
+    public async Task<ICollection<Usuario>> ListAsync(byte idRol)
+    {
+        var collection = await context.Set<Usuario>()
+            .Include(a => a.IdRolNavigation)
+            .AsNoTracking()
+            .Where(m => m.IdRol == idRol)
+            .ToListAsync();
+        return collection;
+    }
+
     public async Task<Usuario?> LoginAsync(string correoElectronico, string contrasenna)
     {
         return await context.Set<Usuario>().Include(m => m.IdRolNavigation).AsNoTracking().FirstOrDefaultAsync(m => m.CorreoElectronico == correoElectronico && m.Contrasenna == contrasenna);
+    }
+
+    public async Task<bool> LibreAsignacionSucursal(short id, byte idSucursalAsignacion) => !await context.Set<UsuarioSucursal>().AsNoTracking().AnyAsync(m => m.IdUsuario == id && m.IdSucursal != idSucursalAsignacion);
+
+    public async Task<bool> ExistsByIdAsync(short id)
+    {
+        var keyProperty = context.Model.FindEntityType(typeof(Usuario))!.FindPrimaryKey()!.Properties[0];
+
+        return await context.Set<Usuario>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => EF.Property<short>(a, keyProperty.Name) == id) != null;
     }
 }

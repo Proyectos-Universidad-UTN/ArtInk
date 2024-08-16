@@ -1,0 +1,69 @@
+@model ArtInk.Site.ViewModels.Request.Misc.SucursalUsuario;
+
+@await Html.PartialAsync("~/Views/Shared/_ManejoMensajesPartial.cshtml")
+
+<div class="row mb-4 px-3 pb-3">
+    <div class="col-sm-12 col-md-12">
+        <label for="IdUsuarioSelect" class="form-label">Usuarios</label>
+    </div>
+    <div class="col-sm-10 col-md-11">
+        <select id="IdUsuarioSelect" class="form-select"
+            asp-items='@(new SelectList(Model.Usuarios, "Id" , "NombreCompleto"))'></select>
+    </div>
+    <div class="col-sm-2 col-md-1">
+        <button type="button" class="btn btn-success btn-sm flex-fill m-0 p-020rem" onclick="agregarUsuario(this)">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+        </button>
+    </div>
+</div>
+
+<div class="row px-3 pb-3">
+    <div class="col-sm-12 col-md-12">
+        <label for="IdUsuarioSelect" class="form-label">Usuarios agregados</label>
+    </div>
+    <div class="col-sm-12 col-md-12 mb-4" id="UsuariosAgregados">
+        <ul class="list-group">
+            @{
+                if(!Model.UsuariosSucursal.Any())
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 text-center">
+                                <label for="" class="form-label">Sin registros</label>
+                            </div>
+                        </div>
+                    </li>
+                }
+                foreach(var it in Model.UsuariosSucursal.Select((x, i) => new { Value = x, Index = i }))
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div hidden>
+                                <input name="UsuariosSucursal[@it.Index].IdSucursal" value="@it.Value.IdSucursal" />
+                                <input name="UsuariosSucursal[@it.Index].IdUsuario" value="@it.Value.IdUsuario" />
+                                <input name="UsuariosSucursal[@it.Index].Usuario.Nombre" value="@it.Value.Usuario.Nombre" />
+                                <input name="UsuariosSucursal[@it.Index].Usuario.Apellidos" value="@it.Value.Usuario.Apellidos" />
+                                <input name="UsuariosSucursal[@it.Index].Usuario.Rol.Descripcion" value="@it.Value.Usuario.Rol.Descripcion" />
+                            </div>
+                            <div class="col-10 col-sm-11">
+                                <label for="" class="form-label">@it.Value.Usuario.Nombre @it.Value.Usuario.Apellidos - Rol: @it.Value.Usuario.Rol.Descripcion</label>
+                            </div>
+                            <div class="col-2 col-sm-1">
+                                <button type="button" class="btn btn-danger btn-sm flex-fill m-0" data-usuario="@it.Value.IdUsuario"
+                                    onclick="eliminarUsuario(this)">
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<script src="~/js/toast-partial.js" asp-append-version="true"></script>

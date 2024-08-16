@@ -40,6 +40,7 @@ public static class Configuration
         services.AddTransient<IServiceTipoPago, ServiceTipoPago>();
         services.AddTransient<IServiceImpuesto, ServiceImpuesto>();
         services.AddTransient<IServiceProveedor, ServiceProveedor>();
+        services.AddTransient<IServiceUsuarioSucursal, ServiceUsuarioSucursal>();
 
         services.AddScoped<IServiceUserContext, ServiceUserContext>();
         services.AddScoped<IServiceUserAuthorization, ServiceUserAuthorization>();

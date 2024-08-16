@@ -1,4 +1,5 @@
-﻿using ArtInk.Application.Services.Interfaces;
+﻿using ArtInk.Application.DTOs;
+using ArtInk.Application.Services.Interfaces;
 using ArtInk.WebAPI.Configuration;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +15,8 @@ namespace ArtInk.WebAPI.Controllers;
 public class UnidadMedidaController(IServiceUnidadMedida serviceUnidadMedida) : ControllerBase
 {
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<UnidadMedidaDto>))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetailsArtInk))]
     public async Task<IActionResult> GetAllUnidadMedidasAsync()
     {
         var users = await serviceUnidadMedida.ListAsync();
