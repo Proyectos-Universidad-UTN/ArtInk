@@ -132,6 +132,7 @@ public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
             return View(facturaRequestDto);
         }
 
+        facturaRequestDto.Fecha = DateOnly.FromDateTime(DateTime.Now);
         var resultado = await cliente.ConsumirAPIAsync<FacturaResponseDto>(Constantes.POST, Constantes.POSTFACTURA, valoresConsumo: Serialization.Serialize(facturaRequestDto));
         if (resultado == null)
         {
