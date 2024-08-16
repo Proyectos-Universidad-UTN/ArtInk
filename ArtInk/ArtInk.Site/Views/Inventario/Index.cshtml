@@ -59,6 +59,7 @@ ViewData["Title"] = "Inventarios sucursal";
     }
 
     const cargarInventarios = () => {
+        const jwt = getCookie("JWT");
         const url = "@Model.UrlAPI".replace("{0}", `Sucursal/0/Inventario`);
         table = new DataTable($("#inventarios"),
             {
@@ -75,7 +76,10 @@ ViewData["Title"] = "Inventarios sucursal";
                 ajax: {
                     url: url,
                     type: "GET",
-                    dataSrc: ''
+                    dataSrc: '',
+                    headers: {
+                        'Authorization': `Bearer ${jwt}`
+                    }
                 },
                 columns: [
                     { data: "id" },

@@ -52,6 +52,7 @@ ViewData["Title"] = "Feriados sucursal";
     })
 
     const cargarFeriados = () => {
+        const jwt = getCookie("JWT");
         const url = "@Model.UrlAPI".replace("{0}", `Sucursal/0/Feriado`);
         table = new DataTable($("#feriados"),
             {
@@ -68,7 +69,10 @@ ViewData["Title"] = "Feriados sucursal";
                 ajax: {
                     url: url,
                     type: "GET",
-                    dataSrc: ''
+                    dataSrc: '',
+                    headers: {
+                        'Authorization': `Bearer ${jwt}`
+                    }
                 },
                 columns: [
                     { data: "id" },
