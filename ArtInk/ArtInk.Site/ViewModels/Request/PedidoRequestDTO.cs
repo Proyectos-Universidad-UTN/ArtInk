@@ -29,8 +29,6 @@ namespace ArtInk.Site.ViewModels.Request
         [DisplayName("Número")]
         public short Consecutivo { get; set; }
 
-        public short IdUsuarioSucursal { get; set; }
-
         [DisplayName("Impuesto")]
         [Range(1, 99999, ErrorMessage = "Debe seleccionar el impuesto a aplicar")]
         public byte IdImpuesto { get; set; }
@@ -102,6 +100,8 @@ namespace ArtInk.Site.ViewModels.Request
         public string? MontoTotalFormateado { get; set; }
 
         public char Estado { get; set; }
+
+        public byte IdSucursal { get; set; }
 
         public IEnumerable<ServicioResponseDto>? Servicios { get; set; } = null!;
 

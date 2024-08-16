@@ -41,4 +41,8 @@ public record SucursalResponseDto
     public virtual ICollection<SucursalFeriadoResponseDto> SucursalFeriados { get; set; } = new List<SucursalFeriadoResponseDto>();
 
     public virtual ICollection<ReservaResponseDto> Reservas { get; set; } = new List<ReservaResponseDto>();
+
+    public virtual ICollection<PedidoResponseDto> Pedidos { get; set; } = new List<PedidoResponseDto>();
+
+    public virtual ICollection<FacturaResponseDto> Facturas { get; set; } = new List<FacturaResponseDto>();
 }

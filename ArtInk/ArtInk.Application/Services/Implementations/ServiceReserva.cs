@@ -18,7 +18,6 @@ public class ServiceReserva(IRepositoryReserva repository, IMapper mapper,
 {
     public async Task<ReservaDto> CreateReservaAsync(RequestReservaDto reservaDTO)
     {
-        reservaDTO.IdUsuarioSucursal = 1;
         var reserva = await ValidarReserva(reservaDTO);
         
         var result = await repository.CreateReservaAsync(reserva);

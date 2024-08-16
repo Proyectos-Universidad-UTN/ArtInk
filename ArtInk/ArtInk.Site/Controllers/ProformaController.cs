@@ -58,9 +58,10 @@ public class ProformaController(IApiArtInkClient cliente) : BaseArtInkController
 
         var pedido = new PedidoRequestDto()
         {
+            IdReserva = reserva.Id,
             IdCliente = reserva.IdCliente,
             NombreCliente = reserva.NombreCliente,
-            IdReserva = idReserva.Value,
+            IdSucursal = reserva.IdSucursal,
             Clientes = clientes,
             TipoPagos = tipoPagos,
             Impuestos = impuestos,

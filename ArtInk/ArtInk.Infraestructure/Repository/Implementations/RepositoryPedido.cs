@@ -11,7 +11,7 @@ namespace ArtInk.Infraestructure.Repository.Implementations;
 
 public class RepositoryPedido(ArtInkContext context) : IRepositoryPedido
 {
-    public async Task<Pedido> CreatePedidoAsync(Pedido pedido)
+    public async Task<Pedido> CreatePedidoAsync(Pedido pedido, Reserva reserva)
     {
         Pedido result = null!;
         var executionStrategy = context.Database.CreateExecutionStrategy();
@@ -30,8 +30,6 @@ public class RepositoryPedido(ArtInkContext context) : IRepositoryPedido
                     throw (new Exception("No se ha podido guardar el pedido") as SqlException)!;
                 }
 
-                var reserva = await context.Reservas.FindAsync(pedido.IdReserva);
-                reserva!.Estado = "A";
                 context.Reservas.Update(reserva);
 
                 filasAfectadas = await context.SaveChangesAsync();
@@ -56,6 +54,15 @@ public class RepositoryPedido(ArtInkContext context) : IRepositoryPedido
         return result;
     }
 
+    public async Task<bool> ExisteFacturaAsync(long id)
+    {
+        var keyProperty = context.Model.FindEntityType(typeof(Pedido))!.FindPrimaryKey()!.Properties[0];
+
+        return await context.Set<Pedido>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => EF.Property<long>(a, keyProperty.Name) == id) != null;
+    }
+
     public async Task<Pedido?> FindByIdAsync(long id)
     {
         var keyProperty = context.Model.FindEntityType(typeof(Pedido))!.FindPrimaryKey()!.Properties[0];
@@ -63,8 +70,7 @@ public class RepositoryPedido(ArtInkContext context) : IRepositoryPedido
             .Include(a => a.IdClienteNavigation)
             .Include(a => a.IdTipoPagoNavigation)
             .Include(a => a.IdImpuestoNavigation)
-            .Include(a => a.IdUsuarioSucursalNavigation)
-            .ThenInclude(a => a.IdSucursalNavigation)
+            .Include(a => a.IdSucursalNavigation)
             .Include(a => a.DetallePedidos)
             .ThenInclude(a => a.IdServicioNavigation)
             .ThenInclude(a => a.IdTipoServicioNavigation)

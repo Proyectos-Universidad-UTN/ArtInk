@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Create";
     var pedido = Model.IdPedido == null ? "" : $"Nº {Model.IdPedido}";
+    var origenPedido = Model.IdPedido != null;
 }
 
 <div class="container mt-5">
@@ -19,6 +20,25 @@
                     <input asp-for="NumeroLineaEliminar" id="NumeroLineaEliminar" />
                     <input asp-for="PorcentajeImpuestoFormateado" id="PorcentajeImpuestoFormateado" />
                     <input asp-for="IdPedido" />
+                </div>
+
+                <div class="ro2">
+                    <div class="col-12 col-sm-6 mb-4">
+                        <label asp-for="IdSucursal" class="form-label"></label>
+                        @{
+                            if(origenPedido)
+                            {
+                                <input asp-for="IdSucursal" hidden />
+                                <select id="IdSucursal" class="form-select cargar-horario"
+                                asp-items='@(new SelectList(Model.Sucursales, "Id", "Nombre", Model.IdSucursal))' disabled></select>
+                            }else
+                            {
+                                <select asp-for="IdSucursal" class="form-select cargar-horario"
+                                asp-items='@(new SelectList(Model.Sucursales, "Id", "Nombre" ))'></select>
+                            }
+                        }
+                        <span asp-validation-for="IdSucursal" class="text-danger"></span>
+                    </div>
                 </div>
 
                 <div class="row">

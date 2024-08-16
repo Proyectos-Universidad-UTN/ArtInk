@@ -286,10 +286,10 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Factura_TipoPago");
 
-            entity.HasOne(d => d.IdUsuarioSucursalNavigation).WithMany(p => p.Facturas)
-                .HasForeignKey(d => d.IdUsuarioSucursal)
+                entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Facturas)
+                .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Factura_UsuarioSucursal");
+                .HasConstraintName("FK_Factura_Sucursal");
         });
 
         modelBuilder.Entity<Pedido>(entity =>
@@ -323,15 +323,15 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Pedido_TipoPago");
 
-            entity.HasOne(d => d.IdUsuarioSucursalNavigation).WithMany(p => p.Pedidos)
-                .HasForeignKey(d => d.IdUsuarioSucursal)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Pedido_UsuarioSucursal");
-
             entity.HasOne(d => d.IdReservaNavigation).WithMany(p => p.Pedidos)
                 .HasForeignKey(d => d.IdReserva)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Pedido_Reserva");
+
+                entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdSucursal)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pedido_Sucursal");
         });
 
         modelBuilder.Entity<Feriado>(entity =>
@@ -499,11 +499,6 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
                 .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Reserva_Sucursal");
-
-            entity.HasOne(d => d.IdUsuarioSucursalNavigation).WithMany(p => p.Reservas)
-                .HasForeignKey(d => d.IdUsuarioSucursal)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Reserva_UsuarioSucursal");
 
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.IdCliente)
@@ -793,9 +788,13 @@ public partial class ArtInkContext(DbContextOptions<ArtInkContext> options) : Db
         foreach (var entry in ChangeTracker.Entries())
         {
             string UsuarioCreacion = string.Empty;
-            string UsuarioModificacion = string.Empty;
+            string UsuarioModificacion = null!;
             if(entry.Entity.GetType().GetProperty("UsuarioCreacion") != null) UsuarioCreacion = entry.Property("UsuarioCreacion").CurrentValue!.ToString()!;
-            if(entry.Entity.GetType().GetProperty("UsuarioModificacion") != null) UsuarioModificacion = entry.Property("UsuarioModificacion").CurrentValue!.ToString()!;
+            if(entry.Entity.GetType().GetProperty("UsuarioModificacion") != null)
+            {
+                var modificacion = entry.Property("UsuarioModificacion").CurrentValue;
+                if (modificacion != null) UsuarioModificacion = modificacion.ToString()!;
+            }
 
             if (entry.State == EntityState.Added)
             {

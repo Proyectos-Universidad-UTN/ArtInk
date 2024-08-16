@@ -20,9 +20,6 @@ public record FacturaResponseDto
 
     public short Consecutivo { get; set; }
 
-    [DisplayName("Usuario")]
-    public short IdUsuarioSucursal { get; set; }
-
     [DisplayName("Impuesto")]
     public byte IdImpuesto { get; set; }
 
@@ -41,6 +38,8 @@ public record FacturaResponseDto
     [DisplayFormat(DataFormatString = "{0:C2}")]
     public decimal MontoTotal { get; set; }
 
+    public byte IdSucursal { get; set; }
+
     public virtual ICollection<DetalleFacturaResponseDto> DetalleFacturas { get; set; } = new List<DetalleFacturaResponseDto>();
 
     public virtual ClienteResponseDto Cliente { get; set; } = null!;
@@ -50,4 +49,6 @@ public record FacturaResponseDto
     public virtual TipoPagoResponseDto TipoPago { get; set; } = null!;
 
     public virtual UsuarioSucursalResponseDto UsuarioSucursal { get; set; } = null!;
+    
+    public SucursalResponseDto Sucursal { get; set; } = null!;
 }

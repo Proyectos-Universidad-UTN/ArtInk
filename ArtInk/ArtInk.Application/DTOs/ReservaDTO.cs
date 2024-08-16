@@ -20,10 +20,6 @@ public record ReservaDto: BaseEntity
 
     public bool Activo { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
-    public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
-
     public virtual SucursalDto Sucursal { get; set; } = null!;
 
     public virtual ClienteDto Cliente { get; set; } = null!;

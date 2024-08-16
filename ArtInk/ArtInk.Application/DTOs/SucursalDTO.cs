@@ -31,4 +31,8 @@ public record SucursalDto: BaseEntity
     public virtual ICollection<SucursalFeriadoDto> SucursalFeriados { get; set; } = new List<SucursalFeriadoDto>();
 
     public virtual ICollection<ReservaDto> Reservas { get; set; } = new List<ReservaDto>();
+
+    public virtual ICollection<PedidoDto> Pedidos { get; set; } = new List<PedidoDto>();
+
+    public virtual ICollection<FacturaDto> Facturas { get; set; } = new List<FacturaDto>();
 }

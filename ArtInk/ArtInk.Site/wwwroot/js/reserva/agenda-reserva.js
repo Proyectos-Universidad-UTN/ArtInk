@@ -12,7 +12,7 @@ $(document).ready(function () {
         nowIndicator: true,
         headerToolbar: {
             left: 'title',
-            center: 'timeGridWeek,dayGridMonth,multiMonthYear,',
+            center: 'timeGridWeek,dayGridMonth,multiMonthYear',
             right: 'today prev,next'
         },
         locale: 'es',

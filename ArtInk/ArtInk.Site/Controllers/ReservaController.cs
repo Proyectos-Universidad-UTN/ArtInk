@@ -106,7 +106,6 @@ public class ReservaController(IApiArtInkClient cliente, IMapper mapper, ICurren
     [HttpPost]
     public async Task<IActionResult> Create(ReservaRequestDto reserva)
     {
-
         var sucursal = await cliente.ConsumirAPIAsync<IEnumerable<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES);
         if (sucursal == null)
         {

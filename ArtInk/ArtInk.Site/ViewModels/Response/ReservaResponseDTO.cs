@@ -16,7 +16,6 @@ public record ReservaResponseDto
 
     public bool Activo { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
 
     [DisplayName("Sucursal")]
     public byte IdSucursal { get; set; }
@@ -25,9 +24,6 @@ public record ReservaResponseDto
 
     [DisplayName("Cliente")]
     public string NombreCliente { get; set; } = null!;
-
-    [DisplayName("Usuario Sucursal")]
-    public virtual UsuarioSucursalResponseDto UsuarioSucursal { get; set; } = null!;
 
     public virtual SucursalResponseDto Sucursal { get; set; } = null!;
 

@@ -10,8 +10,6 @@ public record RequestReservaDto: RequestBaseDto
 
     public TimeOnly Hora { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
     public byte IdSucursal { get; set; }
 
     public short IdCliente { get; set; }

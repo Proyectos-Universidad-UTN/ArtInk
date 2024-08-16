@@ -1,4 +1,5 @@
 using ArtInk.Application.DTOs.Base;
+using ArtInk.Infraestructure.Models;
 
 namespace ArtInk.Application.DTOs;
 
@@ -18,8 +19,6 @@ public record FacturaDto: BaseEntity
 
     public short Consecutivo { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
     public byte IdImpuesto { get; set; }
 
     public decimal PorcentajeImpuesto { get; set; }
@@ -30,6 +29,8 @@ public record FacturaDto: BaseEntity
 
     public decimal MontoTotal { get; set; }
 
+    public byte IdSucursal { get; set; }
+
     public virtual ICollection<DetalleFacturaDto> DetalleFacturas { get; set; } = new List<DetalleFacturaDto>();
 
     public virtual ClienteDto Cliente { get; set; } = null!;
@@ -38,7 +39,7 @@ public record FacturaDto: BaseEntity
 
     public virtual TipoPagoDto TipoPago { get; set; } = null!;
 
-    public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
+    public virtual PedidoDto? Pedido { get; set; } = null!;
 
-    public virtual PedidoDto? Pedido { get; set; }
+    public virtual Sucursal Sucursal { get; set; } = null!;
 }

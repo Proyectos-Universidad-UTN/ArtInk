@@ -31,9 +31,6 @@ public record FacturaRequestDto
     [DisplayName("Número")]
     public short Consecutivo { get; set; }
 
-    [DisplayName("Usuario")]
-    public short IdUsuarioSucursal { get; set; }
-
     [DisplayName("Impuesto")]
     public byte IdImpuesto { get; set; }
 
@@ -96,6 +93,8 @@ public record FacturaRequestDto
     [DisplayName("Total ¢")]
     public string? MontoTotalFormateado { get; set; }
 
+    public byte IdSucursal { get; set; }
+
     [JsonIgnore]
     public IEnumerable<ServicioResponseDto>? Servicios { get; set; } = null!;
 
@@ -109,6 +108,8 @@ public record FacturaRequestDto
     public IEnumerable<ImpuestoResponseDto>? Impuestos { get; set; } = null!;
 
     public List<DetalleFacturaRequestDto> DetalleFacturas { get; set; } = new List<DetalleFacturaRequestDto>();
+
+    public IEnumerable<SucursalResponseDto>? Sucursales { get; set; } = new List<SucursalResponseDto>();
 
     public void AgregarDetalleFactura(DetalleFacturaRequestDto detalleFactura)
     {
