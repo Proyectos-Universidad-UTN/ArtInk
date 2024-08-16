@@ -12,6 +12,8 @@ public interface IRepositorySucursalHorarioBloqueo
 
     Task<ICollection<SucursalHorarioBloqueo>> GetSucursalHorarioBloqueosBySucursalHorarioAsync(short idSucursalHorario);
 
+    Task<ICollection<SucursalHorarioBloqueo>> GetSucursalHorarioBloqueosBySucursalAsync(byte idSucursal);
+
     Task<SucursalHorarioBloqueo?> FindByIdAsync(long id);
 
     Task<bool> ExisteHorarioBloqueo(long id);

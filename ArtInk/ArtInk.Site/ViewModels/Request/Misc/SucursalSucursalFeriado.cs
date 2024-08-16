@@ -27,6 +27,7 @@ public record SucursalSucursalFeriado
         FeriadosSucursal = new List<SucursalFeriadoRequestDto>();
         foreach (var item in feriados)
         {
+            if (item.Id == 0) continue;
             FeriadosSucursal.Add(new SucursalFeriadoRequestDto()
             {
                 IdFeriado = item.Id,
@@ -37,4 +38,12 @@ public record SucursalSucursalFeriado
             });
         }
     }
+
+    public void AgregarFeriado(SucursalFeriadoRequestDto sucursalFeriado)
+    {
+        FeriadosSucursal.Add(sucursalFeriado);
+        FeriadosSucursal = FeriadosSucursal.OrderBy(m => m.Fecha).ToList();
+    }
+
+    public void EliminarFeriado() => FeriadosSucursal = FeriadosSucursal.Where(m => m.IdFeriado != IdFeriado).ToList();
 }

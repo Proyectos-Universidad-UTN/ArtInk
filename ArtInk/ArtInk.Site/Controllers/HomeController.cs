@@ -43,7 +43,15 @@ public class HomeController(IApiArtInkClient apiArtInkClient) : BaseArtInkContro
         HttpContext.Response.Cookies.Append("JWT", respuestaInicioSesion.Token);
         HttpContext.Response.Cookies.Append("Refresh-Token", respuestaInicioSesion.RefreshToken);
 
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
+    }
+
+    public ActionResult CerrarSesion()
+    {
+        HttpContext.Response.Cookies.Delete("JWT");
+        HttpContext.Response.Cookies.Delete("Refresh-Token");
+
+        return RedirectToAction(nameof(InicioSesion));
     }
 
     public async Task<IActionResult> Index(string? errorCode)
@@ -52,7 +60,7 @@ public class HomeController(IApiArtInkClient apiArtInkClient) : BaseArtInkContro
 
         var cookie = HttpContext.Request.Cookies["JWT"];
         if (!string.IsNullOrEmpty(errorCode) && errorCode == "1" && cookie == null) return RedirectToAction(nameof(InicioSesion), new { errorCode = 2 });
-        if(!string.IsNullOrEmpty(errorCode) && errorCode == "2") TempData[ERRORMESSAGE] = "Rol sin permisos";
+        if (!string.IsNullOrEmpty(errorCode) && errorCode == "2") TempData[ERRORMESSAGE] = "Rol sin permisos";
 
         var sucursales = await apiArtInkClient.ConsumirAPIAsync<IEnumerable<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALES, incluyeAuthorization: false);
         if (sucursales == null)

@@ -16,6 +16,7 @@ public record SucursalFeriadoRequestDto
     public byte IdSucursal { get; set; }
 
     [Required(ErrorMessage = "Por favor ingrese una fecha")]
+    [DisplayFormat(DataFormatString = "dd/MM/yyyy")]
     public DateOnly Fecha { get; set; }
 
     public short Anno { get; set; }

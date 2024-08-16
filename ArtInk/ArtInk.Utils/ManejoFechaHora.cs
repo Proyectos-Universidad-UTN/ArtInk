@@ -20,6 +20,22 @@ public static class ManejoFechaHora
         return horas;
     }
 
+    public static List<DateOnly> ObtenerDias(DateOnly inicio, DateOnly fin ) 
+    {
+        List<DateOnly> dias = new List<DateOnly>();
+
+        DateOnly diaActual = inicio;
+
+        while (diaActual <= fin)
+        {
+            dias.Add(diaActual);
+
+            diaActual = diaActual.AddDays(1);
+        }
+
+        return dias;
+    }
+
     public static String ObtenerDiaSemanaCRCulture(DateOnly fecha) => new CultureInfo("es-CR").DateTimeFormat.GetDayName(fecha.DayOfWeek).Capitalize().Replace("é","e").Replace("á","a");
    
 }

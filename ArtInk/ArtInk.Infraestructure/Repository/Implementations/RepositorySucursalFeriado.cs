@@ -78,6 +78,17 @@ public class RepositorySucursalFeriado(ArtInkContext context) : IRepositorySucur
         return collection;
     }
 
+    public async Task<ICollection<SucursalFeriado>> GetFeriadosBySucursalAsync(byte idSucursal, DateOnly fechaInicio, DateOnly fechaFin)
+    {
+        var collection = await context.Set<SucursalFeriado>()
+                .AsNoTracking()
+                .Include(m => m.IdFeriadoNavigation)
+                .Where(m => m.IdSucursal == idSucursal && m.Fecha >= fechaInicio && m.Fecha <= fechaFin)
+                .AsNoTracking()
+                .ToListAsync();
+        return collection;
+    }
+
     public async Task<SucursalFeriado?> GetSucursalFeriadoByIdAsync(short id)
     {
         var keyProperty = context.Model.FindEntityType(typeof(SucursalFeriado))!.FindPrimaryKey()!.Properties[0];

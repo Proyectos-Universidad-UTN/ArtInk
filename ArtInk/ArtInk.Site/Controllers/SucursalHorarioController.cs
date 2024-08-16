@@ -7,10 +7,11 @@ using ArtInk.Site.ViewModels.Response;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ArtInk.Utils;
+using ArtInk.Site.Common;
 
 namespace ArtInk.Site.Controllers;
 
-public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper) : BaseArtInkController
+public class SucursalHorarioController(IApiArtInkClient cliente, ICurrentUserAccessor currentUserAccessor, IMapper mapper) : BaseArtInkController
 {
     const string INDEX = "Index";
     const string SUCCESSMESSAGE = "SuccessMessage";
@@ -20,9 +21,13 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
 
     public async Task<IActionResult> Index()
     {
-        var collection = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, Constantes.GETALLSUCURSALESBYROL);
-        collection.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
-        if (collection == null)
+        var currentUser = currentUserAccessor.GetCurrentUser();
+        string url = currentUser.Role != "Administrador" ? Constantes.GETALLSUCURSALESBYROL : Constantes.GETALLSUCURSALES;
+        
+        var sucursales = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, url);
+        sucursales.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
+
+        if (sucursales == null)
         {
             SetErrorMessage();
             return RedirectToAction(INDEX, "Home");
@@ -31,7 +36,7 @@ public class SucursalHorarioController(IApiArtInkClient cliente, IMapper mapper)
         var sucursalHorarios = new SucursalHorarios()
         {
             UrlAPI = cliente.BaseUrlAPI,
-            Sucursales = collection
+            Sucursales = sucursales
         };
 
         return View(sucursalHorarios);

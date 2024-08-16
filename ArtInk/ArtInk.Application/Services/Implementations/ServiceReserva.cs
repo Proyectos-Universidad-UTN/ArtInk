@@ -1,7 +1,9 @@
-﻿using ArtInk.Application.Comunes;
+﻿using System.Globalization;
+using ArtInk.Application.Comunes;
 using ArtInk.Application.DTOs;
 using ArtInk.Application.RequestDTOs;
 using ArtInk.Application.Services.Interfaces;
+using ArtInk.Infraestructure.Enums;
 using ArtInk.Infraestructure.Models;
 using ArtInk.Infraestructure.Repository.Interfaces;
 using ArtInk.Utils;
@@ -13,9 +15,12 @@ using Infra = ArtInk.Infraestructure.Enums;
 
 namespace ArtInk.Application.Services.Implementations;
 
-public class ServiceReserva(IRepositoryReserva repository, IMapper mapper,
+public class ServiceReserva(IRepositoryReserva repository, IRepositorySucursalHorarioBloqueo repositorySucursalHorarioBloqueo, 
+                            IRepositorySucursalFeriado repositorySucursalFeriado, IMapper mapper,
                             IValidator<Reserva> reservaValidator, IRepositorySucursalHorario repositorySucursalHorario) : IServiceReserva
 {
+    const string formatoFecha = "yyyy-MM-dd";
+
     public async Task<ReservaDto> CreateReservaAsync(RequestReservaDto reservaDTO)
     {
         var reserva = await ValidarReserva(reservaDTO);
@@ -56,16 +61,27 @@ public class ServiceReserva(IRepositoryReserva repository, IMapper mapper,
     public async Task<ICollection<AgendaCalendarioReserva>> ListAsync(byte idSucursal, DateOnly? fechaInicio, DateOnly? fechaFin)
     {
         var list = fechaInicio == null || fechaFin == null ? await repository.ListAsync(idSucursal) : await repository.ListAsync(idSucursal, fechaInicio.Value, fechaFin.Value);
-
-        var agendaCalendario = from a in list
+        
+        var agendaCalendario = (from a in list
                                select new AgendaCalendarioReserva
                                {
                                 Title = $"{a.Id}-{a.NombreCliente}",
                                 Start = new DateTime(a.Fecha.Year, a.Fecha.Month, a.Fecha.Day, a.Hora.Hour, a.Hora.Minute, a.Hora.Second, DateTimeKind.Unspecified),
                                 End = new DateTime(a.Fecha.Year, a.Fecha.Month, a.Fecha.Day, a.Hora.Hour + 1, a.Hora.Minute, a.Hora.Second, DateTimeKind.Unspecified)
-                               };
+                               }).ToList();
 
-        return agendaCalendario.ToList();
+        if(fechaInicio != null && fechaFin != null)
+        {
+            var agendaBloqueos = await ObtenerBloqueosAsync(idSucursal, fechaInicio.Value, fechaFin.Value);
+            var feriados = await ObtenerFeriados(idSucursal, fechaInicio.Value, fechaFin.Value);
+
+            if(feriados.Any()) agendaBloqueos = agendaBloqueos.Except(agendaBloqueos.Where(m => feriados.Exists(z => z.Start.ToString(formatoFecha) == m.Start.ToString(formatoFecha))).ToList()).ToList();
+
+            agendaCalendario.AddRange(agendaBloqueos);
+            agendaCalendario.AddRange(feriados);
+        }
+
+        return agendaCalendario;
     }
 
     private async Task<Reserva> ValidarReserva(RequestReservaDto reservaDTO)
@@ -104,6 +120,40 @@ public class ServiceReserva(IRepositoryReserva repository, IMapper mapper,
         rangoHorario = rangoHorario.Except(reservas.Select(a => a.Hora)).ToList();
 
         return rangoHorario;
+    }
+
+    private async Task<List<AgendaCalendarioReserva>> ObtenerBloqueosAsync(byte idSucursal, DateOnly fechaInicio, DateOnly fechaFin)
+    {
+        var bloqueos = await repositorySucursalHorarioBloqueo.GetSucursalHorarioBloqueosBySucursalAsync(idSucursal);
+        var diferenciaDias = ManejoFechaHora.ObtenerDias(fechaInicio, fechaFin);
+        var agendaBloqueos = from a in bloqueos
+                                  from b in diferenciaDias
+                                  where b.ToString("dddd", new CultureInfo("es-CR")).Capitalize().Replace("é", "e").Replace("á", "a") == Enum.GetName(typeof(DiaSemana), a.IdSucursalHorarioNavigation.IdHorarioNavigation.Dia)! 
+                                  select new AgendaCalendarioReserva
+                                    {
+                                        Title = "",
+                                        Start = new DateTime(b.Year, b.Month, b.Day, a.HoraInicio.Hour, a.HoraInicio.Minute, a.HoraInicio.Second, DateTimeKind.Unspecified),
+                                        End = new DateTime(b.Year, b.Month, b.Day, a.HoraFin.Hour, a.HoraFin.Minute, a.HoraFin.Second, DateTimeKind.Unspecified),
+                                        Display = "background",
+                                        ClassNames = "bg-danger"
+                                    };
+        return agendaBloqueos.ToList();
+    }
+
+    private async Task<List<AgendaCalendarioReserva>> ObtenerFeriados(byte idSucursal, DateOnly fechaInicio, DateOnly fechaFin)
+    {
+        var feriados = await repositorySucursalFeriado.GetFeriadosBySucursalAsync(idSucursal, fechaInicio, fechaFin);
+        var agendaFeriados = from a in feriados 
+                                  select new AgendaCalendarioReserva
+                                    {
+                                        Title = $"Feriado: {a.IdFeriadoNavigation.Nombre}",
+                                        Start = DateTime.ParseExact(a.Fecha.ToString(formatoFecha), formatoFecha, CultureInfo.InvariantCulture),
+                                        Display = "background",
+                                        ClassNames = "bg-warning",
+                                        AllDay = true,
+                                    };
+
+        return agendaFeriados.ToList();
     }
 }
 

@@ -82,6 +82,17 @@ public class RepositorySucursalHorarioBloqueo(ArtInkContext context) : IReposito
             .FirstOrDefaultAsync(a => EF.Property<byte>(a, keyProperty.Name) == id);
     }
 
+    public async Task<ICollection<SucursalHorarioBloqueo>> GetSucursalHorarioBloqueosBySucursalAsync(byte idSucursal)
+    {
+        var collection = await context.Set<SucursalHorarioBloqueo>()
+         .Include(m => m.IdSucursalHorarioNavigation)
+         .ThenInclude(m => m.IdHorarioNavigation)
+         .Where(a => a.IdSucursalHorarioNavigation.IdSucursal == idSucursal)
+         .AsNoTracking()
+         .ToListAsync();
+        return collection;
+    }
+
     public async Task<ICollection<SucursalHorarioBloqueo>> GetSucursalHorarioBloqueosBySucursalHorarioAsync(short idSucursalHorario)
     {
         var collection = await context.Set<SucursalHorarioBloqueo>()

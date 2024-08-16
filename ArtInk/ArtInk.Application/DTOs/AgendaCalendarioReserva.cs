@@ -10,9 +10,11 @@ public class AgendaCalendarioReserva
 
     public DateTime End { get; set; }
 
-    public string ClassName { get; set; } = "fc-bg-default";
+    public string ClassNames { get; set; } = "fc-bg-default";
 
     public string Icon { get; set; } = "calendar";
 
     public bool AllDay { get; set; } = false;
+
+    public string? Display { get; set; }
 }

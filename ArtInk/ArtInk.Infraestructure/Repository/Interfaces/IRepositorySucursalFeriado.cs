@@ -7,6 +7,8 @@ public interface IRepositorySucursalFeriado
 {
     Task<ICollection<SucursalFeriado>> GetFeriadosBySucursalAsync(byte idSucursal);
 
+    Task<ICollection<SucursalFeriado>> GetFeriadosBySucursalAsync(byte idSucursal, DateOnly fechaInicio, DateOnly fechaFin);
+
     Task<ICollection<SucursalFeriado>> GetFeriadosBySucursalAsync(byte idSucursal, short anno);
 
     Task<SucursalFeriado?> GetSucursalFeriadoByIdAsync(short id);

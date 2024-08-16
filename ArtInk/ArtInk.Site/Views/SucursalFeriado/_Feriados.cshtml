@@ -37,9 +37,9 @@
                 <label for="" class="form-label">@it.Value.Feriado.Nombre</label>
             </div>
             <div class="col-sm-10 col-md-5">
-                <input asp-for="@Model.FeriadosSucursal[@it.Index].Fecha" id="@it.Value.Feriado.Id"
+                <input name="FeriadosSucursal[@it.Index].Fecha" id="@it.Value.Feriado.Id"
                     data-anno="@it.Value.Anno" data-mes='@it.Value.Fecha.ToString("MM")'
-                    class="form-control text-end datepicker-fechas">
+                    class="form-control text-end datepicker-fechas" value="@Model.FeriadosSucursal[@it.Index].Fecha">
                 <span asp-validation-for="@Model.FeriadosSucursal[@it.Index].Fecha" class="text-danger"></span>
             </div>
             <div class="col-sm-2 col-md-1">

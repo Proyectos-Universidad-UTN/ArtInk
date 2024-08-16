@@ -36,6 +36,8 @@ $(document).ready(function () {
         },
         eventClick: function (info) {
             const url = $("#urlEvents").val();
+            if (info.event.title == "" || info.event.title.includes("Feriado")) return;
+
             const idReserva = info.event.title.split("-")[0];
 
             $.ajax({
