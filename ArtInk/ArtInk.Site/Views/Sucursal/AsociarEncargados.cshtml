@@ -1,0 +1,70 @@
+@model ArtInk.Site.ViewModels.Request.Misc.SucursalUsuario;
+
+@{
+    ViewData["Title"] = "Asociar encargados";    
+}
+
+<div class="container mt-5">
+    <div class="card mx-auto disable-hover" style="max-width: 800px;">
+        <div class="card-header bg-primary text-white">
+            <h4>Encargados de la sucursal Nº @Model.Sucursal.Id: @Model.Sucursal.Nombre </h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="AsociarEncargados" class="form-object">
+                <div hidden>
+                    <input asp-for="Accion" />
+                    <input asp-for="IdUsuario" />
+                    <input name="Sucursal.Id" value="@Model.Sucursal.Id" />
+                </div>
+
+                <div id="Encargados">
+                    @await Html.PartialAsync("~/Views/Sucursal/_Encargados.cshtml", Model)
+                </div>
+
+                <div class="px-3">
+                    @await Html.PartialAsync("~/Views/Shared/_ButtonsForm.cshtml")
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const agregarUsuario = (button) => {
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/Sucursal/AgregarEliminarUsuario";
+        $("#Accion").val('A')
+        $("#IdUsuario").val($("#IdUsuarioSelect").val())
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#Encargados").html(result);
+            }
+        })
+    }
+
+    const eliminarUsuario = (buttton) => {
+        const host = window.location.host;
+        const url = host.split("/").reverse().slice(2).reverse().join("/") + "/Sucursal/AgregarEliminarUsuario";
+        $("#Accion").val("R")
+        $("#IdUsuario").val($(buttton).data("usuario"))
+        const valoresForm = new FormData(document.getElementsByClassName('form-object')[0])
+
+        $.ajax({
+            url: url,
+            data: valoresForm,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                $("#Encargados").html(result);
+            }
+        })
+    }
+</script>

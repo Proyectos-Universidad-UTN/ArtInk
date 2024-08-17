@@ -9,7 +9,7 @@ namespace ArtInk.Infraestructure.Repository.Implementations;
 
 public class RepositoryFactura(ArtInkContext context) : IRepositoryFactura
 {
-    public async Task<Factura> CreateFacturaAsync(Factura factura)
+    public async Task<Factura> CreateFacturaAsync(Factura factura, Pedido? pedido)
     {
         Factura result = null!;
         var executionStrategy = context.Database.CreateExecutionStrategy();
@@ -27,12 +27,8 @@ public class RepositoryFactura(ArtInkContext context) : IRepositoryFactura
                     await transaccion.RollbackAsync();
                     throw (new Exception("No se ha podido guardar la factura") as SqlException)!;
                 }
-
-                var pedido = await context.Pedidos.FindAsync(factura.IdPedido);
                 if (pedido != null)
                 {
-                    pedido.Estado = 'F';
-
                     context.Pedidos.Update(pedido);
 
                     filasAfectadas = await context.SaveChangesAsync();
@@ -65,8 +61,7 @@ public class RepositoryFactura(ArtInkContext context) : IRepositoryFactura
             .Include(a => a.IdClienteNavigation)
             .Include(a => a.IdTipoPagoNavigation)
             .Include(a => a.IdImpuestoNavigation)
-            .Include(a => a.IdUsuarioSucursalNavigation)
-            .ThenInclude(a => a.IdSucursalNavigation)
+            .Include(a => a.IdSucursalNavigation)
             .Include(a => a.DetalleFacturas)
             .ThenInclude(a => a.IdServicioNavigation)
             .Include(a => a.DetalleFacturas)

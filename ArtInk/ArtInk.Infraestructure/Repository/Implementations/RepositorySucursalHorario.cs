@@ -64,7 +64,6 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
            .Include(m => m.IdHorarioNavigation)
            .Include(v => v.SucursalHorarioBloqueos)
            .Where(m => m.IdSucursal == idSucursal)
-           .AsNoTracking()
            .ToListAsync();
         return collection;
     }
@@ -75,7 +74,6 @@ public class RepositorySucursalHorario(ArtInkContext context) : IRepositorySucur
           .AsNoTracking()
           .Include(m => m.IdHorarioNavigation)
           .Include(v => v.SucursalHorarioBloqueos)
-          .AsNoTracking()
           .FirstOrDefaultAsync(m => m.IdSucursal == idSucursal && m.IdHorarioNavigation.Dia == dia);
         return horarioSucursal;
     }

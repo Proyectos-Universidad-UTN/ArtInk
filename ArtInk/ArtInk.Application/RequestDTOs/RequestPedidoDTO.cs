@@ -14,8 +14,6 @@ public record RequestPedidoDto: RequestBaseDto
 
     public short Consecutivo { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
     public byte IdImpuesto { get; set; }
 
     public int IdReserva { get; set; }
@@ -29,6 +27,8 @@ public record RequestPedidoDto: RequestBaseDto
     public decimal MontoTotal { get; set; }
 
     public char Estado { get; set; }
+
+    public byte IdSucursal { get; set; }
 
     public IEnumerable<RequestDetallePedidoDto> DetallePedidos { get; set; } = null!;
 }

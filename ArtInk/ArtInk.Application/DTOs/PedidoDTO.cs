@@ -16,8 +16,6 @@ public record PedidoDto : BaseEntity
 
     public short Consecutivo { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
     public byte IdImpuesto { get; set; }
 
     public int IdReserva { get; set; }
@@ -32,6 +30,8 @@ public record PedidoDto : BaseEntity
 
     public char Estado { get; set; }
 
+    public byte IdSucursal { get; set; }
+
     public virtual ICollection<DetallePedidoDto> DetallePedidos { get; set; } = new List<DetallePedidoDto>();
 
     public virtual ClienteDto Cliente { get; set; } = null!;
@@ -40,7 +40,7 @@ public record PedidoDto : BaseEntity
 
     public virtual TipoPagoDto TipoPago { get; set; } = null!;
 
-    public virtual UsuarioSucursalDto UsuarioSucursal { get; set; } = null!;
-
     public virtual ReservaDto Reserva { get; set; } = null!;
+
+    public virtual SucursalDto Sucursal { get; set; } = null!;
 }

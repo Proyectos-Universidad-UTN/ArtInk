@@ -13,14 +13,19 @@ using FluentValidation;
 
 namespace ArtInk.Application.Services.Implementations;
 
-public class ServicePedido(IRepositoryPedido repository, IMapper mapper, IValidator<Pedido> pedidoValidator) : IServicePedido
+public class ServicePedido(IRepositoryPedido repository, IRepositoryReserva repositoryReserva, IServiceReserva serviceReserva, 
+                            IMapper mapper, IValidator<Pedido> pedidoValidator) : IServicePedido
 {
     public async Task<PedidoDto> CreatePedidoAsync(RequestPedidoDto pedidoDto)
     {
         var pedido = await ValidarPedido(pedidoDto);
-        pedido.IdUsuarioSucursal = 1;
 
-        var result = await repository.CreatePedidoAsync(pedido);
+        if(!await repositoryReserva.ExisteReserva(pedidoDto.IdReserva)) throw new NotFoundException("Reserva no existe.");
+        var reserva = await serviceReserva.FindByIdAsync(pedidoDto.IdReserva);
+        reserva!.Estado = "A";
+        pedido.IdSucursal = reserva!.IdSucursal;
+
+        var result = await repository.CreatePedidoAsync(pedido, mapper.Map<Reserva>(reserva));
         if (result == null) throw new NotFoundException("Pedido no creado.");
 
         return mapper.Map<PedidoDto>(result);

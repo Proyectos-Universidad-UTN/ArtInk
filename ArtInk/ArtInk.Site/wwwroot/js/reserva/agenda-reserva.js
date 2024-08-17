@@ -12,7 +12,7 @@ $(document).ready(function () {
         nowIndicator: true,
         headerToolbar: {
             left: 'title',
-            center: 'timeGridWeek,dayGridMonth,multiMonthYear,',
+            center: 'timeGridWeek,dayGridMonth,multiMonthYear',
             right: 'today prev,next'
         },
         locale: 'es',
@@ -36,6 +36,8 @@ $(document).ready(function () {
         },
         eventClick: function (info) {
             const url = $("#urlEvents").val();
+            if (info.event.title == "" || info.event.title.includes("Feriado")) return;
+
             const idReserva = info.event.title.split("-")[0];
 
             $.ajax({

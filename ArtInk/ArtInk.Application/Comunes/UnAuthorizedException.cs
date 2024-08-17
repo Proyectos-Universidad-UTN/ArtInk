@@ -9,7 +9,7 @@ public class UnAuthorizedException : BaseException
 {
     public override LogLevel LogLevel { get; set; } = LogLevel.Information;
 
-    public override HttpStatusCode HttpStatusCode { get; set; } = HttpStatusCode.Unauthorized;
+    public override HttpStatusCode HttpStatusCode { get; set; } = HttpStatusCode.NotFound;
 
     public UnAuthorizedException(string mensaje) : base(mensaje)
     {

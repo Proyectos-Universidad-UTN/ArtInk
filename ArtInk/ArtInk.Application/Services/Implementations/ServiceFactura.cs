@@ -10,17 +10,24 @@ using FluentValidation;
 
 namespace ArtInk.Application.Services.Implementations;
 
-public class ServiceFactura(IRepositoryFactura repository, IMapper mapper,
-                            IValidator<Factura> facturaValidator) : IServiceFactura
+public class ServiceFactura(IRepositoryFactura repository, IRepositoryPedido repositoryPedido, IServicePedido servicePedido,
+                            IMapper mapper, IValidator<Factura> facturaValidator) : IServiceFactura
 {
     public async Task<FacturaDto> CreateFacturaAsync(RequestFacturaDto facturaDto)
     {
         var factura = await ValidarFactura(facturaDto);
-        factura.IdUsuarioSucursal = 1;
 
-        var result = await repository.CreateFacturaAsync(factura);
+        PedidoDto? pedido = null;
+        if (facturaDto.IdPedido != null && await repositoryPedido.ExisteFacturaAsync(facturaDto.IdPedido.Value))
+        {
+            pedido = await servicePedido.FindByIdAsync(facturaDto.IdPedido.Value);
+            pedido.Estado = 'F';
+            facturaDto.IdSucursal = pedido.IdSucursal;
+        }
+
+        var result = await repository.CreateFacturaAsync(factura, mapper.Map<Pedido>(pedido));
         if (result == null) throw new NotFoundException("Factura no creada.");
-        
+
         return mapper.Map<FacturaDto>(result);
     }
 

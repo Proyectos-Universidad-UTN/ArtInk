@@ -50,5 +50,5 @@ public record ReservaRequestDto
 
     public void EliminarServicio(byte IdServicio) => ReservaServicios = ReservaServicios.Where(x => x.IdServicio != IdServicio).ToList();
 
-    public string UrlAPI { get; set; } = null!;
+    public string? UrlAPI { get; set; }
 }

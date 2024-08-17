@@ -10,8 +10,6 @@ public partial class Reserva: BaseModel
 
     public TimeOnly Hora { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
     public byte IdSucursal { get; set; }
 
     public short IdCliente { get; set; }
@@ -22,8 +20,6 @@ public partial class Reserva: BaseModel
     public string Estado { get; set; } = null!;
 
     public bool Activo { get; set; }
-
-    public virtual UsuarioSucursal IdUsuarioSucursalNavigation { get; set; } = null!;
 
     public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
 

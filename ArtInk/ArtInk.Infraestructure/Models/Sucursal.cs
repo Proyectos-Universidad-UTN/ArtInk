@@ -29,4 +29,8 @@ public partial class Sucursal: BaseModel
     public virtual ICollection<SucursalFeriado> SucursalFeriados { get; set; } = new List<SucursalFeriado>();
 
     public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
+
+    public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+
+    public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
 }

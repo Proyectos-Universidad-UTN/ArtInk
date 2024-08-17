@@ -61,10 +61,11 @@ public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
             }
         }
 
-        var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
+        var (falloEjecucion, sucursales, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
         var factura = ObtenerModelCreate(servicios, pedido);
+        factura.Sucursales = sucursales;
         factura.Clientes = clientes;
         factura.TipoPagos = tipoPagos;
         factura.Impuestos = impuestos;
@@ -111,9 +112,10 @@ public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
     [HttpPost]
     public async Task<IActionResult> Create(FacturaRequestDto facturaRequestDto)
     {
-        var (falloEjecucion, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
+        var (falloEjecucion, sucursales, clientes, tipoPagos, servicios, impuestos) = await ObtenerValoresInicialesSelect();
         if (falloEjecucion) return RedirectToAction(nameof(Index));
 
+        facturaRequestDto.Sucursales = sucursales;
         facturaRequestDto.Clientes = clientes;
         facturaRequestDto.TipoPagos = tipoPagos;
         facturaRequestDto.Impuestos = impuestos;
@@ -130,6 +132,7 @@ public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
             return View(facturaRequestDto);
         }
 
+        facturaRequestDto.Fecha = DateOnly.FromDateTime(DateTime.Now);
         var resultado = await cliente.ConsumirAPIAsync<FacturaResponseDto>(Constantes.POST, Constantes.POSTFACTURA, valoresConsumo: Serialization.Serialize(facturaRequestDto));
         if (resultado == null)
         {
@@ -142,13 +145,22 @@ public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
         return RedirectToAction(nameof(Index));
     }
 
-    private async Task<(bool fallo, IEnumerable<ClienteResponseDto>, IEnumerable<TipoPagoResponseDto>, IEnumerable<ServicioResponseDto>, IEnumerable<ImpuestoResponseDto>)> ObtenerValoresInicialesSelect()
+    private async Task<(bool fallo, IEnumerable<SucursalResponseDto>, IEnumerable<ClienteResponseDto>, IEnumerable<TipoPagoResponseDto>, IEnumerable<ServicioResponseDto>, IEnumerable<ImpuestoResponseDto>)> ObtenerValoresInicialesSelect()
     {
+        string url = Constantes.GETALLSUCURSALES;
+        var sucursales = await cliente.ConsumirAPIAsync<List<SucursalResponseDto>>(Constantes.GET, url);
+        if (sucursales == null)
+        {
+            SetErrorMessage();
+            return (true, null, null, null, null, null)!;
+        }
+        sucursales.Insert(0, new SucursalResponseDto() { Id = 0, Nombre = "Seleccione una sucursal" });
+
         var clientes = await cliente.ConsumirAPIAsync<List<ClienteResponseDto>>(Constantes.GET, Constantes.GETALLCLIENTES);
         if (clientes == null)
         {
             SetErrorMessage();
-            return (true, null, null, null, null)!;
+            return (true, null, null, null, null, null)!;
         }
 
         clientes.Insert(0, new ClienteResponseDto() { Id = 0, Nombre = "Seleccione un cliente" });
@@ -157,7 +169,7 @@ public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
         if (tipoPagos == null)
         {
             SetErrorMessage();
-            return (true, null, null, null, null)!;
+            return (true, null, null, null, null, null)!;
         }
 
         tipoPagos.Insert(0, new TipoPagoResponseDto() { Id = 0, Descripcion = "Seleccione un tipo de pago" });
@@ -166,7 +178,7 @@ public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
         if (impuestos == null)
         {
             SetErrorMessage();
-            return (true, null, null, null, null)!;
+            return (true, null, null, null, null, null)!;
         }
 
         impuestos.Insert(0, new ImpuestoResponseDto() { Id = 0, Nombre = "Seleccione un impuesto" });
@@ -175,10 +187,10 @@ public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
         if (servicios == null)
         {
             SetErrorMessage();
-            return (falloEjecucion, null, null, null, null)!;
+            return (true, null, null, null, null, null)!;
         }
 
-        return (false, clientes, tipoPagos, servicios, impuestos);
+        return (false, sucursales, clientes, tipoPagos, servicios, impuestos);
     }
 
     private async Task<(bool fallo, IEnumerable<ServicioResponseDto>)> ObtenerValoresServicioselect()
@@ -214,6 +226,7 @@ public class FacturaController(IApiArtInkClient cliente) : BaseArtInkController
 
         var factura = new FacturaRequestDto()
         {
+            IdSucursal = pedido.IdSucursal,
             IdCliente = pedido.IdCliente,
             NombreCliente = pedido.NombreCliente,
             IdPedido = pedido.Id,

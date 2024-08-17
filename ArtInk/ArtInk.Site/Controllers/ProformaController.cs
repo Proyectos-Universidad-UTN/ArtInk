@@ -58,9 +58,10 @@ public class ProformaController(IApiArtInkClient cliente) : BaseArtInkController
 
         var pedido = new PedidoRequestDto()
         {
+            IdReserva = reserva.Id,
             IdCliente = reserva.IdCliente,
             NombreCliente = reserva.NombreCliente,
-            IdReserva = idReserva.Value,
+            IdSucursal = reserva.IdSucursal,
             Clientes = clientes,
             TipoPagos = tipoPagos,
             Impuestos = impuestos,
@@ -131,6 +132,7 @@ public class ProformaController(IApiArtInkClient cliente) : BaseArtInkController
             return View(pedidoRequestDto);
         }
 
+        pedidoRequestDto.Fecha = DateOnly.FromDateTime(DateTime.Now);
         var resultado = await cliente.ConsumirAPIAsync<PedidoResponseDto>(Constantes.POST, Constantes.POSTPEDIDO, valoresConsumo: Serialization.Serialize(pedidoRequestDto));
         if (resultado == null)
         {

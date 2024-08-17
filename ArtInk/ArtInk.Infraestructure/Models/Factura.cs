@@ -16,8 +16,6 @@ public partial class Factura: BaseModel
 
     public short Consecutivo { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
     public byte IdImpuesto { get; set; }
 
     public decimal PorcentajeImpuesto { get; set; }
@@ -27,6 +25,8 @@ public partial class Factura: BaseModel
     public decimal MontoImpuesto { get; set; }
 
     public decimal MontoTotal { get; set; }
+
+    public byte IdSucursal { get; set; }
 
     public virtual ICollection<DetalleFactura> DetalleFacturas { get; set; } = new List<DetalleFactura>();
 
@@ -38,5 +38,5 @@ public partial class Factura: BaseModel
 
     public virtual TipoPago IdTipoPagoNavigation { get; set; } = null!;
 
-    public virtual UsuarioSucursal IdUsuarioSucursalNavigation { get; set; } = null!;
+    public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
 }

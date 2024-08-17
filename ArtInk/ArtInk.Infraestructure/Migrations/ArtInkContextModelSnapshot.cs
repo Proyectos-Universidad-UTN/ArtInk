@@ -394,11 +394,11 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<long?>("IdPedido")
                         .HasColumnType("bigint");
 
-                    b.Property<byte>("IdTipoPago")
+                    b.Property<byte>("IdSucursal")
                         .HasColumnType("tinyint");
 
-                    b.Property<short>("IdUsuarioSucursal")
-                        .HasColumnType("smallint");
+                    b.Property<byte>("IdTipoPago")
+                        .HasColumnType("tinyint");
 
                     b.Property<decimal>("MontoImpuesto")
                         .HasColumnType("money");
@@ -435,9 +435,9 @@ namespace ArtInk.Infraestructure.Migrations
 
                     b.HasIndex("IdPedido");
 
-                    b.HasIndex("IdTipoPago");
+                    b.HasIndex("IdSucursal");
 
-                    b.HasIndex("IdUsuarioSucursal");
+                    b.HasIndex("IdTipoPago");
 
                     b.ToTable("Factura", (string)null);
                 });
@@ -730,11 +730,11 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<int>("IdReserva")
                         .HasColumnType("int");
 
-                    b.Property<byte>("IdTipoPago")
+                    b.Property<byte>("IdSucursal")
                         .HasColumnType("tinyint");
 
-                    b.Property<short>("IdUsuarioSucursal")
-                        .HasColumnType("smallint");
+                    b.Property<byte>("IdTipoPago")
+                        .HasColumnType("tinyint");
 
                     b.Property<decimal>("MontoImpuesto")
                         .HasColumnType("money");
@@ -771,9 +771,9 @@ namespace ArtInk.Infraestructure.Migrations
 
                     b.HasIndex("IdReserva");
 
-                    b.HasIndex("IdTipoPago");
+                    b.HasIndex("IdSucursal");
 
-                    b.HasIndex("IdUsuarioSucursal");
+                    b.HasIndex("IdTipoPago");
 
                     b.ToTable("Pedido", (string)null);
                 });
@@ -971,9 +971,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Property<byte>("IdSucursal")
                         .HasColumnType("tinyint");
 
-                    b.Property<short>("IdUsuarioSucursal")
-                        .HasColumnType("smallint");
-
                     b.Property<string>("NombreCliente")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -994,8 +991,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.HasIndex("IdCliente");
 
                     b.HasIndex("IdSucursal");
-
-                    b.HasIndex("IdUsuarioSucursal");
 
                     b.ToTable("Reserva", (string)null);
                 });
@@ -1669,17 +1664,17 @@ namespace ArtInk.Infraestructure.Migrations
                         .HasForeignKey("IdPedido")
                         .HasConstraintName("FK_Factura_Pedido");
 
+                    b.HasOne("ArtInk.Infraestructure.Models.Sucursal", "IdSucursalNavigation")
+                        .WithMany("Facturas")
+                        .HasForeignKey("IdSucursal")
+                        .IsRequired()
+                        .HasConstraintName("FK_Factura_Sucursal");
+
                     b.HasOne("ArtInk.Infraestructure.Models.TipoPago", "IdTipoPagoNavigation")
                         .WithMany("Facturas")
                         .HasForeignKey("IdTipoPago")
                         .IsRequired()
                         .HasConstraintName("FK_Factura_TipoPago");
-
-                    b.HasOne("ArtInk.Infraestructure.Models.UsuarioSucursal", "IdUsuarioSucursalNavigation")
-                        .WithMany("Facturas")
-                        .HasForeignKey("IdUsuarioSucursal")
-                        .IsRequired()
-                        .HasConstraintName("FK_Factura_UsuarioSucursal");
 
                     b.Navigation("IdClienteNavigation");
 
@@ -1687,9 +1682,9 @@ namespace ArtInk.Infraestructure.Migrations
 
                     b.Navigation("IdPedidoNavigation");
 
-                    b.Navigation("IdTipoPagoNavigation");
+                    b.Navigation("IdSucursalNavigation");
 
-                    b.Navigation("IdUsuarioSucursalNavigation");
+                    b.Navigation("IdTipoPagoNavigation");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Inventario", b =>
@@ -1753,17 +1748,17 @@ namespace ArtInk.Infraestructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Pedido_Reserva");
 
+                    b.HasOne("ArtInk.Infraestructure.Models.Sucursal", "IdSucursalNavigation")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("IdSucursal")
+                        .IsRequired()
+                        .HasConstraintName("FK_Pedido_Sucursal");
+
                     b.HasOne("ArtInk.Infraestructure.Models.TipoPago", "IdTipoPagoNavigation")
                         .WithMany("Pedidos")
                         .HasForeignKey("IdTipoPago")
                         .IsRequired()
                         .HasConstraintName("FK_Pedido_TipoPago");
-
-                    b.HasOne("ArtInk.Infraestructure.Models.UsuarioSucursal", "IdUsuarioSucursalNavigation")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("IdUsuarioSucursal")
-                        .IsRequired()
-                        .HasConstraintName("FK_Pedido_UsuarioSucursal");
 
                     b.Navigation("IdClienteNavigation");
 
@@ -1771,9 +1766,9 @@ namespace ArtInk.Infraestructure.Migrations
 
                     b.Navigation("IdReservaNavigation");
 
-                    b.Navigation("IdTipoPagoNavigation");
+                    b.Navigation("IdSucursalNavigation");
 
-                    b.Navigation("IdUsuarioSucursalNavigation");
+                    b.Navigation("IdTipoPagoNavigation");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Producto", b =>
@@ -1820,17 +1815,9 @@ namespace ArtInk.Infraestructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Reserva_Sucursal");
 
-                    b.HasOne("ArtInk.Infraestructure.Models.UsuarioSucursal", "IdUsuarioSucursalNavigation")
-                        .WithMany("Reservas")
-                        .HasForeignKey("IdUsuarioSucursal")
-                        .IsRequired()
-                        .HasConstraintName("FK_Reserva_UsuarioSucursal");
-
                     b.Navigation("IdClienteNavigation");
 
                     b.Navigation("IdSucursalNavigation");
-
-                    b.Navigation("IdUsuarioSucursalNavigation");
                 });
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.ReservaPregunta", b =>
@@ -2119,7 +2106,11 @@ namespace ArtInk.Infraestructure.Migrations
 
             modelBuilder.Entity("ArtInk.Infraestructure.Models.Sucursal", b =>
                 {
+                    b.Navigation("Facturas");
+
                     b.Navigation("Inventarios");
+
+                    b.Navigation("Pedidos");
 
                     b.Navigation("Reservas");
 
@@ -2157,15 +2148,6 @@ namespace ArtInk.Infraestructure.Migrations
                     b.Navigation("TokenMasters");
 
                     b.Navigation("UsuarioSucursals");
-                });
-
-            modelBuilder.Entity("ArtInk.Infraestructure.Models.UsuarioSucursal", b =>
-                {
-                    b.Navigation("Facturas");
-
-                    b.Navigation("Pedidos");
-
-                    b.Navigation("Reservas");
                 });
 #pragma warning restore 612, 618
         }

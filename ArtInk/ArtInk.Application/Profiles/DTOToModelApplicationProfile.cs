@@ -13,11 +13,11 @@ public class DtoToModelApplicationProfile : Profile
         CreateMap<RequestBaseDto, BaseModel>()
             .ForMember(m => m.UsuarioCreacion, opts =>
             {
-                opts.MapFrom<CurrentUserIdResolver>();
+                opts.MapFrom<CurrentUserIdResolverAdd>();
             })
             .ForMember(m => m.UsuarioModificacion, opts =>
             {
-                opts.MapFrom<CurrentUserIdResolver>();
+                opts.MapFrom<CurrentUserIdResolverModify>();
             });
 
         CreateMap<RequestProductoDto, Producto>()
@@ -67,5 +67,6 @@ public class DtoToModelApplicationProfile : Profile
         CreateMap<RequestDetalleFacturaDto,  DetalleFactura>();
         CreateMap<RequestDetallePedidoDto, DetallePedido>();
         CreateMap<RequestReservaServicioDto, ReservaServicio>();
+        CreateMap<RequestUsuarioSucursalDto, UsuarioSucursal>();
     }
 }

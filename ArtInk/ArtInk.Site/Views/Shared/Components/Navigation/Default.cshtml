@@ -46,20 +46,26 @@
                             </ul>
                         </li>
 
-                        @if(Model.Role == "Moderador")
-                        {
-                            <li class="nav-item dropdown">
-                                <button class="nav-link dropdown-toggle btnfos btnfos-5" id="gestionesDropdown"
-                                    data-bs-toggle="dropdown" aria-expanded="false">Gestiones</button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="gestionesDropdown">
+                        <li class="nav-item dropdown">
+                            <button class="nav-link dropdown-toggle btnfos btnfos-5" id="gestionesDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">Gestiones</button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="gestionesDropdown">
+                                @if(Model.Role == "Moderador" || Model.Role == "Cliente")
+                                {
                                     <li>
                                         <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Reserva"
                                             asp-action="Index">Reservas</a>
                                     </li>
+                                }
+                                @if(Model.Role == "Moderador" || Model.Role == "Administrador")
+                                {
                                     <li>
                                         <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Reserva"
                                             asp-action="AgendaReserva">Agenda</a>
-                                    </li>
+                                    </li>   
+                                }
+                                @if(Model.Role == "Moderador" || Model.Role == "Cliente")
+                                {
                                     <li>
                                         <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Proforma"
                                             asp-action="Index">Proforma</a>
@@ -68,6 +74,9 @@
                                         <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Factura"
                                             asp-action="Index">Facturaciones</a>
                                     </li>
+                                }
+                                @if(Model.Role == "Moderador" || Model.Role == "Administrador")
+                                {
                                     <li>
                                         <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Inventario"
                                             asp-action="Index">Inventario</a>
@@ -76,9 +85,9 @@
                                         <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="InventarioProducto"
                                             asp-action="Index">Inventario productos</a>
                                     </li>
-                                </ul>
-                            </li>
-                        }
+                                }
+                            </ul>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Proveedor"
@@ -112,6 +121,11 @@
                                 </ul>
                             </li>
                         }
+
+                        <li class="nav-item">
+                            <a class="nav-link btnfos btnfos-5" asp-area="" asp-controller="Home"
+                                        asp-action="CerrarSesion">Cerrar sesión</a>
+                        </li>
                     }
                     else
                     {

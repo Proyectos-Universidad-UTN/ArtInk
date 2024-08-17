@@ -73,6 +73,7 @@
     }
 
     const cargarInventarioProductos = () => {
+        const jwt = getCookie("JWT");
         const url = "@Model.UrlAPI".replace("{0}", `Inventario/0/Productos`);
         table = new DataTable($("#feriados"),
             {
@@ -89,7 +90,10 @@
                 ajax: {
                     url: url,
                     type: "GET",
-                    dataSrc: ''
+                    dataSrc: '',
+                    headers: {
+                        'Authorization': `Bearer ${jwt}`
+                    }
                 },
                 columns: [
                     { data: "id" },
@@ -100,7 +104,6 @@
                     { 
                         data: null,
                         render: function (data) {
-                            console.log(data)
                             return `<div class="btn-group d-flex justify-content-between gap-2">
                                         <a href="/InventarioProducto/Edit/${data.id}" class="btn btn-secondary btn-sm flex-fill m-0">Editar</a>
                                         <a href="/InventarioProductoMovimiento/Entrada/${data.id}" class="btn btn-primary btn-sm flex-fill m-0">Entrada</a>

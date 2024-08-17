@@ -16,8 +16,6 @@ public record RequestFacturaDto: RequestBaseDto
 
     public short Consecutivo { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
     public byte IdImpuesto { get; set; }
 
     public decimal PorcentajeImpuesto { get; set; }
@@ -27,6 +25,8 @@ public record RequestFacturaDto: RequestBaseDto
     public decimal MontoImpuesto { get; set; }
 
     public decimal MontoTotal { get; set; }
+
+    public byte IdSucursal { get; set; }
 
     public IEnumerable<RequestDetalleFacturaDto>? DetalleFacturas { get; set; }
 }

@@ -20,9 +20,6 @@ public class ReservaValidator : AbstractValidator<Reserva>
         RuleFor(x => x.Hora)
             .NotEmpty().WithMessage("Por favor ingrese la hora");
 
-        RuleFor(x => x.IdUsuarioSucursal)
-            .GreaterThan((short)0).WithMessage("Por favor ingrese un Id de usuario válido");
-
         RuleFor(x => x.IdSucursal)
             .GreaterThan((byte)0).WithMessage("Por favor ingrese un Id de sucursal válido");
     }

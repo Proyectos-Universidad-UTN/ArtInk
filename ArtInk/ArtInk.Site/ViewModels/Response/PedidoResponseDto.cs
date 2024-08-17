@@ -22,8 +22,6 @@ public class PedidoResponseDto
     [DisplayName("Número")]
     public short Consecutivo { get; set; }
 
-    public short IdUsuarioSucursal { get; set; }
-
     public byte IdImpuesto { get; set; }
 
     public int IdReserva { get; set; }
@@ -44,6 +42,8 @@ public class PedidoResponseDto
 
     public char Estado { get; set; }
 
+    public byte IdSucursal { get; set; }
+
     public virtual ICollection<DetallePedidoResponseDto> DetallePedidos { get; set; } = new List<DetallePedidoResponseDto>();
 
     public virtual ClienteResponseDto Cliente { get; set; } = null!;
@@ -55,4 +55,6 @@ public class PedidoResponseDto
     public virtual UsuarioSucursalResponseDto UsuarioSucursal { get; set; } = null!;
 
     public virtual ReservaResponseDto Reserva { get; set; } = null!;
+
+    public virtual SucursalResponseDto Sucursal { get; set; } = null!;
 }

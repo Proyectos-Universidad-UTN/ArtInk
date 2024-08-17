@@ -46,6 +46,14 @@ public record UsuarioResponseDto
     public virtual GeneroResponseDto Genero { get; set; } = null!;
 
     public virtual RolResponseDto Rol { get; set; } = null!;
+
+    private string? _nombreCompleto;
+
+    public string NombreCompleto 
+    {
+        get => string.IsNullOrEmpty(Nombre) ? _nombreCompleto ?? "" : $"{Nombre ?? ""} {Apellidos ?? ""} - Rol: {Rol.Descripcion}";
+        set => _nombreCompleto = value; 
+    }
     
     public virtual ICollection<UsuarioSucursalResponseDto> UsuarioSucursal { get; set; } = new List<UsuarioSucursalResponseDto>();
 }

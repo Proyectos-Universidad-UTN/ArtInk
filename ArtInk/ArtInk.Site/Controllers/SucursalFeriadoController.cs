@@ -49,7 +49,6 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         var (falloEjecucion, feriados) = await ObtenerFeriados();
         if (falloEjecucion) return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
 
-        feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
         sucursalSucursalFeriado.Feriados = feriados;
 
         RemoveSucursalRequireModel();
@@ -59,38 +58,54 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
             return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
         }
 
-        if (sucursalSucursalFeriado.Accion == 'R')
+        if (sucursalSucursalFeriado.Accion == 'R') sucursalSucursalFeriado.EliminarFeriado();
+
+        if (sucursalSucursalFeriado.Accion == 'A')
         {
-            sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.Where(m => m.IdFeriado != sucursalSucursalFeriado.IdFeriado).ToList();
-            TempData[SFSUCCESSMESSAGEPARTIAL] = "Feriado removido de la lista preliminar";
-            return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
+            var feriadodoSeleccionado = feriados.Single(m => m.Id == sucursalSucursalFeriado.IdFeriado);
+            var feriadoSucursal = new SucursalFeriadoRequestDto()
+            {
+                IdFeriado = sucursalSucursalFeriado.IdFeriado,
+                Fecha = DateOnly.FromDateTime(new DateTime(sucursalSucursalFeriado.Anno, (int)feriadodoSeleccionado.Mes, feriadodoSeleccionado.Dia, 0, 0, 0, DateTimeKind.Local)),
+                Feriado = feriadodoSeleccionado,
+                Anno = sucursalSucursalFeriado.Anno
+            };
+
+            sucursalSucursalFeriado.AgregarFeriado(feriadoSucursal);
         }
 
-        if (sucursalSucursalFeriado.FeriadosSucursal.Exists(m => m.IdFeriado == sucursalSucursalFeriado.IdFeriado))
-        {
-            TempData[SFERRORMESSAGEPARTIAL] = "Feriado ya existe en lista preliminar";
-            return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
-        }
+        var feriadosExistentesSucursal = feriados.Where(m => sucursalSucursalFeriado.FeriadosSucursal.Exists(x => x.IdFeriado == m.Id)).ToList();
+        sucursalSucursalFeriado.Feriados = feriados.Except(feriadosExistentesSucursal).ToList();
 
-        var url = string.Format(Constantes.GETFERIADOBYID, sucursalSucursalFeriado.IdFeriado);
-        var feriado = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.GET, url);
-        if (feriado == null)
-        {
-            TempData[SFERRORMESSAGEPARTIAL] = cliente.Error ? cliente.MensajeError : null;
-            return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
-        }
+        string mensajeProceso = sucursalSucursalFeriado.Accion == 'E' ? "eliminado de" : "agregado a";
+        TempData[SFSUCCESSMESSAGEPARTIAL] = $"Feriado {mensajeProceso} lista preliminar";
 
-        sucursalSucursalFeriado.FeriadosSucursal.Add(new SucursalFeriadoRequestDto()
-        {
-            IdFeriado = sucursalSucursalFeriado.IdFeriado,
-            Fecha = DateOnly.FromDateTime(new DateTime(sucursalSucursalFeriado.Anno, (int)feriado.Mes, feriado.Dia, 0, 0, 0, DateTimeKind.Local)),
-            Feriado = feriado,
-            Anno = sucursalSucursalFeriado.Anno
-        });
+        // if (sucursalSucursalFeriado.Accion == 'R')
+        // {
+        //     sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.Where(m => m.IdFeriado != sucursalSucursalFeriado.IdFeriado).ToList();
+        //     TempData[SFSUCCESSMESSAGEPARTIAL] = "Feriado removido de la lista preliminar";
+        //     return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
+        // }
 
-        TempData[SFSUCCESSMESSAGEPARTIAL] = "Feriado agregado a lista preliminar";
+        // if (sucursalSucursalFeriado.FeriadosSucursal.Exists(m => m.IdFeriado == sucursalSucursalFeriado.IdFeriado))
+        // {
+        //     TempData[SFERRORMESSAGEPARTIAL] = "Feriado ya existe en lista preliminar";
+        //     return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
+        // }
 
-        sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.OrderBy(m => m.Fecha).ToList();
+        // var url = string.Format(Constantes.GETFERIADOBYID, sucursalSucursalFeriado.IdFeriado);
+        // var feriado = await cliente.ConsumirAPIAsync<FeriadoResponseDto>(Constantes.GET, url);
+        // if (feriado == null)
+        // {
+        //     TempData[SFERRORMESSAGEPARTIAL] = cliente.Error ? cliente.MensajeError : null;
+        //     return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
+        // }
+
+        
+
+        // TempData[SFSUCCESSMESSAGEPARTIAL] = "Feriado agregado a lista preliminar";
+
+        //sucursalSucursalFeriado.FeriadosSucursal = sucursalSucursalFeriado.FeriadosSucursal.OrderBy(m => m.Fecha).ToList();
         return PartialView(FERIADOPARTIALVIEW, sucursalSucursalFeriado);
     }
 
@@ -128,7 +143,6 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         };
         sucursalSucursalFeriado.CargarFeriados(mapper.Map<IEnumerable<SucursalFeriadoRequestDto>>(sucursalFeriados), feriados, anno);
 
-        feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
         sucursalSucursalFeriado.Feriados = feriados;
 
         return View(sucursalSucursalFeriado);
@@ -141,7 +155,6 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
         var (falloEjecucion, feriados) = await ObtenerFeriados();
         if (falloEjecucion) return RedirectToAction(INDEX);
         
-        feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
         sucursalSucursalFeriado.Feriados = feriados;
 
         RemoveSucursalRequireModel();
@@ -170,6 +183,8 @@ public class SucursalFeriadoController(IApiArtInkClient cliente, IMapper mapper)
             SetErrorMessage();
             return (true, null)!;
         }
+
+        feriados.Insert(0, new FeriadoResponseDto() { Id = 0, Nombre = "Seleccione un feriado" });
         return (false, feriados)!;
     }
 
