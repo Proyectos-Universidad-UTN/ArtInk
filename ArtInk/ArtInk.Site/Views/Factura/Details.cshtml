@@ -29,15 +29,15 @@ ViewData["Title"] = "Detalle Factura";
                                 </div>
                                 <div class="col-sm-6 col-xl-6">
                                     <address class="text-end m-0">Dirección Local:
-                                        @Model.UsuarioSucursal.Sucursal.DireccionExacta</address>
+                                        @Model.Sucursal.DireccionExacta</address>
                                     <div class="text-end m-0">
                                         Correo electrónico
                                         <a
-                                            href='@String.Format("mailto:{0}",Model.UsuarioSucursal.Sucursal.CorreoElectronico)'>
-                                            @Model.UsuarioSucursal.Sucursal.CorreoElectronico
+                                            href='@String.Format("mailto:{0}",Model.Sucursal.CorreoElectronico)'>
+                                            @Model.Sucursal.CorreoElectronico
                                         </a>
                                     </div>
-                                    <div class="text-end m-0">Teléfono: @Model.UsuarioSucursal.Sucursal.Telefono</div>
+                                    <div class="text-end m-0">Teléfono: @Model.Sucursal.Telefono</div>
                                 </div>
                             </div>
                             <div class="row gutters">

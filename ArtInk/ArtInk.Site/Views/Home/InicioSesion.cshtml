@@ -5,6 +5,7 @@ ViewData["Title"] = "Iniciar sesión";
 Layout = "_LayoutSeguridad";
 }
 
+
 <form asp-action="InicioSesion" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
@@ -41,7 +42,7 @@ Layout = "_LayoutSeguridad";
         </div>
     </div>
 
-    <a href="#" class="forgot">Forgot your email or password?</a>
+    <a href="#" class="forgot">¿Se te olvido la contraseña?</a>
 </form>
 
 @await Html.PartialAsync("_ValidationScriptsPartial")

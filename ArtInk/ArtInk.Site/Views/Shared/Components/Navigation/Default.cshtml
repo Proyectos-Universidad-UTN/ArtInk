@@ -50,7 +50,7 @@
                             <button class="nav-link dropdown-toggle btnfos btnfos-5" id="gestionesDropdown"
                                 data-bs-toggle="dropdown" aria-expanded="false">Gestiones</button>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="gestionesDropdown">
-                                @if(Model.Role == "Moderador" || Model.Role == "Cliente")
+                                @if (Model.Role == "Moderador" || Model.Role == "Usuario" || Model.Role == "Administrador")
                                 {
                                     <li>
                                         <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Reserva"
@@ -64,7 +64,7 @@
                                             asp-action="AgendaReserva">Agenda</a>
                                     </li>   
                                 }
-                                @if(Model.Role == "Moderador" || Model.Role == "Cliente")
+                                @if (Model.Role == "Moderador" || Model.Role == "Usuario")
                                 {
                                     <li>
                                         <a class="dropdown-item btnfos btnfos-5" asp-area="" asp-controller="Proforma"
